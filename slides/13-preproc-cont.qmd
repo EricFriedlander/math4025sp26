@@ -1,0 +1,436 @@
+---
+title: 'MATH 427: Preprocessing, Missing Data, and Resampling Continued'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+  cache: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+## Announcements
+
+- [Coyote Connections Thu March 13th 7-9pm](https://alumni.collegeofidaho.edu/e/coyote-connections-2025)
+- Please print out and bring four copies of your resume and cover letter to class on Friday
+- Debrief from talk today
+
+## Computational Set-Up
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(knitr)
+library(janitor) # for contingency tables
+library(ISLR2)
+library(readODS)
+
+tidymodels_prefer()
+
+set.seed(427)
+```
+
+
+# Pre-processing
+
+
+## Data: Different Ames Housing Prices {.smaller}
+
+Goal: Predict `Sale_Price`.
+
+```{r}
+ames <- read_rds("../data/AmesHousing.rds")
+ames |> glimpse()
+```
+
+```{r}
+#| echo: FALSE
+ames <- ames |> 
+  mutate(Garage_Type = if_else(Garage_Type == "No_Garage", NA, Garage_Type),
+        rand_num2 = runif(881, 0, 1),
+        Year_Built = if_else(rand_num2 < 0.05, NA, Year_Built)) |> 
+  select(-rand_num2)
+```
+
+## Today
+
+Well cover some common pre-processing tasks:
+
+- Dealing with zero-variance (zv) and/or near-zero variance (nzv) variables
+- Imputing missing entries
+- Label encoding ordinal categorical variables
+- Standardizing (centering and scaling) numeric predictors
+- Lumping predictors
+- One-hot/dummy encoding categorical predictor
+
+## Pre-Split Cleaning {.smaller}
+
+- Before you split your data: make sure data is in correct format
+- This may mean different things for different data sets
+- Common examples:
+    + Fixing names of columns
+    + Ensure all variable types are correct
+    + Ensure all factor levels are correct and in order (if applicable)
+    + Remove any variables that are not important (or harmful) to your analysis
+    + Ensure missing values are coded as such (i.e. as `NA` instead of 0 or -1 or "missing")
+    + Filling in missing values where you know what the answer should be (i.e. if a missing value really means 0 instead of missing)
+
+## Example: Factor Levels in Wrong Order
+
+```{r}
+ames |> pull(Overall_Qual) |> levels()
+```
+
+## Re-Factoring
+
+```{r}
+ames <- ames |> 
+  mutate(Overall_Qual = factor(Overall_Qual, levels = c("Very_Poor", "Poor", 
+                                                        "Fair", "Below_Average",
+                                                        "Average", "Above_Average", 
+                                                        "Good", "Very_Good",
+                                                        "Excellent", "Very_Excellent")))
+ames |> pull(Overall_Qual) |> levels()
+```
+
+## Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables {.smaller}
+
+Heuristic for detecting near-zero variance features is:
+
+- The fraction of unique values over the sample size is low (say ≤ 10%).
+- The ratio of the frequency of the most prevalent value to the frequency of the second most prevalent
+value is large (say ≥ 20%).
+
+```{r}
+library(caret)
+nearZeroVar(ames, saveMetrics = TRUE) |> kable()
+```
+
+## Recipe: Near-Zero Variance
+
+```{r}
+preproc <- recipe(Sale_Price ~ ., data = ames) |> 
+  step_nzv(all_predictors()) # remove zero or near-zero variable predictors
+```
+
+## Missing Data {.smaller}
+
+-   Many times, you can't just drop missing data
+-   Even if you can, dropping missing values can generate *biased* data/models
+-   Sometimes missing data gives you more information
+-   Types of missing data:
+    +   Missing completely at random (MCAR): there is no pattern to your missing values
+    +   Missing at random (MAR): missing values are dependent on other values in the data set
+    +   Missing not at random (MNAR): missing values are dependent on the value that is missing
+-   Structured missingness (SM):  when the missingness of certain values are depends on one another, regardless of whether the missing values are MCAR, MAR, or MNAR
+
+## MCAR: Examples
+
+-   Sensor data: occasionally sensors break so you're missing data randomly
+-   Survey data: sometimes people just randomly skip questions
+-   Survey data: customers are randomly given 5 questions from a bank of 100 questions
+
+## MAR: Examples
+
+-   Men are less likely to respond to surveys about depression
+-   Medical study: patients who miss follow-up appointments are more likely to be young
+-   Survey responses: ESL respondents may be more likely to skip certain questions that are difficult to interpret (only MAR if you know they are ESL)
+-   Measure of student performance: students who score lower are more likely to skip questions
+
+## MNAR: Examples
+
+-   Survey on income: respondent may be less likely to report their income if they are poor
+-   Survey about political beliefs: respondent may be more likely to skip questions when their answer is perceived as undesirable
+-   Customer satisfaction: only customers who feel strongly respond
+-   Medical study: patients refuse to report unhealthy habits
+
+## Structurally Missing: Examples
+
+-   Health survey: all questions related to pregnancy are left blank by males
+-   Bank data set: combination of home, auto, and credit cards... not all customer have all three so have missing data in certain portions
+-   Survey: many respondents by stop the survey early so all questions after a certain point are missing
+-   Netflix: customers may only watch similar movies and TV shows
+
+## Remedies for Missing Data
+
+-   Lot of complicated ways that you can read about
+-   Can drop column of too much of the data is missing
+-   Imputing:
+    +  `step_impute_median`: used for numeric (especially discrete) variables
+    +  `step_impute_mean`: used for numeric variables
+    +  `step_impute_knn`: used for both numeric and categorical variables (computationally expensive)
+    +  `step_impute_mode`: used for nominal (having no order) categorical variable
+    
+## Exploring Missing Data
+
+```{r}
+ames |> 
+  summarize(across(everything(), ~ sum(is.na(.)))) |> 
+  pivot_longer(everything()) |> 
+  filter(value > 0) |> 
+  kable()
+```
+
+## Missing Data: Garage_Type
+
+-   The reason that `Garage_Type` is missing is because there is no basement
+    +   Solution: replace `NA`s with `No_Garage`
+    +   Do this before data splitting
+    
+## Fixing Garage_Type
+
+```{r}
+ames <- ames |> 
+  mutate(Garage_Type = as_factor(if_else(is.na(Garage_Type), "No_Garage", Garage_Type)))
+```
+    
+## Missing Data: Year_Built
+
+-   MCAR
+    +   Solution 1: Impute with mean or median
+    +   Solution 2: Impute with KNN... maybe we can infer what the values are based on other values in the data set?
+    
+## Missing Data: Gr_Liv_Area
+
+-   MCAR
+    +   Solution 1: Impute with mean or median
+    +   Solution 2: Impute with KNN... maybe we can infer what the values are based on other values in the data set?
+  
+## Recipe: Missing Data
+
+```{r}
+preproc <- recipe(Sale_Price ~ ., data = ames) |> 
+  step_nzv(all_predictors()) |>  # remove zero or near-zero variable predictors
+  step_impute_knn(Year_Built, Gr_Liv_Area) # impute missing values in Overall_Qual and Year_Built
+```
+
+-   Note: `step_imput_knn` uses the "Gower's Distance" so don't need to worry about normalizing
+
+## Encoding Ordinal Features
+
+Two types of categorical features:
+
+-   Ordinal (order is important)
+-   Nominal (order is not important)
+
+## Encoding Ordinal Features
+
+```{r}
+ames |> pull(Overall_Qual) |> levels()
+```
+- `Very_Poor` = 1, `Poor` = 2, `Fair` = 3, etc...
+
+## Recipe: Encoding Ordinal Features
+
+```{r}
+preproc <- recipe(Sale_Price ~ ., data = ames) |> 
+  step_nzv(all_predictors()) |>  # remove zero or near-zero variable predictors
+  step_impute_knn(Year_Built, Gr_Liv_Area) |>  # impute missing values in Overall_Qual and Year_Built
+  step_integer(Overall_Qual) # convert Overall_Qual into ordinal encoding
+```
+
+## Lump Small Categories Together
+
+```{r}
+ames |> count(Neighborhood) |> kable()
+```
+
+## Lump Small Categories Together
+
+```{r}
+ames |> mutate(Neighborhood = fct_lump_prop(Neighborhood, 0.05)) |> 
+  count(Neighborhood) |>  kable()
+```
+
+## Recipe: Lumping Small Factors Together
+
+```{r}
+preproc <- recipe(Sale_Price ~ ., data = ames) |> 
+  step_nzv(all_predictors()) |>  # remove zero or near-zero variable predictors
+  step_impute_knn(Year_Built, Gr_Liv_Area) |>  # impute missing values in Overall_Qual and Year_Built
+  step_integer(Overall_Qual) |> # convert Overall_Qual into ordinal encoding
+  step_other(Neighborhood, threshold = 0.01, other = "Other") # lump all categories with less than 1% representation into a category called Other for each variable
+```
+
+## One-hot/dummy encoding categorical predictors
+
+![Figure 3.9: [Machine Learning with R](https://bradleyboehmke.github.io/HOML/engineering.html)](images/12/ohe-vs-dummy.png)
+
+## Recipe: Dummy Variables
+
+```{r}
+preproc <- recipe(Sale_Price ~ ., data = ames) |> 
+  step_nzv(all_predictors()) |>  # remove zero or near-zero variable predictors
+  step_impute_knn(Year_Built, Gr_Liv_Area) |>  # impute missing values in Overall_Qual and Year_Built
+  step_integer(Overall_Qual) |> # convert Overall_Qual into ordinal encoding
+  step_other(Neighborhood, threshold = 0.01, other = "Other") |> # lump all categories with less than 1% representation into a category called Other for each variable
+  step_dummy(all_nominal_predictors(), one_hot = TRUE)  # in general use one_hot unless doing linear regression
+```
+
+## Recipe: Center and scale
+
+```{r}
+preproc <- recipe(Sale_Price ~ ., data = ames) |> 
+  step_nzv(all_predictors()) |>  # remove zero or near-zero variable predictors
+  step_impute_knn(Year_Built, Gr_Liv_Area) |>  # impute missing values in Overall_Qual and Year_Built
+  step_integer(Overall_Qual) |> # convert Overall_Qual into ordinal encoding
+  step_other(Neighborhood, threshold = 0.01, other = "Other") |> # lump all categories with less than 1% representation into a category called Other for each variable
+  step_dummy(all_nominal_predictors(), one_hot = TRUE) |>  # in general use one_hot unless doing linear regression
+  step_normalize(all_numeric_predictors())
+```
+
+## Order of Preprocessing Step {.smaller}
+
+Questions to ask:
+
+1. Should this be done before or after data splitting?
+2. If I do step_A first what is the impact on step_B? For example, do you want to encode categorical variables before or after normalizing?
+3. What data format is required by the model I'm fitting and how will my model react to these changes?
+4. Is this step part of my "model"? I.e. is this a decision I'm making based on the data or based on subject matter expertise?
+5. Do I have access to my test predictors?
+
+## Questions
+
+-   Should I lump before or after dummy coding?
+-   Should I dummy code before or after normalizing?
+-   Should I lump before my initial split?
+-   How does ordinal encoding impact linear regression vs. KNN?
+
+# Final R Workflow
+
+## Clean Data Set
+
+```{r}
+ames <- ames |> 
+  mutate(Overall_Qual = factor(Overall_Qual, levels = c("Very_Poor", "Poor", 
+                                                        "Fair", "Below_Average",
+                                                        "Average", "Above_Average", 
+                                                        "Good", "Very_Good",
+                                                        "Excellent", "Very_Excellent")),
+         Garage_Type = if_else(is.na(Garage_Type), "No_Garage", Garage_Type),
+         Garage_Type = as_factor(Garage_Type)
+         )
+```
+
+## Initial Data Split
+
+```{r}
+set.seed(427)
+
+data_split <- initial_split(ames, strata = "Sale_Price")
+ames_train <- training(data_split)
+ames_test  <- testing(data_split)
+```
+
+## Define Folds
+
+```{r}
+ames_folds <- vfold_cv(ames_train, v = 10, repeats = 10)
+ames_folds
+```
+
+## Define Model(s)
+
+```{r}
+lm_model <- linear_reg() |>
+  set_engine('lm')
+
+knn5_model <- nearest_neighbor(neighbors = 5) |>
+  set_engine("kknn") |>
+  set_mode("regression")
+
+knn10_model <- nearest_neighbor(neighbors = 10) |>
+  set_engine("kknn") |>
+  set_mode("regression")
+```
+
+## Define Preprocessing: Linear regression
+
+```{r}
+lm_preproc <- recipe(Sale_Price ~ ., data = ames_train) |> 
+  step_nzv(all_predictors()) |>  # remove zero or near-zero variable predictors
+  step_impute_knn(Year_Built, Gr_Liv_Area) |>  # impute missing values in Overall_Qual and Year_Built
+  step_integer(Overall_Qual) |> # convert Overall_Qual into ordinal encoding
+  step_other(all_nominal_predictors(), threshold = 0.01, other = "Other") |> # lump all categories with less than 1% representation into a category called Other for each variable
+  step_dummy(all_nominal_predictors(), one_hot = FALSE) |>  # in general use one_hot unless doing linear regression
+  step_corr(all_numeric_predictors(), threshold = 0.5) |> # remove highly correlated predictors
+  step_lincomb(all_numeric_predictors()) # remove variables that have exact linear combinations
+```
+
+## Define Preprocessing: KNN
+
+```{r}
+knn_preproc <- recipe(Sale_Price ~ ., data = ames_train) |> 
+  step_nzv(all_predictors()) |>  # remove zero or near-zero variable predictors
+  step_impute_knn(Year_Built, Gr_Liv_Area) |>  # impute missing values in Overall_Qual and Year_Built
+  step_integer(Overall_Qual) |> # convert Overall_Qual into ordinal encoding
+  step_other(all_nominal_predictors(), threshold = 0.01, other = "Other") |> # lump all categories with less than 1% representation into a category called Other for each variable
+  step_dummy(all_nominal_predictors(), one_hot = TRUE) |>  # in general use one_hot unless doing linear regression
+  step_nzv(all_predictors()) |> 
+  step_normalize(all_numeric_predictors())
+```
+
+## Define Workflows
+
+```{r}
+lm_wf <- workflow() |> add_model(lm_model) |> add_recipe(lm_preproc)
+knn5_wf <- workflow() |> add_model(knn5_model) |> add_recipe(knn_preproc)
+knn10_wf <- workflow() |> add_model(knn10_model) |> add_recipe(knn_preproc)
+```
+
+## Define Metrics
+
+```{r}
+ames_metrics <- metric_set(rmse, rsq)
+```
+
+## Fit and Assess Models
+
+```{r}
+lm_results <- lm_wf |> fit_resamples(resamples = ames_folds, metrics = ames_metrics)
+knn5_results <- knn5_wf |> fit_resamples(resamples = ames_folds, metrics = ames_metrics)
+knn10_results <- knn10_wf |> fit_resamples(resamples = ames_folds, metrics = ames_metrics)
+```
+
+
+## Collecting Metrics {.smaller}
+
+```{r}
+collect_metrics(lm_results) |> kable()
+collect_metrics(knn5_results) |> kable()
+collect_metrics(knn10_results) |> kable()
+```
+
+## Final & Evaluate Final Model
+
+- After choosing best model/workflow, fit on full training set and assess on test set
+
+```{r}
+final_fit <- knn10_wf |> fit(data = ames_train)
+final_fit_perf <- final_fit |> 
+  predict(new_data = ames_test) |> 
+  bind_cols(ames_test) |> 
+  ames_metrics(truth = Sale_Price, estimate = .pred)
+
+final_fit_perf |> kable()
+```
+
+
+## Tips
+
+-   Can try out different pre-processing to see if it improves your model!
+-   Process can be intense for you computer, so might take a while
+-   No 100% correct way to do it, although there are some 100% incorrect ways to do it
+

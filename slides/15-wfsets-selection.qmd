@@ -1,0 +1,336 @@
+---
+title: 'MATH 427: Workflow Sets and Feature Selection'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+  cache: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+## Computational Set-Up
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(knitr)
+library(janitor) # for contingency tables
+library(ISLR2)
+library(readODS)
+
+tidymodels_prefer()
+
+set.seed(427)
+```
+
+
+# Workflow Sets in R
+
+## Data: Different Ames Housing Prices {.smaller}
+
+Goal: Predict `Sale_Price`.
+
+```{r}
+ames <- read_rds("../data/AmesHousing.rds")
+ames |> glimpse()
+```
+
+
+```{r}
+#| echo: FALSE
+ames <- ames |> 
+  mutate(Garage_Type = if_else(Garage_Type == "No_Garage", NA, Garage_Type),
+        rand_num2 = runif(881, 0, 1),
+        Year_Built = if_else(rand_num2 < 0.05, NA, Year_Built)) |> 
+  select(-rand_num2)
+```
+
+## Clean Data Set
+
+```{r}
+ames <- ames |> 
+  mutate(Overall_Qual = factor(Overall_Qual, levels = c("Very_Poor", "Poor", 
+                                                        "Fair", "Below_Average",
+                                                        "Average", "Above_Average", 
+                                                        "Good", "Very_Good",
+                                                        "Excellent", "Very_Excellent")),
+         Garage_Type = if_else(is.na(Garage_Type), "No_Garage", Garage_Type),
+         Garage_Type = as_factor(Garage_Type)
+         )
+```
+
+## Initial Data Split
+
+```{r}
+data_split <- initial_split(ames, strata = "Sale_Price")
+ames_train <- training(data_split)
+ames_test  <- testing(data_split)
+```
+
+## Define Folds
+
+```{r}
+ames_folds <- vfold_cv(ames_train, v = 10, repeats = 10)
+ames_folds
+```
+
+## Define Model(s)
+
+```{r}
+lm_model <- linear_reg() |> 
+  set_engine("lm")
+
+knn5_model <- nearest_neighbor(neighbors = 5) |>
+  set_engine("kknn") |>
+  set_mode("regression")
+
+knn10_model <- nearest_neighbor(neighbors = 10) |>
+  set_engine("kknn") |>
+  set_mode("regression")
+```
+
+## Define Preprocessing: Linear regression
+
+```{r}
+lm_knnimpute <- recipe(Sale_Price ~ ., data = ames_train) |> 
+  step_nzv(all_predictors()) |>  # remove zero or near-zero variable predictors
+  step_impute_knn(Year_Built, Gr_Liv_Area) |>  # impute missing values in Overall_Qual and Year_Built
+  step_integer(Overall_Qual) |> # convert Overall_Qual into ordinal encoding
+  step_other(all_nominal_predictors(), threshold = 0.01, other = "Other") |> # lump all categories with less than 1% representation into a category called Other for each variable
+  step_dummy(all_nominal_predictors(), one_hot = FALSE) |>  # in general use one_hot unless doing linear regression
+  step_corr(all_numeric_predictors(), threshold = 0.5) |> # remove highly correlated predictors
+  step_lincomb(all_numeric_predictors()) # remove variables that have exact linear combinations
+```
+
+## Define Preprocessing: Linear regression
+
+```{r}
+lm_meanimpute <- recipe(Sale_Price ~ ., data = ames_train) |> 
+  step_nzv(all_predictors()) |>  # remove zero or near-zero variable predictors
+  step_impute_mean(Year_Built, Gr_Liv_Area) |>  # impute missing values in Overall_Qual and Year_Built
+  step_integer(Overall_Qual) |> # convert Overall_Qual into ordinal encoding
+  step_other(all_nominal_predictors(), threshold = 0.01, other = "Other") |> # lump all categories with less than 1% representation into a category called Other for each variable
+  step_dummy(all_nominal_predictors(), one_hot = FALSE) |>  # in general use one_hot unless doing linear regression
+  step_corr(all_numeric_predictors(), threshold = 0.5) |> # remove highly correlated predictors
+  step_lincomb(all_numeric_predictors()) # remove variables that have exact linear combinations
+```
+
+## Define Preprocessing: Linear regression
+
+```{r}
+lm_medianimpute <- recipe(Sale_Price ~ ., data = ames_train) |> 
+  step_nzv(all_predictors()) |>  # remove zero or near-zero variable predictors
+  step_impute_median(Year_Built, Gr_Liv_Area) |>  # impute missing values in Overall_Qual and Year_Built
+  step_integer(Overall_Qual) |> # convert Overall_Qual into ordinal encoding
+  step_other(all_nominal_predictors(), threshold = 0.01, other = "Other") |> # lump all categories with less than 1% representation into a category called Other for each variable
+  step_dummy(all_nominal_predictors(), one_hot = FALSE) |>  # in general use one_hot unless doing linear regression
+  step_corr(all_numeric_predictors(), threshold = 0.5) |> # remove highly correlated predictors
+  step_lincomb(all_numeric_predictors()) # remove variables that have exact linear combinations
+```
+
+## Define Preprocessing: KNN
+
+```{r}
+knn_preproc1 <- recipe(Sale_Price ~ ., data = ames_train) |> 
+  step_nzv(all_predictors()) |>  # remove zero or near-zero variable predictors
+  step_impute_knn(Year_Built, Gr_Liv_Area) |>  # impute missing values in Overall_Qual and Year_Built
+  step_integer(Overall_Qual) |> # convert Overall_Qual into ordinal encoding
+  step_other(all_nominal_predictors(), threshold = 0.01, other = "Other") |> # lump all categories with less than 1% representation into a category called Other for each variable
+  step_dummy(all_nominal_predictors(), one_hot = TRUE) |>  # in general use one_hot unless doing linear regression
+  step_nzv(all_predictors()) |> 
+  step_normalize(all_numeric_predictors())
+```
+
+## Define Preprocessing: KNN
+
+```{r}
+knn_preproc2 <- recipe(Sale_Price ~ ., data = ames_train) |> 
+  step_nzv(all_predictors()) |>  # remove zero or near-zero variable predictors
+  step_impute_mean(Year_Built, Gr_Liv_Area) |>  # impute missing values in Overall_Qual and Year_Built
+  step_integer(Overall_Qual) |> # convert Overall_Qual into ordinal encoding
+  step_other(all_nominal_predictors(), threshold = 0.01, other = "Other") |> # lump all categories with less than 1% representation into a category called Other for each variable
+  step_dummy(all_nominal_predictors(), one_hot = TRUE) |>  # in general use one_hot unless doing linear regression
+  step_nzv(all_predictors()) |> 
+  step_normalize(all_numeric_predictors())
+```
+
+## Define Preprocessing: KNN
+
+```{r}
+knn_preproc3 <- recipe(Sale_Price ~ ., data = ames_train) |> 
+  step_nzv(all_predictors()) |>  # remove zero or near-zero variable predictors
+  step_impute_median(Year_Built, Gr_Liv_Area) |>  # impute missing values in Overall_Qual and Year_Built
+  step_integer(Overall_Qual) |> # convert Overall_Qual into ordinal encoding
+  step_other(all_nominal_predictors(), threshold = 0.01, other = "Other") |> # lump all categories with less than 1% representation into a category called Other for each variable
+  step_dummy(all_nominal_predictors(), one_hot = TRUE) |>  # in general use one_hot unless doing linear regression
+  step_nzv(all_predictors()) |> 
+  step_normalize(all_numeric_predictors())
+```
+
+## Workflow Sets
+
+-   Input `list`s of models and `recipe`s
+-   If `cross = TRUE` will try out all combinations
+
+## Create lists
+
+```{r}
+knn_preprocessors <- list(
+  knn_knn_impute = knn_preproc1,
+  knn_mean_impute = knn_preproc2,
+  knn_median_imput = knn_preproc3
+)
+
+knn_models <- list(
+  knn5 = knn5_model,
+  knn10 = knn10_model
+)
+```
+
+## Create lists
+
+```{r}
+lm_preprocessors <- list(
+  lm_knn_impute = lm_knnimpute,
+  lm_mean_impute = lm_meanimpute,
+  lm_median_imput = lm_medianimpute
+)
+
+lm_models <- list(
+  lm_model = lm_model
+)
+```
+
+## Define Workflow Sets {.smaller}
+
+```{r}
+knn_models <- workflow_set(knn_preprocessors, knn_models, cross = TRUE)
+lm_models <-  workflow_set(lm_preprocessors, lm_models, cross = TRUE)
+all_models <- lm_models |> 
+  bind_rows(knn_models)
+  
+all_models
+```
+
+## Define Metrics
+
+```{r}
+ames_metrics <- metric_set(rmse, rsq)
+```
+
+## Fit Resamples {.smaller}
+
+```{r}
+all_fits <- all_models |> 
+  workflow_map("fit_resamples",
+               resamples = ames_folds,
+               metrics = ames_metrics)
+```
+
+## View Metrics
+
+```{r}
+collect_metrics(all_fits) |> 
+  filter(.metric == "rmse") |> 
+  kable()
+```
+
+## View Metrics
+
+```{r}
+collect_metrics(all_fits) |> 
+  filter(.metric == "rsq") |> 
+  kable()
+```
+
+## Plotting Results
+
+```{r}
+library(ggrepel)
+autoplot(all_fits, metric = "rmse") +
+  geom_text_repel(aes(label = wflow_id), nudge_x = 1/8, nudge_y = 1/100) +
+  theme(legend.position = "none")
+```
+
+## Plotting Results
+
+```{r}
+autoplot(all_fits, metric = "rsq") +
+  geom_text_repel(aes(label = wflow_id), nudge_x = 1/8, nudge_y = 1/100) +
+  theme(legend.position = "none")
+```
+
+
+
+
+# Feature Selection for Linear Regression
+
+## What is feature selection? {.smaller}
+
+-   How do we choose what variables to include in our model?
+-   Up to now... include all of them... probably not the best
+-   Advantage of linear regression: interpretability
+-   Including every feature decreases interpretability
+-   Reasons for feature selection:
+    +   Improve model performance
+    +   Improve model interpretability
+-   Parsimony: simpler models are called more *parsimonious*
+-   Occam's Razor: more parsimonious models are better than less parsimonious models, holding all else constant
+
+## Types of feature selection
+
+-   Subset selection: Forward/Backward/Best-Subset Selection
+-   Shrinkage-based methods: LASSO and Ridge Regression
+-   Dimension reduction: consider linear combinations of predictors
+
+# Subset Selection
+
+## Exercise
+
+-   With your group, write out the steps for the following algorithms on the board
+  +   Group 1: Forward selection
+  +   Group 2: Backward elimination
+  +   Group 3: Step-wise selection
+  +   Group 4: Best-subset selection
+
+## Subset Selection in R {.smaller}
+
+-   `tidymodels` does not have an implementation for any subset selection techniques
+-   regularization (shrinkage-based) methods almost always perform better
+-   [`colino` package](https://stevenpawley.github.io/colino/) provides `tidymodels` implementation
+-   Other options
+    +   `caret` package
+    +   `olsrr` and `blorr` packages if you don't care about cross-validation
+    +   implement yourself
+    
+## Feature Selection in R
+
+-   When creating your recipe, don't need to always include all variables in your `recipe`:
+
+```{r}
+#| eval: FALSE
+int_recipe <- recipe(pred ~ var1 + var2 + var1*var2, data = training_data) |> 
+  step_x(...)
+```
+
+## Re-using Recipe but changing formula
+
+```{r}
+#| eval: FALSE
+noint_recipe2 <- new_recipe |> 
+  remove_formula() |> 
+  add_formula(pred ~ var1 + var2)
+```

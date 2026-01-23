@@ -1,0 +1,234 @@
+---
+title: "Homework 05: Preprocessing and Cross Validation" 
+author: "Your Name"
+editor: visual
+format:
+  html:
+    embed-resources: true
+---
+
+# Introduction
+
+In this homework you will practice pre-processing data and using cross-validation to evaluate regression models.
+
+## Learning goals
+
+In this assignment, you will...
+
+-   Use exploratory data analysis to inform feature engineering steps
+-   Pre-process data and impute missing values
+-   Evaluate and compare models using cross-validation
+
+# Getting Started
+
+In last weeks homework, you learned how to share your work using GitHub and to resolve merge conflicts using branches. From here on out, you are free to use whatever version control strategy you like.
+
+## Teams & Rules
+
+You can find your team for this assignment on Canvas in the **People** section. The group set is called **HW5**. Your group will consist of 2-3 people and has been randomly generated. You have now been exposed to all of the Git concepts that we will talk about in this class. It is up to you to apply them to complete your homework in any way you see fit. Some rules:
+
+1.  You are all responsible for understanding the work that you turn in.
+2.  All team members must make roughly equal contributions to the homework.
+3.  Any work completed by a team member must be committed and pushed to GitHub by that person.
+
+## Exercise 0
+
+As in your previous homework's, create your team on GitHub classroom and clone the repository. [Here](https://classroom.github.com/a/VhxbjrFN) is a link to the homework.
+
+## Data: LEGO
+
+The data for this analysis includes information about LEGO sets from themes produced January 1, 2018 and September 11, 2020. The data were originally scraped from Brickset.com, an online LEGO set guide and were obtained for this assignment from Peterson and Zieglar ([2021](https://www.tandfonline.com/doi/full/10.1080/26939169.2021.1946450)).
+
+You will work with data on about 400 randomly selected LEGO sets produced during this time period. The primary variables are interest in this analysis are:
+
+-   `Item_Number`: a serial code corresponding to the set.
+-   `Set_Name`: The name of the LEGO set.
+-   `Theme`: Theme of the LEGO set.
+-   `Pieces`: Number of pieces in the set from brickset.com.
+-   `Amazon_Price`: Amazon price of the set scraped from brickset.com (in U.S. dollars).
+-   `Year` : Year the LEGO set was produced.
+-   `Ages`: Variable stating what aged children the set is appropriate for.
+-   `Pages`: Number of pages in the instruction booklet.
+-   `Minifigures`: Number of minifigures (LEGO people) in the set scraped from brickset.com. LEGO sets with no minifigures have been coded as NA. NA's also represent missing data. This is due to how brickset.com reports their data.
+-   `Packaging`: What type of packaging the set came in.
+-   `Weight`: The weight of the set.
+-   `Unique_Pieces`: The number of unique pieces in each set.
+-   `Availability`: Where the set can be purchased.
+-   `Size`: General size of the interlocking bricks (Large = LEGO Duplo sets - which include large brick pieces safe for children ages 1 to 5, Small = LEGO sets which- include the traditional smaller brick pieces created for age groups 5 and - older, e.g., City, Friends).
+
+Your ultimate goal will be to predict `Amazon_Price` from the other features.
+
+# Loading & Cleaning the Data
+
+## Exercise 1
+
+::: {.callout-tip title="Question"}
+The data are contained in `lego-sample.csv`. Load the data.
+:::
+
+## Exercise 2
+
+::: {.callout-tip title="Question"}
+Two of the variables in the data set shouldn't be useful because they just serve to identify the different LEGO sets. Which two are they? Remove them.
+:::
+
+## Exercise 3
+
+::: {.callout-tip title="Question"}
+Notice that the `Weight` variable is a bit odd... It seems like it should be numeric but it's a `chr`. Why? Write code to extract the true numerical weight in either lbs or Kgs (your choice). You are encouraged to use the internet and generative AI to help you figure out how to do this. However, make sure you are able to explain your code once you are done.
+:::
+
+## Exercise 4
+
+::: {.callout-tip title="Question"}
+For each of the 12 features do the following:
+:::
+
+### Exercise 4.1
+
+::: {.callout-tip title="Question"}
+Identify if they are the correct data type. Are categorical variables coded as factors? Are the factor levels in the correct order if necessary? Are numerical variables coded as numbers? You will need to read descriptions of the data to make this determination.
+:::
+
+### Exercise 4.2
+
+::: {.callout-tip title="Question"}
+Identify any variables with missing values. Identify and then fix any variables for whom missing values (i.e. `NA`s) indicate something other than that the data is missing (there is at least one). Fill in this missing values appropriately.
+:::
+
+
+### Exercise 4.3
+
+::: {.callout-tip title="Question"}
+For all of the categorical variables, identify ones that you think may be problematic because they may have near-zero variance. Decide whether to remove them now, or remove them as part of your pre-processor. Make an argument for why your choice is appropriate.
+:::
+
+### Exercise 4.4
+
+::: {.callout-tip title="Question"}
+For all of the categorical variables, identify ones that you think may be problematic because they have many categories that don't have a lot of observations and likely need to be "lumped". Decide whether to remove them now, or remove them as part of your pre-processor. Make an argument for why your choice is appropriate.
+:::
+
+# Data Splitting & Preprocessing
+
+## Exercise 5
+
+::: {.callout-tip title="Question"}
+Split your data into training and test sets. Use your own judgement to determine training to test split ratio. Make sure to set a seed.
+:::
+
+
+## Exercise 6
+
+::: {.callout-tip title="Question"}
+Generate at least three different recipes designed to be used with linear regression that treat preprocessing differently. Hint: you'll likely want to try out different missing value imputation or lumping strategies. It's also a good idea to include `step_lincolm`.
+:::
+
+
+## Exercise 7
+
+::: {.callout-tip title="Question"}
+Generate at least three different recipes designed to be used with $K$-nearest neighbors that treat preprocessing differently. Hint: you'll likely want to try out different missing value imputation or lumping strategies.
+:::
+
+# Model-Fitting & Evaluation
+
+## Exercise 7
+
+::: {.callout-tip title="Question"}
+Create a `workflow_set` that contains 12 different workflows:
+
+-   three linear regression workflows: one linear regression model with each of the three recipes you created above
+-   nine different KNN workflows: choose three different $K$s for you KNN models and create one workflow for each combination of KNN model and preprocessing recipe
+:::
+
+## Exercise 8
+
+::: {.callout-tip title="Question"}
+Use 5 fold CV with 5 repeats to compute the RMSE and R-squared for each of the 12 workflows you created above. Note that this step may take a few minutes to execute.
+:::
+
+## Exercise 9
+
+::: {.callout-tip title="Question"}
+Plot the results of your cross validation and select your best workflow.
+:::
+
+## Exercise 10
+
+::: {.callout-tip title="Question"}
+Re-fit your best model on the whole training set and estimate your error metrics on the test set.
+:::
+
+# Conceptual Question
+
+## Exercise 11 (Sample interview question)
+
+::: {.callout-tip title="Question"}
+The time to complete cross-validation can be substantially improved by using parallel processing. Below is the output for the copilot prompt "Generate pseudo-code in R to do cross-validation with repetition and multiple models". Which parts of this code can be run in parallel and which can't. Note any changes that you might need to make for this to be parallelizable.
+
+```{r}
+#| eval: FALSE
+
+# Define the number of folds (k) and the number of repetitions (r)
+k <- 5
+r <- 3
+
+# Define the list of models to evaluate
+models <- list(
+    model1 = train_model1,
+    model2 = train_model2,
+    model3 = train_model3
+)
+
+# Initialize a list to store the performance metrics for each model
+all_performance_metrics <- list()
+
+# Loop through each model
+for (model_name in names(models)) {
+    # Initialize a list to store the performance metrics for this model
+    model_performance_metrics <- list()
+    
+    # Loop through each repetition
+    for (rep in 1:r) {
+        # Create k-fold cross-validation indices for this repetition
+        folds <- createFolds(dataset$target_variable, k = k)
+        
+        # Initialize a list to store the performance metrics for this repetition
+        performance_metrics <- list()
+        
+        # Loop through each fold
+        for (i in 1:k) {
+            # Use the i-th fold as the validation set
+            validation_indices <- folds[[i]]
+            validation_set <- dataset[validation_indices, ]
+            
+            # Use the remaining folds as the training set
+            training_set <- dataset[-validation_indices, ]
+            
+            # Train the model on the training set
+            model <- models[[model_name]](training_set)
+            
+            # Evaluate the model on the validation set
+            performance <- evaluate_model(model, validation_set)
+            
+            # Store the performance metric
+            performance_metrics[[i]] <- performance
+        }
+        
+        # Store the performance metrics for this repetition
+        model_performance_metrics[[rep]] <- performance_metrics
+    }
+    
+    # Store the performance metrics for this model
+    all_performance_metrics[[model_name]] <- model_performance_metrics
+}
+
+# Calculate the average performance metric for each model across all repetitions
+average_performance <- sapply(all_performance_metrics, function(metrics) mean(unlist(metrics)))
+
+# Output the average performance for each model
+print("Average Performance for each model:")
+print(average_performance)
+```
+:::

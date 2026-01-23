@@ -1,0 +1,8 @@
+---
+title: "Preparation for Classification Metrics"
+---
+
+## Assigned readings & videos
+
+- Read Chapter 4.4 from ISLR2
+- Read [Chapters 9 of TMWR](https://www.tmwr.org/base-r)

@@ -1,0 +1,113 @@
+---
+title: "Homework 10: Boosting and Multiclass Classification"
+author: "Your Name"
+editor: visual
+format:
+  html:
+    embed-resources: true
+---
+
+```{r setup}
+#| include: false
+
+# insert packages here
+```
+
+# Introduction
+
+In this homework, we will practice solving multi-class classification problems using gradient boosted trees.
+
+## Learning goals
+
+In this assignment, you will...
+
+-   Fit gradient boosted trees
+-   Use variable importance plots to interpret your model
+-   Interpret multi-class classification metrics
+
+# Getting Started
+
+You are free to use whatever version control strategy you like.
+
+## Teams & Rules
+
+You can find your team for this assignment on Canvas in the **People** section. The group set is called **HW10**. Your group will consist of 2-3 people and has been randomly generated. The GitHub assignment can be found [here](https://classroom.github.com/a/nYrzIptH). Rules:
+
+1.  You are all responsible for understanding the work that your team turns in.
+2.  All team members must make roughly equal contributions to the homework.
+3.  Any work completed by a team member must be committed and pushed to GitHub by that person.
+
+## Data: `academic_success`
+
+We will be using a data set from the UCI Machine Learning Repository. From the website:
+
+> A dataset created from a higher education institution (acquired from several disjoint databases) related to students enrolled in different undergraduate degrees, such as agronomy, design, education, nursing, journalism, management, social service, and technologies. The dataset includes information known at the time of student enrollment (academic path, demographics, and social-economic factors) and the students' academic performance at the end of the first and second semesters. The data is used to build classification models to predict students' dropout and academic sucess. The problem is formulated as a three category classification task, in which there is a strong imbalance towards one of the classes.
+
+Our goal will be to predict the column `Target` which contains three different factors:
+
+-   `Dropout`: the student dropped out before graduating
+-   `Enrolled`: the student graduated but took extra time
+-   `Gradute`: the student graduated on time
+
+More information (such as feature descriptions) can be found on the [website here](https://archive.ics.uci.edu/dataset/697/predict+students+dropout+and+academic+success).
+
+# Exploratory Data Analysis
+
+
+## Exercise 1
+
+::: {.callout-tip title="Question"}
+Load the data set. Note that the file is delimited by semicolons (`;`) instead of commas. You may want to use the `clean_names` function from the `janitor` package to make the variable names a bit nicer. Do any cleaning that you think in necessary before you split your data. Make sure to read the documentation so that you are treating factors as factors rather than numbers.
+
+Once that is done, split your data.
+:::
+
+## Exercise 2
+
+::: {.callout-tip title="Question"}
+Describe the different metrics and strategies you might use to evaluate how a model performs on this data. Generate a plot of the response variable and comment on anything that you think may impact your model and these different metrics.
+:::
+
+# Pre-Processing
+
+## Exercise 3
+
+::: {.callout-tip title="Question"}
+Generate a recipe that can be used with a boosted tree. You are welcome to create more than one if you feel it's necessary.
+:::
+
+# Boosted Tree
+
+## Exercise 4
+
+::: {.callout-tip title="Question"}
+Using all of the default settings in `boost_tree` fit a gradient boosted tree.
+:::
+
+## Exercise 5
+
+::: {.callout-tip title="Question"}
+Compute all of the metrics you described in Exercise 2. 
+
+Our goal is to identify any student in the `Dropout` or `Enroll` categories so that we can target interventions (e.g. extra advising, tutoring, mentorship, etc.) towards these students. It's not a big deal if students that were going to graduate on time also get these interventions because it doesn't harm students to give them some extra support they don't need. That said, the school's budget isn't infinite so we'd like to minimize the number of students who get unnecessary support, as long as the students who do need it are still getting it. Based on this goal, which metrics would you be most invested in? How does the model perform on these metrics? 
+:::
+
+# Cross Validation and Parameter Tuning
+
+## Exercise 6
+
+::: {.callout-tip title="Question"}
+Use cross-validation to tune the number of trees and choose your best model. You may try to tune more than just `trees` if you'd like, but this may take a long time for your computer to run. Try to optimize over a metric that best aligns with the goal outlined in Exercise 5. Once you choose you best model fit it to the full training data.
+:::
+
+## Exercise 7
+
+::: {.callout-tip title="Question"}
+Generate and interpret a variable importance plot. 
+:::
+
+## Exercise 8
+
+::: {.callout-tip title="Question"}
+Generate one-vs-all metrics and a confusion matrix and interpret both in the context of our goal.
+:::

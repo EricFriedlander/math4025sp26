@@ -1,0 +1,88 @@
+---
+title: "Project Instructions"
+---
+
+## Introduction
+
+Every fall, the College of Idaho welcomes around 300 new students to campus. Before a student steps foot on campus, they have likely traversed a "funnel".
+The College starts the process by buying information on tens of thousands of high school students. The College of Idaho's Admissions office reaches out in various ways to these prospects with the goal of eventually turning them into College of Idaho students. However, there are several steps in the funnel from Prospect to Student:
+
+1.  Prospects must apply.
+2.  Applicants must be admitted.
+3.  Admitted students must then commit to the school by putting down a deposit.
+4.  Deposited students must then enroll.  
+
+Your task is to analyze the data, finding actionable insights that would help the Admissions staff to refine their processes. The class will be divided into 4 groups, each focusing on a different step in the funnel. Your groups can be found on Canvas and your tasks will be assigned next week.
+
+## Deliverables
+
+Your deliverables are:
+
+-    A seven-minute **non-technical** talk with slides, appropriate for Admissions leaders, to be followed by a brief Q&A. Presentations are tentatively scheduled to happen during class on Monday, May 5th.
+-    A one-page executive summary or infographic (not a report) with bullet points of key information, and possibly one or two data visualizations, etc.   
+-    All of your work should be included and reproducible in [GitHub classroom](https://classroom.github.com/a/8zvjBROc) and you should fill in the README.md file to help guide any readers through your work.
+      +   While you need not submit a data analysis report, it is expected that your work is organized enough for Dr. Friedlander to look at it and, with minimal effort, figure out what you did.
+-   A short report summarizing each team members contribution and the rough amount of time spend working on the project.
+
+## Data
+
+Anonymized data is provided on over 100,000 prospects for 2022-2024, and stored in three separate datasets. **Note, if you discover that you are able to identify anyone in this dataset, please contact Dr. Friedlander immediately!** In order, the data attributes are as follows:
+
+-   `Prospect`: Was information on this prospect purchased?
+-   `Inquiry`: Did the student reach out to us first?
+-   `Applicant`: TBD
+-   `Admit`: Was the student admitted?
+-   `Conversion Rate`: Did the student convert from an admit to a deposit?
+-   `Deposit`: Did the student put down a deposit?
+-   `Yield Rate`: Did the student convert from a deposit to an enrolled student?
+-   `Drops-DP/DF`: Deposits who don't enroll or defer to a future term.
+-   `Net Deposits`: Deposits that matriculate that fall.
+-   `Sex`: Sex of student.
+-   `Student Type`: Is the student a Freshman or Transfer?
+-   `IPEDS Classification`: Race category used by the Integrated Post-secondary Education Data System (IPEDS) which is a survey conducted by the U.S. Department of Education's National Center for Education Statistics (NCES).
+-   `Geographic Region`: region that the student lives in.
+-   `Active County`: County if from Idaho.
+-   `First_Source Origin First Source Summary`: Where their data was obtained from.
+-   `Application Souce`: How the student submitted their application.
+-   `Entry Term`: What term did the student intend to matriculate?
+-   `School X Type`: Type of school on their application.
+-   `School X Institution`: Name of school on their application.
+-   `School X Verified GPA`: GPA from corresponding school.
+-   `ACT` and `SAT` variables: should be self explanatory
+-   `Sport X Sport`: A sport they're interested in.
+-   `Academic Interest`: What their stated academic interest is.
+
+Please note that the biggest part of this project will be cleaning the data, augmenting the data, and conducting feature engineering.
+
+## Evaluation Guide
+
+Your project will be assessed in each of the following areas as either Outstanding (5), Good (4), Acceptable (3), Needs Work (2), Inadequate (1), Incomplete (0). The questions below will be used as a guide to determine the quality of your analysis in each area.
+
+### Slides and Presentation	Evaluation:
+
+-   Is the presentation of the appropriate length (roughly 7 minutes)? 
+-   Is the presentation directed at the appropriate (NON-TECHNICAL) audience?
+-   Are results presented in a clear, logical, and engaging manner? 
+-   Are the slides easy to read with appropriate graphics that support the narrative and analysis? 
+
+### Content and Analysis Evaluation:
+
+-   Is the analysis complex and insightful, showing evidence that the data have been analyzed in multiple different ways?
+-   Are the methods and assumptions explained and justified?
+-   Are the findings and conclusions supported by sound reasoning and/or additional research?
+-   Are the possible implications of the results both useful and discussed in context?
+
+### Professionalism	Evaluation:
+
+-   Is the presentation well-prepared with minimal reliance on notes or slides?
+-   Is the presentation clear and well-paced and free of distracting mannerisms?
+-   Are all presenters engaged throughout the presentation?
+-   Is the responsibility for presenting the analysis shared between presenters?
+-   Do all presenters show mastery of the subject and answer questions with ease?
+
+### Executive Summary & Infographic:
+
+-   Does the document clearly summarize the methodology, results, and recommendations?
+-   Is the executive summary directed at the appropriate (NON-TECHNICAL) audience?
+-   Are results presented in clear, logical, and engaging manner? 
+-   Do appropriate visuals support the narrative and analysis?

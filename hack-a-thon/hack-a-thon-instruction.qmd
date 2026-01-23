@@ -1,0 +1,106 @@
+---
+title: "Hack-A-Thon Instructions"
+---
+
+# Census Income
+
+The U.S. Constitution requires that a census be conducted every ten years in order to allocate congressional representatives. The first census was conducted in 1790 and the U.S. Census Bureau is still compiling the data from the 2020 census. While the Constitution only requires an "actual enumeration" of citizens, the census has expanded to include a number of demographic questions. As described by the Census Bureau, the results of the 2020 census will,
+
+> "...determine congressional representation, inform hundreds of billions in federal funding, and provide data that will impact communities for the next decade."
+
+## Project Overview
+
+In this hack-a-thon, you will use census data to predict whether or not someone has an annual income of more than $50,000. The data for making your predictions are contained in two files:
+
+- `census_train.csv` contains **35,000** rows representing unique individuals, and **15 columns**, representing demographic information about those individuals (including whether their income is above or below $50,000).
+- `census_test.csv` contains **13,840** rows, but only **14 columns** since the `income` column has been removed.
+
+A complete description of the variables in the data set is below.
+
+## Deliverables
+
+There are two deliverables for this project:
+
+1. An HTML file outlining your modeling process. This should following the same guidelines for the [Job Application 2 Resources](/jobs/job-app-2-resources.qmd). This should be pushed to the [GitHub classroom assignment](https://classroom.github.com/a/_tSAzgC1). This is also where you can get all of the data.
+2. A `.csv` file, uploaded to Canvas, containing a vector of your predictions for whether the individuals in the test set make more than $50,000. That is, you will create a length **13,480** vector of `0`s and `1`s where `1` indicates an individual makes MORE than \$50K and write them to a file using:
+
+```{r}
+#| eval: FALSE
+write.csv(prediction_vector, "my_predictions.csv", row.names = FALSE)
+```
+
+Your submission will be evaluated for predictive quality (accuracy), writing quality, and clarity. Not all columns in this data set contain numerical values, so some will need to be translated into appropriate forms before beginning data analysis. There are also instances of missing or incomplete data, and some issues with how the data have been entered that you will need to address. You are also welcome to use any other techniques or packages you would like, but make sure that you can explain your analysis well. 
+
+## Notes
+
+This data set is great for practicing data science techniques. Because of this, if you search the internet you will find the original data set as well as articles that describe exactly how to apply statistical learning methods to it. There are several reasons **NOT TO DO THIS**. For one, it is cheating and will result in a 0. But also, it ruins the fun. This project is a great chance for you to go more in depth about something we have discussed in class and to challenge yourself to make the best predictions possible!  You are welcome to search the internet for general advice regarding predictive modeling, but if you encounter census data, look away! **If you have more specific questions about the data set, please ask me.**
+
+## Description of Variables
+
+`age`: continuous.
+
+`workclass`: Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked.
+
+`fnlwgt`: continuous. A weight that represents how common people with these exact age and racial demographics are in the United States.
+
+`education`: Bachelors, Some-college, 11th, HS-grad, Prof-school, Assoc-acdm, Assoc-voc, 9th, 7th-8th, 12th, Masters, 1st-4th, 10th, Doctorate, 5th-6th, Preschool.
+
+`education-num`: continuous. Numerical representation of education level.
+
+`marital-status`: Married-civ-spouse, Divorced, Never-married, Separated, Widowed, Married-spouse-absent, Married-AF-spouse. ("civ" and "AF" represent "civilian" (not in military) or "Armed Forces" (in military)).
+
+`occupation`: Tech-support, Craft-repair, Other-service, Sales, Exec-managerial, Prof-specialty, Handlers-cleaners, Machine-op-inspct, Adm-clerical, Farming-fishing, Transport-moving, Priv-house-serv, Protective-serv, Armed-Forces.
+
+`relationship`: Wife, Own-child, Husband, Not-in-family, Other-relative, Unmarried.
+
+`race`: White, Asian-Pac-Islander, Amer-Indian-Eskimo, Other, Black.
+
+`sex`: Female, Male.
+
+`capital-gain`: continuous. (Income from the sale of a capital asset, e.g., stocks or property)
+
+`capital-loss`: continuous. (A loss occurred when a capital asset, e.g., stocks or property, decreases in value.)
+
+`hours-per-week`: continuous. Number of hours worked per week.
+
+`native-country`: United-States, Cambodia, England, Puerto-Rico, Canada, Germany, Outlying-US (Guam-USVI-etc), India, Japan, Greece, South, China, Cuba, Iran, Honduras, Philippines, Italy, Poland, Jamaica, Vietnam, Mexico, Portugal, Ireland, France, Dominican-Republic, Laos, Ecuador, Taiwan, Haiti, Columbia, Hungary, Guatemala, Nicaragua, Scotland, Thailand, Yugoslavia, El-Salvador, Trinadad&Tobago, Peru, Hong, Holland-Netherlands.
+
+`income`: whether or not annual income from all sources is above or below $50,000.
+
+## Evaluation Guidelines
+
+Your submission will be assessed in each of the following areas as either Outstanding, Good, Acceptable, Needs Work, or Inadequate. The questions below will be used as a guide to determine the quality of your analysis in each area.
+
+
+### Predictive Accuracy	Evaluation
+
+-   Are the submitted predictions in the appropriate form? 
+-   Are appropriate modeling techniques employed given the data and the task? 
+-   Are the predictions reasonably accurate given the available data?
+-   Where do the predictions rank in terms of the class?
+
+### Writing Quality	Evaluation
+
+-   Is the report well-organized? 
+-   Is the modeling process described in a clear, logical, and engaging manner? 
+-   Is the modeling choices clearly justified?
+-   Is the report free of spelling and grammatical errors?
+-   Is the report aimed at the appropriate (technical) audience?
+
+### Data Analysis	Evaluation:
+
+-   Are the mathematical and statistical methods described accurately?
+-   Are appropriate predictor variables used in the analysis?
+-   Are the reasons for excluding and/or transforming the data sensible and well-explained?
+-   How was the model chosen and validated?
+-   How were the parameters of the model tuned (if applicable)?
+
+## Submitting Your Work
+
+You must submit two things:
+
+1. Your report must be pushed to GitHub.
+2. The csv file containing your predictions must be uploaded to [Canvas](https://cofi.instructure.com/courses/17021/assignments/213175).
+
+
+

@@ -1,0 +1,17 @@
+---
+title: "Course support"
+---
+
+We expect everyone will have questions at some point in the semester, so we want to make sure you can identify when that is and feel comfortable seeking help.
+
+## Lectures
+
+If you have a question during lecture, feel free to ask it! There are likely other students with the same question, so by asking you will create a learning opportunity for everyone.
+
+## Office hours + Homework Lab
+
+Dr. Friedlander is here to help you be successful in the course. You are encouraged to attend office hours and the homework lab during the times posted on the home page to ask questions about the course content and assignments. A lot of questions are most effectively answered in-person, so office hours are a valuable resource. I encourage you to take advantage of them!
+
+## Email
+
+If you have questions about personal matters or course content, you may email Dr. Friedlander at [efriedlander\@collegeofidaho.edu](mailto:efriedlander@collegeofidaho.edu). **If you email me about an error please include a screenshot of the error and the code causing the error.** Barring extenuating circumstances, I will respond to MAT 427 emails within 48 hours Monday - Friday. Response time may be slower for emails sent Friday evening - Sunday.

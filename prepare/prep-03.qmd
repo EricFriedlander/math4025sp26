@@ -1,0 +1,9 @@
+---
+title: "Preparation for Linear Regression & Gradient Descent"
+---
+
+## Assigned readings & videos
+
+- Read Chapter 3.1 from ISLR2
+- If you haven't taken Multivariable Calculus or don't remember what a partial derivative or gradient is [watch this](https://www.youtube.com/watch?v=AXH9Xm6Rbfc)
+- [Read this article on gradient descent](https://homes.cs.washington.edu/~jrl/cse422wi24/lectures/pdf/grad-descent-primer.pdf)

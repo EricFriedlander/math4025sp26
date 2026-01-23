@@ -1,0 +1,8 @@
+---
+title: "Preparation for Big Picture Discussion"
+---
+
+## Assigned reading
+
+- Review Syllabus
+- Read Chapter 1 from [ISLR2](https://www.statlearning.com/)

@@ -1,0 +1,9 @@
+---
+title: "Preparation for KNN and Preprocessing"
+---
+
+## Assigned readings & videos
+
+- Read [Chapters 8 of TMWR](https://www.tmwr.org/base-r)
+
+<!-- Next time add 7 here -->

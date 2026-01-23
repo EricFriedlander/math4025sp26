@@ -1,0 +1,219 @@
+---
+title: 'MATH 427: Feature Selection and Regularization'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+  cache: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+## Computational Set-Up
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(knitr)
+library(fivethirtyeight) # for candy rankings data
+
+tidymodels_prefer()
+
+set.seed(427)
+```
+
+## Data: Candy {.smaller}
+
+The data for this lecture comes from the article FiveThirtyEight [*The Ultimate Halloween Candy Power Ranking*](https://fivethirtyeight.com/features/the-ultimate-halloween-candy-power-ranking) by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment people could vote on a series of randomly generated candy matchups (e.g. Reese's vs. Skittles). Click [here](http://walthickey.com/2017/10/18/whats-the-best-halloween-candy/) to check out some of the match ups.
+
+The data set contains 12 characteristics and win percentage from 85 candies in the experiment.
+
+## Data: Candy
+
+```{r}
+glimpse(candy_rankings)
+```
+
+## Data Cleaning
+
+```{r}
+candy_rankings_clean <- candy_rankings |> 
+  select(-competitorname) |> 
+  mutate(sugarpercent = sugarpercent*100, # convert proportions into percentages
+         pricepercent = pricepercent*100, # convert proportions into percentages
+         across(where(is.logical), ~ factor(.x, levels = c("FALSE", "TRUE")))) # convert logicals into factors
+```
+
+## Data Cleaning
+
+```{r}
+glimpse(candy_rankings_clean)
+```
+
+## Data Splitting
+
+```{r}
+candy_split <- initial_split(candy_rankings_clean, prop = 0.75, strata = winpercent)
+candy_train <- training(candy_split)
+candy_test <- testing(candy_split)
+```
+
+
+# Feature Selection for Linear Regression
+
+## What is feature selection? {.smaller}
+
+-   How do we choose what variables to include in our model?
+-   Up to now... include all of them... probably not the best
+-   Advantage of linear regression: interpretability
+-   Including every feature decreases interpretability
+-   Reasons for feature selection:
+    +   Improve model performance
+    +   Improve model interpretability
+-   Parsimony: simpler models are called more *parsimonious*
+-   Occam's Razor: more parsimonious models are better than less parsimonious models, holding all else constant
+
+## Types of feature selection
+
+-   Subset selection: Forward/Backward/Best-Subset Selection
+-   Shrinkage-based methods: LASSO and Ridge Regression
+-   Dimension reduction: consider linear combinations of predictors
+
+# Subset Selection
+
+## Exercise
+
+-   With your group, write out the steps for the following algorithms on the board
+    +   Group 1: Forward selection
+    +   Group 2: Backward elimination
+    +   Group 3: Step-wise selection
+    +   Group 4: Best-subset selection
+
+## Subset Selection in R {.smaller}
+
+-   `tidymodels` does not have an implementation for any subset selection techniques
+-   regularization (shrinkage-based) methods almost always perform better
+-   [`colino` package](https://stevenpawley.github.io/colino/) provides `tidymodels` implementation
+-   Other options
+    +   `caret` package
+    +   `olsrr` and `blorr` packages if you don't care about cross-validation
+    +   implement yourself
+    
+## Feature Selection in R
+
+-   When creating your recipe, don't need to always include all variables in your `recipe`:
+
+```{r}
+#| eval: FALSE
+int_recipe <- recipe(resp ~ var1 + var2 + var1*var2, data = training_data) |> 
+  step_x(...)
+```
+
+## Re-using Recipe but changing formula
+
+```{r}
+#| eval: FALSE
+noint_recipe2 <- new_recipe |> 
+  remove_formula() |> 
+  add_formula(resp ~ var1 + var2)
+```
+
+# Shrinkage/Penalized/Regularization Methods
+
+## Question
+
+-   What criteria do we use to fit a linear regression model? Write down an expression with $\hat{\beta_i}$'s, $x_{ij}$'s, and $y_j$'s in it.
+
+## OLS {.smaller}
+
+-   Ordinary Least Squares Regression:
+
+$$
+\begin{aligned}
+\hat{\beta} =\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}SSE(\hat{\beta}) &= \underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\sum_{j=1}^n(y_j-\hat{y}_j)^2\\
+&=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2
+\end{aligned}
+$$
+
+-   $\hat{\beta} = (\hat{\beta}_0,\ldots, \hat{\beta}_p)$ is the vector of all my coefficients
+-   $\operatorname{argmin}$ is a function (operator) that returns the *arguments* that minimize the quantity it's being applied to
+
+## Ridge Regression {.smaller}
+
+$$
+\begin{aligned}
+\hat{\beta} &=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}} \left(SSE(\hat{\beta}) + \lambda\|\hat{\beta}\|_2^2\right) \\
+&= \underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\left(\sum_{j=1}^n(y_j-\hat{y}_j)^2 + \lambda\sum_{i=1}^p \hat{\beta}_i^2\right)\\
+&=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\left(\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2 + \lambda\sum_{i=1}^p \hat{\beta}_i^2\right)
+\end{aligned}
+$$
+
+-   $\lambda$ is called a "tuning parameter" and is not estimated from the data (more on this later)
+-   Idea: penalize large coefficients
+-   If we penalize large coefficients, what's going to happen to to our estimated coefficients? [[THEY SHRINK!]{.span style="color:red;"}]{.fragment .fade-in}
+-   $\|\cdot\|_2$ is called the *$L_2$-norm*
+
+## But... but... but why?!? {.smaller}
+
+::: incremental
+-   Recall the Bias-Variance Trade-Off
+-   Our reducible error can partitioned into:
+    +   Bias: how much $\hat{f}$ misses $f$ by *on average*
+    +   Variance: how much $\hat{f}$ moves around from sample to sample
+-   Ridge: increase bias a little bit in exchange for large decrease in variance
+-   As we increase $\lambda$ do we increase or decrease the penalty for large coefficients?
+-   As we increase $\lambda$ do we increase or decrease the *flexibility* of our model?
+:::
+
+## LASSO {.smaller}
+
+$$
+\begin{aligned}
+\hat{\beta} &=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}} \left(SSE(\hat{\beta}) + \lambda\|\hat{\beta}\|_1\right) \\
+&= \underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\left(\sum_{j=1}^n(y_j-\hat{y}_j)^2 + \lambda\sum_{i=1}^p |\hat{\beta}_i|\right)\\
+&=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\left(\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2 + \lambda\sum_{i=1}^p |\hat{\beta}_i|\right)
+\end{aligned}
+$$
+
+-   LASSO: **L**east **A**bsolute **S**hrinkage and **S**election **O**perator
+-   $\lambda$ is called a "tuning parameter" and is not estimated from the data (more on this later)
+-   Idea: penalize large coefficients
+-   If we penalize large coefficients, what's going to happen to to our estimated coefficients [THEY SHRINK!]{.span style="color:red;"}
+-   $\|\cdot\|_1$ is called the *$L_1$-norm*
+
+## Question
+
+-   What should happen to our coefficients as we *increase* $\lambda$?
+
+## Ridge vs. LASSO
+
+::: incremental
+-   Ridge has a *closed-form solution*... how might we calculate it?
+-   Ridge has some nice linear algebra properties that makes it EXTREMELY FAST to fit
+-   LASSO has no *closed-form solution*... why?
+-   LASSO coefficients estimated *numerically*... how?
+    +   Gradient descent works (kind of) but something called **coordinate descent** is typically better
+-   MOST IMPORTANT PROPERTY OF LASSO: it *induces sparsity* while Ridge does not
+:::
+
+## Sparsity in Applied Math {.smaller}
+
+-   **sparse** typically means "most things are zero"
+-   Example: sparse matrices are matrices where most entries are zero
+    +   for large matrices this can provide HUGE performance gains
+-   LASSO *induces sparsity* by setting most of the parameter estimates to zero
+    +   this means it fits the model and does feature selection SIMULTANEOUSLY
+-   Let's do some board work to see why this is...
+

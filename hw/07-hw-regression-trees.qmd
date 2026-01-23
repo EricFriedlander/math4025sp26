@@ -1,0 +1,141 @@
+---
+title: "Homework 7: Regression Trees"
+author: "Your Name"
+editor: visual
+format:
+  html:
+    embed-resources: true
+---
+
+```{r setup}
+#| include: false
+
+# insert packages here
+```
+
+# Introduction
+
+In this homework you will practice fitting regression trees and and using model tuning to select models.
+
+## Learning goals
+
+In this assignment, you will...
+
+-   Fit and interpret regression trees
+-   Use grid-based techniques to choose tuning parameters
+
+# Getting Started
+
+You are free to use whatever version control strategy you like.
+
+## Teams & Rules
+
+You can find your team for this assignment on Canvas in the **People** section. The group set is called **HW7**. Your group will consist of 2-3 people and has been randomly generated. The GitHub assignment can be found [here](https://classroom.github.com/a/DkTfH-Nj). Rules:
+
+1.  You are all responsible for understanding the work that your team turns in.
+2.  All team members must make roughly equal contributions to the homework.
+3.  Any work completed by a team member must be committed and pushed to GitHub by that person.
+
+# Dataset: Communities and Crime
+
+For this homework, we'll return to the Communities and Crime data set from the UCI Machine Learning repository. From the abstract:
+
+> "Communities in the US. Data combines socio-economic data from the '90 Census, law enforcement data from the 1990 Law Enforcement Management and Admin Stats survey, and crime data from the 1995 FBI UCR."
+
+More details can be found [here](http://archive.ics.uci.edu/ml/datasets/communities+and+crime+unnormalized). Our goal will be to predict the number of crimes per capita, stored in the column called `ViolentCrimesPerPop`.
+
+## Cleaning and Preprocessing
+
+## Exercise 1
+
+::: {.callout-tip title="Question"}
+Load the data set `CommViolPredUnnormalizedDataCleaned.csv` and clean it. Hint: review Exercises 1-4 of your previous homework.
+:::
+
+## Exercise 2
+
+::: {.callout-tip title="Question"}
+Split the data into a training and test set using an 80-20 split. Use the seed 427.
+:::
+
+## Exercise 3
+
+::: {.callout-tip title="Question"}
+Generate a recipe that can be used with a regression tree.
+:::
+
+# Baseline Model
+
+Before we start building fancy models, it's helpful to understand our data and to have a simple baseline for comparison.
+
+## Exercise 4
+
+::: {.callout-tip title="Question"}
+What was the best model from your last homework? Write out the model below in a neat format. What was it's RMSE and $R^2$?
+:::
+
+Ideally we'd like any model we create to make better predictions that this baseline model. Hopefully, we can do better than this model using a regression tree.
+
+## Exercise 5
+
+::: {.callout-tip title="Question"}
+Before you fit any trees, do you think a decision tree will have better performance than the baseline model? Describe the differences between linear models and decision trees including the advantages and disadvantages of each.
+:::
+
+# Regression Trees
+
+## Exercise 6
+
+::: {.callout-tip title="Question"}
+Find a good Regression Tree to model the data. Use a grid search and cross-validation to find a good complexity parameter.
+:::
+
+## Exercise 7
+
+::: {.callout-tip title="Question"}
+Fit your tree on the entire training set and use the `rpart` functions from class to display it.
+:::
+
+## Exercise 8
+
+::: {.callout-tip title="Question"}
+Based on your tree, which variable do you think is most important for determining the number of Violent Crimes Per Capita?.
+:::
+
+## Exercise 9
+
+::: {.callout-tip title="Question"}
+How many different predictions are possible from your regression tree model? Why? How does this compare with the baseline model you selected in Exercise 4.
+:::
+
+# Final Evaluation
+
+## Exercise 9
+
+::: {.callout-tip title="Question"}
+Compute the root mean squared error for your regression tree model applied to the test set.
+:::
+
+## Exercise 10
+
+::: {.callout-tip title="Question"}
+How does the test error compare to the baseline model? Which model has better performance? Compare the interpretability of each model.
+:::
+
+## Exercise 11
+
+::: {.callout-tip title="Question"}
+Look at the documentation for `decision_tree` by typing `?decision_tree` in your console. Notice that there are two other tuning parameters, `tree_depth` (defaults to 30) and `min_n` (defaults to 2). Use an [irregular grid](https://www.tmwr.org/grid-search#irregular-grids) with at least 100 points and cross-validation to find an optimal combination of your three tuning parameters. Why do you think we want to use an irregular grid, rather than a regular grid here?
+:::
+
+## Exercise 12
+
+::: {.callout-tip title="Question"}
+Fit the resulting model to the full training data and estimate it's performance on the test set.
+:::
+
+## Exercise 13 (Practice interview question)
+
+::: {.callout-tip title="Question"}
+Describe how `tree_depth` and `min_n` should impact the flexibility and bias-variance trade off of the resulting tree.
+:::

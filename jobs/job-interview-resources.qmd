@@ -1,0 +1,159 @@
+---
+title: "Job Interview Resources"
+---
+
+As discussed at the beginning of the course, you will engage in two different Job Interviews this semester, each worth 15% of your grade. This document will guide you through preparing for your first one.
+
+## Job Interview Components
+
+Your interview will simulate the interview process at many companies and include two rounds:
+
+-   **First-Round**: Your first round interview will be with Dani Carmack. This interview will last about 15 minutes and will mimic an initial screening interview that you might encounter with an recruiter or HR representative without technical expertise. More information about preparing can be found in the [Screening Interview Preparation](#screen-prep) section below.
+    +   Your first-round interview must be completed by **Friday, April 11th at 5pm**. You may schedule 15 minutes with Dani using [this link](https://calendly.com/danicarmack). Make sure to scroll down and select the option **Friedlander - Screening Interview**. 
+    +   *It is your responsibility to schedule your interview in a timely manner. Dani's time is limited and she will run out of time-slots quickly.  Inability to find a time will not be an acceptable excuse for being unable to complete the interview on time, unless the issue is reported before Wednesday, April 3rd.*
+-   **Second-Round**: Your second round interview will be with Dr. Friedlander. This interview will last about 45 minutes and will mimic a longer form interview with a hiring manager. This person will typically be your prospective manager (and maybe some colleagues) and have intimate knowledge of the subject matter and skills necessary to be successful in the role you are applying for. More information can be found in the [Second Round Interview Preparation](#second-prep) section below.
+    +   Your second round interview must be completed by the last day of class. Please note that we will be going through a second round of Job Applications and you will be completing a second interview for that job during Finals Week. 
+    +   You will be given a link to schedule your second round interview after you complete your first round. Once again, *it is your responsibility to schedule your interview in a timely manner. My time is limited and I may run out of time-slots quickly. Inability to find a time will not be an acceptable excuse for being unable to complete the interview on time. I recommend you schedule a time with me as soon as you receive your link.*
+    
+## Screening Interview Preparation {#screen-prep}
+
+To prepare, review the **Interviewing 101** and **Sample Interview Questions** on the [Career Prep Resources Canvas Page.](https://cofi.instructure.com/courses/14763/pages/career-prep-resources) The format of the interview will be as follows:
+
+1.  Your interview will begin with the following two prompts:
+    +   Tell me about yourself.
+    +   Why do you want to work for Clearwater Analytics?
+2.  You will then be asked three questions chosen from the **Sample Interview Questions** referenced above.
+3.  You will then be asked one or two questions you have yet to see. These will not come out of left field but will most likely address strengths, weaknesses, or clarifications from your resume such as:
+    +   A cool project or job you had
+    +   Clarification on the size of a group you worked with
+    +   Your level of involvement with a project or job
+    +   A lack of experience
+    +   A lack of technical skills
+    +   A lack of teamwork or soft skills
+4.  The interviewer will ask you whether you have any questions. It is expected that you have at least one but ideally more questions about the company or role. That said, quality is a lot more important than quantity. The goal here is to demonstrate enthusiasm and that you have researched both the company and the role. 
+
+### Some General Tips
+
+-   Behavioral or screening interviews conducted with someone from HR are usually intended to screen out candidates rather than choose the best candidate. Put more bluntly, they are looking to screen out the candidates who (a) lied on their resumes or very clearly don't meet the requirements for the job, (b) have communication skills that are so bad as to be disqualifying, or (c) have some personality trait that makes them really difficult to be around. Your main goals in these interview should be to **NOT DISQUALIFY YOURSELF** and [**BE LIKEABLE**](https://thehill.com/wp-content/uploads/sites/2/2023/08/AP23224682407201-1-e1691871340554.jpg). If you are receiving a first-round interview, it means that the company thinks that, on paper, you have the skills to succeed. Do not show them that you don't.
+-   Your second goal should be to demonstrate that you are good at communicating:
+    -   Do not speak overly fast. Don't speak overly slow either but I've never seen someone do that.
+    -   [Demonstrate awareness of your audience](https://giphy.com/gifs/news-virginia-glenn-youngkin-alexandria-Lrau5Px80dsgZez7Q1). If you are speaking with someone from HR with no technical expertise, do not use technical jargon.
+    -   Do your best not to sounds overly rehearsed. While you should prepare, you shouldn't sound like you're reading off a script. One thing I like to do for interviews and presentations is type out an answer to a question, but then don't memorize it. This will help you organize your thoughts and point you toward parts of your answer where you need to think of clever wording or a smooth transition.
+    -   Use professional language (i.e. minimal slang) but do not try to use big words and "sound smart".
+-   Assorted tips:
+    +   It is OK to take a minute to collect your thoughts. If you need a second to formulate your thoughts just say "Hmm... that's a great question, let me think for a second." Then take 15-30 second to collect your thoughts and give a concise answer.
+    +   DO NOT LIE!
+    +   As you are preparing, use the [STAR method](https://nationalcareers.service.gov.uk/careers-advice/interview-advice/the-star-method) as a guide. That is, make sure you are citing examples when talking about your personal characteristics.
+    +   That said, make sure you can go with the flow and don't sound like an overly rehearsed robot. You all have friends and know how to talk to people. Don't just throw out everything you've learned about talking to people just because you're in an interview.
+    +   Show up early. If you run into traffic or get lost, you won't be late. 
+    +   Don't force the interview over time. If your time is up but you still have questions to ask you can say "I have a few more questions, but it looks like we're out of time. Is it OK if I email them to you?". Sometimes they will offer to extend the interview (this is usually a good sign) and sometimes they won't (not necessarily a bad sign).
+    +   Bring a pen and notepad to take notes. You won't always use them, but you might need them and it looks professional to have them. It also communicates that you care about what they are saying.
+
+### Grading (30% of total grade)
+
+Your screening interview will be worth 30 percent of your Job Interview total.
+
+#### Attire and Professionalism
+
+Your attire and professionalism will account for 1/3 of your screening interview grade. The following criteria will be used to determine your grade:
+
+-   Did the student arrive on time?
+-   Did the student wear business casual attire (including dress shoes)?
+    +   If you do not have business casual attire or are unclear what business casual attire is, please notify Dr. Friedlander ASAP.
+-   Did student speak at an appropriate pace (i.e. not too fast or too slow)?
+-   Did student use professional language, avoiding any slang?
+-   Did student stay focused on the question being asked?
+-   Were the student's answers too long or too short?
+-   Did the student bring a notepad and writing implement?
+-   Was the student respectful?
+
+
+#### Preparation and Enthusiasm
+
+The next 1/3 of your screening interview grade will be based on your preparation and enthusiasm. The following criteria will be used to determine your grade:
+
+-   Did the student seem prepared to answer all of the questions given in advance?
+-   When answering questions, did the student have examples to point to that re-enforce what they are saying?
+-   Did the student demonstrate knowledge of the company and role they are applying to?
+-   Did the student demonstrate enthusiasm for the company and role?
+-   Did the student have good questions at the end of the interview?
+
+
+#### Content and Adaptability
+
+The next 1/3 of your screening interview grade will be based on your how well you actually answer the questions, along with your adaptability to unseen questions. The following criteria will be used to determine your grade:
+
+-   Did the student's answers demonstrate that they would be a good fit for the company and role?
+-   Did the student show awareness of their audience? I.e. did they make use of overly technical jargon or did they show awareness that they were talking to someone without technical expertise?
+-   Did the student appear to be honest? For example, did the student appear to be overselling themselves?
+-   Did the student successfully address weaknesses in their application?
+-   How well did the student handle questions they had not seen before?
+-   Did the student sound overly rehearsed?
+
+## Second Round Interview Preparation {#second-prep}
+
+Your second round interview will mimic a technical interview. It will last 45 minutes and have the following format:
+
+1.  (5 minutes) Your interview will begin with the following two prompts:
+    +   Tell me about yourself.
+    +   Why are you interested in this role?
+2.  (10 minutes) You will be asked questions about your resume, asking you describe the details of some of the projects or jobs you have listed. If you don't have any projects or job's that are relevant you will be asked questions about your previous coursework. In real life, it is unlikely that you'd make it to this interview without anything relevant listed on your resume.
+3.  (10 minutes) You will be asked questions about the sample data analysis you turned in. For example, "Why do you choose method X instead of method Y?"
+4.  (20 minutes) You will be asked general technical questions related to the role. Each of these questions will fall into one of the following categories:
+    +   Questions asking you to explain something you did on your homework.
+    +   Questions similar in style to those asked in Chapter 5-8 of [this book](https://huyenchip.com/ml-interviews-book/). Please note that only content that has been covered in this class, a pre-requisite for this class, or is listed on your resume will be included with a heavy focus on content from this class. 
+      +   Pseudo-coding questions: E.g. "Write pseudo-code to perform gradient-descent".
+      +   Theory questions: E.g. "Why do we do cross-validation?"
+      +   Closed Case-Study Questions: E.g. "Suppose you are trying to build an model that classifies pictures of food as either a *hot dog* or *not a hot dog*. What metrics would you use to evaluate performance?
+      +   Open-Ended Case-Study Questions: E.g. "Suppose you are tasked with building a model to predict whether an employee will leave the company within a year. How would you approach this problem?"
+      
+### Grading (70% of total grade)
+
+Your technical interview will be worth 70 percent of your Job Interview total.
+
+#### Attire and Professionalism (5% of total grade)
+
+Your attire and professionalism will account for 1/14 of your technical interview grade. The following criteria will be used to determine your grade:
+
+-   Did the student arrive on time?
+-   Did the student wear business casual attire (including dress shoes)?
+    +   If you do not have business casual attire or are unclear what business casual attire is, please notify Dr. Friedlander ASAP.
+-   Did the student bring a notepad and writing implement?
+-   Was the student respectful?
+
+#### Meta-cognition (5% of total grade)
+
+The next 1/14 of your technical interview will be based on your meta-cognition. That is, whether you are able to self-assess what you know and what you don't know. The following criteria will be used to determine your grade:
+
+-   Did the student seem to understand where the gaps in their knowledge were?
+-   Did the student seem to know if their answers were complete?
+-   Did the student think that answers that were wrong were actually right?
+-   Has the student actually mastered the skills on their resume?
+
+#### Communication (20% of total grade)
+
+The next 4/14 of your screening interview grade will be based on your communication skills. The following criteria will be used to determine your grade:
+
+-   Did student speak at an appropriate pace (i.e. not too fast or too slow)?
+-   Did student use professional language, avoiding any slang?
+-   Did student stay focused on the question being asked?
+-   Were the student's answers too long or too short?
+-   Were the student's answers clear?
+-   Was the student good and talking through their thought process?
+
+
+#### Content (40% of total grade)
+
+The remainder of your grade will be determined based on whether the answers to the questions asked of you are correct and complete. The following criteria will be used to determine your grade:
+
+-   Were the student's answers correct?
+-   Were the student's answers complete?
+-   For open-ended questions, did the student ask for any good questions and request necessary information?
+-   For open-ended questions, did the student state any assumptions they were making?
+
+### Some General Tips
+
+-   If you are asked a question you don't know the answer to, be honest. It is OK to say something like "I'm honestly not sure." However, unless you absolutely know NOTHING about it I think the best way to answer is to state that you don't really know but say what you do know. For example, suppose the interviewer asks "What are some strategies for dealing with imbalanced data?" You may not know the answer to this question, but it's not like you know nothing about it! You could say something like, "Hmm... I'm not familiar with techniques for dealing with imbalanced data, but I do know that when you're data is extremely imbalanced, accuracy isn't super useful. You might want to focus more on metrics which are a bit more robust to imbalanced data like F-measure, AUC, or precision."
+-   Don't be afraid to ask for more information, especially when you are being asked an open-ended question! Remember, they are trying to evaluate whether you'll be good at your job. An important part of any job is asking good questions and obtaining the appropriate information necessary to solve a problem. In fact, some questions are purposely vague to see if you can properly scope a problem and obtain the information you need to solve it.
+-   Practice thinking through problems out loud. Employers are really interested in seeing how you think through problems. Even if you don't know the answer, talk through your thoughts as you grappling with it.
+-   That said, don't be afraid of a little silence. As with the screening interview, it is OK to take some time to think things through.

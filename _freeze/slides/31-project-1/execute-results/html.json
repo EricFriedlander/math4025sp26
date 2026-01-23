@@ -1,0 +1,19 @@
+{
+  "hash": "be8b5cbdb7b800e30ff744cc5b2b351c",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: 'MATH 427: Project'\nauthor: Eric Friedlander\nfooter: \"[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)\"\nlogo: \"../images/logo.png\"\nformat: \n  revealjs:\n    theme: slides.scss\n    multiplex: false\n    transition: fade\n    slide-number: false\n    incremental: false \n    chalkboard: true\nexecute:\n  freeze: auto\n  echo: true\n  cache: false\nknitr:\n  opts_chunk: \n    R.options:      \n    width: 200\n---\n\n\n\n\n\n    \n## Reponses from Brian {.smaller}\n\n> Why is the 2024 data set so much bigger than the other two? It has about ~74k rows vs. 16k and 17k for 2022 and 23.\n\n ... we imported all of our prospects into Slate during the 2024 recruitment cycle, whereas in the past they were only imported if they became an inquiry. Since we knew that we were going to be switching strategic partners, we wanted to make sure we had all the names in our system just in case. \n \n## Responses from Brian {.smaller}\n \n> I'm still having trouble understanding when a column gets a \"Y\" and when it gets a \"N\"...  For example, it sounds like a student can start as a Prospect and then move over to an Inquiry at which point they get an \"N\" in the Prospect column and become a \"Y\" in the Inquiry column. Similar with \"Applicant\" and \"Admit\". But a student can still have a \"Y\" in both \"Inquiry\" and \"Admit\" right? Perhaps that report will help things make sense?\n\nI think part of the challenge with the data is that it really is used to populate information from the Application stage forward My understanding is if there is a Y in a field that leads to it being counted in the corresponding place on the report. So yes, you can have a Y in inquiry and admit.\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-after-body": [
+        "\n<script>\n  // htmlwidgets need to know to resize themselves when slides are shown/hidden.\n  // Fire the \"slideenter\" event (handled by htmlwidgets.js) when the current\n  // slide changes (different for each slide format).\n  (function () {\n    // dispatch for htmlwidgets\n    function fireSlideEnter() {\n      const event = window.document.createEvent(\"Event\");\n      event.initEvent(\"slideenter\", true, true);\n      window.document.dispatchEvent(event);\n    }\n\n    function fireSlideChanged(previousSlide, currentSlide) {\n      fireSlideEnter();\n\n      // dispatch for shiny\n      if (window.jQuery) {\n        if (previousSlide) {\n          window.jQuery(previousSlide).trigger(\"hidden\");\n        }\n        if (currentSlide) {\n          window.jQuery(currentSlide).trigger(\"shown\");\n        }\n      }\n    }\n\n    // hookup for slidy\n    if (window.w3c_slidy) {\n      window.w3c_slidy.add_observer(function (slide_num) {\n        // slide_num starts at position 1\n        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);\n      });\n    }\n\n  })();\n</script>\n\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

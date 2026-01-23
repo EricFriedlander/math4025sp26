@@ -1,0 +1,7 @@
+---
+title: "Preparation for ROC and AUC"
+---
+
+## Assigned readings & videos
+
+- Read [Chapters 9 of TMWR](https://www.tmwr.org/base-r)

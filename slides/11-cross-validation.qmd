@@ -1,0 +1,236 @@
+---
+title: 'MATH 427: Cross Validation and Resampling'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+  cache: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+## Announcement
+
+On March 5th at 10am in JAAC, Kyle Mayer will be guest lecturing to talk about his role as a data analyst at Micron. Kyle has a Bachelors in Engineering and a Masters in Physics. 
+
+Location: Basement of the library.
+
+## Computational Set-Up
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(knitr)
+library(janitor) # for contingency tables
+library(ISLR2)
+
+tidymodels_prefer()
+
+set.seed(427)
+```
+
+# Resampling & Cross Validation
+
+## Data Splitting: Discussion
+
+:::{.incremental}
+-   Why do we split our data before fitting a model?
+    +   To prevent overfitting
+-   What are some pitfalls we might encounter if we compare A LOT of models on the test set? (E.g. 100 different thresholds or $k = 1, 2, \ldots, 100$ neighbors)
+    +   We open ourselves up to information leakage
+-   Potential solution... three way split (training/validation/test)
+-   Better solution... cross validation and resampling
+:::
+
+## Resampling
+
+![Figure 10.1 from TMWR](images/09/resampling.svg)
+
+## Cross-Validation Terminology
+
+-   Divide training set into two sets
+    +   Analysis set: fit the model (similar to training set)
+    +   Assessment set: evaluation the model (similar to test set)
+
+## K-Fold Cross-Validation (CV) {.smaller}
+
+:::{.incremental}
+-   Partition your data into $K$ randomly selected non-overlapping "folds"
+    +   Folds don't overlap and every training observation is in one fold
+    +   Each fold contained $1/K$ of the training data
+-   Looping through the folds $k = 1, \ldots, K$:
+    +   Treat fold $k$ as the assessment set
+    +   Treat all folds except for $k$ as the analysis set
+    +   Fit model to analysis set (use whole modeling workflow)
+    +   Compute error metrics on assessment set
+-   After loop, you will have $K$ copies of each error metrics
+-   Average them together to get performance estimate
+-   Can also look at distribution of performance metrics
+:::
+
+## <span style="color:blue">Your Turn!!!</span>
+
+Suppose you start with a data set with $n=1000$ observations. You are trying to predict a numerical variable and your target metric is MSE.
+
+1. You start with an initial 70/30 training/test split. How many observations are in your training and test set?
+
+2. You then perform 10-Fold CV on the training set. How large is each analysis set and each assessment set and how many analysis and assessment sets do you have?
+
+3. Do you analysis set's overlap? Do your assessment sets overlap?
+
+4. How many times will you fit your model? How many different MSE's will you have?
+
+# CV Workflow in R
+
+## Data: Ames Housing Prices {.smaller}
+
+A data set from [De Cock (2011)](https://jse.amstat.org/v19n3/decock.pdf) has 82 fields were recorded for 2,930 properties in Ames IA. This version is copies from the `AmesHousing` package but does not include a few quality columns that appear to be outcomes rather than predictors.
+
+Goal: Predict `Sale_Price`.
+
+```{r}
+ames |> glimpse()
+```
+
+## Initial Data Split
+
+```{r}
+set.seed(427)
+
+data_split <- initial_split(ames, strata = "Sale_Price")
+ames_train <- training(data_split)
+ames_test  <- testing(data_split)
+```
+
+## Define Folds
+
+```{r}
+ames_folds <- vfold_cv(ames_train, v = 10)
+ames_folds
+```
+
+## Define Model(s)
+
+```{r}
+lm_model <- linear_reg() |>
+  set_engine('lm')
+
+knn5_model <- nearest_neighbor(neighbors = 5) |>
+  set_engine("kknn") |>
+  set_mode("regression")
+
+knn10_model <- nearest_neighbor(neighbors = 10) |>
+  set_engine("kknn") |>
+  set_mode("regression")
+```
+
+## Define Preprocessing: Linear regression
+
+```{r}
+lm_preproc <- recipe(Sale_Price ~ ., data = ames_train) |> 
+  step_dummy(all_nominal_predictors()) |> # Convert categorical data into dummy variables
+  step_zv(all_predictors()) |> # remove zero-variance predictors (i.e. predictors with one value)
+  step_corr(all_predictors(), threshold = 0.5) |> # remove highly correlated predictors
+  step_lincomb(all_predictors()) # remove variables that have exact linear combinations
+```
+
+## Define Preprocessing: KNN
+
+```{r}
+knn_preproc <- recipe(Sale_Price ~ ., data = ames_train) |> # only uses ames_train for data types
+  step_dummy(all_nominal_predictors(), one_hot = TRUE) |> # Convert categorical data into dummy variables
+  step_zv(all_predictors()) |> # remove zero-variance predictors (i.e. predictors with one value)
+  step_normalize(all_predictors())
+```
+
+## Define Workflows
+
+```{r}
+lm_wf <- workflow() |> add_model(lm_model) |> add_recipe(lm_preproc)
+knn5_wf <- workflow() |> add_model(knn5_model) |> add_recipe(knn_preproc)
+knn10_wf <- workflow() |> add_model(knn10_model) |> add_recipe(knn_preproc)
+```
+
+## Define Metrics
+
+```{r}
+ames_metrics <- metric_set(rmse, rsq)
+```
+
+## Fit and Assess Models
+
+```{r}
+lm_results <- lm_wf |> fit_resamples(resamples = ames_folds, metrics = ames_metrics)
+knn5_results <- knn5_wf |> fit_resamples(resamples = ames_folds, metrics = ames_metrics)
+knn10_results <- knn10_wf |> fit_resamples(resamples = ames_folds, metrics = ames_metrics)
+```
+
+## What does this create
+
+```{r}
+lm_results
+```
+
+## Collecting Metrics {.smaller}
+
+```{r}
+collect_metrics(lm_results) |> kable()
+collect_metrics(knn5_results) |> kable()
+collect_metrics(knn10_results) |> kable()
+```
+
+## Questions
+
+1. How many times did we train a model?
+2. Which model formulation was the best?
+
+## Final Model
+
+- After choosing best model/workflow, fit on full training set and assess on test set
+
+```{r}
+final_fit <- lm_wf |> fit(data = ames_train)
+final_fit |> 
+  predict(new_data = ames_test) |> 
+  bind_cols(ames_test) |> 
+  ames_metrics(truth = Sale_Price, estimate = .pred)
+```
+
+## Leave-One-Out Cross-Validation (LOOCV) {.smaller}
+
+-  $n$-Fold cross validation
+-  Iterate through training set
+    +   Treat observation $i$ has assessment set
+    +   Treat other $n-1$ observations as analysis set
+    
+Suppose you implement LOOCV on a dataset with $n=100$ observations.
+
+1. What is the size (number of observations) of each analysis set?
+
+2. What is the size of each assessment set?
+
+3. How many times must you fit a model to complete the overall LOOCV process?
+
+
+
+## LOOCV vs. K-Fold CV
+
+-   Typically we use 5-Fold or 10-Fold CV
+-   $K$-Fold is much less computationally expensive
+-   $K$ actually gives better estimates of your test error... Why?
+-   Bias-Variance Trade-Off
+-   LOOCV has the lowest level of bias but highest level of variance
+-   5- and 10-Fold CV have medium levels of bias but lower variance
+

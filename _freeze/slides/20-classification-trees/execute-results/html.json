@@ -1,0 +1,19 @@
+{
+  "hash": "eb2328997af57de1c6312037bef8c3d1",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: 'MATH 427: Classification Trees'\nauthor: Eric Friedlander\nfooter: \"[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)\"\nlogo: \"../images/logo.png\"\nformat: \n  revealjs:\n    theme: slides.scss\n    multiplex: false\n    transition: fade\n    slide-number: false\n    incremental: false \n    chalkboard: true\nexecute:\n  freeze: auto\n  echo: true\n  cache: true\nknitr:\n  opts_chunk: \n    R.options:      \n    width: 200\n---\n\n\n\n\n## Computational Set-Up\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(dsbox) # dcbikeshare data\nlibrary(knitr)\n\ntidymodels_prefer()\n\nset.seed(427)\n```\n:::\n\n\n\n\n\n## Decision Trees\n\n-   Advantages\n    +   Easy to explain and interpret\n    +   Closely mirror human decision-making\n    +   Can be displayed graphically, and are easily interpreted by non-experts\n    +   Does not require standardization of predictors\n    +   Can handle missing data directly\n    +   Can easily capture non-linear patterns\n-   Disadvantages\n    +   Do not have same level of prediction accuracy\n    +   Not very robust\n    \n# Decision Trees for Classification\n\n## Last Time\n\n::: incremental\n-   Regression Trees: Decision Trees for Regression Problems\n-   How are they fit?\n-   What is pruning? Why do we do it?\n-   What tuning parameter did we talk about last time?\n-   Today: Classification Trees\n:::\n\n## Classification Trees\n\n-   Predictions: \n    +   Classes: most common class at terminal node\n    +   Probability: proportion of each class at terminal node\n-   Rest of tree: same as regression tree\n\n## Fitting Classification Trees {.smaller}\n-   Still use **recursive binary splitting** to grow a classification tree\n-   $\\hat{p}_{mk}$: proportion of training observations in the $m^{th}$ region from the $k^{th}$ class\n-   $SSE$ can be replaced by \n    +   **classification error rate**, fraction of the training observations that do not belong to the most common class ($1 - \\text{accuracy}) $$E = 1 - \\max_k \\left(\\hat{p}_{mk}\\right)$$\n    +   **Gini index**,  measure of node purity— small valuse indicate that a node is predominantly a single class $$G = \\displaystyle \\sum_{k=1}^{K} \\hat{p}_{mk}\\left(1-\\hat{p}_{mk}\\right)$$\n\n\n\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-after-body": [
+        "\n<script>\n  // htmlwidgets need to know to resize themselves when slides are shown/hidden.\n  // Fire the \"slideenter\" event (handled by htmlwidgets.js) when the current\n  // slide changes (different for each slide format).\n  (function () {\n    // dispatch for htmlwidgets\n    function fireSlideEnter() {\n      const event = window.document.createEvent(\"Event\");\n      event.initEvent(\"slideenter\", true, true);\n      window.document.dispatchEvent(event);\n    }\n\n    function fireSlideChanged(previousSlide, currentSlide) {\n      fireSlideEnter();\n\n      // dispatch for shiny\n      if (window.jQuery) {\n        if (previousSlide) {\n          window.jQuery(previousSlide).trigger(\"hidden\");\n        }\n        if (currentSlide) {\n          window.jQuery(currentSlide).trigger(\"shown\");\n        }\n      }\n    }\n\n    // hookup for slidy\n    if (window.w3c_slidy) {\n      window.w3c_slidy.add_observer(function (slide_num) {\n        // slide_num starts at position 1\n        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);\n      });\n    }\n\n  })();\n</script>\n\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,144 @@
+---
+title: 'MATH 427: Decision Trees'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+  cache: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+
+## Computational Set-Up
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(dsbox) # dcbikeshare data
+library(knitr)
+
+tidymodels_prefer()
+
+set.seed(427)
+```
+
+
+
+## Tree-Based Methods {.smaller}
+
+-   Idea: **stratify** or **segment** the predictor space into simple regions
+-   Splitting rules used to segment the predictor space form a tree
+-   Can be used for both classification and regression
+-   Single tree called **decision tree**
+    +   Simple and useful for interpretation
+    +   Not the best in terms of prediction accuracy.
+-   Much more powerful: grow multiple trees and then combine their results
+    +   **bagging** and **boosting** .
+-   Most powerful methods for tabular data are typically tree-based methods
+
+## Terminology for Trees
+
+-   Every split is considered to be a **node**
+-   First node at the top of the tree: **root node** (contains all the training data)
+-   Final nodes at the bottom of tree called **leaves** or **terminal nodes**
+-   Decision trees typically drawn with root at top and leaves at bottom
+-   Nodes in middle of tree called **internal nodes**
+-   The segments of the trees that connect nodes are known as **branches**
+
+
+## Terminology for Trees
+
+::: {#fig-tree1 layout-ncol=2}
+
+![](images/19/depth-3-decision-tree-1.png)
+
+![](images/19/depth-3-decision-tree-2.png)
+
+From Hands-On Machine Learning, Boehmke & Greenwell
+:::
+
+
+## Building a Tree {.smaller}
+
+-   Select predictor $X_j$ and cut point $s$ such that splitting the predictor space into the regions
+$\{X|X_j < s\}$ and $\{X|X_j \geq s\}$ leads to the greatest possible reduction in performance metric (e.g. SSE)
+-   For any $j$ and $s$, define
+$$R_1 = \{X|X_j < s\} \ \ \text{and} \ \ R_2 = \{X|X_j \geq s\}$$
+-   Find $j$ and $s$ that minimize
+$$SSE = \displaystyle \sum_{i \in R_1}\left(y_i - \hat{y}_{R_1}\right)^2 + \sum_{i \in R_2}\left(y_i - \hat{y}_{R_2}\right)^2$$
+-   Repeat process on each the two new regions
+-   Continue until a stopping criterion is reached
+
+
+
+
+
+## Prediction
+
+-   For new observation that falls in region $R_j$:
+    +   Regression: the mean response of the training set observations in $R_j$
+    +   Classificaiton: majority vote response of the training set observations in $R_j$
+
+
+## Building a Tree and Prediction
+
+::: {#fig-tree2 layout-ncol=2}
+
+![](images/19/decision-stump-1.png)
+
+![](images/19/decision-stump-2.png)
+
+From Hands-On Machine Learning, Boehmke & Greenwell
+:::
+
+
+## Building a Tree and Prediction
+
+::: {#fig-tree3 layout-ncol=2}
+
+![](images/19/depth-3-decision-tree-1.png)
+
+![](images/19/depth-3-decision-tree-2.png)
+
+From Hands-On Machine Learning, Boehmke & Greenwell
+:::
+
+
+## Building a Tree and Prediction
+
+![From ISLR](images/19/ISLR-tree-1.png)
+
+## Building a Tree {.smaller}
+
+-   Anyone know what a **greedy algorithm** is?
+
+. . .
+
+-   Computationally infeasible to consider every possible partition
+-   Idea: **top-down, greedy** approach known as **recursive binary splitting**.
+    +   **top-down** because it begins at the top of the tree
+    +   **greedy** because at each step of the tree-building process, the best split is made at that particular step, rather than looking ahead and picking a split that will lead to a better tree in some future step
+        +   Important for determining whether to use a ordinal encoding or not
+    +   Stop when each terminal node has fewer than some predetermined number of observations
+    
+## Overfitting
+
+-   This process described above is likely to **overfit** the data
+-   One solution: require each split to improve performance by some amount
+    +   Bad Idea: sometimes seemingly meaningless cuts early on enable really good cuts later on
+-   Good solution: **pruning**
+    +   Build big tree and the prune off branches that are unnecessary
+    

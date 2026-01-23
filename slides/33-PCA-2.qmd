@@ -1,0 +1,453 @@
+---
+title: 'MATH 427: Principal Component Analysis (PCA)'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+  cache: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+## Computational Set-Up
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(knitr)
+library(kableExtra)
+
+tidymodels_prefer()
+
+set.seed(427)
+```
+
+## Data: `mnist`
+
+-   MNIST Database: Modified National Institute of Standards and Technology Database
+-   Large database of handwritten digits
+    +   60,000 training images
+    +   10,000 test images
+-   Each image:
+    +   28x28 black and white pixels
+    +   $28\times 28\times 1 = 784$
+    
+## Loading data
+
+```{r}
+#| cache: TRUE
+
+library(dslabs)
+mnist <- read_mnist()
+mnist_train <- mnist$train$images
+mnist_train |> head() |> kable()
+```
+
+## Digits
+
+```{r}
+#| code-fold: TRUE
+
+image(x = 1:28, y = 1:28,
+      z = matrix(mnist_train[1,], nrow = 28, byrow=FALSE)[,28:1],
+      col=gray((0:255)/255))
+```
+
+## Digits
+
+```{r}
+#| code-fold: TRUE
+
+image(x = 1:28, y = 1:28,
+      z = matrix(mnist_train[2,], nrow = 28, byrow=FALSE)[,28:1],
+      col=gray((0:255)/255))
+```
+
+## Digits
+
+```{r}
+#| code-fold: TRUE
+
+image(x = 1:28, y = 1:28,
+      z = matrix(mnist_train[3,], nrow = 28, byrow=FALSE)[,28:1],
+      col=gray((0:255)/255))
+```
+
+## Digits
+
+```{r}
+#| code-fold: TRUE
+
+image(x = 1:28, y = 1:28,
+      z = matrix(mnist_train[4,], nrow = 28, byrow=FALSE)[,28:1],
+      col=gray((0:255)/255))
+```
+    
+## Unsupervised Learning & Dimensionality Reduction
+
+-   **Unsupervised Learning**: ML for unlabeled data (i.e. no response variables)
+    +   Goal: Uncover patterns/structure within data
+    +   Tasks:
+        -   **Clustering**: finding sub-groups within our data
+        -   **Dimensionality Reduction**: reducing the number of columns in our data set... [why?]{.fragment}
+        
+## Dimensionality Reduction
+
+-   Goal phrasing 1: Reduce the number of columns, while losing as little information as possible
+-   Goal phrasing 2: Extract lower-dimensional structure from our data
+
+## Last Time
+
+-   Vectors and Projects
+
+# Principal Component Analysis (PCA)
+
+## PCA Vocabulary
+
+-   **Principal Component (PC1)**: direction in $p$-dimensional space (e.g. $\langle 1, 1, 2\rangle$)
+-   **Scores**: our new variables (e.g. $(-0.56\times 1 + -0.996\times 1 + -1.56\times 2)/6 = -0.778$)
+-   **Loadings**: For direction above'
+    +   Loading on $x$ is 1
+    +   Loading on $y$ is 1
+    +   Loading on $z$ is 2
+
+## Recall: Variance
+
+::: incremental
+-   What is variance?
+-   Intuitively: what does variance measure?
+-   Variance: $\frac{1}{n-1}\sum_{i=1}^n(x_i - \bar{x})^2$
+    +   Average of the squared distance from zero of each observation
+:::
+
+## Idea behind PCA
+
+-   Select first PC so variance of scores is the maximum
+-   Iteratively:
+    +   Select next PC so variance of scores is maximize AND new PC is *orthogonal* to all other PCs
+
+. . .
+
+-   What does orthogonal mean?
+
+## Easy Example
+
+-   Exercise: What should the first and second PCs be?
+
+```{r}
+#| echo: false
+#| code-fold: true
+
+set.seed(123)
+n = 1000
+easy_ex <- tibble(x = rnorm(n), y = rnorm(n, sd = 0.25))
+
+ggplot(easy_ex, aes(x=x, y=y)) +
+  geom_point() +
+  xlim(-4, 4)+
+  ylim(-4,4)
+```
+
+## How much variance is explained by each of the PC's?
+
+```{r}
+var_exp <- easy_ex |> 
+  mutate(PC1 = x,
+         PC2 = y) |> 
+  summarize(var1 = var(PC1), 
+            var2 = var(PC2))
+
+var_exp |> kable()
+```
+
+## What proportion of variance is explained by each of the PC's?
+
+```{r}
+var_exp |> 
+  pivot_longer(everything()) |> 
+  mutate(proportion = value/sum(value)) |> 
+  kable()
+```
+
+-   93% of our variance (information) is contained in our first PC
+
+## Harder Example
+
+-   Exercise: What should the first and second PCs be?
+
+```{r}
+#| echo: false
+#| code-fold: true
+
+set.seed(123)
+n = 1000
+harder_ex <- tibble(x = rnorm(n), y = x + rnorm(n, sd = 0.25))
+
+ggplot(harder_ex, aes(x=x, y=y)) +
+  geom_point() +
+  xlim(-4, 4)+
+  ylim(-4,4)
+```
+
+## How much variance is explained by each of the PC's?
+
+```{r}
+var_exp <- harder_ex |> 
+  mutate(PC1 = (x + y)/2,
+         PC2 = (x-y)/2) |> 
+  summarize(var1 = var(PC1), 
+            var2 = var(PC2))
+
+var_exp |> kable()
+```
+
+## Question?
+
+::: incremental
+-   Will our PCs depend on the scale of our data?
+-   What does this mean we should do?
+:::
+
+## How is PCA actually accomplished
+
+-   Compute **Variance-Covariance Matrix**
+-   Compute **Eigen-decomposition of variance-covariance matrix**
+    +   Eigen-vectors = Principal components
+    +   Eigen-values = Variance explained by corresponding component
+    
+# PCA in R
+
+## Recipe
+
+-   [Documentation for `step_normalize`](https://recipes.tidymodels.org/reference/step_pca.html)
+
+```{r}
+pca_recipe <- recipe(~ ., data = mnist_train) |> 
+  step_normalize(all_numeric_predictors()) |> 
+  step_pca(all_numeric_predictors(), num_comp = 20)
+```
+
+## Prepping and Baking `recipe`s
+
+-   If we want to apply a recipe to a data set *outside of a workflow*:
+    +   First, `prep` using training set: this estimates any necessary quantities
+    +   Second, `bake` this applies the recipe to a new data set (in our case the new data set in the same data set)
+    
+## Applying recipe to training data
+
+```{r}
+prepped_pca <- pca_recipe |> prep(mnist_train)
+mnist_pca <- prepped_pca |> bake(new_data = mnist_train)
+```
+
+## Using the results
+
+-   Three things of interest
+    +   New scores: this is our new data... use for plotting and analysis
+    +   PCs: these are our new directions... by looking at loadings we can interpret structure
+    +   Eigenvalues: this will tell us how much information is lost
+    
+## How many PCs Should We Use?
+
+:::: columns
+::: column
+```{r}
+prepped_pca |> 
+  tidy(2, type = "variance") |> 
+  filter(terms == "variance") |> 
+  kable()
+```
+:::
+
+::: column
+```{r}
+prepped_pca |> 
+  tidy(2, type = "variance") |> 
+  filter(terms == "percent variance") |> 
+  kable()
+```
+:::
+::::
+
+## Scree Plot
+
+-   Percent variance against number of components
+
+```{r}
+#| code-fold: true
+
+prepped_pca |> 
+  tidy(2, type = "variance") |> 
+  filter(terms == "percent variance") |> 
+  ggplot(aes(x = component, y = value)) +
+  geom_line() +
+  labs(
+    x = "PCAs",
+    y = "% of variance",
+    title = "Scree plot"
+  )
+```
+
+## Scree Plot
+
+-   Percent variance against number of components
+
+```{r}
+#| code-fold: true
+
+prepped_pca |> 
+  tidy(2, type = "variance") |> 
+  filter(terms == "percent variance", component < 40) |>
+  ggplot(aes(x = component, y = value)) +
+  geom_line() +
+  labs(
+    x = "PCAs",
+    y = "% of variance",
+    title = "Scree plot"
+  )
+```
+
+## Heuristic
+
+-   Set number of components to be where you see a "big drop"
+-   Choose number of components where plot starts to level off
+    
+## New Scores
+
+```{r}
+mnist_pca |> head() |> kable()
+```
+
+## Visualizing Scores
+
+```{r}
+#| code-fold: true
+
+library(GGally)
+
+mnist_pca |> ggpairs(columns = 1: 5, aes(color = as_factor(mnist$train$labels)),
+                     lower = list(continuous = wrap("points", alpha = 0.1,    size=0.1)))
+```
+
+## Visualizing PCs
+
+```{r}
+#| code-fold: true
+
+prepped_pca |> tidy(2) |> 
+  filter(component == "PC1") |> 
+  ggplot(aes(x = terms, y = value)) +
+  geom_col() +
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+```
+
+## Visualizing PC1
+
+```{r}
+#| code-fold: true
+
+pc_matrix <- prepped_pca |> tidy(2) |> 
+  filter(component == "PC1") |> 
+  pull(value) |> 
+  matrix(nrow = 28, byrow=FALSE)
+
+image(x = 1:28, y = 1:28,
+      z = pc_matrix[,28:1],
+      col=gray((0:255)/255))
+```
+
+## Visualizing PC2
+
+```{r}
+#| code-fold: true
+
+pc_matrix <- prepped_pca |> tidy(2) |> 
+  filter(component == "PC2") |> 
+  pull(value) |> 
+  matrix(nrow = 28, byrow=FALSE)
+
+image(x = 1:28, y = 1:28,
+      z = pc_matrix[,28:1],
+      col=gray((0:255)/255))
+```
+
+## Visualizing PCs
+
+```{r}
+#| code-fold: true
+
+pc_matrix <- prepped_pca |> tidy(2) |> 
+  filter(component == "PC3") |> 
+  pull(value) |> 
+  matrix(nrow = 28, byrow=FALSE)
+
+image(x = 1:28, y = 1:28,
+      z = pc_matrix[,28:1],
+      col=gray((0:255)/255))
+```
+
+## Twos and Sevens
+
+```{r}
+mnist_train_27 <- mnist_train[mnist$train$labels %in% c(2, 7),]
+prepped_pca27 <- pca_recipe |> prep(mnist_train_27)
+mnist27_pca <- prepped_pca27 |> bake(new_data = mnist_train_27)
+```
+
+## Visualizing PCs
+
+```{r}
+#| code-fold: true
+
+pc_matrix <- prepped_pca27 |> tidy(2) |> 
+  filter(component == "PC1") |> 
+  pull(value) |> 
+  matrix(nrow = 28, byrow=FALSE)
+
+image(x = 1:28, y = 1:28,
+      z = pc_matrix[,28:1],
+      col=gray((0:255)/255))
+```
+
+## Visualizing PCs
+
+```{r}
+#| code-fold: true
+
+pc_matrix <- prepped_pca27 |> tidy(2) |> 
+  filter(component == "PC2") |> 
+  pull(value) |> 
+  matrix(nrow = 28, byrow=FALSE)
+
+image(x = 1:28, y = 1:28,
+      z = pc_matrix[,28:1],
+      col=gray((0:255)/255))
+```
+
+## Visualizing PCs
+
+```{r}
+#| code-fold: true
+
+pc_matrix <- prepped_pca27 |> tidy(2) |> 
+  filter(component == "PC3") |> 
+  pull(value) |> 
+  matrix(nrow = 28, byrow=FALSE)
+
+image(x = 1:28, y = 1:28,
+      z = pc_matrix[,28:1],
+      col=gray((0:255)/255))
+```

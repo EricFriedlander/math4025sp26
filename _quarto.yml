@@ -1,0 +1,91 @@
+project:
+  type: website
+  
+execute:
+  freeze: auto
+
+website:
+  page-navigation: true
+  title: "MAT 427 - Spring 2025"
+  description: "Homepage for MAT 427 - Statistical Machine Learning at the College of Idaho, Spring 2025"
+  site-url: https://mat427sp25.netlify.app/
+  
+  repo-url: https://github.com/EricFriedlander/MAT427SP25
+  repo-actions: [edit, issue]
+  
+  page-footer:
+    background: "#412d5e"
+    left: |
+      &copy; Copyright 2025, Eric Friedlander
+    right: |
+      This site is built with [Quarto](https://quarto.org/)
+      
+  sidebar:
+    background: "#bbbbbb"
+    logo: "images/logo.png"
+    align: center
+    tools: 
+      - icon: github
+        href: https://classroom.github.com/classrooms/197280685-mat427sp25
+        text: "GitHub classroom"
+      - icon: code-square
+        href: https://rstudio.collegeofidaho.edu/
+        text: "RStudio"
+      - icon: person
+        href: https://cofi.instructure.com/courses/17021
+        text: "Canvas"
+    style: "docked"
+    search: true
+    collapse-level: 1
+    contents:
+      - schedule.qmd
+      - syllabus.qmd
+      - support.qmd
+      - section: Computing
+        contents:
+        - href: computing-access.qmd
+        - href: computing-r-resources.qmd
+          text: R resources
+      - section: Job Applications & Interviews
+        contents:
+        - jobs/job-app-1-resources.qmd
+        - href: https://cofi.instructure.com/courses/17021/assignments/210575
+          text: "Job Advertisement 1"
+        - jobs/job-app-1-rubric.qmd
+        - jobs/job-interview-resources.qmd
+        - jobs/job-app-2-resources.qmd
+      - section: Project
+        contents:
+        - href: project/project-instructions.qmd
+          text: "Instructions"
+      - section: Hack-A-Thon
+        contents:
+        - href: hack-a-thon/hack-a-thon-instruction.qmd
+    #     - href: project/project-rubric.qmd
+    #       text: "Supplementary Report Rubric"
+    #     - href: project/poster-rubric.qmd
+    #       text: "Poster Rubric"
+    #   - section: Exams
+    #     contents:
+    #     - href: exam/exam-rubric.qmd
+    #       text: "Oral Exam Rubric"
+    #     - href: exam/exam-01-review.qmd
+    #       text: "Exam 1 Overview"
+    #     - href: exam/exam-01-practice.qmd
+    #       text: "Exam 1 Practice"
+    #     - href: exam/exam-02-review.qmd
+    #       text: "Exam 2 Overview"
+    #     - href: exam/exam-02-practice.qmd
+    #       text: "Exam 2 Practice"
+  
+format:
+  html:
+    theme:
+      - cosmo
+      - theme.scss
+    mainfont: "Open Sans"
+    code-copy: true
+    code-overflow: wrap
+    toc: true
+
+

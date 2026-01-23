@@ -1,0 +1,616 @@
+---
+title: 'MATH 427: Regularization & Model Tuning'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+  cache: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+
+## Computational Set-Up
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(knitr)
+library(fivethirtyeight) # for candy rankings data
+
+tidymodels_prefer()
+
+set.seed(427)
+```
+
+## Data: Candy {.smaller}
+
+The data for this lecture comes from the article FiveThirtyEight [*The Ultimate Halloween Candy Power Ranking*](https://fivethirtyeight.com/features/the-ultimate-halloween-candy-power-ranking) by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment people could vote on a series of randomly generated candy match-ups (e.g. Reese's vs. Skittles). Click [here](http://walthickey.com/2017/10/18/whats-the-best-halloween-candy/) to check out some of the match ups.
+
+The data set contains 12 characteristics and win percentage from 85 candies in the experiment.
+
+## Data: Candy
+
+```{r}
+glimpse(candy_rankings)
+```
+
+## Data Cleaning
+
+```{r}
+candy_rankings_clean <- candy_rankings |> 
+  select(-competitorname) |> 
+  mutate(sugarpercent = sugarpercent*100, # convert proportions into percentages
+         pricepercent = pricepercent*100, # convert proportions into percentages
+         across(where(is.logical), ~ factor(.x, levels = c("FALSE", "TRUE")))) # convert logicals into factors
+```
+
+## Data Cleaning
+
+```{r}
+glimpse(candy_rankings_clean)
+```
+
+## Data Splitting
+
+```{r}
+candy_split <- initial_split(candy_rankings_clean, strata = winpercent)
+candy_train <- training(candy_split)
+candy_test <- testing(candy_split)
+```
+
+# Model Tuning
+
+## Tuning Parameters
+
+-   **Tuning Parameters** or **Hyperparameters** are parameters that cannot (or should not) be estimated when a model is being trained
+-   These parameters control something about the learning process and changing them will result in a different model when fit to the full training data (i.e. after cross-validation)
+-   Frequently: tuning parameters control model complexity
+-   Example: $\lambda$ in LASSO and Ridge regression
+-   Today: How to choose our tuning parameters?
+
+## Question
+
+-   Which of the following are tuning parameters:
+    +   $\beta_0$: the intercept of linear regression
+    +   $k$ in KNN
+    +   step size in gradient descent
+    +   The number of folds in cross-validation
+    +   Type of distance to use in KNN (i.e. rectangular vs. Gower's vs. weighted etc)
+
+## Basic Idea
+
+-   Use CV to try out a bunch of different tuning parameters and choose the "best" one
+-   How do we choose which tuning parameters to try?
+-   Two general approaches:
+    +   Grid Search
+    +   Iterative Search
+    
+# Grid Search
+    
+## Grid Search
+
+-   Create a grid of tuning parameters and try out each combination
+-   Types of grids:
+    +   Regular Grid: tuning parameter values are spaced *deterministically* using a linear or logarithmic scale and all combinations of parameters are used (mostly what you want to use in this class)
+    +   Irregular Grids: tuning parameter values are chosen *stochastically*
+        -   Use when you have A LOT of parameters
+    
+## Grid Search in R
+
+-   Take advantage of package `dials` which is part of the `tidyverse`
+    +   Set every tuning variable equal to `tune()`
+    
+## LASSO and Ridge in R
+
+```{r}
+ols <- linear_reg() |> 
+  set_engine("lm")
+
+ridge <- linear_reg(mixture = 0, penalty = tune()) |> # penalty set's our lambda
+  set_engine("glmnet")
+
+lasso <- linear_reg(mixture = 1, penalty = tune()) |> # penalty set's our lambda
+  set_engine("glmnet")
+```
+    
+## Create Recipe
+
+-   Note: no tuning variables in this case
+
+```{r}
+lm_preproc <- recipe(winpercent ~ . , data = candy_train) |> 
+  step_dummy(all_nominal_predictors()) |> 
+  step_normalize(all_numeric_predictors())
+```
+
+## Create workflows
+
+```{r}
+generic_wf <- workflow() |> add_recipe(lm_preproc)
+ols_wf <- generic_wf |> add_model(ols)
+ridge_wf <- generic_wf |> add_model(ridge)
+lasso_wf <- generic_wf |> add_model(lasso)
+```
+
+## Create Metric Set
+
+```{r}
+candy_metrics <- metric_set(rmse, rsq)
+```
+
+## Create Folds
+
+```{r}
+# Since sample size is so small, not using stratification
+candy_folds <- vfold_cv(candy_train, v = 2, repeats = 10)
+```
+
+## Grid Search in R
+
+-   Take advantage of package `dials` which is part of the `tidyverse`
+    +   Set every tuning variable equal to `tune()`
+    +   Generate grid for hyperparameters
+
+## Generate Grid
+
+```{r}
+# note that dials treats penalty on a log10 scale
+penalty_grid <- grid_regular(penalty(range = c(-10, 2)), # I had to play around with these 
+                             levels = 10)
+```
+
+:::: columns
+::: column
+```{r}
+penalty_grid |> head() |>  kable(digits = 11, format.args = list(scientific = TRUE))
+```
+:::
+
+::: column
+```{r}
+penalty_grid |> tail() |>  kable()
+```
+:::
+::::
+
+
+## Regular Grid Search in R
+
+-   Take advantage of package `dials` which is part of the `tidyverse`
+    +   Set every tuning variable equal to `tune()`
+    +   Generate grid for hyperparameters using `grid_regular`
+    +   Tune your model: fit all hyperparameter combination on resamples using `tune_grid`
+
+## Tune Models
+
+```{r}
+tuning_ridge_results <- tune_grid(
+  ridge_wf,
+  resamples= candy_folds,
+  grid = penalty_grid
+)
+
+tuning_lasso_results <- tune_grid(
+  lasso_wf,
+  resamples = candy_folds,
+  grid = penalty_grid
+)
+```
+
+## Regular Grid Search in R
+
+-   Take advantage of package `dials` which is part of the `tidyverse`
+    +   Set every tuning variable equal to `tune()`
+    +   Generate grid for hyperparameters using `grid_regular`
+    +   Tune your model: fit all hyperparameter combination on resamples using `tune_grid`
+    +   Visualize and Choose final model
+
+## Visualizing Results: Ridge
+
+```{r}
+autoplot(tuning_ridge_results)
+```
+
+## Selecting Best Model: Ridge
+
+:::: columns
+::: column
+
+Best RMSE
+
+```{r}
+best_rmse_ridge <- tuning_ridge_results |> 
+  select_best(metric = "rmse")
+best_rmse_ridge |> kable(digits = 2)
+```
+:::
+
+::: column
+Best $R^2$
+```{r}
+best_rsq_ridge <- tuning_ridge_results |> 
+  select_best(metric = "rsq",)
+best_rsq_ridge |> kable(digits = 2)
+```
+:::
+::::
+
+-   Which should be use?
+
+## Finalize Model {.smaller}
+
+-   RMSE estimate is less flexible and seems to be sacrificing less $R^2$ than the opposite
+
+```{r}
+ridge_rmse_final <- finalize_workflow(ridge_wf, best_rmse_ridge)
+ridge_rmse_fit <- fit(ridge_rmse_final, data = candy_train)
+tidy(ridge_rmse_fit) |> 
+  kable()
+```
+
+## Visualizing Results: LASSO
+
+```{r}
+autoplot(tuning_lasso_results)
+```
+
+## Selecting Best Model: LASSO
+
+:::: columns
+::: column
+
+Best RMSE
+
+```{r}
+best_rmse_lasso <- tuning_lasso_results |> 
+  select_best(metric = "rmse")
+best_rmse_lasso |> kable(digits = 2)
+```
+:::
+
+::: column
+Best $R^2$
+```{r}
+best_rsq_lasso <- tuning_lasso_results |> 
+  select_best(metric = "rsq")
+best_rsq_lasso |> kable(digits = 2)
+```
+:::
+::::
+
+-   Which should be use?
+
+## Finalize Model {.smaller}
+
+-   RMSE estimate is less flexible and seems to be sacrificing less $R^2$ than the opposite
+
+```{r}
+lasso_rmse_final <- finalize_workflow(lasso_wf, best_rmse_lasso)
+lasso_rmse_fit <- fit(lasso_rmse_final, data = candy_train)
+tidy(lasso_rmse_fit) |> 
+  filter(estimate != 0) |> 
+  kable()
+```
+
+## Using Parsimony as a Tie-Breaker
+
+-   Good heuristic: **One-Standard Error Rule**
+    +   Use resampling to estimate error metrics
+    +   Compute standard error for error metrics
+    +   Select most parsimonious model that is within one standard error of the best performance metric
+    
+
+
+## Selecting Best Model: Ridge
+
+:::: columns
+::: column
+
+Best RMSE
+
+```{r}
+best_ose_rmse_ridge <- tuning_ridge_results |> 
+  select_by_one_std_err(metric = "rmse", desc(penalty)) # why are we descending
+best_ose_rmse_ridge |> kable(digits = 2)
+```
+:::
+
+::: column
+Best $R^2$
+```{r}
+bse_ose_rsq_ridge <- tuning_ridge_results |> 
+  select_by_one_std_err(metric = "rsq", desc(penalty))
+bse_ose_rsq_ridge |> kable(digits = 2)
+```
+:::
+::::
+
+-   Which should be use?
+
+## Visualizing Results: Ridge
+
+```{r}
+autoplot(tuning_ridge_results)
+```
+
+## Finalize Model {.smaller}
+
+-   RMSE estimate is less flexible and seems to be sacrificing less $R^2$ than the opposite
+
+```{r}
+ridge_rmse_final <- finalize_workflow(ridge_wf, best_ose_rmse_ridge)
+ridge_rmse_fit <- fit(ridge_rmse_final, data = candy_train)
+tidy(ridge_rmse_fit) |> 
+  kable()
+```
+
+## Visualizing Results: LASSO
+
+```{r}
+autoplot(tuning_lasso_results)
+```
+
+## Selecting Best Model: Ridge
+
+:::: columns
+::: column
+
+Best RMSE
+
+```{r}
+bse_ose_rmse_lasso <- tuning_lasso_results |> 
+  select_by_one_std_err(metric = "rmse", desc(penalty)) # why are we descending
+bse_ose_rmse_lasso |> kable(digits = 2)
+```
+:::
+
+::: column
+Best $R^2$
+```{r}
+bse_ose_rsq_lasso <- tuning_lasso_results |> 
+  select_by_one_std_err(metric = "rsq", desc(penalty)) # why are we descending
+bse_ose_rsq_lasso |> kable(digits = 2)
+```
+:::
+::::
+
+-   Which should be use?
+
+## Finalize Model {.smaller}
+
+-   RMSE estimate is less flexible and seems to be sacrificing less $R^2$ than the opposite
+
+```{r}
+lasso_rmse_final <- finalize_workflow(lasso_wf, bse_ose_rmse_lasso)
+lasso_rmse_fit <- fit(lasso_rmse_final, data = candy_train)
+tidy(lasso_rmse_fit) |> 
+  filter(estimate != 0) |> 
+  kable()
+```
+
+## Using the Test Set as a Tie Breaker
+
+-   Once you've found you "best" candidate from several different classes of model, it's ok to compare on test set
+-   In this case, we have our best ridge and our best lasso model
+-   Main this to avoid... LOTS of comparisons on your test set
+
+## Using the Test Set as a Tie Breaker {.smaller}
+
+```{r}
+candy_test_wpreds <- candy_test |> 
+  mutate(ridge_preds = predict(ridge_rmse_fit, new_data = candy_test)$.pred,
+         lasso_preds = predict(lasso_rmse_fit, new_data = candy_test)$.pred)
+candy_test_wpreds |> rmse(estimate = ridge_preds, truth = winpercent)
+candy_test_wpreds |> rmse(estimate = lasso_preds, truth = winpercent)
+candy_test_wpreds |> rsq(estimate = ridge_preds, truth = winpercent)
+candy_test_wpreds |> rsq(estimate = lasso_preds, truth = winpercent)
+```
+
+-   Ridge Wins!
+
+## Good strategies
+
+-   First use coarse grid with large range to find general area
+    +   Then use fine grid with small range to fine tune
+    +   Use iterative method to fine tune
+    
+# Iterative Methods (Bonus Content)
+
+## Brief Overview
+
+-   Basic Idea: iterative select parameter values to choose based on how previous ones have done
+-   TMWR gives two examples:
+    +   Bayesian search
+    +   Stochastic Annealing
+-   Both require an understanding of multivariate probability distributions
+
+## Bayesian Search: GP {.smaller}
+
+::: incremental
+-   Assume performance metrics follow a Gaussian process... [dafuq]{.fragment}
+-   Consider two sets of tuning parameters: $x_1 = (\lambda_1, k_1)$ and $x_2 = (\lambda_2, k_2)$
+-   Let $Y_1$ and $Y_2$ be random variables representing the performance metric at these $x$'s
+-   Assume $\text{Cov}(Y_1, Y_2)$ depends on how far apart $x_1$ and $x_2$
+    +   Covariance should decrease the further apart $x_1$ and $x_2$ are
+    +   This covariance function is typically parameterized and estimated from an initial tuning grid
+:::
+
+## Bayesian Search: Acquisition Function {.smaller}
+
+::: incremental
+-   GP process gives us predicted mean and variance of performance metrics
+-   Imagine two scenario's:
+    +   1: Predicted mean is slightly better than current parameter choice and variance is low
+        -   Low-Risk, Low-Reward
+    +   2: Predicted mean is slightly worst than current parameter choice but variance is high
+        -   High-Risk, High-Reward
+-   How do we balance?
+-   Two competing goals: *Exploration* (got toward high variance) and *Exploitation* (go toward best mean)
+-   Acquisition function: balances these two goals (several to choose from)
+-   [tmwr](https://www.tmwr.org/iterative-search)
+:::
+
+## Bayesian Search: `tidymodels`
+
+```{r}
+ridge_params <- ridge_wf |> 
+  extract_parameter_set_dials() |> 
+  update(penalty = penalty(c(-2, 1)))
+
+bayes_ridge <- ridge_wf |> 
+  tune_bayes(
+    resamples = candy_folds,
+    metrics = candy_metrics, # first metrics is what's optimized (rmse in this case)
+    initial = tuning_ridge_results,
+    param_info = ridge_params,
+    iter = 25
+  )
+```
+
+## Bayesian Search: `tidymodels`
+
+```{r}
+autoplot(bayes_ridge, type = "performance")
+```
+
+## Bayesian Search: `tidymodels`
+
+```{r}
+autoplot(bayes_ridge, type = "parameters")
+```
+
+## Bayesian Search: `tidymodels`
+
+```{r}
+show_best(bayes_ridge) |> kable()
+```
+
+## Bayesian Search: `tidymodels`
+
+```{r}
+lasso_params <- lasso_wf |> 
+  extract_parameter_set_dials() |> 
+  update(penalty = penalty(c(-2,1)))
+
+bayes_lasso <- lasso_wf |> 
+  tune_bayes(
+    resamples = candy_folds,
+    metrics = candy_metrics, # first metrics is what's optimized (rmse in this case)
+    initial = tuning_lasso_results,
+    param_info = lasso_params,
+    iter = 25
+  )
+```
+
+## Bayesian Search: `tidymodels`
+
+```{r}
+autoplot(bayes_lasso, type = "performance")
+```
+
+## Bayesian Search: `tidymodels`
+
+```{r}
+autoplot(bayes_lasso, type = "parameters")
+```
+
+## Bayesian Search: `tidymodels`
+
+```{r}
+show_best(bayes_lasso) |> kable()
+```
+
+## Simulated Annealing {.smaller}
+
+::: incremental
+-   Does anyone know what annealing is in Physics/Material Science?
+-   Start with initial parameter combination $x_0$(think gradient descent)
+-   Embark on random walk... in each step $i$
+    +   Consider small perturbation from $x_{i-1}$... let's call it $x_{i-1}^{\epsilon}$
+    +   Get performance for $x_{i-1}^\epsilon$
+    +   If performance is better set $x_i = x_{i-1}^\epsilon$
+    +   If performance is worse set $x_i = x_{i-1}^\epsilon$ with probability $\exp(-c\times D_i\times i)$
+        -   $c$ is user specified constant called cooling coefficient
+        -   $D_i$ percent difference between old and new
+    +   Otherwise $x_i = x_{i-1}$
+-   Idea: 
+    +   start hot: likely to accept suboptimal parameter combinations and move around
+    +   cools over time: decrease number sub-optimal acceptances
+:::
+
+## Simulated Annealing: `tidymodels`
+
+```{r}
+library(finetune)
+ridge_sim_anneal <- ridge_wf |> 
+  tune_sim_anneal(
+    resamples = candy_folds,
+    metrics = candy_metrics, # first metric is what's optimized (rmse in this case)
+    initial = tuning_ridge_results,
+    param_info = ridge_params,
+    iter = 50
+  )
+```
+
+## Simulated Annealing `tidymodels`
+
+```{r}
+autoplot(ridge_sim_anneal, type = "performance")
+```
+
+## Simulated Annealing `tidymodels`
+
+```{r}
+autoplot(ridge_sim_anneal, type = "parameters")
+```
+
+## Simulated Annealing `tidymodels`
+
+```{r}
+show_best(ridge_sim_anneal) |> kable()
+```
+
+## Simulated Annealing: `tidymodels`
+
+```{r}
+lasso_sim_anneal <- ridge_wf |> 
+  tune_sim_anneal(
+    resamples = candy_folds,
+    metrics = candy_metrics, # first metrics is what's optimized (rmse in this case)
+    initial = tuning_lasso_results,
+    param_info = lasso_params,
+    iter = 50
+  )
+```
+
+## Simulated Annealing `tidymodels`
+
+```{r}
+autoplot(lasso_sim_anneal, type = "performance")
+```
+
+## Simulated Annealing `tidymodels`
+
+```{r}
+autoplot(lasso_sim_anneal, type = "parameters") +
+  scale_x_continuous(trans = 'log10')
+```
+
+## Simulated Annealing `tidymodels`
+
+```{r}
+show_best(lasso_sim_anneal) |> kable()
+```

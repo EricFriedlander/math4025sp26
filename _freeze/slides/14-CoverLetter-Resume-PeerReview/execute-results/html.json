@@ -1,0 +1,19 @@
+{
+  "hash": "7e1c70a7c8b4d02629fc84b2ffdb4870",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: 'MATH 427: Cover Letter & Resume Peer-Review'\nauthor: Eric Friedlander\nfooter: \"[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)\"\nlogo: \"../images/logo.png\"\nformat: \n  revealjs:\n    theme: slides.scss\n    multiplex: false\n    transition: fade\n    slide-number: false\n    incremental: false \n    chalkboard: true\nexecute:\n  freeze: auto\n  echo: true\n  cache: true\nknitr:\n  opts_chunk: \n    R.options:      \n    width: 200\n---\n\n\n\n## Peer Review {.smaller}\n\nYou will be placed in groups of two or three:\n\n-   Spend about 10-15 minutes reviewing each of our partner's documents\n    +   Point out anything that is unclear\n    +   Point out any typos or grammatical errors. If there are A LOT, then just say \"PROOF READ\"\n    +   Fill out the rubric you have\n    +   Pretend to be an employer: Write down a few questions you have and would want to learn more about based on the documents you have.\n\n-   After your group is done reviewing, discuss each persons document as a group.\n    +   Talk about strengths\n    +   Talk about weaknesses\n    +   BE KIND AND SUPPORTIVE!\n    \n-   If you're getting feedback, take it graciously!",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-after-body": [
+        "\n<script>\n  // htmlwidgets need to know to resize themselves when slides are shown/hidden.\n  // Fire the \"slideenter\" event (handled by htmlwidgets.js) when the current\n  // slide changes (different for each slide format).\n  (function () {\n    // dispatch for htmlwidgets\n    function fireSlideEnter() {\n      const event = window.document.createEvent(\"Event\");\n      event.initEvent(\"slideenter\", true, true);\n      window.document.dispatchEvent(event);\n    }\n\n    function fireSlideChanged(previousSlide, currentSlide) {\n      fireSlideEnter();\n\n      // dispatch for shiny\n      if (window.jQuery) {\n        if (previousSlide) {\n          window.jQuery(previousSlide).trigger(\"hidden\");\n        }\n        if (currentSlide) {\n          window.jQuery(currentSlide).trigger(\"shown\");\n        }\n      }\n    }\n\n    // hookup for slidy\n    if (window.w3c_slidy) {\n      window.w3c_slidy.add_observer(function (slide_num) {\n        // slide_num starts at position 1\n        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);\n      });\n    }\n\n  })();\n</script>\n\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

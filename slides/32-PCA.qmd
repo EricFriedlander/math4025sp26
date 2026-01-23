@@ -1,0 +1,599 @@
+---
+title: 'MATH 427: Principal Component Analysis (PCA)'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+  cache: false
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+## Remainder of Semester
+
+-   Project (Due Friday)
+-   Hack-a-thon (Next week + Final Exam Time)
+-   Job Application 2 (Due Next Friday)
+-   Two Technical Interviews...
+
+. . .
+
+-   TOO MUCH!!!
+
+## Lesson's Learned by Dr. F
+
+-   Learning objectives coming in:
+    +   Machine Learning Theory
+    +   Professional Development
+    +   Communication!!!
+
+. . .
+
+-   Do less to do more... don't need multiple assignments for each of these
+-   Prioritize an assessment before Spring Break
+-   Build in better time-management and revision checkpoints
+
+## Next Time {.smaller}
+
+-   First half of semester focused on ML pipeline and professional development
+    +   Assess with written exam before Spring Break
+    +   Resume and Cover Letter due before Spring Break
+-   Second half of semester focus on different models and communication
+    +   Behavioral Interview shortly after Spring Break
+    +   Sample Analysis due last week of class with draft due earlier and opportunities to revise
+    +   Technical interview during final's week
+-   Not sure about Hack-a-thon and Project
+    +   Want to do both but feels like that is too much
+    
+## Proposal For Rest of Semester {.smaller}
+
+-   If you like original syllabus, feel free to stick with it (no penalty)
+-   Project - still due Friday
+    +   One-pager
+    +   Presentation
+-   ~~Job Application 2~~: Hack-a-thon report
+-   Hack-a-thon - still next week
+    +   ~~Presentation~~
+    +   Predictions and report due during final exam period
+-   Hack-a-thon report counts as second Job Application
+-   Technical interviews:
+    +   45 minute technical interview during final exam week will replace your first technical interview grade if you do better... even if you don't do the first interview
+    +   Think of first interview as "practice"
+    
+## New Grade Structure (Proposal)
+
+| Category                   | Percentage |
+|----------------------------|------------|
+| Homework                   | 10%        |
+| Job Application 1          | 15%        |
+| Job Interview 1            | 15%        |
+| Job Interview 2            | 20%        |
+| Hack-a-thon + Report       | 25%        |
+| Project                    | 15%        |
+
+## Computational Set-Up
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(knitr)
+library(kableExtra)
+
+tidymodels_prefer()
+
+set.seed(427)
+```
+
+## Data: `mnist`
+
+-   MNIST Database: Modified National Institute of Standards and Technology Database
+-   Large database of handwritten digits
+    +   60,000 training images
+    +   10,000 test images
+-   Each image:
+    +   28x28 black and white pixels
+    +   $28\times 28\times 1 = 784$
+    
+## Loading data
+
+```{r}
+#| cache: TRUE
+
+library(dslabs)
+mnist <- read_mnist()
+mnist_train <- mnist$train$images
+mnist_train |> head() |> kable()
+```
+
+## Digits
+
+```{r}
+#| code-fold: TRUE
+
+image(x = 1:28, y = 1:28,
+      z = matrix(mnist_train[1,], nrow = 28, byrow=FALSE)[,28:1],
+      col=gray((0:255)/255))
+```
+
+## Digits
+
+```{r}
+#| code-fold: TRUE
+
+image(x = 1:28, y = 1:28,
+      z = matrix(mnist_train[2,], nrow = 28, byrow=FALSE)[,28:1],
+      col=gray((0:255)/255))
+```
+
+## Digits
+
+```{r}
+#| code-fold: TRUE
+
+image(x = 1:28, y = 1:28,
+      z = matrix(mnist_train[3,], nrow = 28, byrow=FALSE)[,28:1],
+      col=gray((0:255)/255))
+```
+
+## Digits
+
+```{r}
+#| code-fold: TRUE
+
+image(x = 1:28, y = 1:28,
+      z = matrix(mnist_train[4,], nrow = 28, byrow=FALSE)[,28:1],
+      col=gray((0:255)/255))
+```
+
+## What if we want to visualize our data?
+
+```{r}
+#| code-fold: TRUE
+
+mnist_train <- as_tibble(mnist_train)
+ggplot(mnist_train, aes(x = V300, y = V301, 
+                        color = as_factor(mnist$train$labels))) + 
+  geom_point()
+```
+    
+## Unsupervised Learning & Dimensionality Reduction
+
+-   **Unsupervised Learning**: ML for unlabeled data (i.e. no response variables)
+    +   Goal: Uncover patterns/structure within data
+    +   Tasks:
+        -   **Clustering**: finding sub-groups within our data
+        -   **Dimensionality Reduction**: reducing the number of columns in our data set... [why?]{.fragment}
+        
+## Dimensionality Reduction
+
+-   Goal phrasing 1: Reduce the number of columns, while losing as little information as possible
+-   Goal phrasing 2: Extract lower-dimensional structure from our data
+-   Analogy: file compression
+
+## Which One is Compressed?
+
+::: {layout-ncol=2}
+
+![](images/32/Duck-Hires.png)
+
+![](images/32/Duck-Lores.png)
+
+:::
+
+## Which One is Compressed?
+
+::: {layout-ncol=2}
+
+![1,330 KB](images/32/Duck-Hires.png)
+
+![396 KB](images/32/Duck-Lores.png)
+
+:::
+
+## Idea
+
+-   We managed to:
+    +   Reduce file size by 70%
+    +   Note lose much information
+    +   Extract underlying structure (a duck)
+
+## Thinking about structure in tabular data
+
+```{r}
+#| echo: FALSE
+
+# Load necessary libraries
+library(plotly)
+
+# Generate sample data
+set.seed(123)
+n <- 1000
+x <- rnorm(n)
+y <- rnorm(n)
+z <- x + y
+
+data1 <- tibble(x = x, y = y, z = z)
+
+# Create 3D scatter plot
+plot_ly(x = ~x, y = ~y, z = ~z, type = "scatter3d", mode = "markers",
+        marker = list(size = 3, color = 'blue')) |>
+  plotly::layout(scene = list(xaxis = list(title = "X-axis"),
+                      yaxis = list(title = "Y-axis"),
+                      zaxis = list(title = "Z-axis")))
+
+
+```
+
+## Underlying Structure
+
+::: incremental
+-   What dimension is our data in?
+-   What is the underlying structure here?
+-   What is the dimension of a plane?
+:::
+
+## Visualizing Plane
+
+```{r}
+#| echo: false
+
+data1 <- data1 |> 
+  mutate(new_x = x + y +  2*z, new_y = x - y)
+
+data1 |> ggplot(aes(x = new_x, y = new_y)) +
+  geom_point()
+```
+
+## Thinking about structure in tabular data
+
+```{r}
+#| echo: FALSE
+
+# Load necessary libraries
+library(plotly)
+
+# Generate sample data
+set.seed(123)
+n <- 1000
+x <- rnorm(n)
+y <- x
+z <- 0.5*x + 0.5*y
+
+data2 <- tibble(x = x, y = y, z = z)
+
+# Create 3D scatter plot
+plot_ly(x = ~x, y = ~y, z = ~z, type = "scatter3d", mode = "markers",
+        marker = list(size = 3, color = 'blue')) |>
+  plotly::layout(scene = list(xaxis = list(title = "X-axis"),
+                      yaxis = list(title = "Y-axis"),
+                      zaxis = list(title = "Z-axis")))
+
+
+```
+
+## Underlying Structure
+
+::: incremental
+-   What dimension is our data in?
+-   What is the underlying structure here?
+-   What is the dimension of a line?
+:::
+
+## Visualizing 2D
+
+```{r}
+#| echo: false
+
+data2 <- data2 |> 
+  mutate(new_x = x + y + z, new_y = x + y)
+
+data2 |> ggplot(aes(x = new_x, y = new_y)) +
+  geom_point()
+```
+
+## Visualizing 1D
+
+```{r}
+#| echo: false
+data2 |> ggplot(aes(x = new_x, y = "")) +
+  geom_point()
+```
+
+## Visualizing 1D Data
+
+```{r}
+#| echo: false
+
+library(ggforce)
+
+data2 <- data2 |> 
+  mutate(new_x = x + y + z, new_y = x + y)
+
+data2 |> ggplot(aes(x = new_x, y = "")) +
+  geom_sina()
+```
+
+## Thinking about structure in tabular data
+
+```{r}
+#| echo: FALSE
+
+# Load necessary libraries
+library(plotly)
+
+# Generate sample data
+set.seed(123)
+n <- 1000
+x <- rnorm(n)
+y <- rnorm(n)
+z <- 0.5*x + 0.5*y + rnorm(n, 0, sd = 0.25)
+
+data3 <- tibble(x = x, y = y, z = z)
+
+# Create 3D scatter plot
+plot_ly(x = ~x, y = ~y, z = ~z, type = "scatter3d", mode = "markers",
+        marker = list(size = 3, color = 'blue')) |>
+  plotly::layout(scene = list(xaxis = list(title = "X-axis"),
+                      yaxis = list(title = "Y-axis"),
+                      zaxis = list(title = "Z-axis")))
+
+
+```
+
+## Underlying Structure
+
+::: incremental
+-   What dimension is our data in?
+-   What is the underlying structure here?
+-   What is the dimension of a plane?
+:::
+
+## Visualizing Plane
+
+```{r}
+#| echo: false
+
+data3 <- data3 |> 
+  mutate(new_x = x + z, new_y = y - z)
+
+data3 |> ggplot(aes(x = new_x, y = new_y)) +
+  geom_point()
+```
+
+## Discussion
+
+-   What's the difference between the first two scenario's and the third scenario?
+    +   How much have we reduced the dimension?
+    +   How much information have we lost?
+    
+# Principal Component Analysis (PCA)
+
+## Vector's and Projections
+
+```{r}
+#| echo: FALSE
+
+# Load necessary libraries
+library(plotly)
+
+# Generate sample data
+set.seed(123)
+n <- 1000
+x <- rnorm(n)
+y <- rnorm(n)
+z <- x + y
+
+vector_x1 <- c(0, 1)
+vector_y1 <- c(0, 1)
+vector_z1 <- c(0, 2)
+vector_x2 <- c(0, 1)
+vector_y2 <- c(0, -1)
+vector_z2 <- c(0, 0)
+
+data <- tibble(x=x, y=y, z=z)
+
+# Create 3D scatter plot
+plot_ly(x = ~x, y = ~y, z = ~z, type = "scatter3d", mode = "markers",
+        marker = list(size = 3, color = 'blue', opacity = 0.25)) |>
+  plotly::layout(scene = list(xaxis = list(title = "X-axis"),
+                      yaxis = list(title = "Y-axis"),
+                      zaxis = list(title = "Z-axis")),
+                 showlegend = FALSE) |> 
+  add_trace(x = ~vector_x1, y = ~vector_y1, z = ~vector_z1, type = "scatter3d", mode = 'lines+markers', line = list(color = 'red')) |> 
+  add_trace(x = ~vector_x2, y = ~vector_y2, z = ~vector_z2, type = "scatter3d", mode = 'lines+markers', line = list(color = 'red'))
+```
+
+## Basis Vectors and New Coordinates
+
+-   Plane above: $z = x + y$
+-   New Directions:
+    -   New Direction 1: $\vec{d}_1 = \langle 1, 1, 2\rangle$
+    -   New Direction 2: $\vec{d}_1 = \langle 1, -1, 0\rangle$
+-   New data:
+    -   New $x$: $1\times x_{old} + 1\times y_{old} + 2\times z_{old}$
+    -   New $y$: $1\times x_{old} - 1\times y_{old} + 0\times z_{old}$
+-   Note: Not quite correct, need to re-normalize
+    
+## New Data {.smaller}
+
+```{r}
+new_data <- data |> 
+  mutate(new_x = x + y + 2*z,
+         new_y = x - y,
+         new_x = new_x/6, #re-normalizing
+         new_y = new_y/2)
+
+new_data |> head() |> kable()
+```
+
+## What's actually happening
+
+-   We are **projecting** each observation onto our new directions $\vec{d}_1$ and $\vec{d}_2$
+-   [Visualization](https://xaktly.com/VectorProjections.html)
+
+## Projecting our data
+
+```{r}
+#| echo: FALSE
+
+# Load necessary libraries
+library(plotly)
+
+# Generate sample data
+set.seed(123)
+n <- 1000
+x <- rnorm(n)
+y <- rnorm(n)
+z <- x + y
+new_x <- (x + y + 2*z)/6
+new_y <- (x - y)/2
+
+vector_x1 <- c(0, 1)
+vector_y1 <- c(0, 1)
+vector_z1 <- c(0, 2)
+vector_x2 <- c(0, 1)
+vector_y2 <- c(0, -1)
+vector_z2 <- c(0, 0)
+
+data <- tibble(x=x, y=y, z=z)
+
+# Create 3D scatter plot
+plot_ly(x = ~x, y = ~y, z = ~z, type = "scatter3d", mode = "markers",
+        marker = list(size = 3, color = 'blue', opacity = 0.25)) |>
+  plotly::layout(scene = list(xaxis = list(title = "X-axis"),
+                      yaxis = list(title = "Y-axis"),
+                      zaxis = list(title = "Z-axis")),
+                 showlegend = FALSE) |> 
+  add_trace(x = ~vector_x1, y = ~vector_y1, z = ~vector_z1, type = "scatter3d", mode = 'lines+markers', line = list(color = 'red')) |> 
+  add_trace(x = ~vector_x2, y = ~vector_y2, z = ~vector_z2, type = "scatter3d", mode = 'lines+markers', line = list(color = 'red')) |> 
+  add_trace(x = ~new_x, y = ~new_x, z = ~2*new_x, type = "scatter3d", mode = 'markers', marker = list(size = 3, color = 'purple')) |> 
+  add_trace(x = ~new_y, y = ~-new_y, z = ~0, type = "scatter3d", mode = 'markers', marker = list(size = 3, color = 'purple'))
+```
+
+## Plotting these
+
+```{r}
+new_data |> 
+  ggplot(aes(x = new_x, y = new_y)) +
+           geom_point()
+```
+
+# Principal Component Analysis (PCA)
+
+## PCA Vocabulary
+
+-   **Principal Component (PC1)**: direction in $p$-dimensional space (e.g. $\langle 1, 1, 2\rangle$)
+-   **Scores**: our new variables (e.g. $(-0.56\times 1 + -0.996\times 1 + -1.56\times 2)/6 = -0.778$)
+-   **Loadings**: For direction above'
+    +   Loading on $x$ is 1
+    +   Loading on $y$ is 1
+    +   Loading on $z$ is 2
+
+## Recall: Variance
+
+::: incremental
+-   What is variance?
+-   Intuitively: what does variance measure?
+-   Variance: $\frac{1}{n-1}\sum_{i=1}^n(x_i - \bar{x})^2$
+    +   Average of the squared distance from zero of each observation
+:::
+
+## Idea behind PCA
+
+-   Select first PC so variance of scores is the maximum
+-   Iteratively:
+    +   Select next PC so variance of scores is maximize AND new PC is *orthogonal* to all other PCs
+
+. . .
+
+-   What does orthogonal mean?
+
+## Easy Example
+
+-   Exercise: What should the first and second PCs be?
+
+```{r}
+#| echo: false
+#| code-fold: true
+
+set.seed(123)
+n = 1000
+easy_ex <- tibble(x = rnorm(n), y = rnorm(n, sd = 0.25))
+
+ggplot(easy_ex, aes(x=x, y=y)) +
+  geom_point() +
+  xlim(-4, 4)+
+  ylim(-4,4)
+```
+
+## How much variance is explained by each of the PC's?
+
+```{r}
+var_exp <- easy_ex |> 
+  mutate(PC1 = x,
+         PC2 = y) |> 
+  summarize(var1 = var(PC1), 
+            var2 = var(PC2))
+
+var_exp |> kable()
+```
+
+## What proportion of variance is explained by each of the PC's?
+
+```{r}
+var_exp |> 
+  pivot_longer(everything()) |> 
+  mutate(proportion = value/sum(value)) |> 
+  kable()
+```
+
+-   93% of our variance (information) is contained in our first PC
+
+## Harder Example
+
+-   Exercise: What should the first and second PCs be?
+
+```{r}
+#| echo: false
+#| code-fold: true
+
+set.seed(123)
+n = 1000
+harder_ex <- tibble(x = rnorm(n), y = x + rnorm(n, sd = 0.25))
+
+ggplot(easy_ex, aes(x=x, y=y)) +
+  geom_point() +
+  xlim(-4, 4)+
+  ylim(-4,4)
+```
+
+## How much variance is explained by each of the PC's?
+
+```{r}
+var_exp <- harder_ex |> 
+  mutate(PC1 = (x + y)/2,
+         PC2 = (x-y)/2) |> 
+  summarize(var1 = var(PC1), 
+            var2 = var(PC2))
+
+var_exp |> kable()
+```
+
+## Next Time
+
+-   Using R to apply this to bigger data sets
+-   More on interpreting PCA
+
+

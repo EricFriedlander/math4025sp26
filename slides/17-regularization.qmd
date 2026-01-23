@@ -1,0 +1,300 @@
+---
+title: 'MATH 427: Regularization & Model Tuning'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+  cache: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+
+## Computational Set-Up
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(knitr)
+library(fivethirtyeight) # for candy rankings data
+
+tidymodels_prefer()
+
+set.seed(427)
+```
+
+## Data: Candy {.smaller}
+
+The data for this lecture comes from the article FiveThirtyEight [*The Ultimate Halloween Candy Power Ranking*](https://fivethirtyeight.com/features/the-ultimate-halloween-candy-power-ranking) by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment people could vote on a series of randomly generated candy match-ups (e.g. Reese's vs. Skittles). Click [here](http://walthickey.com/2017/10/18/whats-the-best-halloween-candy/) to check out some of the match ups.
+
+The data set contains 12 characteristics and win percentage from 85 candies in the experiment.
+
+## Data: Candy
+
+```{r}
+glimpse(candy_rankings)
+```
+
+## Data Cleaning
+
+```{r}
+candy_rankings_clean <- candy_rankings |> 
+  select(-competitorname) |> 
+  mutate(sugarpercent = sugarpercent*100, # convert proportions into percentages
+         pricepercent = pricepercent*100, # convert proportions into percentages
+         across(where(is.logical), ~ factor(.x, levels = c("FALSE", "TRUE")))) # convert logicals into factors
+```
+
+## Data Cleaning
+
+```{r}
+glimpse(candy_rankings_clean)
+```
+
+## Data Splitting
+
+```{r}
+candy_split <- initial_split(candy_rankings_clean, strata = winpercent)
+candy_train <- training(candy_split)
+candy_test <- testing(candy_split)
+```
+
+# Lasso & Ridge Regression
+
+## Question
+
+-   What criteria do we use to fit a linear regression model? Write down an expression with $\hat{\beta_i}$'s, $x_{ij}$'s, and $y_j$'s in it.
+
+## OLS {.smaller}
+
+-   Ordinary Least Squares Regression:
+
+$$
+\begin{aligned}
+\hat{\beta} =\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}SSE(\hat{\beta}) &= \underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\sum_{j=1}^n(y_j-\hat{y}_j)^2\\
+&=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2
+\end{aligned}
+$$
+
+-   $\hat{\beta} = (\hat{\beta}_0,\ldots, \hat{\beta}_p)$ is the vector of all my coefficients
+-   $\operatorname{argmin}$ is a function (operator) that returns the *arguments* that minimize the quantity it's being applied to
+
+## Ridge Regression {.smaller}
+
+$$
+\begin{aligned}
+\hat{\beta} &=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}} \left(SSE(\hat{\beta}) + \lambda\|\hat{\beta}\|_2^2\right) \\
+&= \underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\left(\sum_{j=1}^n(y_j-\hat{y}_j)^2 + \lambda\sum_{i=1}^p \hat{\beta}_i^2\right)\\
+&=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\left(\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2 + \lambda\sum_{i=1}^p \hat{\beta}_i^2\right)
+\end{aligned}
+$$
+
+-   $\lambda$ is called a "tuning parameter" and is not estimated from the data (more on this later)
+-   Idea: penalize large coefficients
+-   If we penalize large coefficients, what's going to happen to to our estimated coefficients? [[THEY SHRINK!]{.span style="color:red;"}]{.fragment .fade-in}
+-   $\|\cdot\|_2$ is called the *$L_2$-norm*
+
+## But... but... but why?!? {.smaller}
+
+::: incremental
+-   Recall the Bias-Variance Trade-Off
+-   Our reducible error can partitioned into:
+    +   Bias: how much $\hat{f}$ misses $f$ by *on average*
+    +   Variance: how much $\hat{f}$ moves around from sample to sample
+-   Ridge: increase bias a little bit in exchange for large decrease in variance
+-   As we increase $\lambda$ do we increase or decrease the penalty for large coefficients?
+-   As we increase $\lambda$ do we increase or decrease the *flexibility* of our model?
+:::
+
+## LASSO {.smaller}
+
+$$
+\begin{aligned}
+\hat{\beta} &=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}} \left(SSE(\hat{\beta}) + \lambda\|\hat{\beta}\|_1\right) \\
+&= \underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\left(\sum_{j=1}^n(y_j-\hat{y}_j)^2 + \lambda\sum_{i=1}^p |\hat{\beta}_i|\right)\\
+&=\underset{\hat{\beta}_0,\ldots, \hat{\beta}_p}{\operatorname{argmin}}\left(\sum_{j=1}^n(y_j-\hat{\beta}_0-\hat{\beta}_1x_{1j} - \cdots - \hat{\beta}_px_{pj})^2 + \lambda\sum_{i=1}^p |\hat{\beta}_i|\right)
+\end{aligned}
+$$
+
+-   LASSO: **L**east **A**bsolute **S**hrinkage and **S**election **O**perator
+-   $\lambda$ is called a "tuning parameter" and is not estimated from the data (more on this later)
+-   Idea: penalize large coefficients
+-   If we penalize large coefficients, what's going to happen to to our estimated coefficients [THEY SHRINK!]{.span style="color:red;"}
+-   $\|\cdot\|_1$ is called the *$L_1$-norm*
+
+## Question
+
+-   What should happen to our coefficients as we *increase* $\lambda$?
+
+## Ridge vs. LASSO
+
+::: incremental
+-   Ridge has a *closed-form solution*... how might we calculate it?
+-   Ridge has some nice linear algebra properties that makes it EXTREMELY FAST to fit
+-   LASSO has no *closed-form solution*... why?
+-   LASSO coefficients estimated *numerically*... how?
+    +   Gradient descent works (kind of) but something called **coordinate descent** is typically better
+-   MOST IMPORTANT PROPERTY OF LASSO: it *induces sparsity* while Ridge does not
+:::
+
+## Sparsity in Applied Math {.smaller}
+
+-   **sparse** typically means "most things are zero"
+-   Example: sparse matrices are matrices where most entries are zero
+    +   for large matrices this can provide HUGE performance gains
+-   LASSO *induces sparsity* by setting most of the parameter estimates to zero
+    +   this means it fits the model and does feature selection SIMULTANEOUSLY
+-   Let's do some board work to see why this is...
+
+## LASSO and Ridge in R
+
+```{r}
+ols <- linear_reg() |> 
+  set_engine("lm")
+ridge_0 <- linear_reg(mixture = 0, penalty = 0) |> # penalty set's our lambda
+  set_engine("glmnet")
+ridge_1 <- linear_reg(mixture = 0, penalty = 1) |> # penalty set's our lambda
+  set_engine("glmnet")
+ridge_10 <- linear_reg(mixture = 0, penalty = 10) |> # penalty set's our lambda
+  set_engine("glmnet")
+lasso_0 <- linear_reg(mixture = 1, penalty = 0) |> # penalty set's our lambda
+  set_engine("glmnet")
+lasso_1 <- linear_reg(mixture = 1, penalty = 1) |> # penalty set's our lambda
+  set_engine("glmnet")
+lasso_10 <- linear_reg(mixture = 1, penalty = 10) |> # penalty set's our lambda
+  set_engine("glmnet")
+```
+
+## Create Recipe
+
+```{r}
+lm_preproc <- recipe(winpercent ~ . , data = candy_train) |> 
+  step_dummy(all_nominal_predictors()) |> 
+  step_normalize(all_numeric_predictors())
+```
+
+## Question
+
+-   Why do we need to normalize our data?
+
+## Create workflows
+
+```{r}
+generic_wf <- workflow() |> add_recipe(lm_preproc)
+ols_wf <- generic_wf |> add_model(ols)
+ridge0_wf <- generic_wf |> add_model(ridge_0)
+ridge1_wf <- generic_wf |> add_model(ridge_1)
+ridge10_wf <- generic_wf |> add_model(ridge_10)
+lasso0_wf <- generic_wf |> add_model(lasso_0)
+lasso1_wf <- generic_wf |> add_model(lasso_1)
+lasso10_wf <- generic_wf |> add_model(lasso_10)
+```
+
+## Fit Models
+
+```{r}
+ols_fit <- ols_wf |> fit(candy_train)
+ridge0_fit <- ridge0_wf |> fit(candy_train)
+ridge1_fit <- ridge1_wf |> fit(candy_train)
+ridge10_fit <- ridge10_wf |> fit(candy_train)
+lasso0_fit <- lasso0_wf |> fit(candy_train)
+lasso1_fit <- lasso1_wf |> fit(candy_train)
+lasso10_fit <- lasso10_wf |> fit(candy_train)
+```
+
+## Collect coefficients
+
+```{r}
+all_coefs <- bind_cols(model = "ols", tidy(ols_fit)) |> 
+  bind_rows(bind_cols(model = "ridge0", tidy(ridge0_fit))) |> 
+  bind_rows(bind_cols(model = "ridge1", tidy(ridge1_fit))) |> 
+  bind_rows(bind_cols(model = "ridge10", tidy(ridge10_fit))) |> 
+  bind_rows(bind_cols(model = "lasso0", tidy(lasso0_fit))) |> 
+  bind_rows(bind_cols(model = "lasso1", tidy(lasso1_fit))) |> 
+  bind_rows(bind_cols(model = "lasso10", tidy(lasso10_fit)))
+```
+
+## Question
+
+::: incremental
+-   What should we expect from `ols`, `ridge0`, and `lasso0`?
+-   They should be the same!
+:::
+
+## Visualize
+
+```{r}
+all_coefs |> 
+  filter(model %in% c("ols", "ridge0", "lasso0")) |> 
+  ggplot(aes(y = term, x = estimate, fill = model, color = model)) +
+  geom_bar(position = "dodge", stat = "identity")
+```
+
+## Uh-Oh!
+
+::: incremental
+-   They're not the same
+-   Any idea why?
+-   Algorithm used to fit model
+    +   `lm` estimates coefficients *analytically*
+    +   `glmnet` estimates coefficients *numerically* using an algorithm named "coordinate-descent"
+-   Moral: you must understand theory AND application
+:::
+
+## Visualizing Coefficients: Ridge
+
+```{r}
+all_coefs |> 
+  filter(model %in% c("ols", "ridge1", "ridge10")) |> 
+  ggplot(aes(y = term, x = estimate, fill = model, color = model)) +
+  geom_bar(position = "dodge", stat = "identity")
+```
+
+## Visualizing Coefficients: LASSO
+
+```{r}
+all_coefs |> 
+  filter(model %in% c("ols", "lasso1", "lasso10")) |> 
+  ggplot(aes(y = term, x = estimate, fill = model, color = model)) +
+  geom_bar(position = "dodge", stat = "identity")
+```
+
+## Ridge Coefficients vs. Penalty ( $\lambda$ )
+
+```{r}
+ridge0_fit |> extract_fit_engine() |> autoplot()
+```
+
+## LASSO Coefficients vs. Penalty ( $\lambda$ )
+
+```{r}
+lasso0_fit |> extract_fit_engine() |> autoplot()
+```
+
+
+## Why should I learn math for data science?
+
+-   Today:
+    +   Ordinary Least Squares: Linear algebra, Calc 3
+    +   LASSO: Calc 3, Geometry, Numerical Analysis
+    +   Ridge: Linear Algebra, Calc 3
+    +   Bias-Variance Trade-Off: Probability
+    
+## Question
+
+-   How do you think we should choose $\lambda$?
+
+
+

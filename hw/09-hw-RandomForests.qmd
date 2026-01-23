@@ -1,0 +1,153 @@
+---
+title: "Homework 9: Random Forests"
+author: "Your Name"
+editor: visual
+format:
+  html:
+    embed-resources: true
+---
+
+```{r setup}
+#| include: false
+
+# insert packages here
+```
+
+# Introduction
+
+In this homework, we will practice using bagging and random forests to make classifications. In addition, we will talk more about *cross validation* and *parameter tuning.*
+
+## Learning goals
+
+In this assignment, you will...
+
+-   Fit random forests
+-   Use variable importance plots to interpret random forests
+-   Use grid-based techniques to choose tuning parameters
+
+# Getting Started
+
+You are free to use whatever version control strategy you like.
+
+## Teams & Rules
+
+You can find your team for this assignment on Canvas in the **People** section. The group set is called **HW9**. Your group will consist of 2-3 people and has been randomly generated. The GitHub assignment can be found [here](https://classroom.github.com/a/zm3IwmB7). Rules:
+
+1.  You are all responsible for understanding the work that your team turns in.
+2.  All team members must make roughly equal contributions to the homework.
+3.  Any work completed by a team member must be committed and pushed to GitHub by that person.
+
+## Data: Titanic
+
+We will be using the famous Titanic data set which includes data for many passengers on the Titanic, including whether or not they survived. The files have already been cleaned up a bit for you and are split into testing `Titanic_test.csv` and training sets `Titanic_train.csv`. If you ever participate in a "hack-a-thon" or Kaggle-type data science competition, you will typically be given a "labeled" training set (i.e. including response variables) and unlabeled test set. You will then be scored on how well your predictions on the test set match the true values that you are unable to see. In this homework, I will be giving you the labels on the test set. The variables in the data represent, in order:
+
+-   Whether the passenger survived (1) or died (0)
+-   Passenger Class (1st, 2nd, or 3rd)
+-   Sex
+-   Age (`NA` if unknown),
+-   Siblings/spouses on board
+-   Parents/children on board
+-   Fare paid,
+-   Port of Embarkation (either Cherbourg, Queenstown, or Southhampton)
+
+# Exploratory Data Analysis
+
+Let's start with some simple exploratory data analysis and reasonable conjectures about who might have survived the Titanic.
+
+## Exercise 1
+
+::: {.callout-tip title="Question"}
+Load the two data sets. Take a look at the data (don't print anything) and take care of any cleaning that is necessary (e.g. removing an ID column or columns or row numbers). Based on the characteristics above, which two or three features do you think are going to be most important for predicting who survives? Give a brief justification for each.
+:::
+
+## Exercise 2
+
+::: {.callout-tip title="Question"}
+Conduct a **BRIEF** EDA to explore the relationship between survival status and the variables you describe above. Practice making this looks professional. Advice:
+
+-   Use plots instead of table unless there is something interesting about specific numbers that you'd like to point out.
+-   Make sure you interpret each plot. Do not simply create the plot and say "Look at this plot that I made!"
+-   Put your explanations and interpretations directly before and after your plots. I.e. if you're going to make three plots, display and explain them one at a time.
+:::
+
+# Pre-Processing
+
+## Exercise 3
+
+::: {.callout-tip title="Question"}
+Generate a recipe that can be used with a random forest and classification tree. You are welcome to create more than one if you feel it's necessary.
+:::
+
+# Baseline Tree
+
+## Exercise 4
+
+::: {.callout-tip title="Question"}
+Build a classification tree on the training set to predict who will survive. Plot your classification tree below. What variables seem most important?
+:::
+
+## Exercise 5
+
+::: {.callout-tip title="Question"}
+Apply your model to the test set to predict who will survive. Print the confusion matrix below. What is the accuracy of this tree model?
+:::
+
+# Random Forest
+
+## Exercise 6
+
+::: {.callout-tip title="Question"}
+Build a single random forest for the training set. Make sure to
+
+-   Choose the number of factors to consider at each step (e.g. `mtry`)
+-   Choose the number of trees to build by specifying `ntree`
+-   Make sure to set `importance = "impurity"` in the engine
+:::
+
+## Exercise 7
+
+::: {.callout-tip title="Question"}
+Generate a variable importance plot for your forest. How do the variables it identifies as important compare to the classification tree?
+:::
+
+## Exercise 8
+
+::: {.callout-tip title="Question"}
+How does your model perform on the test data? How does it's performance compare to the classification tree?
+:::
+
+## Cross Validation and Parameter Tuning
+
+## Exercise 9
+
+::: {.callout-tip title="Question"}
+For tuning a random forest model, we are mostly interested in finding the best value of `mtry`, the number of variables used at each split when building the trees. Conduct a grid search to find the best value of `mtry`.
+:::
+
+## Exercise 10
+
+::: {.callout-tip title="Question"}
+When you have your best model, use it to predict who will survive in `Titanic_test` and report the accuracy.
+
+Most likely, this is greater than the accuracy of your classification tree model from Problem 5. But maybe not. There is still some randomness involved and it is always possible that on a particular data set, one method will outperform another. Still, by tuning parameters and doing cross-validation, we give ourselves the best chance of creating an accurate model.
+:::
+
+# Conceptual Questions
+
+## Exercise 11
+
+::: {.callout-tip title="Question"}
+Compare and contrast the information given by the variable importance plot of the random forest and looking at the actual classification tree. What information is contained in both? What information is only contained in one but not the other? Which is better for interpretability?
+:::
+
+## Exercise 12
+
+::: {.callout-tip title="Question"}
+In class, Dr. Friedlander described the number of tree grown in a random forest as being "kind of" a hyper parameter. What did he mean by that?
+:::
+
+## Exercise 13
+
+::: {.callout-tip title="Question"}
+Discuss the `mtry` parameter in the context of the bias-variance trade-off. How should `mtry` impact the flexibility, bias, and variance of the model?
+:::

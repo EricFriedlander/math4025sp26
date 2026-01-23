@@ -1,0 +1,329 @@
+---
+title: 'MAT-427: Multiple Linear Regression + Data Splitting'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+
+## Computational Setup
+
+```{r setup}
+library(tidyverse)
+library(knitr)
+library(readODS)
+```
+
+## [Question!!!]{style="color:blue"}
+
+As a model's flexibility increases:
+
+::: panel-tabset
+
+## Questions
+
+1. its variance (increases/decreases)
+2. its bias  (increases/decreases)
+3. its training MSE  (increases/decreases)
+4. its test MSE  (describe)
+
+## Answers
+1. its variance  (**increases**)
+2. its bias  (**decreases**)
+3. its training MSE  (**decreases**)
+4. its test MSE  (**decreases at first, then increases and the model starts to overfit, U-shaped**)
+
+:::
+
+
+<!-- ## Bias-Variance Trade-Off App {.smaller} -->
+
+<!-- When Dr. F tell you, navigate to [this app](https://efriedlander.shinyapps.io/BVTappRegression/) -->
+
+<!-- -   Select your assigned data set and look at the second row of plots -->
+<!--   +   Which order polynomials have the lowest Bias, Variance, training MSE, and test MSE -->
+<!--       +   Which order polynomial would you say is best? -->
+<!--   +   Scroll down to the last row of plots and discuss how these images support your answers -->
+<!--   +   Repeat this process for different amounts of noise? -->
+<!--   +   Return to the first row of plots and select three different order polynomials based on your answers above... is the bias variance trade-off visible in this plot? -->
+
+
+# Modeling in R
+
+## Outlet Data {.smaller} 
+
+Suppose the CEO of a restaurant franchise is considering opening new outlets in different cities. They would like to expand their business to cities that give them higher profits with the assumption that highly populated cities will probably yield higher profits.
+
+They have data on the population (in 100,000) and profit (in $1,000) at 97 cities where they currently have outlets.
+
+```{r}
+outlets <- readRDS("../data/outlets.rds")   # load dataset
+head(outlets) |> kable() # first six observations of the dataset
+```
+
+## R as an open-source language
+
+- R is an open source language
+  + Advantages:
+    + Packages for almost anything you want
+    + "Cutting edge" methods rolled out quickly and early
+  + Disadvantages
+    + Many packages (especially new ones) may  have bugs
+    + Lots of syntactical diversity
+    + Syntax is frequently dependent on the needs of the person who wrote the package and conventions at the time the package was created
+    
+## Enter `tidyverse`
+
+> The tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.
+
+- `tidyverse` is for manipulating and visualizing data
+- the `tidyverse` is a *meta-package* meaning it is a collection of a bunch of other packages
+
+## Enter `tidymodels`
+
+>The tidymodels framework is a collection of packages for modeling and machine learning using tidyverse principles.
+
+- `tidymodels` creates a unified framework for building models in R
+- Eric's opinion: similar idea to `scikit-learn` in Python
+
+## Back to linear regression
+
+```{r}
+ggplot(data = outlets) +
+  geom_point(mapping = aes(x = population, y = profit)) +    # create scatterplot
+  geom_smooth(mapping = aes(x = population, y = profit), 
+              method = "lm", se = FALSE)   # add the regression line
+```
+
+## Classic Linear Regression in R {.smaller}
+
+::::{.columns}
+:::{.column}
+```{r}
+outlets_model <- lm(profit ~ population, data = outlets)
+outlets_model
+```
+:::
+
+:::{.column}
+
+This corresponds to the model:
+
+$$
+\begin{aligned}
+\text{Profit}  &= -3.90 + 1.19\times\text{Population}\\
+\hat{Y}_i &= -3.90 + 1.19X_i
+\end{aligned}
+$$
+i.e. $\hat{\beta}_0 = -3.90$ and $\hat{\beta}_1 = 1.19$
+:::
+::::
+
+## Modeling with `tidymodels`
+
+1. Specify mathematical structure of model (e.g. linear regression, logistic regression)
+
+2. Specify the *engine* for fitting the model. (e.g. `lm`, `stan`, `glmnet`).
+
+3. When required, declare the mode of the model (i.e. regression or classification). 
+
+## Linear Regression with `tidymodels`
+
+```{r}
+#| code-line-numbers: "|2|3|5|6|11,12"
+
+# Usually put these at the top
+library(tidymodels) # load tidymodels package
+tidymodels_prefer() # avoid common conflicts
+
+lm_model <- linear_reg() |> # Step 1
+  set_engine("lm") # Step 2
+
+# Step 3 not required since linear regression can't be used for classification
+
+# Fit the model
+lm_model_fit <- lm_model |> 
+  fit(profit ~ population, data = outlets)
+```
+
+## Linear Regression with `tidymodels`
+
+```{r}
+lm_model_fit |> 
+  tidy() |> 
+  kable()
+```
+
+Same model as before:
+
+$$
+\begin{aligned}
+\text{Profit}  &= -3.90 + 1.19\times\text{Population}\\
+\hat{Y}_i &= -3.90 + 1.19X_i
+\end{aligned}
+$$
+
+
+
+## Linear Regression in R: Prediction
+
+```{r}
+new_cities <- tibble(population = rnorm(100, 7, 3))
+
+lm_model_fit |> 
+predict(new_data = new_cities) |> 
+  kable()
+```
+
+```{r}
+new_cities <- tibble(population = rnorm(100, 7, 3))
+
+new_cities <- new_cities |> 
+  bind_cols(predict(lm_model_fit, new_data = new_cities, type = "pred_int")) |> 
+  kable()
+```
+
+Note: New data must be a data frame with the same columns names as the training data
+
+
+# Multiple Linear Regression
+
+## Multiple Linear Regression
+
+- Response: $Y$
+- Predictor Variables: $X_1, X_2, \ldots, X_p$
+- Assume true relationship:
+
+$$
+\begin{aligned}
+Y&=f(\mathbf{X}) + \epsilon\\
+&=\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \epsilon
+\end{aligned}
+$$
+where $\beta_j$ quantifies the association between the $j^{th}$ predictor and the response.
+
+
+
+## [Multiple Linear Regression: Estimating Parameters]{.r-fit-text} {.smaller}
+
+- Suppose $\hat{\beta}_0, \hat{\beta}_1, \ldots, \hat{\beta}_p$ are estimates of $\beta_0, \beta_1, \ldots, \beta_p$
+- Training Data:
+  + Observed response: $y_i$ for $i=1,\ldots,n$
+  + Observed predictors: $x_{1i}, x_{2i}, \ldots x_{pi}$ for $i=1,\ldots, n$
+- Predicted response: 
+$$\hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1x_{1i} + \ldots + \hat{\beta}_px_{pi} \text{ for } i=1, \ldots, n$$
+- Residuals: $e_i = \hat{y}_i - y_i$ for $i=1, \ldots, n$
+- Mean Squared Error (MSE): $MSE =\dfrac{e^2_1+e^2_2+\ldots+e^2_n}{n}$
+
+## [Multiple Linear Regression: Estimating Parameters]{.r-fit-text}
+
+- **Goal:** Use *training data* to find $\hat{\beta}_0, \hat{\beta}_1, \ldots, \hat{\beta}_p$ that minimizes MSE
+  + $\hat{\beta}_i$'s called **least-squares estimators**
+  + Since minimizing MSE $\implies$ MSE is called **cost/loss function**
+- Can use calculus or gradient descent to find $\hat{\beta}_i$'s
+
+
+
+## House Prices dataset {.smaller}
+
+- `size` is in square feet
+- `num_bedrooms` is a count
+- `price` is in $1,000's
+
+```{r}
+house_prices <- readRDS("../data/house_prices.rds")   # load dataset
+head(house_prices, 6) |> kable()  # print first 6 observations
+```
+
+
+## Multiple Linear Regression
+
+Some Exploratory Data Analysis (EDA)
+
+```{r}
+library(GGally)
+ggpairs(data = house_prices)   # correlation plot
+```
+
+## Multiple Linear Regression in R {.smaller}
+
+```{r}
+mlr_model <- linear_reg() |> 
+  set_engine("lm")
+
+house_price_mlr <- mlr_model |> 
+  fit(price ~ size + num_bedrooms, data = house_prices)   # fit the model
+
+house_price_mlr |> 
+  tidy() |>   # produce result summaries of the model
+  kable()
+```
+
+## [Multiple Linear Regression: Interpreting Parameters]{.r-fit-text} {.smaller}
+
+- $\hat{\beta}_0=89.5978$: The intercept $\implies$ a house with 0 square feet and 0 bedrooms would cost approximately \$89,598.80. Is this meaningful in context? [Not really]{.fragment .fade-in}
+- $\hat{\beta}_1=0.1392$: With `num_bedrooms` remaining fixed, an additional 1 square foot of `size` leads to an increase in `price` by approximately \$139.20.
+- $\hat{\beta}_2=-8.7379$: With `size` remaining fixed, an additional bedroom leads to an decrease in `price` of approximately \$8,737.90.
+
+. . .
+
+- Hmm.... that's a little weird...
+- **Simpson's Paradox:** when relationship between two variables disappears or reverses when controlling for a third, **confounding variable**
+
+## [Multiple Linear Regression: Interpreting Parameters]{.r-fit-text}
+
+:::{.incremental}
+- Write down our model in mathematical notation
+- $\text{price} = 89.5978 + 0.1392\times\text{size} - 8.7379\times\text{num_bedrooms}$
+- $Y = 89.5978 + 0.1392X_1 - 8.7379X_2$
+:::
+
+
+## Multiple Linear Regression: Prediction {.smaller}
+
+- Prediction of `price` when `size` is 2000 square feet for a house with 3 bedrooms
+- $\text{sales} = 89.5978 + 0.1392\times2000 - 8.7379\times3 = 341.7841$
+
+. . .
+
+```{r}
+predict(house_price_mlr, new_data = tibble(size = 2000, num_bedrooms = 3))   # obtain prediction
+```
+- Why don't these match exactly? [**rounding**]{.fragment .fade-in}
+
+
+## Linear Regression: Comparing Models {.smaller}
+
+:::{.fragment}
+:::{.incremental}
+- Many methods for comparing regression models from your regression course
+- Today: Data splitting
+- First: New Data
+:::
+:::
+:::{.fragment}
+- **ames housing data**
+  + Many variables
+  + Focus on:
+    * `Sale_Price`: in dollars
+    * `Gr_Liv_Area`: size in square feet
+    * `Bedroom_AbvGr`: number of bedrooms above grade
+:::
+
+
+

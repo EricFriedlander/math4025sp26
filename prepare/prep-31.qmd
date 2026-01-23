@@ -1,0 +1,8 @@
+---
+title: "Preparation for Principal Component Analysis"
+---
+
+## Assigned readings & videos
+
+- [Chapter 16 of TMWR](https://www.tmwr.org/dimensionality)
+- Chapter 12.1-12.2 ISLR

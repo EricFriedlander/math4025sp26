@@ -1,0 +1,509 @@
+---
+title: 'MATH 427: ROC Curve and AUC'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+## Announcements {.smaller}
+
+On March 5th at 10am in JAAC, Kyle Mayer will be guest lecturing to talk about his role as a data analyst at Micron. Kyle has a Bachelors in Engineering and a Masters in Physics. 
+
+Bio: Kyle Mayer is a Senior Data Analytics Engineer at Micron Technology with over 15 years of experience. He currently supports the Global Quality organization with engineering and data science projects. Kyle specializes in modeling complex physical processes, delivering insights that drive business value. Leveraging his expertise in semiconductor manufacturing, Kyle has developed tools and processes that have prevented over $100M in lost revenue. His passion for applying artificial intelligence to solve complex problems and develop automated systems highlights his commitment to innovation. In his spare time, Kyle enjoys spending time with his kids and going on hikes.
+
+## Job Application 1
+
+- [Job Ad](https://cofi.instructure.com/courses/17021/assignments/210575)
+- [Directions and Resources](/jobs/job-app-1-resources.qmd)
+- [Rubic (in progress)](/jobs/job-app-1-rubric.qmd)
+- Due Next Friday: CV and Cover Letter
+- Due Friday March 21st: whole application
+
+## Computational Set-Up
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(knitr)
+library(janitor) # for contingency tables
+library(ISLR2)
+library(ggforce) # sina plots
+
+tidymodels_prefer()
+
+set.seed(427)
+```
+
+
+
+## Default Dataset {.smaller}
+
+::: columns
+::: column
+A simulated data set containing information on ten thousand customers. The aim here is to predict which customers will default on their credit card debt.
+
+```{r}
+#| message: FALSE
+head(Default) |> kable()  # print first six observations
+```
+:::
+
+::: column
+**Response Variable**: `default`
+
+```{r}
+Default |> 
+  tabyl(default) |>  # class frequencies
+  kable()           # Make it look nice
+```
+:::
+:::
+
+## Split the data
+
+```{r}
+set.seed(427)
+
+default_split <- initial_split(Default, prop = 0.6, strata = default)
+default_split
+
+default_train <- training(default_split)
+default_test <- testing(default_split)
+```
+
+## [K-Nearest Neighbors Classifier: Build Model]{.r-fit-text}
+
+-   **Response** ($Y$): `default`
+-   **Predictor** ($X$): `balance`
+
+```{r}
+knnfit <- nearest_neighbor(neighbors = 10) |> 
+  set_engine("kknn") |> 
+  set_mode("classification") |>  
+  fit(default ~ balance, data = default_train)   # fit 10-nn model
+```
+
+## [K-Nearest Neighbors Classifier: Predictions]{.r-fit-text} {.smaller}
+
+::: panel-tabset
+## Class labels
+
+```{r}
+predict(knnfit, new_data = default_test, type = "class") |> head() |> kable()   # obtain predictions as classes
+```
+
+## Probabilities
+
+-   Predicts class w/ maximum probability
+
+```{r}
+predict(knnfit, new_data = default_test, type = "prob") |> head() |> kable() # obtain predictions as probabilities
+```
+:::
+
+## Fitting a logistic regression
+
+Fitting a logistic regression model with `default` as the response and `balance` as the predictor:
+
+```{r}
+logregfit <- logistic_reg() |> 
+  set_engine("glm") |> 
+  fit(default ~ balance, data = default_train)   # fit logistic regression model
+
+tidy(logregfit) |> kable()  # obtain results
+```
+
+## Making predictions in R
+
+::: panel-tabset
+
+## Class Labels
+
+```{r}
+predict(logregfit, new_data = tibble(balance = 700), type = "class") |> kable()   # obtain class predictions
+```
+
+## Log-Odds
+
+```{r}
+predict(logregfit, new_data = tibble(balance = 700), type = "raw") |> kable()   # obtain log-odds predictions
+```
+
+## Probabilities
+
+```{r}
+predict(logregfit, new_data = tibble(balance = 700), type = "prob") |> kable()  # obtain probability predictions
+```
+
+:::
+
+## Binary Classifiers
+
+-   Start with binary classification scenarios
+-   With binary classification, designate one category as "Success/Positive" and the other as "Failure/Negative"
+    +   If relevant to your problem: "Positive" should be the thing you're trying to predict/care more about
+    +   Note: "Positive" $\neq$ "Good"
+    +   For `default`: "Yes" is Positive
+-   Some metrics weight "Positives" more and viceversa
+
+## Last Time {.smaller}
+
+-   Confusion Matrix
+-   Metrics based on confusion matrix
+    +   Accuracy
+    +   Recall/Sensitivity
+    +   Precision/PPV
+    +   Specificity
+    +   NPV
+    +   MCC
+    +   F-Measure
+-   Today: ROC and AUC
+    
+# Thresholding
+
+
+## Using a threshold {.smaller}
+
+- Step 1: Predict **probabilities** for all observations
+
+```{r}
+default_test_wprobs <- default_test |>
+  mutate(
+    knn_probs = predict(knnfit, new_data = default_test, type = "prob") |> pull(.pred_Yes),
+    logistic_probs = predict(logregfit, new_data = default_test, type = "prob") |> pull(.pred_Yes)
+  )
+
+default_test_wprobs |> head() |> kable()   # obtain probability predictions
+```
+
+## Using a threshold {.smaller}
+
+- Step 1: Predict **probabilities** for all observations
+- Step 2: Set a threshold to obtain **class labels** (0.5 below)
+
+```{r}
+threshold <- 0.5   # set threshold
+default_test_wprobs <- default_test_wprobs |>
+  mutate(knn_preds = as_factor(if_else(knn_probs > threshold, "Yes", "No")),
+         logistic_preds = as_factor(if_else(logistic_probs > threshold, "Yes", "No"))
+  )
+
+default_test_wprobs |> head() |> kable()
+```
+
+## Using a threshold {.smaller}
+
+- Step 1: Predict **probabilities** for all observations
+- Step 2: Set a threshold to obtain **class labels** (0.5 below)
+
+```{r}
+threshold <- 0.5   # set threshold
+default_test_wprobs <- default_test_wprobs |>
+  mutate(knn_preds = as_factor(if_else(knn_probs > threshold, "Yes", "No")),
+         logistic_preds = as_factor(if_else(logistic_probs > threshold, "Yes", "No")))
+
+default_test_wprobs |> head() |> kable()
+```
+
+## Performance
+
+```{r}
+roc_metrics <- metric_set(accuracy, sensitivity, specificity)
+roc_metrics(default_test_wprobs, truth = default, estimate = knn_preds, event_level = "second") |> kable()
+```
+
+## Low Threshold
+
+```{r}
+threshold <- 0.1   # set threshold
+default_test_wprobs <- default_test_wprobs |>
+  mutate(knn_preds = as_factor(if_else(knn_probs > threshold, "Yes", "No")))
+
+roc_metrics(default_test_wprobs, truth = default, estimate = knn_preds, event_level = "second")  |> kable()
+```
+
+## High Threshold
+
+```{r}
+threshold <- 0.9   # set threshold
+default_test_wprobs <- default_test_wprobs |>
+  mutate(knn_preds = as_factor(if_else(knn_probs > threshold, "Yes", "No"))
+  )
+
+roc_metrics(default_test_wprobs, truth = default, estimate = knn_preds, event_level = "second") |> kable()
+```
+
+## Question
+
+-   If I want to improve Recall/Sensitivity should I increase or decrease my threshold?
+-   If I want to improve my Precision/PPV should I increase or decrease my threshold?
+
+# ROC Curve
+
+## ROC Curve and AUC
+
+- **ROC (Receiver Operating Characteristics) curve**: popular graphic for comparing different classifiers across all possible thresholds
+  + Plots the (1-Specificity) along the x-axis and the Sensitivity (true positive rate) along the y-axis
+- **AUC**: area under the AUC curve
+  + Ideal ROC curve will hug the top left corner
+- Idea: How well is my classifier separating positives from negatives
+
+## ROC Curve
+
+```{r}
+roc_curve(default_test_wprobs, truth = default, knn_probs, event_level = "second") |>
+  head() |>
+  kable()
+```
+
+## ROC Curve: Plot
+
+```{r}
+roc_curve(default_test_wprobs, truth = default, knn_probs, event_level = "second") |>
+  autoplot()
+```
+
+
+## AUC
+
+-   AUC: Area under the curve (ROC Curve that is)
+-   Measures how good your model is at separating categories
+-   Only for binary classification
+
+## AUC in R
+
+
+```{r}
+roc_auc(default_test_wprobs, truth = default, knn_probs, event_level = "second") |>
+  kable()
+```
+
+
+## Pathological Example 1
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+example1 <- tibble(prob = c(runif(100, 0, 0.1), runif(100, 0.9, 1)), class = c(rep("Negative", 100), rep("Positive", 100))) |>
+  mutate(class = factor(class))
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot() +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%"))
+```
+:::
+::::
+
+## Pathological Example 2
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+example1 <- tibble(prob = c(runif(100, 0, 0.5), runif(100, 0.5, 1)), class = c(rep("Negative", 100), rep("Positive", 100))) |>
+  mutate(class = factor(class))
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot() +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%"))
+```
+:::
+::::
+
+## Pathological Example 3
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+example1 <- tibble(prob = c(runif(100, 0, 0.7), runif(100, 0.3, 1)), class = c(rep("Negative", 100), rep("Positive", 100))) |>
+  mutate(class = factor(class))
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot()  +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%"))
+```
+:::
+::::
+
+## Pathological Example 4
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+example1 <- tibble(prob = c(runif(100, 0, 1), runif(100, 0, 1)), class = c(rep("Negative", 100), rep("Positive", 100))) |>
+  mutate(class = factor(class))
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot()
+```
+:::
+::::
+
+## Pathological Example 5
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+multiplier <- 1
+a <- 1 * multiplier
+b <- 3 * multiplier
+example1 <- tibble(prob = c(rbeta(100, a, b), rbeta(100, b, a)), class = c(rep("Negative", 100), rep("Positive", 100))) |>
+  mutate(class = factor(class))
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot() +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%"))
+```
+:::
+::::
+
+## Pathological Example 6
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+multiplier <- 1
+a <- 2 * multiplier
+b <- 3 * multiplier
+example1 <- tibble(prob = c(rbeta(100, a, b), rbeta(100, b, a)), class = c(rep("Negative", 100), rep("Positive", 100))) |>
+  mutate(class = factor(class))
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot() +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%"))
+```
+::: 
+:::: 
+
+## Pathological Example 7
+
+:::: columns
+:::: {.column width="40%"}
+```{r}
+#| echo: FALSE
+multiplier <- 20
+a <- 2 * multiplier
+b <- 3 * multiplier
+example1 <- tibble(prob = c(rbeta(100, a, b), rbeta(100, b, a)), class = c(rep("Negative", 100), rep("Positive", 100))) |>
+  mutate(class = factor(class))
+
+example1 |>
+  ggplot(aes(y = prob, x = class, color = class)) +
+  geom_sina() +
+  ylab("Predicted Probability of Positive")
+```
+:::
+
+:::: {.column width="60%"}
+```{r}
+#| echo: FALSE
+example1 |>
+  roc_curve(truth = class, prob, event_level = "second") |>
+  autoplot() +
+  annotate("text",
+           x = 0.75, y = 0.25,
+           label = paste0("AUC: ", roc_auc(example1, truth = class, prob, event_level = "second") |> pull(.estimate)*100, "%"))
+```
+:::
+::::
+
+## AUC Questions
+
+-   What should be the minimum AUC?
+-   What should be that maximum possible AUC?

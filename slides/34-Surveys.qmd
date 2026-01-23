@@ -1,0 +1,27 @@
+---
+title: 'MATH 427: Fill out your surveys'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+  cache: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+## Surveys
+
+1. Please fill out [this](https://forms.office.com/r/QxVXKcdfRF) post-survey about the apps.
+2. Please fill out your course evaluation survey.

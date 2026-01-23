@@ -1,0 +1,9 @@
+---
+title: "Preparation for Multiple Linear Regression & Data Splitting"
+---
+
+## Assigned readings & videos
+
+- Read Chapter 3.2, 3.3, and (optionally) 3.4 from ISLR2
+- If you you don't have experience with the `tidyverse` please read [Chapter 2 of TMWR](https://www.tmwr.org/tidyverse)
+- Read [Chapters 3-6 of TMWR](https://www.tmwr.org/base-r)

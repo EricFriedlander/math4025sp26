@@ -1,0 +1,7 @@
+---
+title: "Preparation for Decision Trees"
+---
+
+## Assigned readings & videos
+
+- Read 8.1 of ISLR

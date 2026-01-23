@@ -1,0 +1,86 @@
+---
+title: 'MATH 427: Project Work Day'
+author: Eric Friedlander
+format: html
+---
+
+
+## Goals for this week
+
+-   Monday's Class: Explore data, clean data, choose a step to focus on, and get ready for modeling.
+    +   Complete by Wednesday's class
+-   Wednesday's Class: Build and analyze models.
+    +   Complete by Friday's class
+-   Friday's class: Translating models into suggestions and presentations
+    +   Be ready to present by Monday
+    
+## Class Notes on Data
+
+While each group might be focusing on a slightly different question, let's approach this data set as a team. Whenever you notice something interesting about the data, or you have a cool idea about how to filter it, put that in [this](https://yotescollegeofidaho-my.sharepoint.com/:w:/g/personal/efriedlander_collegeofidaho_edu/EcPEtFB-QedEn0j-SwB_tp0BFzIRW25UYKu61ru6fugBXQ?e=HF58ml) shared word document. You should all have edit access with your CofI credentials.
+    
+## Responses from Brian {.smaller}
+
+> Why is the 2024 data set so much bigger than the other two? It has about ~74k rows vs. 16k and 17k for 2022 and 23.
+
+ ... we imported all of our prospects into Slate during the 2024 recruitment cycle, whereas in the past they were only imported if they became an inquiry. Since we knew that we were going to be switching strategic partners, we wanted to make sure we had all the names in our system just in case. 
+ 
+> I'm still having trouble understanding when a column gets a "Y" and when it gets a "N"... For example, it sounds like a student can start as a Prospect and then move over to an Inquiry at which point they get an "N" in the Prospect column and become a "Y" in the Inquiry column. Similar with "Applicant" and "Admit". But a student can still have a "Y" in both "Inquiry" and "Admit" right? Perhaps that report will help things make sense?
+
+I think part of the challenge with the data is that it really is used to populate information from the Application stage forward My understanding is if there is a Y in a field that leads to it being counted in the corresponding place on the report. So yes, you can have a Y in inquiry and admit.
+
+
+> Once a deposit is made, do we track if the student later decides not to enroll, and is that information reflected in the dataset? 
+
+Yes, we do track this information.  It would be indicated if the student only showed up in the deposit field and not the net deposit field.
+
+
+>  What is the difference between the 'Deposit' and 'Net Deposits' fields? How should we interpret cases where a student has deposited but is not included in the net deposits?
+
+Deposit means they submitted an enrollment deposit.  A Net Deposit means that they matriculated at the College for that term.
+
+> Are there cases where a student might be listed as an applicant without ever being an inquiry? If so, what does that imply about how they entered the process?
+
+Yes.  We talked about this in class.  They are referred to as "stealth apps", meaning that our first engagement with them was through an application they submitted to the College.
+
+> Does the data give any hints about whether an application is complete or if parts of it are missing, such as standardized test scores or GPA information?
+
+No, this data-set does not list out the materials that a student may be missing.
+
+> How do we distinguish between a student who is simply a prospect because we purchased their information and one who might have shown some early signs of interest? Is there any way to tell from the data which prospects are more likely to be accurate?
+
+You wouldn’t be able to do so in this particular data set, but we do have source code information that would indicate how the student entered our system.  (ex. standardized test score name purchase, group visit to campus, high school visit, etc.)
+
+> Would you prefer us to disregard factors like the significance of test scores in evaluating a student’s overall performance?
+
+The College has found that a better indicator of student success is their high school GPA, so when we review test scores, a score can only help their candidacy, not hurt it.  The exception would be with language proficiency scores, such as Duolingo, TOEFL, IELTS, etc.
+
+>  What criteria do you use to calculate GPA? Is a 4.0 GPA acceptable, and is it permissible to average them with different scales? 
+
+We evaluate GPA on a 4.0 scale.  In the event a school uses percentages over GPA points, there is a formula we can use to convert it to a GPA.
+
+> How do you envision us handling international students, particularly UWCers, given the fluctuating percentages?
+
+I don’t have any particular preference.  Perhaps comparing the yield rates of UWC graduates vs. non-UWC graduates or even from particular UWCs?
+
+> How did the COVID-19 situation impact the admission process? Did you introduce any specific features or variables to address certain indicators? 
+
+The biggest impact that the pandemic had was that we no longer factored test score into the scholarship matrix calculation.  We already had information that GPA was a better predictor anyway, but given that it was harder for students to take standardized tests at that time, we eliminated the need completely.
+
+> You mentioned that for Idahoans cost is important, what other factors do you think are important for getting yotes?
+
+I think lack of understanding among Idaho families about the difference between four-year publics, two-year publics, and private institutions is a big factor.  There also is a misunderstanding of what it means to be a Liberal Arts College.  In a fairly conservative state like Idaho, some families/students may perceive the College to be extremely liberal and not welcoming to their political persuasion. 
+
+> What does the drops-dp/df column mean? 
+
+This means that a student who deposited either decided not to come or deferred their enrollment to a future term.
+
+> In academic interest, there's Undecided but also NA, what is the difference? 
+
+NA would mean that the field was left blank on the application, whereas a student may have listed Undecided as their choice.
+
+> How does your team handle missing data? 
+
+Not exactly sure what you mean here, but in an application there are some key things that we must have in order to make an admission decision.  As long as we have them, we can proceed.
+
+
+

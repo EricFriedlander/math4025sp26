@@ -1,0 +1,184 @@
+---
+title: "Homework 6: Feature/Model Selection and Regularization"
+author: "Your Name"
+editor: visual
+format:
+  html:
+    embed-resources: true
+---
+
+```{r setup}
+#| include: false
+
+# insert packages here
+```
+
+# Introduction
+
+In this homework you will practice using regularization and model tuning to select models and features.
+
+## Learning goals
+
+In this assignment, you will...
+
+-   Fit linear and logistic regression models using regularization
+-   Use grid-based techniques to choose tuning parameters
+
+# Getting Started
+
+You are free to use whatever version control strategy you like.
+
+## Teams & Rules
+
+You can find your team for this assignment on Canvas in the **People** section. The group set is called **HW6**. Your group will consist of 2-3 people and has been randomly generated. The GitHub assignment can be found [here](https://classroom.github.com/a/aNkAg26g). Rules:
+
+1.  You are all responsible for understanding the work that your team turns in.
+2.  All team members must make roughly equal contributions to the homework.
+3.  Any work completed by a team member must be committed and pushed to GitHub by that person.
+
+# Dataset 1: Communities and Crime
+
+For the first half of this homework, we'll be working with the Communities and Crime data set from the UCI Machine Learning repository. From the abstract:
+
+> "Communities in the US. Data combines socio-economic data from the '90 Census, law enforcement data from the 1990 Law Enforcement Management and Admin Stats survey, and crime data from the 1995 FBI UCR."
+
+More details can be found [here](http://archive.ics.uci.edu/ml/datasets/communities+and+crime+unnormalized). Our goal will be to predict the number of crimes per capita, stored in the column called `ViolentCrimesPerPop`.
+
+## Cleaning and Preprocessing
+
+## Exercise 1
+
+::: {.callout-tip title="Question"}
+Load the data set `CommViolPredUnnormalizedDataCleaned.csv`. This data set contains quite a bit of missing data but it uses question marks to denote values which are missing. Use `read_csv` to load this data set into Rand include the argument `na = "?"`. R should automatically replace question marks with missing values. Comment on any aspects of the data which you find pertinent.
+:::
+
+## Exercise 2
+
+::: {.callout-tip title="Question"}
+Clean the data by:
+
+0.  [READ THE DOCUMENTATION!](http://archive.ics.uci.edu/dataset/211/communities+and+crime+unnormalized)
+1.  Dropping any columns that seem like they won't be helpful to your analysis including all of the "non-predictive" and "potential goal" variables (other than `ViolentCrimesPerPop`) in the "Additional Variable Information" section in the documentation.
+2.  Ensuring all features have the correct type.
+:::
+
+## Exercise 3
+
+::: {.callout-tip title="Question"}
+Use `drop_na` to drop any rows which have a missing value in the `ViolentCrimesPerPop` column, our target variable. Why do we want to do this instead of trying to impute them?
+:::
+
+## Exercise 4
+
+::: {.callout-tip title="Question"}
+How many observation are left? Split the remaining data into a training and test set using an 80-20 split. Use the seed 427.
+:::
+
+## Exercise 5
+
+::: {.callout-tip title="Question"}
+Generate a recipe that can be used for ridge regression and LASSO. At a minimum it should include the following steps (not necessarily in this order):
+
+-   Dummy code all factors.
+-   Imputing missing values.
+-   Normalization of all predictors... why?
+:::
+
+# Initial Model Fits
+
+## Exercise 6
+
+::: {.callout-tip title="Question"}
+Fit two models to the training data, a ridge regression model and a LASSO model. Set the penalty for both to 0. Plot the coefficient estimates against the penalty as in [these](https://mat427sp25.netlify.app/slides/17-regularization#/ridge-coefficients-vs.-penalty-lambda) [plots](https://mat427sp25.netlify.app/slides/17-regularization#/lasso-coefficients-vs.-penalty-lambda). Explain what you see and why. (Practice interview question).
+:::
+
+# Tuning your model
+
+## Exercise 7
+
+::: {.callout-tip title="Question"}
+Use cross-validation and grid-search to find the best penalty (according to RMSE) for your Ridge and LASSO models. Tip: This step will take a while to run so start with two folds and one repetition, maybe even on a subset of your data, until you're sure that it is running correctly. Then use 5-folds and 10-repeats to get your final estimate of $\lambda$. In addition, make use of [caching](https://quarto.org/docs/computations/caching.html) so you don't need to re-run the cross-validation every time the document is Rendered.
+:::
+
+# Final Model
+
+## Exercise 8
+
+::: {.callout-tip title="Question"}
+Fit your best Ridge, and your best LASSO model to the full training set. Assess both models performance on the test set. Which is better? List all variables that LASSO includes in the final model. How does this compare to Ridge? What does this mean for the interpretability of a model fit with LASSO compared to Ridge?
+:::
+
+# Dataset 2: NFL Field Goals
+
+In the second part of this homework, you will practice working with a classification problem. The dataset describes NFL field goal attempts. For those of you unfamiliar with American football, this is when the kicker tries to kick the ball through the uprights to score three points, as in
+[this video](https://www.youtube.com/watch?v=U3L10PoEXvI).
+This data set contains information on about 3000 NFL field goal attempts over three seasons. The column we will be interested in predicting is `Made`, which has value `1` or `0` indicating if the
+field goal was made or missed. If you want explanations for the other variables,
+you can look at the notes in the Excel file (the `.xlsx` file) by hovering over the variable names.
+
+## Exercise 9  
+
+::: {.callout-tip title="Question"}
+Open the data in Excel. Clean up the spreadsheet and save it as a csv so that it can be loaded into R. Load the data, partition the data using a 80-20 split.
+:::
+
+## Exercise 10
+
+::: {.callout-tip title="Question"}
+Clean the data by:
+
+1.  Dropping any columns that seem like they won't be helpful to your analysis. There is at least one.
+2.  Ensuring all features have the correct type.
+3.  Convert the `Made` column into a factor with informative levels (e.g. `Made`, `Missed`).
+:::
+
+## Exercise 11
+
+::: {.callout-tip title="Question"}
+What proportion of field goals in your training set were made? What does this mean in the context
+of determining a baseline level of accuracy that we want to beat?
+:::
+
+# Logistic Regression and Regularization
+
+We will now extend what we've learned about $L_1$-regularization to logistic regression! In the same way that LASSO adds an $L_1$-norm penalty to the *objective* function for Ordinary Least Squares regression, we can add an $L_1$-norm penalty to the objective function for logistic regression. Whereas in OLS, the objective function was the sum of squared errors, the objective function for Logistic Regression is the log-likelihood. Other than this the principle works the same way... by including an $L_1$-regularization term, you induce sparsity.
+
+## Exercise 12
+
+::: {.callout-tip title="Question"}
+Generate a recipe that can be used for logistic regression with $L_1$-regularization. At a minimum it should include the following steps (not necessarily in this order):
+
+-   Dummy code all factors.
+-   Normalization of all predictors... why?
+:::
+
+## Exercise 13
+
+::: {.callout-tip title="Question"}
+Fit a logistic regression model with $L_1$ regularization to the training data. This can be done in the exact same was as with OLS, simply use `logisic_reg` instead of `linear_reg` when you start your model and make sure to use `glmnet` as your engine. Set the penalty to 0. Plot the coefficient estimates against the penalty as in [these](https://mat427sp25.netlify.app/slides/17-regularization#/ridge-coefficients-vs.-penalty-lambda) [plots](https://mat427sp25.netlify.app/slides/17-regularization#/lasso-coefficients-vs.-penalty-lambda). Explain what you see and why. (Practice interview question).
+:::
+
+## Exercise 14
+
+::: {.callout-tip title="Question"}
+Use cross-validation and grid-search to find the best penalty (according to accuracy) for your logistic regression model. Tip: This step will take a while to run so start with two folds and one repetition, maybe even on a subset of your data, until you're sure that it is running correctly. Then use 5-folds and 10-repeats to get your final performance estimates. In addition, make use of [caching](https://quarto.org/docs/computations/caching.html) so you don't need to re-run the cross-validation every time the document is Rendered.
+:::
+
+
+## Exercise 15
+
+::: {.callout-tip title="Question"}
+Fit your final model on the full training set and assess it's performance on the test set. Which variables are included in your final model?
+:::
+
+## Exercise 16 (Very long question)
+
+::: {.callout-tip title="Question"}
+Use grid search and cross-validation to find the best $k$ for a KNN classification model on this data. Fit the final model on the full training set and assess it's performance on the test set. How does it perform compared to the model from Exercise 15?
+:::
+
+## Exercise 17 (Practice Interview Question)
+
+::: {.callout-tip title="Question"}
+Why doesn't it make sense to use $L_1$ regularization with KNN?
+:::

@@ -1,0 +1,329 @@
+---
+title: 'MATH 427: Classification Trees'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+  cache: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+
+## Computational Set-Up
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(rpart.plot)
+library(knitr)
+library(kableExtra)
+
+tidymodels_prefer()
+
+set.seed(427)
+```
+
+
+
+# Decision Trees for Classification
+
+## Classification Trees
+
+-   Predictions: 
+    +   Classes: most common class at terminal node
+    +   Probability: proportion of each class at terminal node
+-   Rest of tree: same as regression tree
+
+## Classification Trees
+
+-   Predictions: 
+    +   Classes: most common class at terminal node
+    +   Probability: proportion of each class at terminal node
+-   Rest of tree: same as regression tree
+
+## Fitting Classification Trees {.smaller}
+-   Still use **recursive binary splitting** to grow a classification tree
+-   $\hat{p}_{mk}$: proportion of training observations in the $m^{th}$ region from the $k^{th}$ class
+-   $SSE$ can be replaced by 
+    +   **classification error rate**, fraction of the training observations that do not belong to the most common class ($1 - \text{accuracy}) $$E = 1 - \max_k \left(\hat{p}_{mk}\right)$$
+    
+## Alternatives to Classification Error Rate
+
+-   **Gini index**,  measure of node purity— small values indicate that a node is predominantly a single class $$G = \displaystyle \sum_{k=1}^{K} \hat{p}_{mk}\left(1-\hat{p}_{mk}\right)$$
+-   **Entropy**,  measure of node purity— small values indicate that a node is predominantly a single class $$G = \displaystyle -\sum_{k=1}^{K} \hat{p}_{mk}]\log\left(\hat{p}_{mk}\right)$$
+    
+## General Idea
+
+-   Many different implementations so check documentation
+-   ISLR2 recommendation
+    +   Use Gini or Cross-Entropy to split
+    +   Use classification error rate to prune
+-   `rpart` uses Gini to split and classification error (plus penalty) to prune
+
+# Data Cleaning Side-Quest
+
+## Data: Voter Frequency
+
+-   [Info about data](https://github.com/fivethirtyeight/data/tree/master/non-voters)
+-   Goal: Identify individuals who are unlikely to vote to help organization target "get out the vote" effort.
+
+```{r}
+voter_data <- read_csv('https://raw.githubusercontent.com/fivethirtyeight/data/master/non-voters/nonvoters_data.csv')
+
+glimpse(voter_data)
+```
+
+## Cleaning the Data: Straight Forward Stuff
+
+```{r}
+voter_clean <- voter_data |> 
+  select(-RespId, -weight, -Q1) |>
+  mutate(
+    educ = factor(educ, levels = c("High school or less", "Some college", "College")),
+    income_cat = factor(income_cat, levels = c("Less than $40k", "$40-75k ",
+                                               "$75-125k", "$125k or more")),
+    voter_category = factor(voter_category, levels = c("rarely/never", "sporadic", "always"))
+  )
+```
+
+## Cleaning Data: Missing Data
+
+```{r}
+voter_data |> 
+  summarize(across(everything(), ~sum(is.na(.x)))) |> 
+  pivot_longer(everything()) |> 
+  filter(value > 0) |> 
+  kable() |> 
+  kable_paper() |> 
+  scroll_box(width = "1050px", height = "400px")
+```
+
+## Cleaning the Data: Q22, 28, 29, 31, 32, 33
+
+-   Dealing with missing values should depend on what "missing" means in the context of each variable
+
+## Cleaning the Data: Q22
+
+```{r}
+voter_clean |> 
+  count(Q22) |> 
+  kable() |> 
+  kable_paper() |> 
+  scroll_box(width = "1050px", height = "400px")
+```
+
+## Uh-Oh... -1s?
+
+:::: columns
+::: column
+```{r}
+voter_clean |> filter(Q22 == -1) |> select(Q20, Q22) |> kable() |> 
+  kable_paper() |> scroll_box(width = "1050px", height = "400px")
+```
+:::
+
+::: column
+```{r}
+voter_clean |> filter(is.na(Q22)) |> select(Q20, Q22) |> kable() |> 
+  kable_paper() |> scroll_box(width = "1050px", height = "400px")
+```
+:::
+::::
+
+## More Cleaning: -1s
+
+```{r}
+voter_clean |> 
+  summarize(across(everything(), ~sum(.x == -1))) |> 
+  pivot_longer(everything()) |> 
+  filter(value > 0)  |> kable() |> 
+  kable_paper() |> scroll_box(width = "1050px", height = "400px")
+```
+
+## How should we handle -1s? {.smaller}
+
+::: incremental
+-   Seems like -1 means: question asked and not answered, or answer not ranked
+-   Seems like `NA` means: question never asked
+-   What should we do?
+-   Couple methods:
+    +   Replace -1 with "Not answered"
+    +   Replace -1 with `NA`
+    +   Replace -1 with `NA` and add extra columns `QX_Ranked_Answered`, (Yes/No)
+        + Can do this using `step_indicate_na` in our recipe
+        + First, deal with current `NA`s
+        + Second, convert -1s to `NA`
+:::
+
+## Dealing with current `NA`s: Q22
+
+```{r}
+voter_clean <- voter_clean |> 
+  filter(Q22 != 5 | is.na(Q22)) |> 
+  mutate(Q22 = as_factor(Q22),
+         Q22 = if_else(is.na(Q22), "Not Asked", Q22)) 
+```
+
+## Cleaning Q28
+
+```{r}
+voter_clean |> 
+  count(Q28_1) |> 
+  kable()
+```
+
+## Cleaning Q28
+
+-   Seems like 
+    +   -1 means not selected
+    +   Seems like 1 means selected
+    +   `NA` means never asked
+
+## Cleaning Q28
+
+```{r}
+voter_clean <- voter_clean |> 
+  mutate(across(Q28_1:Q28_8, ~if_else(.x == -1, 0, .x)),
+         across(Q28_1:Q28_8, ~ as_factor(.x)),
+         across(Q28_1:Q28_8, ~if_else(is.na(.x) , "Not Asked", .x))
+  )
+```
+
+## Cleaning Q29
+
+```{r}
+voter_clean <- voter_clean |> 
+  mutate(across(Q29_1:Q29_10, ~if_else(.x == -1, 0, .x)),
+         across(Q29_1:Q29_10, ~ as_factor(.x)),
+         across(Q29_1:Q29_8, ~if_else(is.na(.x) , "Not Asked", .x))
+  )
+```
+
+
+## Cleaning Q31:Q33: Handling Party
+
+```{r}
+voter_clean <- voter_clean |> 
+mutate(
+  Party_ID = as_factor(case_when(
+    Q31 == 1 ~ "Strong Republican",
+    Q31 == 2 ~ "Republican",
+    Q32 == 1  ~ "Strong Democrat",
+    Q32 == 2 ~ "Democrat",
+    Q33 == 1 ~ "Lean Republican",
+    Q33 == 2 ~ "Lean Democrat",
+    TRUE ~ "Other"
+  )),
+  Party_ID = factor(Party_ID, levels =c("Strong Republican", "Republican", "Lean Republican",
+                                          "Other", "Lean Democrat", "Democrat", "Strong Democrat")))
+```
+
+## Finally: Dealing with -1s
+
+```{r}
+voter_clean <- voter_clean |> 
+  mutate(across(!ppage, ~as_factor(if_else(.x == -1, NA, .x))))
+```
+
+# Classification Trees in R
+
+## Split Data
+
+```{r}
+set.seed(427)
+
+voter_splits <- initial_split(voter_clean, prop = 0.7, strata = voter_category)
+voter_train <- training(voter_splits)
+voter_test <- testing(voter_splits)
+```
+
+## Define Model
+
+```{r}
+tree_model <- decision_tree(cost_complexity = tune(),
+                            min_n = tune(), 
+                            tree_depth = tune()) |> 
+  set_engine("rpart") |> 
+  set_mode("classification")
+```
+
+## Define Recipe
+
+```{r}
+tree_recipe <- recipe(voter_category ~ . , data = voter_train) |> 
+  step_indicate_na(all_predictors()) |> 
+  step_zv(all_predictors()) |> 
+  step_integer(educ, income_cat, Party_ID, Q2_2:Q4_6, Q6, Q8_1:Q9_4, Q14:Q17_4,
+               Q25:Q26) |> 
+  step_impute_median(all_numeric_predictors()) |> 
+  step_impute_mode(all_nominal_predictors()) |> 
+  step_dummy(all_nominal_predictors(), one_hot = TRUE)
+  
+```
+
+## Define Workflow
+
+```{r}
+tree_wf <- workflow() |> 
+  add_model(tree_model) |> 
+  add_recipe(tree_recipe)
+```
+
+## Tune Model
+
+```{r}
+voter_folds <- vfold_cv(voter_train, v = 5, repeats = 10)
+tuning_grid <- grid_latin_hypercube(cost_complexity(range = c(-10, 1)), 
+                                    min_n(range = c(1, 30)),
+                                    tree_depth(range = c(1, 30)), size = 50)
+tuned_model <- tune_grid(tree_wf,
+                         resamples = voter_folds,
+                         grid = tuning_grid,
+                         metrics = metric_set(accuracy))
+```
+
+# Plot output
+
+```{r}
+autoplot(tuned_model)
+```
+
+# Plot output
+
+```{r}
+autoplot(tuned_model)
+```
+
+## Select Best Tree
+
+```{r}
+best_combo <- select_best(tuned_model, metric = "accuracy")
+best_tree <-  tree_wf |> 
+  finalize_workflow(best_combo) |> 
+  fit(voter_train)
+
+best_combo |> kable()
+```
+
+## Select Best Tree
+
+```{r}
+best_tree |> extract_fit_engine() |> rpart.plot()
+```
+
+## Interpreting the tree
+
+-   What features seem to be more important?

@@ -1,0 +1,39 @@
+---
+title: 'MATH 427: Cover Letter & Resume Peer-Review'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+  cache: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+## Peer Review {.smaller}
+
+You will be placed in groups of two or three:
+
+-   Spend about 10-15 minutes reviewing each of our partner's documents
+    +   Point out anything that is unclear
+    +   Point out any typos or grammatical errors. If there are A LOT, then just say "PROOF READ"
+    +   Fill out the rubric you have
+    +   Pretend to be an employer: Write down a few questions you have and would want to learn more about based on the documents you have.
+
+-   After your group is done reviewing, discuss each persons document as a group.
+    +   Talk about strengths
+    +   Talk about weaknesses
+    +   BE KIND AND SUPPORTIVE!
+    
+-   If you're getting feedback, take it graciously!

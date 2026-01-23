@@ -1,0 +1,293 @@
+---
+title: 'MATH 427: The Big Picture'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+```{r setup}
+#| include: false
+
+library(tidyverse)
+library(ISLR2)
+library(kableExtra)
+library(countdown)
+```
+
+
+# Having a successful semester in MAT 427
+
+## Five tips for success
+
+1.  Complete all the preparation work (readings and videos) before class.
+
+2.  Ask questions, come to office hours and help session.
+
+3.  Do the homework; get started on homework early when possible.
+
+4.  Don't procrastinate and don't let a week pass by with lingering questions.
+
+5.  Stay up-to-date on announcements on Canvas and sent via email.
+
+## Emails for help
+
+If you email me about an error please include a screenshot of the error and the code causing the error.
+
+# Questions?
+
+Raise your hand or email me.
+
+# Machine Learning
+
+## What is Machine Learning?
+
+-   Machine Learning is the study of tools/techniques for extracting
+    information and making predictions from complex datasets
+-   The name machine learning was coined in 1959 by Arthur Samuel
+    -   "Field of study that gives computers the ability to learn
+        without being explicitly programmed"
+
+## What is Machine Learning?
+
+Tom M. Mitchell (1998):
+
+> A computer program is said to learn from experience **E** with respect
+> to some class of tasks **T** and performance measure **P** if its
+> performance at tasks in **T**, as measured by **P**, improves with
+> experience **E**.
+
+## What is Machine Learning?
+
+![MNIST handwritten digits (from ISLR, James et
+al.)](images/01/MNIST-0000000001-2e09631a_09liOmx.jpg)
+
+## [Question!!!]{style="color:blue"}
+
+Suppose your email program watches which emails you do or do not mark as
+spam, and based on that learns how to better filter spam. According to
+Tom Mitchell's definition, which of the following is the task **T**,
+experience **E**, and performance measure **P** in this setting?
+
+-   [**P**]{.fragment .fade-in fragment-index="1"} The number (or
+    fraction) of emails correctly classified as spam/ham (not spam)
+-   [**T**]{.fragment .fade-in fragment-index="1"} Classifying emails as
+    spam or ham
+-   [**E**]{.fragment .fade-in fragment-index="1"} Watching you label
+    emails as spam or ham
+    
+```{r}
+#| echo: false
+countdown::countdown(minutes  = 1L)
+```
+
+## Statistical Learning vs Machine Learning vs Data Science
+
+-   Machine learning arose as a sub-field of Artificial Intelligence
+    which is a sub-fields of Computer Science
+-   Statistical learning arose as a sub-field of Statistics
+-   There is much overlap, a great deal of "cross-fertilization"
+-   "Data Science" - Reflects the fact that both statistical and machine
+    learning are about data
+-   "Machine Learning" or "Data Science" are "fancier" terms
+
+## Statistics vs Machine Learning
+
+-   Statistics: more concerned with answering why and how things work,
+    making inferences
+-   Machine/Statistical learning: more concerned with making predictions
+
+## Terminology/Notation {.smaller}
+
+**Ames Housing dataset** - Contains data on 881 houses in Ames, IA. We
+are interested in predicting sale price.
+
+The first ten **observations** are shown below.
+
+```{r}
+#| echo: false
+
+ames <- readRDS("../data/AmesHousing.rds")
+# ames <- ames %>% select(c(1,2,3,5,8,9))
+head(ames, 10) |>
+  select(1:9) |> 
+  kable("html") |> 
+  kable_styling(font_size = 12)
+```
+
+## Terminology/Notation {.smaller}
+
+**Default dataset** - Contains credit card default data on 10,000
+individuals. We are interested in predicting whether somebody will
+default or not.
+
+Ten **observations** are shown below.
+
+```{r}
+#| echo: false
+set.seed(1)
+data("Default")
+Default |> 
+  slice_sample(n=10) |> 
+  kable("html") |> 
+  kable_styling(font_size=12)
+```
+
+## Terminology/Notation
+
+-   **Response/Target/Outcome** - variable we are interested in
+    predicting, denoted as $Y$
+-   **Features/Inputs/Predictors** - variables used to predict the
+    response, denoted as $X$
+-   **Feature Matrix** - all features taken together, denoted as
+    $\mathbf{X}$
+-   Number of data points/observations denoted as $n$
+-   Number of features/inputs/predictors denotes as $p$
+-   Missing entries in R are denoted as `NA`
+
+## [Question!!!]{style="color:blue"} {.smaller}
+
+For the **Ames Housing** and **Default** datasets:
+
+::: panel-tabset
+## Questions
+
+-   What are the corresponding values of $n$ and $p$?
+-   What will be the dimension of the corresponding response vector $Y$?
+-   What is the value of the 3rd feature for the 2nd observation?
+
+## Answers
+
+-   What are the corresponding values of $n$ and $p$?
+    -   Ames: $n = 881$ and $p = 9$
+    -   Default: $n = 10000$ and $p = 4$
+-   What will be the dimension of the corresponding response vector $Y$?
+    -   Ames: $881\times 1$
+    -   Default: $10000\times 1$
+-   What is the value of the 3rd feature for the 2nd observation?
+    -   Ames: `Attchd`
+    -   Default: `397.5425`
+:::
+
+## [Question!!!]{style="color:blue"} {.smaller}
+
+Suppose you have information about 867 cancer patients on their [age,
+tumor size, clump thickness of the tumor, uniformity of cell size, and
+whether the tumor is malignant or benign]{.fragment .highlight-red
+fragment-index="2"}. Based on these data, you are interested in building
+a model to predict the type of tumor (malignant or benign) for future
+cancer patients.
+
+-   What are the values of $n$ and $p$ in this dataset?
+    [$n = 867, p = 5$]{.fragment .fade-in fragment-index="1"}
+-   What are the inputs/features?
+
+## Supervised vs Unsupervised Learning
+
+![Machine Learning Tasks (from Bunker and Fayez,
+2017)](images/01/Supervised-Learning-versus-Unsupervised-Learning-Mathworks-nd.png){.r-stretch}
+
+## Supervised Learning
+
+-   We have access to **labeled** data
+-   Objective: learn overall pattern of relationship between the inputs
+    ($\mathbf{X}$) and response ($Y$) in order to
+    -   Investigate the relationship between inputs and response
+    -   Predict for potential unseen **test** cases
+    -   Assess the quality of predictions
+
+## Types of Supervised Learning
+
+Supervised Learning problems can be categorized into:
+
+::: incremental
+-   **Regression** problems (response is quantitative, continuous)
+-   **Classification** problems (response is qualitative, categorical)
+-   What if I have **discrete** quantitative data (e.g. counts)?
+    +   Can use either but one is probably better...
+    +   How many discrete values are there?
+        +   Enough we can think of the response as continuous? 
+    +   What is our goal?
+        +   How important is being *exactly* correct?
+:::
+
+## Unsupervised Learning
+
+-   No response/outcome variable, just $\mathbf{X}$
+-   Understand structure within data
+    -   find similar groups of observations based on features
+        (**clustering**)
+    -   find a smaller subset of features with the most variation
+        (**dimensionality reduction**)
+-   No gold-standard
+-   Easier to collect unlabeled data
+-   Useful pre-processing step for supervised learning
+
+## Unsupervised Learning {.smaller}
+
+**US Arrests dataset** - Data on arrests for 50 US states.
+
+The first ten observations are shown below.
+
+```{r}
+#| echo: false
+
+data("USArrests")
+head(USArrests, 10) |> 
+  kable("html") |> 
+  kable_styling(font_size = 16)
+```
+
+## [Question!!!]{style="color:blue"}
+
+::: {style="font-size: 60%;"}
+For each of the following, identify whether the problem belongs to the
+supervised or unsupervised learning paradigm
+
+-   Examine the statistics of two football teams, and predict which team
+    will win tomorrow's match (given historical data of teams'
+    wins/losses to learn from) [**supervised**]{.fragment .fade-in}
+-   Given genetic (DNA) data from a person, predict the probability of
+    the person developing diabetes over the next 10 years
+    [**supervised**]{.fragment .fade-in}
+-   Take a collection of 1000 essays written on the US economy, and find
+    a way to automatically group these essays into a small number of
+    groups of essays that are somehow "similar" or "related"
+    [**unsupervised**]{.fragment .fade-in}
+-   Examine data on the income and years of education of adults in a
+    neighborhood and build a model to predict the income from years of
+    education [**supervised**]{.fragment .fade-in}
+:::
+
+## Recap {.smaller}
+
+-   What is a Machine Learning algorithm?
+    +   T: has task
+    +   P: performance is measured
+    +   E: improves with experience
+-   Terminology:
+    +   Features
+        +   $p$
+    +   Target
+    +   Observations
+        + $n$
+-   Supervised vs. unsupervised learning
+    +   Supervised: data is labeled
+    +   Unsupervised: data is unlabeled
+
+
+

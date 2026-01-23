@@ -1,0 +1,311 @@
+---
+title: 'MATH 427: Evaluating Classification Models'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+## Tips on Gradient Descent HW
+
+-   Make step size small!
+-   May take a while to converge
+-   Try adaptive step size (i.e. backtracking)
+-   Clarification on stopping criteria
+    +   Set tolerance
+    +   Stop when distance from gradient to $(0, 0)$ is below tolerance
+
+
+## Computational Set-Up
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(gridExtra)
+library(janitor) # for next contingency tables
+library(kableExtra)
+library(ISLR2)
+
+tidymodels_prefer()
+```
+
+
+
+## Default Dataset {.smaller}
+
+::: columns
+::: column
+A simulated data set containing information on ten thousand customers. The aim here is to predict which customers will default on their credit card debt.
+
+```{r}
+#| message: FALSE
+head(Default) |> kable()  # print first six observations
+```
+:::
+
+::: column
+**Response Variable**: `default`
+
+```{r}
+Default |> 
+  tabyl(default) |>  # class frequencies
+  kable()           # Make it look nice
+```
+:::
+:::
+
+## Split the data
+
+```{r}
+set.seed(427)
+
+default_split <- initial_split(Default, prop = 0.6, strata = default)
+default_split
+
+default_train <- training(default_split)
+default_test <- testing(default_split)
+```
+
+## [K-Nearest Neighbors Classifier: Build Model]{.r-fit-text}
+
+-   **Response** ($Y$): `default`
+-   **Predictor** ($X$): `balance`
+
+```{r}
+knnfit <- nearest_neighbor(neighbors = 10) |> 
+  set_engine("kknn") |> 
+  set_mode("classification") |>  
+  fit(default ~ balance, data = Default)   # fit 10-nn model
+```
+
+## [K-Nearest Neighbors Classifier: Predictions]{.r-fit-text} {.smaller}
+
+::: panel-tabset
+## Class labels
+
+```{r}
+predict(knnfit, new_data = Default, type = "class") |> head() |> kable()   # obtain predictions as classes
+```
+
+## Probabilities
+
+-   Predicts class w/ maximum probability
+
+```{r}
+predict(knnfit, new_data = Default, type = "prob") |> head() |> kable() # obtain predictions as probabilities
+```
+:::
+
+## Fitting a logistic regression
+
+Fitting a logistic regression model with `default` as the response and `balance` as the predictor:
+
+```{r}
+logregfit <- logistic_reg() |> 
+  set_engine("glm") |> 
+  fit(default ~ balance, data = default_train)   # fit logistic regression model
+
+tidy(logregfit) |> kable()  # obtain results
+```
+
+## Making predictions in R
+
+::: panel-tabset
+
+## Class Labels
+
+```{r}
+predict(logregfit, new_data = tibble(balance = 700), type = "class") |> kable()   # obtain class predictions
+```
+
+## Log-Odds
+
+```{r}
+predict(logregfit, new_data = tibble(balance = 700), type = "raw") |> kable()   # obtain log-odds predictions
+```
+
+## Probabilities
+
+```{r}
+predict(logregfit, new_data = tibble(balance = 700), type = "prob") |> kable()  # obtain probability predictions
+```
+
+:::
+
+
+# Assessing Performance of Classifiers
+
+## Binary Classifiers
+
+-   Start with binary classification scenarios
+-   With binary classification, designate one category as "Success/Positive" and the other as "Failure/Negative"
+    +   If relevant to your problem: "Positive" should be the thing you're trying to predict/care more about
+    +   Note: "Positive" $\neq$ "Good"
+    +   For `default`: "Yes" is Positive
+-   Some metrics weight "Positives" more and viceversa
+
+## Confusion Matrix
+
+|                                  | Actual Positive/Event | Actual Negative/Non-event |
+|:--------------------------------:|:---------------------:|:-------------------------:|
+|   **Predicted Positive/Event**   |     True Positive (TP)     |      False Positive  (FP)     |
+| **Predicted Negative/Non-event** |    False Negative (FN)    |       True Negative  (TN)     |
+
+## Adding predictions to tibble
+
+```{r}
+default_test_wpreds <- default_test |> 
+  mutate(
+    knn_preds = predict(knnfit, new_data = default_test, type = "class")$.pred_class,
+    logistic_preds = predict(logregfit, new_data = default_test, type = "class")$.pred_class
+  )
+
+default_test_wpreds |> head() |> kable()
+```
+
+## KNN: Confusion Matrix
+
+```{r}
+default_test_wpreds |>
+  conf_mat(truth = default, estimate = knn_preds)
+```
+
+## KNN: Confusion Matrix (Sexy)
+
+```{r}
+default_test_wpreds |>
+  conf_mat(truth = default, estimate = knn_preds) |> 
+  autoplot("heatmap")
+```
+
+## Logistic Regression: Confusion Matrix
+
+```{r}
+default_test_wpreds |>
+  conf_mat(truth = default, estimate = logistic_preds) |> 
+  autoplot(type = "heatmap")
+```
+
+## Classification Metrics {.smaller}
+
+-   Accuracy: proportion of your classes that are correct $$(TP + TN)/Total$$
+-   Recall/Sensitivity: proportion of true positives correct (true positive rate) $$TP/(TP+FN)$$
+-   Precision/Positive Predictive Value (PPV): proportion of predicted positive that are correct $$TP/(TP+FP)$$
+-   Specificity: proportion of true negatives correct (true negative rate) $$TN/(TN+FP)$$
+-   Negative Predictive Value (NPV): proportion of predicted negatives that are correct $$TN/(TN+FN)$$
+
+## KNN: Performance {.smaller}
+
+:::: columns
+::: column
+```{r}
+default_test_wpreds |>
+  conf_mat(truth = default, estimate = knn_preds) |> 
+  autoplot("heatmap")
+```
+:::
+
+::: column
+-   Accuracy: $(3854+49)/4000 = .976 = 97.6\%$
+-   Recall/Sensitivity: $49/(49+80) = 0.380 = 38.0\%$
+-   Precision/Positive Predictive Value (PPV): $49/(49+17) = .742 = 74.2\%$
+-   Specificity: $3854/(3854+17) = 0.996 = 99.6\%$
+-   Negative Predictive Value (NPV): $3854/(3854+80) = 98.0$
+:::
+::::
+
+## Logistic Regression: Performance {.smaller}
+
+:::: columns
+::: column
+```{r}
+default_test_wpreds |>
+  conf_mat(truth = default, estimate = logistic_preds) |> 
+  autoplot("heatmap")
+```
+:::
+
+::: column
+Compute the following and write your answers on the board:
+
+-   Accuracy
+-   Recall/Sensitivity
+-   Precision/Positive Predictive Value (PPV)
+-   Specificity
+-   Negative Predictive Value (NPV)
+:::
+::::
+
+## Performance Metrics with `yardstick`
+
+-   `yardstick` is a package that ships with `tidymodels` meant for model evaluation
+-   Typical syntax: `metricname(data, truth, estimate, ...)`
+    +   Bind original data with predicted observations
+    +   Put true response in for `truth` and predicted values in for `estimate`
+    
+## Logistic Regression: Accuracy {.smaller}
+
+
+```{r}
+default_test_wpreds |> 
+  accuracy(truth = default, estimate = logistic_preds) |> 
+  kable()
+```
+
+## Two More Metrics {.smaller}
+
+-   Matthews correlation coefficient (MCC): similar to $R^2$ but for classification
+$$\frac{TP\times TN - FP \times FN}{\sqrt{(TP + FP)(TP+FN)(TN+FP)(TN+FN)}}$$
+    +   Good for imbalanced data
+    +   Considers both positives and negatives
+-   F-Measure: harmonic mean of recall and precision
+$$\frac{2}{recall^{-1} + precision^{-1}} = \frac{2TP}{2TP+FP+FN}$$
+    +   Focuses more on positives
+    +   bad of imbalanced data
+
+## Metric Sets
+
+```{r}
+binary_metrics <- metric_set(accuracy, recall, precision, specificity,
+                             npv, mcc, f_meas)
+```
+
+-   Can apply this to compute a bunch of metrics
+
+
+## KNN: Performance {.smaller}
+
+```{r}
+default_test_wpreds |> 
+  binary_metrics(truth = default, estimate = knn_preds, event_level = "second") |> 
+  kable()
+```
+
+## Logistic Regression: Performance {.smaller}
+
+```{r}
+default_test_wpreds |> 
+  binary_metrics(truth = default, estimate = logistic_preds, event_level = "second") |> 
+  kable()
+```
+
+## Discussion
+
+-   For each of the following metrics, brainstorm a situation in which that metric is probably the most important:
+    +   Recall
+    +   Precision
+    +   Accuracy

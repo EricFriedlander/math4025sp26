@@ -1,0 +1,608 @@
+---
+title: 'MAT-427: KNN + Preprocessing'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+
+## Computational Setup
+
+```{r setup}
+library(tidyverse)
+library(tidymodels)
+library(knitr)
+library(modeldata) # contains ames dataset
+
+tidymodels_prefer()
+```
+
+
+## Comparing Models: Data Splitting with `tidymodels` {.smaller}
+
+```{r}
+set.seed(427) # Why?
+
+ames_split <- initial_split(ames, prop = 0.70, strata = Sale_Price) # initialize 70/30
+ames_split
+
+ames_train <- training(ames_split) # get training data
+ames_test <- testing(ames_split) # get test data
+```
+
+
+
+## [K-Nearest Neighbors Regression (multiple predictors)]{.r-fit-text} {.smaller}
+
+```{r}
+#| echo: TRUE
+
+ames |>
+  select(Sale_Price, Gr_Liv_Area, Bedroom_AbvGr) |>
+  head() |> 
+  kable()
+```
+:::{.incremental}
+- Should 1 square foot count the same as 1 bedroom?
+- Need to **center and scale** (freq. just say scale)
+  + subtract mean from each predictor
+  + divide by standard deviation of each predictor
+  + compares apples-to-apples
+:::
+
+# Why center and scale
+
+## New observation
+
+```{r}
+#| code-fold: true
+new_house <- tibble(Gr_Liv_Area = 2000, Bedroom_AbvGr = 2)
+ggplot(ames_train, aes(x = Gr_Liv_Area, y = Bedroom_AbvGr, color = Sale_Price)) + 
+  geom_point() +
+  geom_point(data = new_house, color = "red")
+```
+
+-   Where do you think the 10 nearest neighbors *should* be?
+
+## Computing Distances
+
+```{r}
+ames_dist <- ames_train |> 
+  mutate(dist = sqrt((Gr_Liv_Area - 2000)^2 + (Bedroom_AbvGr-2)^2)) |> 
+  arrange(dist)
+```
+
+## 10 "Nearest Neighbors"
+
+```{r}
+#| code-fold: true
+
+ggplot(ames_train, aes(x = Gr_Liv_Area, y = Bedroom_AbvGr, color = Sale_Price)) + 
+  geom_point() +
+  geom_point(data = new_house, color = "red") +
+  geom_point(data = ames_dist |> slice(1:10), color = "green")
+```
+
+-   Are they where you thought they *should* be?
+
+## Looking at distances {.smaller}
+
+```{r}
+ames_dist |>
+  select(Gr_Liv_Area, Bedroom_AbvGr, dist) |> 
+  kable()
+```
+
+# Visualizing Centering and Scaling in 1-D
+
+## Original data
+
+```{r}
+ggplot(ames_train, aes(x = Gr_Liv_Area)) +
+  geom_histogram() +
+  theme(text = element_text(size = 20)) 
+```
+
+## Centering
+
+- What's different between these two plots
+
+::::{.columns}
+
+:::{.column}
+Original data
+```{r}
+#| code-fold: true
+ames_train |> 
+ggplot(aes(x = Gr_Liv_Area)) +
+  geom_histogram() +
+  theme(text = element_text(size = 20)) 
+```
+:::
+
+::: {.column}
+Centered data
+```{r}
+#| code-fold: true
+ames_train |> mutate(Gr_Liv_Area_Centered = Gr_Liv_Area - mean(Gr_Liv_Area)) |> 
+ggplot(aes(x = Gr_Liv_Area_Centered)) +
+  geom_histogram() +
+  theme(text = element_text(size = 20))
+```
+:::
+::::
+
+## Scaling
+
+- What's different between these two plots
+
+::::{.columns}
+:::{.column}
+Original data
+```{r}
+#| code-fold: true
+ames_train |> 
+ggplot(aes(x = Gr_Liv_Area)) +
+  geom_histogram() +
+  theme(text = element_text(size = 20)) 
+```
+:::
+
+::: {.column}
+Normalized (centered and scaled) data
+```{r}
+#| code-fold: true
+ames_train |> mutate(Gr_Liv_Area_Centered_Scaled = (Gr_Liv_Area - mean(Gr_Liv_Area))/sd(Gr_Liv_Area)) |> 
+ggplot(aes(x = Gr_Liv_Area_Centered_Scaled)) +
+  geom_histogram() +
+  theme(text = element_text(size = 20))
+```
+:::
+::::
+
+# Visualizing Centering and Scaling: 2D
+
+## Original Data
+
+```{r}
+#| code-fold: true
+ggplot(ames_train, aes(x = Gr_Liv_Area, y = Bedroom_AbvGr)) + 
+  geom_point()
+```
+
+## Centering
+
+- What's different between these two plots
+
+::::{.columns}
+:::{.column}
+Original Data
+```{r}
+#| code-fold: true
+ames_train |> 
+ggplot(aes(x = Gr_Liv_Area, y = Bedroom_AbvGr)) + 
+  geom_point()+
+  theme(text = element_text(size = 20))
+```
+:::
+
+::: {.column}
+Centered data
+```{r}
+#| code-fold: true
+ames_train |> mutate(Gr_Liv_Area_Centered = Gr_Liv_Area - mean(Gr_Liv_Area),
+                     Bedroom_AbvGr_Centered = Bedroom_AbvGr - mean(Bedroom_AbvGr)) |> 
+ggplot(aes(x = Gr_Liv_Area_Centered, y = Bedroom_AbvGr_Centered)) +
+  geom_point() +
+  theme(text = element_text(size = 20))
+```
+:::
+::::
+
+## Scaling
+
+- What's different between these two plots
+
+::::{.columns}
+:::{.column}
+Original data
+```{r}
+#| code-fold: true
+ames_train |> 
+ggplot(aes(x = Gr_Liv_Area, y = Bedroom_AbvGr)) + 
+  geom_point()+
+  theme(text = element_text(size = 20))
+```
+:::
+
+::: {.column}
+Normalized data
+```{r}
+#| code-fold: true
+ames_train |> mutate(Gr_Liv_Area_Scaled = scale(Gr_Liv_Area),
+                     Bedroom_AbvGr_Scaled = scale(Bedroom_AbvGr)) |> 
+ggplot(aes(x = Gr_Liv_Area_Scaled, y = Bedroom_AbvGr_Scaled)) +
+  geom_point() +
+  theme(text = element_text(size = 20))
+```
+:::
+::::
+
+# Dealing with new data
+
+## New Observation
+
+```{r}
+#| code-fold: true
+new_house <- tibble(Gr_Liv_Area = 2000, Bedroom_AbvGr = 2)
+ggplot(ames_train, aes(x = Gr_Liv_Area, y = Bedroom_AbvGr, color = Sale_Price)) + 
+  geom_point() +
+  geom_point(data = new_house, color = "red")
+```
+
+-   Where should we put this point on the normalized plot?
+
+## Plotting new observation witout normalizing
+
+```{r}
+#| code-fold: true
+new_house <- tibble(Gr_Liv_Area = 2000, Bedroom_AbvGr = 2)
+ames_train |> mutate(Gr_Liv_Area_Scaled = scale(Gr_Liv_Area), Bedroom_AbvGr_Scaled = scale(Bedroom_AbvGr)) |> 
+  ggplot(aes(x = Gr_Liv_Area_Scaled, y = Bedroom_AbvGr_Scaled)) +
+  geom_point() +
+  geom_point(data = new_house, mapping = aes(Gr_Liv_Area, y = Bedroom_AbvGr), color = "red")
+```
+
+-   Does this look right?
+
+## Normalized using training data
+
+::::{.columns}
+:::{.column}
+Original Data
+```{r}
+#| code-fold: true
+new_house <- tibble(Gr_Liv_Area = 2000, Bedroom_AbvGr = 2)
+ggplot(ames_train, aes(x = Gr_Liv_Area, y = Bedroom_AbvGr)) + 
+  geom_point() +
+  geom_point(data = new_house, color = "red") +
+  theme(text = element_text(size = 20))
+```
+:::
+
+:::{.column}
+Scaled data
+```{r}
+#| code-fold: true
+ames_train_scaled <- 
+  ames_train |> mutate(Gr_Liv_Area_Scaled = scale(Gr_Liv_Area), Bedroom_AbvGr_Scaled = scale(Bedroom_AbvGr))
+
+new_house <- tibble(Gr_Liv_Area = 2000, Bedroom_AbvGr = 2) |> 
+  mutate(Gr_Liv_Area_Scaled = (Gr_Liv_Area - mean(ames_train$Gr_Liv_Area))/sd(ames_train$Gr_Liv_Area), 
+         Bedroom_AbvGr_Scaled = (Bedroom_AbvGr - mean(ames_train$Bedroom_AbvGr))/ sd(ames_train$Bedroom_AbvGr))
+
+ames_train_scaled |> 
+  ggplot(aes(x = Gr_Liv_Area_Scaled, y = Bedroom_AbvGr_Scaled)) +
+  geom_point() +
+  geom_point(data = new_house, color = "red")+
+  theme(text = element_text(size = 20))
+```
+:::
+::::
+
+## Compute new distances
+
+```{r}
+new_house |> kable()
+ames_dist <- ames_train_scaled |> 
+  mutate(orig_dist = sqrt((Gr_Liv_Area - 2000)^2 + (Bedroom_AbvGr-2)^2),
+         scaled_dist = sqrt((Gr_Liv_Area_Scaled - 0.99)^2 + (Bedroom_AbvGr_Scaled-(-1.04))^2))
+
+orig_closest <- ames_dist |> 
+  arrange(orig_dist) |> 
+  head(10)
+
+scaled_closest <- ames_dist |> 
+  arrange(scaled_dist) |> 
+  head(10)
+```
+
+## Scaled distances look better {.smaller}
+
+:::: columns
+::: column
+```{r}
+orig_closest |> select(Gr_Liv_Area, Bedroom_AbvGr, Gr_Liv_Area_Scaled, Bedroom_AbvGr_Scaled, orig_dist, scaled_dist) |> kable()
+```
+:::
+
+::: column
+```{r}
+scaled_closest |>  select(Gr_Liv_Area, Bedroom_AbvGr, Gr_Liv_Area_Scaled, Bedroom_AbvGr_Scaled, orig_dist, scaled_dist) |>  kable()
+```
+:::
+::::
+
+## Which plot looks better {.smaller}
+
+:::: columns
+::: column
+Original distances
+```{r}
+#| code-fold: true
+ggplot(ames_train, aes(x = Gr_Liv_Area, y = Bedroom_AbvGr, color = Sale_Price)) + 
+  geom_point() +
+  geom_point(data = new_house, color = "red") +
+  geom_point(data = orig_closest, color = "green") +
+  theme(text = element_text(size = 20))
+```
+:::
+
+::: column
+Scaled distances
+```{r}
+#| code-fold: true
+ggplot(ames_train, aes(x = Gr_Liv_Area, y = Bedroom_AbvGr, color = Sale_Price)) + 
+  geom_point() +
+  geom_point(data = new_house, color = "red") +
+  geom_point(data = scaled_closest, color = "green") +
+  theme(text = element_text(size = 20))
+```
+:::
+::::
+
+# Dealing with the test set
+
+
+## Scaling Test Set
+
+-   Subtract mean of corresponding variable in *training* set
+-   Divide by sd of corresponding variable in *training* set
+
+## Visualizing Training and Test Sets: Untransformed
+
+```{r}
+#| code-fold: true
+ggplot(ames_train, aes(x = Gr_Liv_Area, y = Bedroom_AbvGr)) + 
+  geom_point(color = "red", alpha = 0.2) +
+  geom_point(data = ames_test, color = "blue", alpha = 0.2) +
+  theme(text = element_text(size = 20))
+```
+
+## Visualizing Training and Test Sets: Self Centered
+
+:::: columns
+::: column
+Original Data
+```{r}
+#| code-fold: true
+ggplot(ames_train, aes(x = Gr_Liv_Area, y = Bedroom_AbvGr)) + 
+  geom_point(color = "red", alpha = 0.2) +
+  geom_point(data = ames_test, color = "blue", alpha = 0.2) +
+  theme(text = element_text(size = 20))
+```
+:::
+
+::: column
+Scaled Data
+```{r}
+#| code-fold: true
+ames_train_centered <- ames_train |> 
+  mutate(Gr_Liv_Area_Scaled = scale(Gr_Liv_Area),
+         Bedroom_AbvGr_Scaled = scale(Bedroom_AbvGr))
+ames_test_self_centered <- ames_test |> 
+  mutate(Gr_Liv_Area_Scaled = scale(Gr_Liv_Area),
+         Bedroom_AbvGr_Scaled = scale(Bedroom_AbvGr))
+ggplot(ames_train_centered, aes(x = Gr_Liv_Area_Scaled, y = Bedroom_AbvGr_Scaled)) + 
+  geom_point(color = "red", alpha = 0.2) +
+  geom_point(data = ames_test_self_centered, color = "blue", alpha = 0.2) +
+  theme(text = element_text(size = 20))
+```
+:::
+::::
+
+## Visualizing Training and Test Sets: Training Centered
+
+:::: columns
+::: column
+Original data
+```{r}
+#| code-fold: true
+ggplot(ames_train, aes(x = Gr_Liv_Area, y = Bedroom_AbvGr)) + 
+  geom_point(color = "red", alpha = 0.2) +
+  geom_point(data = ames_test, color = "blue", alpha = 0.2) +
+  theme(text = element_text(size = 20))
+```
+:::
+
+::: column
+Scaled data
+```{r}
+#| code-fold: true
+ames_train_centered <- ames_train |> 
+  mutate(Gr_Liv_Area_Scaled = scale(Gr_Liv_Area),
+         Bedroom_AbvGr_Scaled = scale(Bedroom_AbvGr))
+ames_test_self_centered <- ames_test |> 
+  mutate(Gr_Liv_Area_Scaled = (Gr_Liv_Area - mean(ames_train$Gr_Liv_Area))/sd(ames_train$Gr_Liv_Area), 
+         Bedroom_AbvGr_Scaled = (Bedroom_AbvGr - mean(ames_train$Bedroom_AbvGr))/ sd(ames_train$Bedroom_AbvGr))
+ggplot(ames_train_centered, aes(x = Gr_Liv_Area_Scaled, y = Bedroom_AbvGr_Scaled)) + 
+  geom_point(color = "red", alpha = 0.2) +
+  geom_point(data = ames_test_self_centered, color = "blue", alpha = 0.2) +
+  theme(text = element_text(size = 20))
+```
+:::
+::::
+
+# Recipes and Workflows
+
+## Preprocessing + Feature Engineering {.smaller}
+
+-   Preprocessing: reformatting and transforming data so it can be used for modeling
+    +   Centering and scaling
+    +   Converting categorical data into dummy variables or the correct format
+    +   Dealing with missing values
+-   Feature Engineering: reformatting and transforming data to improve the performance of your model
+    +   Combining variables and dimension reduction techniques
+    +   Transforming variables (e.g. squaring or logging)
+-   For recommended preprocessing steps see [Appendix A of TMWR](https://www.tmwr.org/pre-proc-table)
+-   `recipes`: combine feature engineering and preprocessing steps into single object that can be applied to different data sets
+
+## Model workflow
+
+-   Start with raw data
+-   Preprocessing and feature engineering steps
+-   Fit "model"
+-   Make predictions using model
+
+## Where does my model start?
+
+-   Start with raw data
+-   Model starts here
+    -   Preprocessing and feature engineering steps
+    -   Fit "model"
+-   Make predictions using model
+
+## Model Assessment
+
+-   Start with raw data
+-   Split Data
+-   Using training data
+    -   Preprocessing and feature engineering steps
+    -   Fit "model"
+-   Make predictions on test set
+-   Compute error metrics
+
+## `workflows` and `recipes` in `tidymodels`
+
+-   `tidymodels` provides `workflows` that combine model fitting with preprocessing steps and consist of:
+    -   A model object
+    -   A `recipe` which combines all of the preprocessing steps
+
+## Creating a KNN model 
+
+```{r}
+knn10_model <- nearest_neighbor(neighbors = 10) |>   # 10-nn regression
+  set_engine("kknn") |>
+  set_mode("regression")
+```
+
+## `recipe`'s in `tidymodels`
+
+1.  Call `receipe` with R formula and training set to assign features roles (predictor vs. outcome).
+2.  Sequence of `step_*` specifying the list of transformations.
+3.  Apply `recipe` to new data using `predict`.
+
+## Center and Scale Recipe
+
+```{r}
+ames_preproc <- recipe(Sale_Price ~ Bedroom_AbvGr + Gr_Liv_Area, data = ames_train) |> 
+  step_normalize(all_numeric_predictors())
+```
+
+## Create `workflow`
+
+```{r}
+knn10_workflow <- workflow() |> 
+  add_model(knn10_model) |> 
+  add_recipe(ames_preproc)
+```
+
+## Fitting Model
+
+
+```{r}
+knnfit10 <- knn10_workflow |> 
+  fit(data = ames_train)
+```
+
+## Making predictions: Single observation
+
+Test Point: `Gr_Liv_area` = 2000 square feet, and `Bedroom_AbvGr` = 3, then
+
+```{r}
+new_house |> kable()
+
+# obtain 10-nn prediction
+predict(knnfit10, new_data = new_house) |> kable()
+```
+
+## Making Predictions: Test Set
+
+```{r}
+# obtain 10-nn prediction
+predict(knnfit10, new_data = ames_test) |> head() |> kable()
+```
+
+
+## [Linear Regression vs K-Nearest Neighbors]{.r-fit-text} {.smaller}
+
+- Linear regression is a parametric approach (with restrictive assumptions), KNN is non-parametric.
+- Linear regression works for regression problems ($Y$ numerical), KNN can be used for both regression and classification - i.e. $Y$ qualitative
+- Linear regression is interpretable, KNN is not.
+- Linear regression can accommodate qualitative predictors and can be extended to include interaction terms as well while KNN does not allow for qualitative predictors
+- Performance: KNN can be pretty good for small $p$, that is, $p \le 4$ and large $n$. Performance of KNN deteriorates as $p$ increases - *curse of dimensionality*
+
+# Choosing a model
+
+## Linear regression
+
+```{r}
+# Best model from last time
+fit3 <- linear_reg() |> 
+  set_engine("lm") |> 
+  fit(Sale_Price ~ Gr_Liv_Area + Bedroom_AbvGr, data = ames_train)
+```
+
+## 5-NN
+
+```{r}
+knn5_model <- nearest_neighbor(neighbors = 5) |> 
+  set_engine("kknn") |> 
+  set_mode("regression")
+
+knn5_fit <- workflow() |> 
+  add_model(knn5_model) |> 
+  add_recipe(ames_preproc) |> 
+  fit(data = ames_train)
+```
+
+## Making test predictions
+
+```{r}
+ames_test_preds <- ames_test |> 
+  mutate(lr_preds = predict(fit3, new_data = ames_test)$.pred,
+         knn5_preds = predict(knn5_fit, new_data = ames_test)$.pred,
+         knn10_preds = predict(knnfit10, new_data = ames_test)$.pred)
+```
+
+## Computing Error Metrics: RMSE
+
+```{r}
+rmse(ames_test_preds, estimate = lr_preds, truth = Sale_Price) |> kable()
+rmse(ames_test_preds, estimate = knn5_preds, truth = Sale_Price) |> kable()
+rmse(ames_test_preds, estimate = knn10_preds, truth = Sale_Price) |> kable()
+```
+
+## Computing Error Metrics: $R^2$
+
+```{r}
+rsq(ames_test_preds, estimate = lr_preds, truth = Sale_Price) |> kable()
+rsq(ames_test_preds, estimate = knn5_preds, truth = Sale_Price) |> kable()
+rsq(ames_test_preds, estimate = knn10_preds, truth = Sale_Price) |> kable()
+```
+

@@ -1,0 +1,370 @@
+---
+title: 'MATH 427: Decision Trees Continued'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+  cache: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+
+## Computational Set-Up
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(dsbox) # dcbikeshare data
+library(knitr)
+
+tidymodels_prefer()
+
+set.seed(427)
+```
+
+
+## Building a Tree and Prediction
+
+![From ISLR](images/19/ISLR-tree-1.png)
+
+## Building a Tree {.smaller}
+
+-   Anyone know what a **greedy algorithm** is?
+
+. . .
+
+-   Computationally infeasible to consider every possible partition
+-   Idea: **top-down, greedy** approach known as **recursive binary splitting**.
+    +   **top-down** because it begins at the top of the tree
+    +   **greedy** because at each step of the tree-building process, the best split is made at that particular step, rather than looking ahead and picking a split that will lead to a better tree in some future step
+        +   Important for determining whether to use a ordinal encoding or not
+    +   Stop when each terminal node has fewer than some predetermined number of observations
+    
+## Overfitting
+
+-   This process described above is likely to **overfit** the data
+-   One solution: require each split to improve performance by some amount
+    +   Bad Idea: sometimes seemingly meaningless cuts early on enable really good cuts later on
+-   Good solution: **pruning**
+    +   Build big tree and the prune off branches that are unnecessary
+    
+## Tree Pruning
+
+
+![From Hands-On Machine Learning, Boehmke & Greenwell](images/19/pruned-tree-1.png)
+
+
+## Bias-Variance Trade-Off
+
+-   How does the bias-variance trade-off relate to the bias-variance trade-off?
+    +   Would larger trees have high or lower bias?
+    +   What about variance?
+
+
+## Tree Pruning
+
+-   Grow a very large tree, and then **prune** it back to obtain a **subtree**.
+-   Terminology: **cost complexity pruning** or **weakest link pruning**
+-   Consider the following objective function 
+$$
+\begin{aligned}
+&SSE(T) + \alpha \times |T|\\ 
+&\quad= SSE(T) + \alpha \times (\text{# of terminal nodes of }T)
+\end{aligned}
+$$
+
+## Cost-Complexity Pruning
+
+-   Fit full tree $T_0$ to minimise $SSE$
+-   Select **sub-tree** $T\subset T_0$ which minimizes
+$$
+\begin{aligned}
+&SSE(T) + \alpha \times |T|\\ 
+&\quad= SSE(T) + \alpha \times (\text{# of terminal nodes of }T)
+\end{aligned}
+$$
+-   What should happen to the tree as we increase $\alpha$?
+-   What should happen to the bias and variance as we increase $\alpha$?
+-   How should we choose $\alpha$? [Cross Validation]{.fragment}
+
+# Regression Trees in R
+
+## Data: `dcbikeshare` {.smaller}
+
+Bike sharing systems are new generation of traditional bike rentals where whole process from membership, rental and return back has become automatic. Through these systems, user is able to easily rent a bike from a particular position and return back at another position. As of May 2018, there are about over 1600 bike-sharing programs around the world, providing more than 18 million bicycles for public use. Today, there exists great interest in these systems due to their important role in traffic, environmental and health issues. [Documentation](https://www.kaggle.com/datasets/marklvl/bike-sharing-dataset)
+
+```{r}
+glimpse(dcbikeshare)
+```
+
+## Cleaning the Data
+
+```{r}
+dcbikeshare_clean <- dcbikeshare |> 
+  select(-instant, -dteday, -casual, -registered, -yr) |> 
+  mutate(
+    season = as_factor(case_when(
+      season == 1 ~ "winter",
+      season == 2 ~ "spring",
+      season == 3 ~ "summer",
+      season == 4 ~ "fall"
+    )),
+    mnth = as_factor(mnth),
+    weekday = as_factor(weekday),
+    weathersit = as_factor(weathersit)
+  )
+```
+
+## Split the Data
+
+```{r}
+set.seed(427)
+
+bike_split <- initial_split(dcbikeshare_clean, prop = 0.7, strata = cnt)
+bike_train <- training(bike_split)
+bike_test <- testing(bike_split)
+```
+
+
+
+## Recipe
+
+```{r}
+bike_recipe <- recipe(cnt ~ ., data = bike_train) |>   # set up recipe
+  step_integer(season, mnth, weekday) |>   # numeric conversion of levels of the predictors
+  step_dummy(all_nominal(), one_hot = TRUE)  # one-hot/dummy encode nominal categorical predictors
+```
+
+## Define Model Workflow
+
+```{r}
+dec_tree_lowcc <- decision_tree(cost_complexity = 10^(-4)) |> 
+  set_engine("rpart") |> 
+  set_mode("regression")
+
+dec_tree_highcc <- decision_tree(cost_complexity = 0.1) |> 
+  set_engine("rpart") |> 
+  set_mode("regression")
+```
+
+## Visualize
+
+```{r}
+#| eval: FALSE
+
+library(rpart.plot)
+workflow() |> 
+  add_recipe(bike_recipe) |> 
+  add_model(dec_tree_lowcc) |> 
+  fit(bike_train) |>
+  extract_fit_engine() |> 
+  rpart.plot()
+```
+
+## Visualize
+
+```{r}
+#| echo: FALSE
+
+library(rpart.plot)
+workflow() |> 
+  add_recipe(bike_recipe) |> 
+  add_model(dec_tree_lowcc) |> 
+  fit(bike_train) |>
+  extract_fit_engine() |> 
+  rpart.plot()
+```
+
+
+## Visualize
+
+```{r}
+#| eval: false
+
+library(rpart.plot)
+workflow() |> 
+  add_recipe(bike_recipe) |> 
+  add_model(dec_tree_highcc) |> 
+  fit(bike_train) |>
+  extract_fit_engine() |> 
+  rpart.plot()
+```
+
+## Visualize
+
+```{r}
+#| echo: false
+
+library(rpart.plot)
+workflow() |> 
+  add_recipe(bike_recipe) |> 
+  add_model(dec_tree_highcc) |> 
+  fit(bike_train) |>
+  extract_fit_engine() |> 
+  rpart.plot()
+```
+
+
+## Defin Model Workflow with Tuning
+
+```{r}
+dec_tree <- decision_tree(cost_complexity = tune()) |> 
+  set_engine("rpart") |> 
+  set_mode("regression")
+
+dt_wf <- workflow() |> 
+  add_recipe(bike_recipe) |> 
+  add_model(dec_tree)
+```
+
+## Define Folds and Tuning Grid
+
+```{r}
+bike_folds <- vfold_cv(bike_train, v = 5, repeats = 10)
+
+cp_grid <- grid_regular(cost_complexity(range = c(-4, -1)), # I had to play around with these 
+                             levels = 20)
+```
+
+## Tuning CP
+
+```{r}
+tuning_cp_results <- tune_grid(
+  dt_wf,
+  resamples= bike_folds,
+  grid = cp_grid
+)
+```
+
+## Plot Results
+
+```{r}
+autoplot(tuning_cp_results)
+```
+
+## Select Best Trees
+
+:::: columns
+::: column
+```{r}
+best_tree <- select_best(tuning_cp_results)
+best_tree |> kable()
+```
+:::
+
+::: column
+```{r}
+ose_tree <- select_by_one_std_err(tuning_cp_results, desc(cost_complexity))
+ose_tree |> kable()
+```
+:::
+::::
+
+## Fit Best Tree
+
+
+```{r}
+best_tree <- select_best(tuning_cp_results)
+best_wf <- finalize_workflow(dt_wf, best_tree)
+best_model <- best_wf |> fit(bike_train)
+best_model |> 
+  extract_fit_engine() |> 
+  rpart.plot()
+```
+
+## Fit OSE Tree
+
+
+```{r}
+ose_tree <- select_best(tuning_cp_results)
+ose_wf <- finalize_workflow(dt_wf, ose_tree)
+ose_model <- ose_wf |> fit(bike_train)
+ose_model |> 
+  extract_fit_engine() |> 
+  rpart.plot()
+```
+
+## Questions
+
+-   Why are both models the same but have different RMSE estimates from CV?
+-   What's the difference between encoding `mnth` as an ordinal variable vs. a one-hot encoding?
+
+## Decision Trees {.smaller}
+
+-   Advantages
+    +   Easy to explain and interpret
+    +   Closely mirror human decision-making
+    +   Can be displayed graphically, and are easily interpreted by non-experts
+    +   Does not require standardization of predictors
+    +   Can handle missing data directly
+    +   Can easily capture non-linear patterns
+-   Disadvantages
+    +   Do not have same level of prediction accuracy
+    +   Not very robust
+
+## Classification Trees
+
+-   Predictions: 
+    +   Classes: most common class at terminal node
+    +   Probability: proportion of each class at terminal node
+-   Rest of tree: same as regression tree
+
+## Exploring Decision Trees w/ App {.smaller}
+
+-   Dr. F will split you into four groups
+-   On one of your computers connect to a tv and [open this app](https://efriedlander.shinyapps.io/ClassificationMetrics/)
+-   Do the following based on your group number:
+    +   1: Choose plane on the first screen
+    +   2: Choose circle on the first screen
+    +   3: Choose parabola on the first screen
+    +   4: Choose sine curve on the first screen
+-   We will generate data from this population... do you think KNN, logistic regression, or a decision tree will yield a better classifier? Why?
+
+## Exploring Decision Trees w/ App {.smaller}
+
+-   Choose one of the populations
+-   Generate some data
+-   Fit a decision tree to the data and see how the different hyper parameters impact the resulting model:
+    +   **complexity parameter (cp)**: the larger the number the more pruning
+    +   **Minimum leaf size**: the minimum number of observations from the training data that must be contained in a leaf
+    +   **Max depth**: the maximum number of splits before a terminal node
+-   Write down any interesting observations
+
+## Data: Voter Frequency
+
+[Info about data](https://github.com/fivethirtyeight/data/tree/master/non-voters)
+
+```{r}
+voter_data <- read_csv('https://raw.githubusercontent.com/fivethirtyeight/data/master/non-voters/nonvoters_data.csv')
+
+glimpse(voter_data)
+```
+
+## Cleaning Data: Missing Data
+
+```{r}
+voter_data |> 
+  summarize(across(everything(), ~sum(is.na(.x)))) |> 
+  pivot_longer(everything()) |> 
+  filter(value > 0)
+```
+
+## Cleaning the Data: Q28, 29, 31
+
+-   What should we do with question 28?
+-   What should we do with question 29?
+-   What should we do with question 31?
+

@@ -1,0 +1,121 @@
+---
+title: 'MATH 427: Classification Trees'
+author: Eric Friedlander
+footer: "[🔗 MAT 427 - Spring 2025 -  Schedule](https://mat427sp25.netlify.app/schedule)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+  cache: true
+knitr:
+  opts_chunk: 
+    R.options:      
+    width: 200
+---
+
+
+## Computational Set-Up
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(dsbox) # dcbikeshare data
+library(knitr)
+
+tidymodels_prefer()
+
+set.seed(427)
+```
+
+
+
+## Decision Trees {.smaller}
+
+-   Advantages
+    +   Easy to explain and interpret
+    +   Closely mirror human decision-making
+    +   Can be displayed graphically, and are easily interpreted by non-experts
+    +   Does not require standardization of predictors
+    +   Can handle missing data directly
+    +   Can easily capture non-linear patterns
+-   Disadvantages
+    +   Do not have same level of prediction accuracy
+    +   Not very robust
+    
+# Decision Trees for Classification
+
+## Last Time
+
+::: incremental
+-   Regression Trees: Decision Trees for Regression Problems
+-   How are they fit?
+-   What is pruning? Why do we do it?
+-   What tuning parameter did we talk about last time?
+-   Today: Classification Trees
+:::
+
+## Classification Trees
+
+-   Predictions: 
+    +   Classes: most common class at terminal node
+    +   Probability: proportion of each class at terminal node
+-   Rest of tree: same as regression tree
+
+## Classification Trees
+
+-   Predictions: 
+    +   Classes: most common class at terminal node
+    +   Probability: proportion of each class at terminal node
+-   Rest of tree: same as regression tree
+
+## Exploring Decision Trees w/ App {.smaller}
+
+-   Dr. F will split you into four groups
+-   On one of your computers connect to a tv and [open this app](https://efriedlander.shinyapps.io/ClassificationMetrics/)
+-   Do the following based on your group number:
+    +   1: Choose plane on the first screen
+    +   2: Choose circle on the first screen
+    +   3: Choose parabola on the first screen
+    +   4: Choose sine curve on the first screen
+-   We will generate data from this population... do you think KNN, logistic regression, or a decision tree will yield a better classifier? Why?
+
+## Exploring Decision Trees w/ App {.smaller}
+
+-   Choose one of the populations
+-   Generate some data
+-   Fit a decision tree to the data and see how the different hyper parameters impact the resulting model:
+    +   **complexity parameter (cp)**: the larger the number the more pruning
+    +   **Minimum leaf size**: the minimum number of observations from the training data that must be contained in a leaf
+    +   **Max depth**: the maximum number of splits before a terminal node
+-   Write down any interesting observations
+
+## Exploring Decision Trees w/ App {.smaller}
+
+-   Dr. F will split you into four groups
+-   On one of your computers connect to a tv and [open this app](https://efriedlander.shinyapps.io/ClassificationMetrics/)
+-   Do the following based on your group number:
+    +   1: Choose plane on the first screen
+    +   2: Choose circle on the first screen
+    +   3: Choose parabola on the first screen
+    +   4: Choose sine curve on the first screen
+-   We will generate data from this population... do you think KNN, logistic regression, or a decision tree will yield a better classifier? Why?
+
+## Exploring Decision Trees w/ App {.smaller}
+
+-   Choose one of the populations
+-   Generate some data
+-   Fit a decision tree to the data and see how the different hyper parameters impact the resulting model:
+    +   **complexity parameter (cp)**: the larger the number the more pruning
+    +   **Minimum leaf size**: the minimum number of observations from the training data that must be contained in a leaf
+    +   **Max depth**: the maximum number of splits before a terminal node
+-   Write down any interesting observations
+
+

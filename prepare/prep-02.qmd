@@ -1,0 +1,7 @@
+---
+title: "Preparation for Introduction to Statistical Learning"
+---
+
+## Assigned reading
+
+- Read Chapter 2 from ISLR2
