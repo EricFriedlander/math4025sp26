@@ -1,0 +1,73 @@
+project:
+  type: website
+  
+execute:
+  freeze: auto
+
+website:
+  page-navigation: true
+  title: "Math 4025 - Spring 2026"
+  description: "Homepage for Math 4025 - Statistical Machine Learning at the College of Idaho, Spring 2026"
+  site-url: https://math4025sp26.netlify.app/
+  
+  repo-url: https://github.com/EricFriedlander/MATH4025SP26
+  repo-actions: [edit, issue]
+  
+  page-footer:
+    background: "#412d5e"
+    left: |
+      &copy; Copyright 2026, Eric Friedlander
+    right: |
+      This site is built with [Quarto](https://quarto.org/)
+      
+  sidebar:
+    background: "#bbbbbb"
+    logo: "images/logo.png"
+    align: center
+    tools: 
+      - icon: github
+        href: https://github.com/
+        text: "GitHub"
+      - icon: code-square
+        href: https://code.visualstudio.com/
+        text: "VS Code"
+      - icon: person
+        href: https://cofi.instructure.com/
+        text: "Canvas"
+    style: "docked"
+    search: true
+    collapse-level: 1
+    contents:
+      - course-info/schedule.qmd
+      - course-info/syllabus.qmd
+      - course-info/support.qmd
+      - section: Computing
+        contents:
+        - href: course-info/computing-access.qmd
+        - href: course-info/computing-python-resources.qmd
+          text: Python resources
+      - section: Job Applications & Interviews
+        contents:
+        # - jobs/job-app-1-resources.qmd
+        # - href: https://cofi.instructure.com/courses/17021/assignments/210575
+        #   text: "Job Advertisement 1"
+        # - jobs/job-app-1-rubric.qmd
+        # - jobs/job-interview-resources.qmd
+        # - jobs/job-app-2-resources.qmd
+      - section: Project
+        contents:
+        # - href: project/project-instructions.qmd
+        #   text: "Instructions"
+      - section: Hack-A-Thon
+        contents:
+        # - href: hack-a-thon/hack-a-thon-instruction.qmd
+  
+format:
+  html:
+    theme:
+      - cosmo
+      - theme.scss
+    mainfont: "Open Sans"
+    code-copy: true
+    code-overflow: wrap
+    toc: true

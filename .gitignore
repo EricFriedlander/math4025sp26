@@ -8,5 +8,7 @@
 .quarto
 
 /.quarto/
+/_site/
 
 ISLR2v2_corrected_June_2023.pdf
+**/*.quarto_ipynb

@@ -1,0 +1,34 @@
+---
+title: "Computing access"
+---
+
+## Python & VS Code
+
+It is highly recommended that you install Python and VS Code on your own personal computer.
+
+1.  **Install VS Code**: [Download here](https://code.visualstudio.com/).
+2.  **Install Python**: [Download here](https://www.python.org/downloads/).
+3.  **Install Quarto**: [Download here](https://quarto.org/docs/get-started/).
+
+## Git & Github
+
+You need to create a [GitHub](https://github.com/) account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name. Once you have done this, email it to Dr. Friedlander so he can add you to the GitHub Classroom.
+
+### Set up your SSH Key
+
+You will authenticate GitHub using SSH.
+
+::: callout-note
+You only need to do this authentication process one time on a single system.
+:::
+
+*(Instructions for setting up SSH keys vary by operating system. Please consult GitHub's documentation).*
+
+### Configure git
+
+You need to configure git with your name and email.
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+```

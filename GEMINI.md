@@ -1,59 +1,61 @@
-# Gemini Context: Math 4025 (Spring 2026) / MAT 427 (Spring 2025)
+# Gemini Context: Math 4025 (Spring 2026)
 
 ## Project Overview
-This directory contains the source materials for a course website, likely for **Statistical Machine Learning**. 
+This directory contains the source materials for the **Statistical Machine Learning** (Math 4025) course website for Spring 2026.
 
-**Note on Context:**
-*   **Directory Name:** `math4025sp26` (Suggests Math 4025, Spring 2026).
-*   **Configuration (`_quarto.yml`):** "MAT 427 - Spring 2025" (Suggests the content is from the previous year's iteration).
-*   **Current Date:** Jan 2026.
-*   **Inference:** The user is likely setting up the Spring 2026 course (`Math 4025`) using materials from Spring 2025 (`MAT 427`). The main project files currently reside in the `_archive/` directory.
-*   **Key Change for 2026:** The course content is being reimplemented using **Python**, replacing the previous R-based curriculum.
+*   **Course:** Math 4025 (Spring 2026).
+*   **Instructor:** Dr. Eric Friedlander.
+*   **Institution:** College of Idaho.
+*   **Primary Language:** Python (transitioned from R).
+*   **Textbook:** ISLP (Introduction to Statistical Learning with Python).
 
 ## Directory Structure
-The root directory contains the VS Code workspace and an `_archive` folder which houses the actual Quarto project.
+The root directory constitutes the active Quarto project.
 
-*   `_archive/`: **Project Root**. Contains the Quarto configuration and source files (currently R-based).
-    *   `_quarto.yml`: Main configuration file for the website (navigation, theme, metadata).
-    *   `index.qmd`: Home page.
+*   `_archive/`: Legacy R-based materials from Spring 2025 (MAT 427). Use for reference only.
+*   `course-info/`: Course-level documentation.
     *   `syllabus.qmd`: Course syllabus.
     *   `schedule.qmd`: Course schedule.
-    *   `hw/`: Homework assignments (`.qmd` files).
-    *   `data/`: Datasets used in the course (`.csv`, `.rds`, etc.).
-    *   `images/`: Static image assets.
-    *   `_site/`: Generated HTML output (do not edit directly).
-    *   `_freeze/`: Quarto freeze files (cached computations).
+    *   `support.qmd`: Support resources.
+    *   `computing-access.qmd` & `computing-python-resources.qmd`: Computing setup and resources.
+*   `slides/`: Lecture slides (empty).
+*   `hw/`: Homework assignments (empty).
+*   `data/`: Course datasets (empty).
+*   `jobs/`: Job application assignments (empty).
+*   `prepare/`: Preparation materials (empty).
+*   `images/`: Static image assets (e.g., logo).
+*   `_quarto.yml`: Main Quarto configuration.
+*   `index.qmd`: Homepage.
 
 ## Development & Usage
 
 ### 1. Tools
-*   **Quarto:** The publishing system used to build the website.
-*   **Python:** The primary programming language for the new Spring 2026 content.
-*   **R:** The legacy language used in the `_archive` materials.
-*   **VS Code:** The editor environment.
+*   **Quarto:** Website builder.
+*   **Python:** Primary programming language.
+*   **VS Code:** Primary editor.
 
 ### 2. Common Commands
-Since the project source is in `_archive`, commands should be directed there.
+Run these commands from the **project root**.
 
 *   **Preview Site:**
     ```bash
-    quarto preview _archive
+    quarto preview
     ```
 *   **Render Site:**
     ```bash
-    quarto render _archive
+    quarto render
     ```
 *   **Render Specific File:**
     ```bash
-    quarto render _archive/syllabus.qmd
+    quarto render course-info/syllabus.qmd
     ```
 
 ### 3. Key Conventions
 *   **Content:** Written in `.qmd` (Quarto Markdown).
-*   **Code Blocks:** Transitioning from `{r}` blocks to `{python}` blocks for executable code.
-*   **Configuration:** Global settings are in `_quarto.yml`. Page-specific settings are in the YAML header of each `.qmd` file.
-*   **Data:** Store raw data in `_archive/data/`.
-*   **Frozen Computations:** The `_freeze` directory stores the results of executed code.
+*   **Code Blocks:** Use `{python}` blocks.
+*   **Configuration:** Global settings in `_quarto.yml`. Sidebar navigation is configured here.
+*   **Paths:** Relative paths should ideally generally work, but be mindful of the folder structure (e.g., referencing images from `course-info/`).
+*   **Data:** Store raw data in `data/`.
 
 ## Workflow Automation
 The project utilizes the Gemini CLI for assistance.
