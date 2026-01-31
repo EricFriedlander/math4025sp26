@@ -1,0 +1,14 @@
+author: "Dr. Eric Friedlander"
+footer: "[🔗 Math 4025 - Spring 2026 - Schedule](https://EricFriedlander.github.io/math4025sp26/course-info/schedule.html)"
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: true
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true

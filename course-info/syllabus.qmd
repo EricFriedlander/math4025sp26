@@ -56,7 +56,7 @@ The College of Idaho seeks to provide an educational environment that is accessi
 
 ### Communication
 
-All lecture notes, assignment instructions, an up-to-date schedule, and other course materials may be found on the course website.
+All lecture notes, assignment instructions, an up-to-date schedule, and other course materials may be found on the course website, [EricFriedlander.github.io/math4025sp26](https://EricFriedlander.github.io/math4025sp26/).
 
 Periodic announcements will be sent via email and will also be available through Canvas and grades will be stored in the Canvas gradebook. Please check your email regularly to ensure you have the latest announcements for the course.
 
@@ -124,10 +124,11 @@ The final course grade will be calculated as follows:
 |----------------------------|------------|
 | Homework                   | 10%        |
 | Job Application 1          | 15%        |
+| Job Application 2          | 15%        |
 | Job Interview 1            | 15%        |
-| Job Interview 2            | 20%        |
-| Hack-a-thon + Report       | 25%        |
-| Project                    | 15%        |
+| Job Interview 2            | 15%        |
+| Hack-a-thon & Presentation | 15%        |
+| Final Project              | 15%        |
 
 
 </center>

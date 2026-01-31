@@ -1,0 +1,260 @@
+---
+title: 'MATH 4025: Statistical Machine Learning'
+author: Eric Friedlander <br> [Much of the content in these slides have been adapted from Abhishek Chakraborty at Lawrence University]{.smaller}
+---
+
+```{python}
+#| label: setup
+#| include: false
+
+import pandas as pd
+import numpy as np
+from IPython.display import Markdown
+```
+
+# Welcome!
+
+## Meet Prof. Friedlander! {.midi}
+
+::: incremental
+-   Education and career journey
+    -   Grew up outside New York City
+    -   BS in Math & Statistics from Rice University (Houston, TX)
+    -   Business Analyst at Capital One (Plano, TX)
+    -   MS and PhD in Statistics & Operations Research from UNC-Chapel Hill
+    -   Postdoc in Population Genetics at University of Chicago
+    -   Assistant Professor of Math at St. Norbert College (Green Bay, WI)
+-   Work focuses on statistics education, queuing theory, and population genetics
+-   Big sports fan: NY Knicks, Giants, Rangers, Yankees, UNC Tarheels
+-   Dad of three cute dogs: Allie, Miriam, Tony
+:::
+
+## Meet Prof. Friedlander! {.midi}
+
+![](images/01/IMG_3400.JPG)
+
+## Tell me about yourself + GitHub {.smaller}
+
+Create a [GitHub](https://github.com/) account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name.
+
+Send me an email with answers to the following questions:
+
+1. What is the GitHub username you just created?
+2. What would you like me to call you?
+3. Why are you taking this class?
+4. What are your career goals?
+5. Is there anything else you would like me to know about you? E.g. athlete, preferred pronouns, accommodations, etc...
+6. Please recommend at least one and up to infinity songs for the class playlist.
+
+# MATH 4025
+
+## Course FAQ
+
+**Q - What background is assumed for the course?**
+
+A - Familiarity with concepts from statistical inference, linear regression, and logistic regression. A solid grounding in Python, including `pandas` and `matplotlib`/`seaborn`.
+
+## Course FAQ
+
+**Q - Will we be doing computing?**
+
+A - Yes. We will use the computing language Python for analysis, Quarto for writing up results, and GitHub for version control and collaboration
+
+## Course FAQ
+
+**Q - Will we learn the mathematical theory?**
+
+A - Yes and No. The course is primarily focused on application; however, we will discuss some of the mathematics occasionally.
+
+## Course FAQ
+
+**Q - What distinguishes this from a 300-level course?**
+
+A - I expect a high level of independence from you. You should not be relying on me to teach you every small detail from this course. For example, if I tell you about a Python function, I expect that you will be able to figure out how to use it yourself.
+
+## Course FAQ
+
+**Q - Is there anything else I should know?**
+
+A - Machine learning is a RAPIDLY evolving field. If you want to be successful in this field going forward, you will need to be able to learn things for yourself and SELF-ASSESS whether you know them. There are portions of this course that I have *intentionally* designed to not give you enough information to solve on your own.
+
+
+## Course learning objectives {.midi}
+
+By the end of the semester, you will be able to...
+
+-   tackle predictive modeling problems arising from real data.
+
+-   use Python to fit and evaluate machine learning models.
+
+-   assess whether a proposed model is appropriate and describe its limitations.
+
+-   use Quarto to write reproducible reports and GitHub for version control and collaboration.
+
+-   effectively communicate results through writing and oral presentations.
+
+# Course overview
+
+## Course toolkit {.midi}
+
+-   [Course website](https://EricFriedlander.github.io/math4025sp26/)
+    -   Central hub for the course!
+    -   **Tour of the website**
+-   [Canvas](https://cofi.instructure.com/)
+    -   Gradebook
+    -   Announcements
+-   [GitHub](https://github.com/)
+    -   Distribute assignments
+    -   Platform for version control and collaboration
+
+## Computing toolkit {.midi}
+
+::: columns
+::: {.column width="50%"}
+::: {.fragment fragment-index="1"}
+![](images/01/rstudio.png){fig-alt="VS Code logo" fig-align="center" width="5.61in" height="1.6in"}
+:::
+
+::: {.fragment fragment-index="2"}
+-   All analyses using Python, a general purpose programming language
+
+-   Write reproducible reports in Quarto
+
+-   Access VS Code through your personal computer (preferred) or the college JupyterHub (if available)
+:::
+:::
+
+::: {.column width="50%"}
+::: {.fragment fragment-index="1"}
+![](images/01/github.png){fig-alt="GitHub logo" fig-align="center" width="5.61in" height="1.6in"}
+:::
+
+::: {.fragment fragment-index="3"}
+-   Access assignments
+
+-   Facilitates version control and collaboration
+
+-   All work in [MATH 4025 course classroom](https://github.com/)
+:::
+:::
+:::
+
+# Activities + assessments
+
+## Prepare, Participate, Practice, Perform
+
+::: small
+::: incremental
+-   **Prepare:** Introduce new content and prepare for lectures by completing the readings (and sometimes watching the videos)
+
+-   **Participate:** Attend and actively participate in lectures, office hours, team meetings
+
+-   **Practice:** Practice applying statistical concepts and computing with team-based homework graded for completion
+
+-   **Perform:** Put together what you've learned to analyze real-world data
+
+    -   Two Job Applications/Portfolios (individual)
+
+    -   Two Job Interviews (individual)
+    
+    -   One Hack-a-thon/Presentation (individual-ish)
+    
+    -   One Project & Presentation (team)
+:::
+:::
+
+## Grading
+
+| Category                   | Percentage |
+|----------------------------|------------|
+| Homework                   | 10%        |
+| Job Application 1          | 15%        |
+| Job Application 2          | 15%        |
+| Job Interview 1            | 15%        |
+| Job Interview 2            | 15%        |
+| Hack-a-thon & Presentation | 15%        |
+| Final Project              | 15%        |
+
+See the [syllabus](/course-info/syllabus.qmd) for details on how the final letter grade will be calculated.
+
+## Support
+
+-   Attend office hours
+    -   [Prof. Friedlander office hours](/course-info/syllabus.qmd#class-meetings-office-hours)
+-   [Dedicated homework help session](/course-info/syllabus.qmd#class-meetings-office-hours)
+-   Use email for questions regarding personal matters and/or grades
+-   See the [Course Support](/course-info/support.qmd) page for more details
+
+# Course policies
+
+## Late Homework
+
+-   One week late (no grade penalty)
+-   After I start grading (no feedback)
+-   Why should I care about feedback?
+    -   It's how you learn... duh
+    -   You will be repurposing your homeworks for your job applications
+
+## School-Sponsored Events
+
+-   Excused absences for event? Email me at least a week in advance
+-   Sick or injured? Email me as soon as it is safe to do so.
+    -   Don't get me sick...
+-   Failure to adhere to this policy gets you a 35% point reduction
+
+## Academic integrity {.smaller}
+
+> The College of Idaho maintains that academic honesty and integrity are essential values in the educational process. Operating under an Honor Code philosophy, the College expects conduct rooted in honesty, integrity, and understanding, allowing members of a diverse student body to live together and interact and learn from one another in ways that protect both personal freedom and community standards. Violations of academic honesty are addressed primarily by the instructor and may be referred to the [Student Judicial Board](https://collegeofidaho.smartcatalogiq.com/en/current/Undergraduate-Catalog/Policies-and-Procedures/Academic-Misconduct).
+
+By participating in this course, you are agreeing that all your work and conduct will be in accordance with the College of Idaho Honor Code.
+
+## Collaboration & sharing code
+
+-   [I have policies!](/course-info/syllabus.qmd)
+
+## Use of artificial intelligence (AI) {.midi}
+
+-   You should treat AI tools, such as ChatGPT, the same as other online resources.
+-   There are two guiding principles that govern how you can use AI in this course:[^1]
+    -   \(1\) *Cognitive dimension:* Working with AI should not reduce your ability to think clearly. We will practice using AI to facilitate---rather than hinder---learning.
+    -   \(2\) *Ethical dimension***:** Students using AI should be transparent about their use and make sure it aligns with academic integrity.
+
+[^1]: These guiding principles are based on [*Course Policies related to ChatGPT and other AI Tools*](https://docs.google.com/document/d/1WpCeTyiWCPQ9MNCsFeKMDQLSTsg1oKfNIH6MzoSFXqQ/preview) developed by Joel Gladd, Ph.D.[↩︎](https://sta101-f23.github.io/course-syllabus.html#fnref1)
+
+## Use of artificial intelligence (AI) {.midi}
+
+-   Understand everything you write down
+
+-   Tell me where you got it from
+
+-   Don't lie about it
+
+::: callout-important
+In general, you may use AI as a resource as you complete assignments but not to answer the exercises for you. You are ultimately responsible for the work you turn in; it should reflect your understanding of the course content. **Any code or content from your homework is eligible for inclusion during your job interview.**
+:::
+
+## In class agreements
+
+If we discuss/agree to something in class or office hours which requires action from me (e.g. “you may turn in your homework late due to a sporting event”), you MUST send me a follow-up message. If you don’t, I will almost certainly forget, and our agreement will be considered null and void.
+
+# Having a successful semester in MATH 4025
+
+## Five tips for success
+
+1.  Complete all the preparation work (readings and videos) before class.
+
+2.  Ask questions, come to office hours and help session.
+
+3.  Do the homework; get started on homework early when possible.
+
+4.  Don't procrastinate and don't let a week pass by with lingering questions.
+
+5.  Stay up-to-date on announcements on Canvas and sent via email.
+
+## Emails for help
+
+If you email me about an error please include a screenshot of the error and the code causing the error.
+
+# Questions?
+
+Raise your hand or email me.
