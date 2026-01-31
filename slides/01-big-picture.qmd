@@ -1,5 +1,5 @@
 ---
-title: 'MATH 4025: The Big Picture'
+title: The Big Picture
 ---
 
 ```{python}
@@ -8,8 +8,10 @@ title: 'MATH 4025: The Big Picture'
 
 import pandas as pd
 import numpy as np
+import pyreadr
+from pyhere import here
+from itables import show
 from IPython.display import Markdown
-# from ISLP import load_data # Assuming ISLP is installed or will be
 ```
 
 
@@ -99,23 +101,12 @@ The first ten **observations** are shown below.
 ```{python}
 #| echo: false
 
-# Loading AmesHousing data. 
-# Note: Ensure 'pyreadr' is installed if reading RDS, or convert data to CSV/Parquet.
-# Assuming CSV for now or fallback.
-try:
-    ames = pd.read_csv('../data/AmesHousing.csv') # Placeholder if CSV exists
-except FileNotFoundError:
-    # If using RDS and pyreadr is available:
-    # import pyreadr
-    # ames = pyreadr.read_r('../data/AmesHousing.rds')[None]
-    # For display purposes in slides if data missing:
-    ames = pd.DataFrame(columns=['Order', 'PID', 'MS SubClass', 'MS Zoning', 'Lot Frontage', 'Lot Area', 'Street', 'Alley', 'Lot Shape']) # Dummy
-    pass
+ames = pyreadr.read_r(here('data/AmesHousing.rds'))[None]
 
 # Display head
 # ames.head(10).iloc[:, :9]
 # Using markdown table for display if kable was used
-print(ames.head(10).iloc[:, :9].to_markdown(index=False))
+show(ames.head(10).iloc[:, :9])
 ```
 
 ## Terminology/Notation {.smaller}
@@ -129,7 +120,7 @@ Ten **observations** are shown below.
 from ISLP import load_data
 Default = load_data('Default')
 # sampling 10 random rows
-print(Default.sample(n=10, random_state=1).to_markdown(index=False))
+show(Default.sample(n=10, random_state=1))
 ```
 
 ## Terminology/Notation
@@ -228,8 +219,9 @@ The first ten observations are shown below.
 ```{python}
 #| echo: false
 
-USArrests = load_data('USArrests')
-print(USArrests.head(10).to_markdown())
+from statsmodels.datasets import get_rdataset
+USArrests = get_rdataset('USArrests').data
+show(USArrests.head(10))
 ```
 
 ## [Question!!!]{style="color:blue"}

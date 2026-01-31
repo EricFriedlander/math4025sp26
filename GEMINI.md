@@ -31,7 +31,7 @@ The root directory constitutes the active Quarto project.
 *   `prepare/`: Preparation materials (empty).
 *   `images/`: Static image assets (e.g., logo).
 *   `_quarto.yml`: Main Quarto configuration.
-*   `requirements.txt`: Python dependencies for the project.
+*   `environment.yml`: Conda environment definition.
 *   `index.qmd`: Homepage.
 
 ## Development & Usage
@@ -43,9 +43,8 @@ The root directory constitutes the active Quarto project.
 *   **VS Code:** Primary editor.
 
 ### 2. Automatic Deployment
-The website is automatically rendered and published to GitHub Pages via a GitHub Action whenever changes are pushed to the `master` branch.
+The website is automatically rendered and published to GitHub Pages via a GitHub Action whenever changes are pushed to the `main` branch.
 *   **Workflow file:** `.github/workflows/publish.yml`
-*   **Dependencies:** defined in `requirements.txt`
 
 ### 3. Common Commands
 Run these commands from the **project root**.
@@ -70,6 +69,9 @@ Run these commands from the **project root**.
 ### 3. Key Conventions
 *   **Content:** Written in `.qmd` (Quarto Markdown).
 *   **Code Blocks:** Use `{python}` blocks.
+*   **Tables:** Use the `show` function from the `itables` library to display Python data frames.
+*   **Plotting:** Use `plotnine` for visualizations (ggplot2 style).
+*   **Data Loading:** Use `pyreadr` for `.rds` files and `pyhere` for robust relative paths.
 *   **Configuration:** Global settings in `_quarto.yml`. Sidebar navigation is configured here.
 *   **Paths:** Relative paths should ideally generally work, but be mindful of the folder structure (e.g., referencing images from `course-info/`).
 *   **Data:** Store raw data in `data/`.

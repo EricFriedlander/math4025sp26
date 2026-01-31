@@ -1,16 +1,8 @@
 ---
-title: 'MATH 4025: Statistical Machine Learning'
+title: 'Welcome to MATH 4025: Statistical Machine Learning'
 author: Eric Friedlander <br> [Much of the content in these slides have been adapted from Abhishek Chakraborty at Lawrence University]{.smaller}
 ---
 
-```{python}
-#| label: setup
-#| include: false
-
-import pandas as pd
-import numpy as np
-from IPython.display import Markdown
-```
 
 # Welcome!
 

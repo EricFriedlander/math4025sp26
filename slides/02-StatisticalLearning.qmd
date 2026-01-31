@@ -1,5 +1,5 @@
 ---
-title: 'MATH 4025: Intro to Machine Learning'
+title: Intro to Machine Learning
 ---
 
 ```{python}
@@ -65,15 +65,15 @@ We wish to know about $f(\mathbf{X})$ for two reasons:
 There are two types of prediction problems:
 
 -   **Regression** (response $Y$ is quantitative): Build a model
-    $\\hat{Y} = \hat{f}(\\mathbf{X})$
+    $\hat{Y} = \hat{f}(\mathbf{X})$
 -   **Classification** (response $Y$ is qualitative/categorical): Build
-    a classifier $\\hat{Y}=\\hat{C}(\\mathbf{X})$
+    a classifier $\hat{Y}=\hat{C}(\mathbf{X})$
 
 . . .
 
--   Note: a "hat", $\\hat{\\phantom{f}}$, over an object represents an
+-   Note: a "hat", $\hat{\phantom{f}}$, over an object represents an
     estimate of that object
-    -   E.g. $\\hat{Y}$ is an estimate of $Y$ and $\\hat{f}$ is an
+    -   E.g. $\hat{Y}$ is an estimate of $Y$ and $\hat{f}$ is an
         estimate of $f$
 
 ## Prediction and Inference
@@ -154,10 +154,10 @@ Broadly speaking, we have two approaches.
 
 -   Assume a functional form for $f(\mathbf{X})$
     -   Linear Regression:
-        $f(\mathbf{X})=\\beta_0 + \\beta_1 \\mathbf{x}_1 + \\beta_2 \\mathbf{x}_2 + \\ldots + \\beta_p \\mathbf{x}_p$
-    -   Estimate the parameters $\\beta_0, \\beta_1, \\ldots, \\beta_p$
+        $f(\mathbf{X})=\beta_0 + \beta_1 \mathbf{x}_1 + \beta_2 \mathbf{x}_2 + \ldots + \beta_p \mathbf{x}_p$
+    -   Estimate the parameters $\beta_0, \beta_1, \ldots, \beta_p$
         using labeled data
--   Choosing $\\beta$'s that minimize some error metrics is called
+-   Choosing $\beta$'s that minimize some error metrics is called
     **fitting** the model
 -   The data we use to fit the model is called our **training data**
 
@@ -186,7 +186,7 @@ From ISLR2
 ::: incremental
 -   What are some functions that could have resulted in the model on the
     right?
--   $\\text{Income} \\approx \\beta_0 + \\beta_1\\times\\text{Years of Education} + \\beta_2\\times\\text{Seniority}$
+-   $\text{Income} \approx \beta_0 + \beta_1\times\text{Years of Education} + \beta_2\times\text{Seniority}$
 :::
 
 ## Non-parametric Methods {.smaller}
@@ -233,34 +233,54 @@ y = fx + e    # observed responses
 
 toy_data = pd.DataFrame({'input': x, 'true_form': fx, 'response': y})
 
-# Plotting
-plt.figure(figsize=(10, 6))
-sns.scatterplot(data=toy_data, x='input', y='response', color='black', alpha=0.5)
+from plotnine import *
 
-# True model
-x_range = np.linspace(20, 40, 200)
-true_y = a + (b * np.sqrt(x_range)) + (c * np.sin(x_range))
-plt.plot(x_range, true_y, color='red', linewidth=2.5, label='true model')
+# Assuming toy_data, a, b, and c are already defined
+# Example function definition for the "true model"
+def true_model_func(x):
+    return a + (b * np.sqrt(x)) + (c * np.sin(x))
 
-# Linear model
-sns.regplot(data=toy_data, x='input', y='response', scatter=False, color='blue', ci=None, label='linear model')
+g3 = (
+    ggplot(toy_data, mapping=aes(x='input', y='response'))
+    + geom_point()
+    # True Model
+    + stat_function(
+        aes(color="'true model'"), 
+        fun=true_model_func, 
+        size=1.5
+    )
+    # Linear Model
+    + geom_smooth(
+        aes(color="'linear model'"),
+        method='lm', 
+        se=False
+    )
+    # Non-linear Model (requires 'statsmodels' installed)
+    + geom_smooth(
+        aes(color="'non-linear model'"),
+        formula='y ~ np.sqrt(x) + np.sin(x)', 
+        method='lm',
+        se=False
+    )
+    + scale_color_manual(
+        values={
+            "true model": "red", 
+            "linear model": "blue", 
+            "non-linear model": "green"
+        }
+    )
+    + labs(title="Comparing two models", y="y", x="x")
+    + theme(
+        legend_title=element_blank(),
+        text=element_text(size=20)
+    )
+)
 
-# Non-linear model (using polynomial or lowess for "flexibility" demonstration)
-# Here reproducing the spirit of "more flexible" with a lowess smoother
-from statsmodels.nonparametric.smoothers_lowess import lowess
-# lowess returns (x_sorted, y_fitted)
-z = lowess(y, x, frac=0.1) # frac=0.1 to make it wiggly/flexible
-plt.plot(z[:, 0], z[:, 1], color='green', linewidth=2.5, label='non-linear model')
-
-plt.title("Comparing two models", fontsize=20)
-plt.ylabel("y")
-plt.xlabel("x")
-plt.legend()
-plt.show()
+g3
 ```
 
-[More flexible $\\implies$ More complex $\\implies$ Less Smooth $\\implies$
-Less Restrictive $\\implies$ Less Interpretable
+More flexible $\implies$ More complex $\implies$ Less Smooth $\implies$
+Less Restrictive $\implies$ Less Interpretable
 
 ## Supervised Learning: Some Trade-offs {.smaller}
 
@@ -284,11 +304,13 @@ ISLR2)](images/02/2_7-1-01.png)
 
 ## Supervised Learning: Assessing Model Performance {.smaller}
 
--   When we estimate $f(\mathbf{X})$ using $\\hat{f}(\\mathbf{X})$, then,
+-   When we estimate $f(\mathbf{X})$ using $\hat{f}(\mathbf{X})$, then,
 
-$$\\underbrace{E\[Y-\\hat{Y}\]^2}_{Error}=E\[f(\mathbf{X})+\\epsilon - \\hat{f}(\\mathbf{X})\]^2=\\underbrace{E\[f(\mathbf{X})-\\hat{f}(\\mathbf{X})\]^2}_{Reducible} + \\underbrace{Var(\\epsilon)}_{Irreducible}$$
+$$
+\underbrace{E\left[Y-\hat{Y}\right]^2}_{Error}=E\left[f(\mathbf{X})+\epsilon - \hat{f}(\mathbf{X})\right]^2=\underbrace{E\left[f(\mathbf{X})-\hat{f}(\mathbf{X})\right]^2}_{Reducible} + \underbrace{Var(\epsilon)}_{Irreducible}
+$$
 
--   $E\[Y-\\hat{Y}\]^2$: Expected (average) squared difference
+-   $E[Y-\hat{Y}]^2$: Expected (average) squared difference
     between predicted and actual (observed) response, **Mean Squared Error (MSE)**
 -   Goal: find an estimate of $f(\mathbf{X})$ to minimize the reducible
     error
@@ -299,21 +321,21 @@ $$\\underbrace{E\[Y-\\hat{Y}\]^2}_{Error}=E\[f(\mathbf{X})+\\epsilon - \\hat{f}(
 -   Labeled training data $(x_1,y_1), (x_2, y_2), \ldots, (x_n,y_n)$
     -   i.e. $n$ training observations
 -   Fit/train a model from training data
-    -   $\\hat{y}=\\hat{f}(x)$, regression
-    -   $\\hat{y}=\\hat{C}(x)$, classification\
--   Obtain estimates $\\hat{f}(x_1), \\hat{f}(x_2), \ldots, \\hat{f}(x_n)$
-    (or, $\\hat{C}(x_1), \\hat{C}(x_2), \ldots, \\hat{C}(x_n)$) of training
+    -   $\hat{y}=\hat{f}(x)$, regression
+    -   $\hat{y}=\hat{C}(x)$, classification\
+-   Obtain estimates $\hat{f}(x_1), \hat{f}(x_2), \ldots, \hat{f}(x_n)$
+    (or, $\hat{C}(x_1), \hat{C}(x_2), \ldots, \hat{C}(x_n)$) of training
     data
 -   Compute error:
     -   **Regression**
-        $$\\text{Training MSE}=\\text{Average}_{Training} \\left(y-\\hat{f}(x)\right)^2 = \\frac{1}{n} \\displaystyle \\sum_{i=1}^{n} \\left(y_i-\\hat{f}(x_i)\right)^2$$ 
+        $$\text{Training MSE}=\text{Average}_{Training} \left(y-\hat{f}(x)\right)^2 = \frac{1}{n} \displaystyle \sum_{i=1}^{n} \left(y_i-\hat{f}(x_i)\right)^2$$ 
     -   **Classification** $$
-        \\begin{aligned}
-        \\text{Training Error Rate}
-        & = \\text{Average}_{Training} \\ \\left[I \\left(y\ne\\hat{C}(x)\right) \\right]
-        \\\\
-        &= \\frac{1}{n} \\displaystyle \\sum_{i=1}^{n} \\ I\left(y_i \\ne \\hat{C}(x_i)\right)
-        \\end{aligned}
+        \begin{aligned}
+        \text{Training Error Rate}
+        & = \text{Average}_{Training} \ \left[I \left(y\ne\hat{C}(x)\right) \right]
+        \\
+        &= \frac{1}{n} \displaystyle \sum_{i=1}^{n} \ I\left(y_i \ne \hat{C}(x_i)\right)
+        \end{aligned}
         $$ 
 :::
 
