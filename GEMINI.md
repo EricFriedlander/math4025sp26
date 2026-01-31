@@ -39,6 +39,7 @@ The root directory constitutes the active Quarto project.
 ### 1. Tools
 *   **Quarto:** Website builder.
 *   **Python:** Primary programming language.
+*   **Conda/Mamba:** Use the `math-4025-sp26` environment for all Python code in this workspace.
 *   **VS Code:** Primary editor.
 
 ### 2. Automatic Deployment
