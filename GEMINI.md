@@ -8,6 +8,7 @@ This directory contains the source materials for the **Statistical Machine Learn
 *   **Institution:** College of Idaho.
 *   **Primary Language:** Python (transitioned from R).
 *   **Textbook:** ISLP (Introduction to Statistical Learning with Python).
+*   **Live Site:** https://EricFriedlander.github.io/math4025sp26/
 
 ## Directory Structure
 The root directory constitutes the active Quarto project.
@@ -46,6 +47,10 @@ Run these commands from the **project root**.
 *   **Render Site:**
     ```bash
     quarto render
+    ```
+*   **Publish Site:**
+    ```bash
+    quarto publish gh-pages
     ```
 *   **Render Specific File:**
     ```bash
