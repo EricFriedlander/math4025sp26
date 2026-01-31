@@ -13,6 +13,8 @@ This directory contains the source materials for the **Statistical Machine Learn
 The root directory constitutes the active Quarto project.
 
 *   `_archive/`: Legacy R-based materials from Spring 2025 (MAT 427). Use for reference only.
+    *   `slides/`: Legacy lecture slides.
+    *   `hw/`: Legacy homework assignments.
 *   `course-info/`: Course-level documentation.
     *   `syllabus.qmd`: Course syllabus.
     *   `schedule.qmd`: Course schedule.
