@@ -1,102 +1,82 @@
 [
   {
-    "objectID": "GEMINI.html",
-    "href": "GEMINI.html",
-    "title": "Gemini Context: Math 4025 (Spring 2026)",
+    "objectID": "course-info/syllabus.html",
+    "href": "course-info/syllabus.html",
+    "title": "Syllabus",
     "section": "",
-    "text": "This directory contains the source materials for the Statistical Machine Learning (Math 4025) course website for Spring 2026.\n\nCourse: Math 4025 (Spring 2026).\nInstructor: Dr. Eric Friedlander.\nInstitution: College of Idaho.\nPrimary Language: Python (transitioned from R).\nTextbook: ISLP (Introduction to Statistical Learning with Python).\n\n\n\n\nThe root directory constitutes the active Quarto project.\n\n_archive/: Legacy R-based materials from Spring 2025 (MAT 427). Use for reference only.\n\nslides/: Legacy lecture slides.\nhw/: Legacy homework assignments.\n\ncourse-info/: Course-level documentation.\n\nsyllabus.qmd: Course syllabus.\nschedule.qmd: Course schedule.\nsupport.qmd: Support resources.\ncomputing-access.qmd & computing-python-resources.qmd: Computing setup and resources.\n\nslides/: Lecture slides (empty).\nhw/: Homework assignments (empty).\ndata/: Course datasets (empty).\njobs/: Job application assignments (empty).\nprepare/: Preparation materials (empty).\nimages/: Static image assets (e.g., logo).\n_quarto.yml: Main Quarto configuration.\nindex.qmd: Homepage.\n\n\n\n\n\n\n\nQuarto: Website builder.\nPython: Primary programming language.\nVS Code: Primary editor.\n\n\n\n\nRun these commands from the project root.\n\nPreview Site: bash     quarto preview\nRender Site: bash     quarto render\nRender Specific File: bash     quarto render course-info/syllabus.qmd\n\n\n\n\n\nContent: Written in .qmd (Quarto Markdown).\nCode Blocks: Use {python} blocks.\nConfiguration: Global settings in _quarto.yml. Sidebar navigation is configured here.\nPaths: Relative paths should ideally generally work, but be mindful of the folder structure (e.g., referencing images from course-info/).\nData: Store raw data in data/.\n\n\n\n\n\nThe project utilizes the Gemini CLI for assistance. * .gemini/prompts/: Stores reusable prompts for common tasks. * sync-context.md: Analyzes project changes, updates documentation, and handles git operations."
-  },
-  {
-    "objectID": "GEMINI.html#project-overview",
-    "href": "GEMINI.html#project-overview",
-    "title": "Gemini Context: Math 4025 (Spring 2026)",
-    "section": "",
-    "text": "This directory contains the source materials for the Statistical Machine Learning (Math 4025) course website for Spring 2026.\n\nCourse: Math 4025 (Spring 2026).\nInstructor: Dr. Eric Friedlander.\nInstitution: College of Idaho.\nPrimary Language: Python (transitioned from R).\nTextbook: ISLP (Introduction to Statistical Learning with Python)."
-  },
-  {
-    "objectID": "GEMINI.html#directory-structure",
-    "href": "GEMINI.html#directory-structure",
-    "title": "Gemini Context: Math 4025 (Spring 2026)",
-    "section": "",
-    "text": "The root directory constitutes the active Quarto project.\n\n_archive/: Legacy R-based materials from Spring 2025 (MAT 427). Use for reference only.\n\nslides/: Legacy lecture slides.\nhw/: Legacy homework assignments.\n\ncourse-info/: Course-level documentation.\n\nsyllabus.qmd: Course syllabus.\nschedule.qmd: Course schedule.\nsupport.qmd: Support resources.\ncomputing-access.qmd & computing-python-resources.qmd: Computing setup and resources.\n\nslides/: Lecture slides (empty).\nhw/: Homework assignments (empty).\ndata/: Course datasets (empty).\njobs/: Job application assignments (empty).\nprepare/: Preparation materials (empty).\nimages/: Static image assets (e.g., logo).\n_quarto.yml: Main Quarto configuration.\nindex.qmd: Homepage."
-  },
-  {
-    "objectID": "GEMINI.html#development-usage",
-    "href": "GEMINI.html#development-usage",
-    "title": "Gemini Context: Math 4025 (Spring 2026)",
-    "section": "",
-    "text": "Quarto: Website builder.\nPython: Primary programming language.\nVS Code: Primary editor.\n\n\n\n\nRun these commands from the project root.\n\nPreview Site: bash     quarto preview\nRender Site: bash     quarto render\nRender Specific File: bash     quarto render course-info/syllabus.qmd\n\n\n\n\n\nContent: Written in .qmd (Quarto Markdown).\nCode Blocks: Use {python} blocks.\nConfiguration: Global settings in _quarto.yml. Sidebar navigation is configured here.\nPaths: Relative paths should ideally generally work, but be mindful of the folder structure (e.g., referencing images from course-info/).\nData: Store raw data in data/."
-  },
-  {
-    "objectID": "GEMINI.html#workflow-automation",
-    "href": "GEMINI.html#workflow-automation",
-    "title": "Gemini Context: Math 4025 (Spring 2026)",
-    "section": "",
-    "text": "The project utilizes the Gemini CLI for assistance. * .gemini/prompts/: Stores reusable prompts for common tasks. * sync-context.md: Analyzes project changes, updates documentation, and handles git operations."
-  },
-  {
-    "objectID": "course-info/schedule.html",
-    "href": "course-info/schedule.html",
-    "title": "Schedule",
-    "section": "",
-    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nPrepare\nSlides\nHW\nProject\nJob\nHack-a-thon\n\n\n\n\n1\nJan 28\nIntroduction\n\n\n\n\n\n\n\n\n1\nJan 30\n\n\n\n\n\n\n\n\n\n1\nFeb 1\n\n\n\n\n\n\n\n\n\n2\nFeb 3\n\n\n\n\n\n\n\n\n\n2\nFeb 5\n\n\n\n\n\n\n\n\n\n2\nFeb 7\n\n\n\n\n\n\n\n\n\n…\n…\n…\n…\n…\n…\n…\n…\n…\n\n\n\n(This schedule is a placeholder. Please update with your specific course schedule)",
+    "text": "Lecture\nMWF 3:00 - 3:50pm\nCruzen-Murray Library (CML) 208\n\n\n(Optional) Homework Lab\nW 4:00 - 4:50pm (Tentative)\nCruzen-Murray Library (CML) 208\n\n\nOffice Hours\nM 9:30 - 10:30am\nBoone 126B\n\n\nOffice Hours\nT 9:00 - 10:00am\nBoone 126B\n\n\nOffice Hours\nW 1:30 - 2:30pm\nBoone 126B\n\n\nOffice Hours\nTH 10:00 - 11:00am\nBoone 126B\n\n\n\nOffice hours are also available by appointment, just email me!\n\n\n\n\nInstructor: Dr. Eric Friedlander\nOffice: Boone 126B\nEmail: efriedlander@collegeofidaho.edu",
     "crumbs": [
-      "Schedule"
+      "Syllabus"
     ]
   },
   {
-    "objectID": "course-info/computing-access.html",
-    "href": "course-info/computing-access.html",
-    "title": "Computing access",
+    "objectID": "course-info/syllabus.html#course-info",
+    "href": "course-info/syllabus.html#course-info",
+    "title": "Syllabus",
     "section": "",
-    "text": "It is highly recommended that you install Python and VS Code on your own personal computer.\n\nInstall VS Code: Download here.\nInstall Python: Download here.\nInstall Quarto: Download here.",
+    "text": "Lecture\nMWF 3:00 - 3:50pm\nCruzen-Murray Library (CML) 208\n\n\n(Optional) Homework Lab\nW 4:00 - 4:50pm (Tentative)\nCruzen-Murray Library (CML) 208\n\n\nOffice Hours\nM 9:30 - 10:30am\nBoone 126B\n\n\nOffice Hours\nT 9:00 - 10:00am\nBoone 126B\n\n\nOffice Hours\nW 1:30 - 2:30pm\nBoone 126B\n\n\nOffice Hours\nTH 10:00 - 11:00am\nBoone 126B\n\n\n\nOffice hours are also available by appointment, just email me!\n\n\n\n\nInstructor: Dr. Eric Friedlander\nOffice: Boone 126B\nEmail: efriedlander@collegeofidaho.edu",
     "crumbs": [
-      "Computing",
-      "Computing access"
+      "Syllabus"
     ]
   },
   {
-    "objectID": "course-info/computing-access.html#python-vs-code",
-    "href": "course-info/computing-access.html#python-vs-code",
-    "title": "Computing access",
-    "section": "",
-    "text": "It is highly recommended that you install Python and VS Code on your own personal computer.\n\nInstall VS Code: Download here.\nInstall Python: Download here.\nInstall Quarto: Download here.",
+    "objectID": "course-info/syllabus.html#course-learning-objectives",
+    "href": "course-info/syllabus.html#course-learning-objectives",
+    "title": "Syllabus",
+    "section": "Course Learning Objectives",
+    "text": "Course Learning Objectives\nBy the end of the semester, you will be able to…\n\ntackle predictive modeling problems arising from real data.\nuse Python to fit and evaluate machine learning models.\nassess whether a proposed model is appropriate and describe its limitations.\nuse Jupyter notebooks and quarto to write reproducible reports and GitHub for version control and collaboration.\neffectively communicate results results through writing and oral presentations.",
     "crumbs": [
-      "Computing",
-      "Computing access"
+      "Syllabus"
     ]
   },
   {
-    "objectID": "course-info/computing-access.html#git-github",
-    "href": "course-info/computing-access.html#git-github",
-    "title": "Computing access",
-    "section": "Git & Github",
-    "text": "Git & Github\nYou need to create a GitHub account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name. Once you have done this, email it to Dr. Friedlander so he can add you to the GitHub Classroom.\n\nSet up your SSH Key\nYou will authenticate GitHub using SSH.\n\n\n\n\n\n\nNote\n\n\n\nYou only need to do this authentication process one time on a single system.\n\n\n(Instructions for setting up SSH keys vary by operating system. Please consult GitHub’s documentation).\n\n\nConfigure git\nYou need to configure git with your name and email.\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"your.email@example.com\"",
+    "objectID": "course-info/syllabus.html#course-community",
+    "href": "course-info/syllabus.html#course-community",
+    "title": "Syllabus",
+    "section": "Course community",
+    "text": "Course community\n\nCollege of Idaho Honor Code\n\nThe College of Idaho maintains that academic honesty and integrity are essential values in the educational process. Operating under an Honor Code philosophy, the College expects conduct rooted in honesty, integrity, and understanding, allowing members of a diverse student body to live together and interact and learn from one another in ways that protect both personal freedom and community standards. Violations of academic honesty are addressed primarily by the instructor and may be referred to the Student Judicial Board.\n\nBy participating in this course, you are agreeing that all your work and conduct will be in accordance with the College of Idaho Honor Code.\n\n\nDisability Accommodation Statement\nThe College of Idaho seeks to provide an educational environment that is accessible to the needs of students with disabilities. The College provides reasonable services to enrolled students who have a documented permanent or temporary physical, psychological, learning, intellectual, or sensory disability that qualifies the student for accommodations under the Americans with Disabilities Act or section 504 of the Rehabilitation Act of 1973. If you have, or think you may have, a disability that impacts your performance as a student in this class, you are encouraged to arrange support services and/or accommodations through the Department of Accessibility and Learning Excellence located in McCain 201B and available via email at accessibility@collegeofidaho.edu. Reasonable academic accommodations may be provided to students who submit appropriate and current documentation of their disability. Accommodations can be arranged only through this process and are not retroactively applied. More information can be found on the DALE webpage (https://www.collegeofidaho.edu/accessibility).\n\n\nCommunication\nAll lecture notes, assignment instructions, an up-to-date schedule, and other course materials may be found on the course website, EricFriedlander.github.io/math4025sp26.\nPeriodic announcements will be sent via email and will also be available through Canvas and grades will be stored in the Canvas gradebook. Please check your email regularly to ensure you have the latest announcements for the course.\nWe will be using Microsoft Teams for communication. Please make sure you have access to the class team.\n\n\nIn class agreements\nIf we discuss/agree to something in class or office hours which requires action from me (e.g. “you may turn in your homework late due to a sporting event”), you MUST send me a follow-up message. If you don’t, I will almost certainly forget, and our agreement will be considered null and void.\n\n\nGetting help in the course\n\nIf you have a question during lecture or lab, feel free to ask it! There are likely other students with the same question, so by asking you will create a learning opportunity for everyone.\nI am here to help you be successful in the course. You are encouraged to attend office hours and the homework lab to ask questions about the course content and assignments. Many questions are most effectively answered as you discuss them with others, so office hours are a valuable resource. You are encouraged to use them!\nOutside of class and office hours, any general questions about course content or assignments can be emailed to me.\n\n\n\nEmail\nIf you have questions about assignment extensions or accommodations, please email efriedlander@collegeofidaho.edu. Please see Late work policy for more information. If you email me about an error please include a screenshot of the error and the code causing the error. Barring extenuating circumstances, I will respond to course emails within 48 hours Monday - Friday. Response time may be slower for emails sent Friday evening - Sunday.\nCheck out the Support page for more resources.",
     "crumbs": [
-      "Computing",
-      "Computing access"
+      "Syllabus"
     ]
   },
   {
-    "objectID": "course-info/computing-python-resources.html",
-    "href": "course-info/computing-python-resources.html",
-    "title": "Computing Resources",
-    "section": "",
-    "text": "Python Documentation\nIntroduction to Statistical Learning with Applications in Python (ISLP)\nQuarto Documentation\nPandas Documentation\nScikit-Learn Documentation",
+    "objectID": "course-info/syllabus.html#textbook",
+    "href": "course-info/syllabus.html#textbook",
+    "title": "Syllabus",
+    "section": "Textbook",
+    "text": "Textbook\nThe official textbook for this course is:\n\nAn Introduction to Statistical Learning with Applications in Python by Gareth James, Daniela Witten, Trevor Hastie, Robert Tibshirani, and Jonathan Taylor.\n\nColloquially referred to as “ISLP”.\nIt’s free!",
     "crumbs": [
-      "Computing",
-      "Python resources"
+      "Syllabus"
     ]
   },
   {
-    "objectID": "course-info/computing-python-resources.html#python-resources",
-    "href": "course-info/computing-python-resources.html#python-resources",
-    "title": "Computing Resources",
-    "section": "",
-    "text": "Python Documentation\nIntroduction to Statistical Learning with Applications in Python (ISLP)\nQuarto Documentation\nPandas Documentation\nScikit-Learn Documentation",
+    "objectID": "course-info/syllabus.html#assignments",
+    "href": "course-info/syllabus.html#assignments",
+    "title": "Syllabus",
+    "section": "Assignments",
+    "text": "Assignments\nYou will be assessed based on six components: homework, quizzes, a job application, a job interview, a midterm exam, a hack-a-thon, and a project.\n\nQuizzes\nVideos will be posted on the course website that you are expected to watch before class. There will be a short quiz at the beginning of class every Tuesday to ensure you are keeping up with the material.\n\n\nHomework\nHomework will be graded on a pass/fail basis and will be assessed via presentation. Assignments will be due at the beginning of class on Thursday. Students will be randomly chosen to present their solutions. Each solution will be followed by a discussion by the class on what did and didn’t go well.\n\nHonesty Policy: If you did not complete the homework and are honest about it, you will receive 50%. If you demonstrate no understanding of the homework during presentation, you will receive a 0%.\n\n\n\nJob Application & Job Interview\nDuring this course you will apply to one “job”. I will generate the job advertisement including a real company and base the job description on the course content and similar job advertisements. The job application will have three components:\n\nA cover letter.\nA resume.\nA portfolio.\n\nAll three of these should be tailored to the job description and the company to which you are applying. Your portfolio will consist of self-contained data analyses of your choosing. To create your portfolio, you will be required to create a website.\nAfter you submit your job application, you will be invited to schedule a one-hour long job interview. It is your job to schedule your job interview with Dr. Friedlander. The interview will include general interview questions, questions about your portfolio, and a “case interview” portion.\n\n\nMidterm Exam\nThere will be one midterm exam to assess your understanding of the core concepts covered in the first half of the course.\n\n\nHack-a-thon\nAt some point in the semester we will participate in a “Hack-a-thon” as a class. Namely, you will be given a short period of time (1-3 days) to build a model and make a set of predictions. After the competition is over, you will be required to present on your model. Part of your score will be determine by how well your model performs and extra credit will be given to the top scoring individuals.\n\n\nProject\nDuring the latter portion of the course, you will complete a final project that involves a deep exploration of a problem. More details for the final project will be provided later in the course.",
     "crumbs": [
-      "Computing",
-      "Python resources"
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-info/syllabus.html#grading",
+    "href": "course-info/syllabus.html#grading",
+    "title": "Syllabus",
+    "section": "Grading",
+    "text": "Grading\nThe final course grade will be calculated as follows:\n\n\n\n\nCategory\nPercentage\n\n\n\n\nHomework\n10%\n\n\nQuizzes\n10%\n\n\nJob Application\n20%\n\n\nJob Interview\n20%\n\n\nMidterm Exam\n15%\n\n\nHack-a-thon & Presentation\n10%\n\n\nFinal Project\n15%\n\n\n\n\n\nThe final letter grade will be determined based on the following thresholds:\n\n\n\n\nLetter Grade\nFinal Course Grade\n\n\n\n\nA\n&gt;= 93\n\n\nA-\n90 - 92.99\n\n\nB+\n87 - 89.99\n\n\nB\n83 - 86.99\n\n\nB-\n80 - 82.99\n\n\nC+\n77 - 79.99\n\n\nC\n73 - 76.99\n\n\nC-\n70 - 72.99\n\n\nD+\n67 - 69.99\n\n\nD\n63 - 66.99\n\n\nD-\n60 - 62.99\n\n\nF\n&lt; 60",
+    "crumbs": [
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-info/syllabus.html#course-policies",
+    "href": "course-info/syllabus.html#course-policies",
+    "title": "Syllabus",
+    "section": "Course policies",
+    "text": "Course policies\n\nAcademic honesty\nTL;DR: Don’t cheat!\n\nThe job application assignments must be completed individually but you are welcome to discuss the assignment with classmates (e.g., discuss what’s the best way for approaching a problem, what functions are useful for accomplishing a particular task, etc.). However you may not directly share (i.e. via copy/paste or copying) any code or prose with anyone other than myself.\nFor the hack-a-thon, everyone will submit their predictions and give their own presentations. However, you are encouraged to work together. You are allowed to share code with one another. However, everyone should be able to explain what they did and everyone’s projects should be unique in some way. Point reductions will be given if two individuals submit the exact same predictions.\nFor the projects, collaboration within teams is not only allowed, but expected. Communication between teams at a high level is also allowed however you may not share code or components of the project across teams.\nReusing code: Unless explicitly stated otherwise, you may make use of online resources (e.g. StackOverflow) for coding examples on assignments. If you directly use code from an outside source (or use it as inspiration), you must explicitly cite where you obtained the code. Any recycled code that is discovered and is not explicitly cited will be treated as plagiarism.\nUse of artificial intelligence (AI): You are allowed and even encouraged to use AI tools (such as ChatGPT, GitHub Copilot, etc.) to supplement your learning. However, strict adherence to the following is required:\n\nYou are responsible for all work that you submit.\nYou must be able to explain what every line of code does and explain all results that you submit.\nIf you cannot explain your code or results when asked, you will receive a grade of 0 for that assignment.\n\n\nIf you are unsure if the use of a particular resource complies with the academic honesty policy, just ask.\nRegardless of course delivery format, it is the responsibility of all students to understand and follow all College of Idaho policies, including academic integrity (e.g., completing one’s own work, following proper citation of sources, adhering to guidance around group work projects, and more). Ignoring these requirements is a violation of the Honor Code.\n\n\nLate work policy\nThe due dates for assignments are there to help you keep up with the course material and to ensure the teaching team can provide feedback within a timely manner. I understand that things come up periodically that could make it difficult to submit an assignment by the deadline.\n\nLate Homework: Homework is pass/fail based. Assignments are due Thursday morning. If you do not complete the assignment but are honest about it, you will receive 50%. If you demonstrate no understanding during the presentation, you will receive 0%.\nQuizzes & Presentations: Late quizzes and presentations will not be accepted without an excused absence.\nSchool-Sponsored Events/Illness: If an assignment or meeting must be missed due to a school-sponsored event, you must let me know at least a week ahead of time so that we can schedule a time for you to make up the work before you leave. If an assignment or meeting must be missed due to illness, you must let me know as soon as it is safe for you to do so and before the assignment or meeting if possible. Failure to adhere to this policy will result in a 35% penalty on the corresponding assignment.",
+    "crumbs": [
+      "Syllabus"
     ]
   },
   {
@@ -140,93 +120,25 @@
     ]
   },
   {
-    "objectID": "course-info/syllabus.html",
-    "href": "course-info/syllabus.html",
-    "title": "Syllabus",
+    "objectID": "course-info/computing-python-resources.html",
+    "href": "course-info/computing-python-resources.html",
+    "title": "Computing Resources",
     "section": "",
-    "text": "Lecture\nMWF 3:00 - 3:50pm\nCruzen-Murray Library (CML) 208\n\n\n(Optional) Homework Lab\nW 4:00 - 4:50pm (Tentative)\nCruzen-Murray Library (CML) 208\n\n\nOffice Hours\nM 9:30 - 10:30am\nBoone 126B\n\n\nOffice Hours\nT 9:00 - 10:00am\nBoone 126B\n\n\nOffice Hours\nW 1:30 - 2:30pm\nBoone 126B\n\n\nOffice Hours\nTH 10:00 - 11:00am\nBoone 126B\n\n\n\nOffice hours are also available by appointment, just email me!\n\n\n\n\nInstructor: Dr. Eric Friedlander\nOffice: Boone 126B\nEmail: efriedlander@collegeofidaho.edu",
+    "text": "Python Documentation\nIntroduction to Statistical Learning with Applications in Python (ISLP)\nQuarto Documentation\nPandas Documentation\nScikit-Learn Documentation",
     "crumbs": [
-      "Syllabus"
+      "Computing",
+      "Python resources"
     ]
   },
   {
-    "objectID": "course-info/syllabus.html#course-info",
-    "href": "course-info/syllabus.html#course-info",
-    "title": "Syllabus",
+    "objectID": "course-info/computing-python-resources.html#python-resources",
+    "href": "course-info/computing-python-resources.html#python-resources",
+    "title": "Computing Resources",
     "section": "",
-    "text": "Lecture\nMWF 3:00 - 3:50pm\nCruzen-Murray Library (CML) 208\n\n\n(Optional) Homework Lab\nW 4:00 - 4:50pm (Tentative)\nCruzen-Murray Library (CML) 208\n\n\nOffice Hours\nM 9:30 - 10:30am\nBoone 126B\n\n\nOffice Hours\nT 9:00 - 10:00am\nBoone 126B\n\n\nOffice Hours\nW 1:30 - 2:30pm\nBoone 126B\n\n\nOffice Hours\nTH 10:00 - 11:00am\nBoone 126B\n\n\n\nOffice hours are also available by appointment, just email me!\n\n\n\n\nInstructor: Dr. Eric Friedlander\nOffice: Boone 126B\nEmail: efriedlander@collegeofidaho.edu",
+    "text": "Python Documentation\nIntroduction to Statistical Learning with Applications in Python (ISLP)\nQuarto Documentation\nPandas Documentation\nScikit-Learn Documentation",
     "crumbs": [
-      "Syllabus"
-    ]
-  },
-  {
-    "objectID": "course-info/syllabus.html#course-learning-objectives",
-    "href": "course-info/syllabus.html#course-learning-objectives",
-    "title": "Syllabus",
-    "section": "Course Learning Objectives",
-    "text": "Course Learning Objectives\nBy the end of the semester, you will be able to…\n\ntackle predictive modeling problems arising from real data.\nuse Python to fit and evaluate machine learning models.\nassess whether a proposed model is appropriate and describe its limitations.\nuse Quarto to write reproducible reports and GitHub for version control and collaboration.\neffectively communicate results results through writing and oral presentations.",
-    "crumbs": [
-      "Syllabus"
-    ]
-  },
-  {
-    "objectID": "course-info/syllabus.html#course-community",
-    "href": "course-info/syllabus.html#course-community",
-    "title": "Syllabus",
-    "section": "Course community",
-    "text": "Course community\n\nCollege of Idaho Honor Code\n\nThe College of Idaho maintains that academic honesty and integrity are essential values in the educational process. Operating under an Honor Code philosophy, the College expects conduct rooted in honesty, integrity, and understanding, allowing members of a diverse student body to live together and interact and learn from one another in ways that protect both personal freedom and community standards. Violations of academic honesty are addressed primarily by the instructor and may be referred to the Student Judicial Board.\n\nBy participating in this course, you are agreeing that all your work and conduct will be in accordance with the College of Idaho Honor Code.\n\n\nDisability Accommodation Statement\nThe College of Idaho seeks to provide an educational environment that is accessible to the needs of students with disabilities. The College provides reasonable services to enrolled students who have a documented permanent or temporary physical, psychological, learning, intellectual, or sensory disability that qualifies the student for accommodations under the Americans with Disabilities Act or section 504 of the Rehabilitation Act of 1973. If you have, or think you may have, a disability that impacts your performance as a student in this class, you are encouraged to arrange support services and/or accommodations through the Department of Accessibility and Learning Excellence located in McCain 201B and available via email at accessibility@collegeofidaho.edu. Reasonable academic accommodations may be provided to students who submit appropriate and current documentation of their disability. Accommodations can be arranged only through this process and are not retroactively applied. More information can be found on the DALE webpage (https://www.collegeofidaho.edu/accessibility).\n\n\nCommunication\nAll lecture notes, assignment instructions, an up-to-date schedule, and other course materials may be found on the course website.\nPeriodic announcements will be sent via email and will also be available through Canvas and grades will be stored in the Canvas gradebook. Please check your email regularly to ensure you have the latest announcements for the course.\n\n\nIn class agreements\nIf we discuss/agree to something in class or office hours which requires action from me (e.g. “you may turn in your homework late due to a sporting event”), you MUST send me a follow-up message. If you don’t, I will almost certainly forget, and our agreement will be considered null and void.\n\n\nGetting help in the course\n\nIf you have a question during lecture or lab, feel free to ask it! There are likely other students with the same question, so by asking you will create a learning opportunity for everyone.\nI am here to help you be successful in the course. You are encouraged to attend office hours and the homework lab to ask questions about the course content and assignments. Many questions are most effectively answered as you discuss them with others, so office hours are a valuable resource. You are encouraged to use them!\nOutside of class and office hours, any general questions about course content or assignments can be emailed to me.\n\n\n\nEmail\nIf you have questions about assignment extensions or accommodations, please email efriedlander@collegeofidaho.edu. Please see Late work policy for more information. If you email me about an error please include a screenshot of the error and the code causing the error. Barring extenuating circumstances, I will respond to course emails within 48 hours Monday - Friday. Response time may be slower for emails sent Friday evening - Sunday.\nCheck out the Support page for more resources.",
-    "crumbs": [
-      "Syllabus"
-    ]
-  },
-  {
-    "objectID": "course-info/syllabus.html#textbook",
-    "href": "course-info/syllabus.html#textbook",
-    "title": "Syllabus",
-    "section": "Textbook",
-    "text": "Textbook\nThe official textbook for this course is:\n\nAn Introduction to Statistical Learning with Applications in Python by Gareth James, Daniela Witten, Trevor Hastie, Robert Tibshirani, and Jonathan Taylor.\n\nColloquially referred to as “ISLP”.\nIt’s free!",
-    "crumbs": [
-      "Syllabus"
-    ]
-  },
-  {
-    "objectID": "course-info/syllabus.html#assignments",
-    "href": "course-info/syllabus.html#assignments",
-    "title": "Syllabus",
-    "section": "Assignments",
-    "text": "Assignments\nYou will be assessed based on five components: homework, job applications, job interviews, a hack-a-thon, and project.\n\nHomework\nIn homework, you will apply what you’ve learned during lecture to complete data analysis tasks. Homework will completed in teams of three, must be typed up using Quarto, and submitted as .qmd and .pdf files in via GitHub.\n\n\nJob Applications & Job Interviews\nDuring this course you will apply to two “jobs”. I will generate the job advertisements including real companies and base the job description on the course content and similar job advertisements that I get from online or professional collaborators. Each job application will have three components:\n\nA cover letter.\nA resume.\nA portfolio.\n\nAll three of these should be tailored to the job description and the company to which you are applying. Your portfolio will consist of self-contained data analyses of your choosing. The most straight forward method of creating th to repurpose your homeworks, converting them from a format in which you are responding to exercises to something where you are telling a narrative and demonstrating that you meet the job criteria. To create your portfolio, you will be required to create a website. More details on this will be given during the semester, however the idea of this project is that you will be able to use the things you general when you are applying for jobs.\nAfter you submit your job applications, you will be invited to schedule a one-hour long job interview. It is your job to schedule your job interview with Dr. Friedlander. Each job interview will have three portions. The first, lasting 10-15 minutes, will include typical questions that apply to almost any job interview (e.g. “What are your biggest strengths and weaknesses”). The second, lasting 20-30 minutes, will include questions about the portfolio you submitted and your understanding of the required skills described in the job advertising. The third section will mimic what is called a “case interview”. Case interviews are extremely common for many jobs, especially those requiring quantitative or computational skills, and can be intimidating. During the case interview portion, you will be presented with a “case study” and asked questions on how you would go about approaching it. The cases themselves will be designed so that they can be solved using the content from class. The goal of this whole exercise is to assess your knowledge of the course content in a way that is authentic while also preparing you to get a job.\n\n\nHack-a-thon\nAt some point in the semester we will participate in a “Hack-a-thon” as a class. Namely, you will be given a short period of time (1-3 days) to build a model and make a set of predictions. After the competition is over, you will be required to present on your model. Part of your score will be determine by how well your model performs and extra credit will be given to the top scoring individuals.\n\n\nProject\nDuring the latter portion of the course, you will complete a final project that involves a deep exploration of a problem. More details for the final project will be provided later in the course.",
-    "crumbs": [
-      "Syllabus"
-    ]
-  },
-  {
-    "objectID": "course-info/syllabus.html#grading",
-    "href": "course-info/syllabus.html#grading",
-    "title": "Syllabus",
-    "section": "Grading",
-    "text": "Grading\nThe final course grade will be calculated as follows:\n\n\n\n\nCategory\nPercentage\n\n\n\n\nHomework\n10%\n\n\nJob Application 1\n15%\n\n\nJob Interview 1\n15%\n\n\nJob Interview 2\n20%\n\n\nHack-a-thon + Report\n25%\n\n\nProject\n15%\n\n\n\n\n\nThe final letter grade will be determined based on the following thresholds:\n\n\n\n\nLetter Grade\nFinal Course Grade\n\n\n\n\nA\n&gt;= 93\n\n\nA-\n90 - 92.99\n\n\nB+\n87 - 89.99\n\n\nB\n83 - 86.99\n\n\nB-\n80 - 82.99\n\n\nC+\n77 - 79.99\n\n\nC\n73 - 76.99\n\n\nC-\n70 - 72.99\n\n\nD+\n67 - 69.99\n\n\nD\n63 - 66.99\n\n\nD-\n60 - 62.99\n\n\nF\n&lt; 60",
-    "crumbs": [
-      "Syllabus"
-    ]
-  },
-  {
-    "objectID": "course-info/syllabus.html#course-policies",
-    "href": "course-info/syllabus.html#course-policies",
-    "title": "Syllabus",
-    "section": "Course policies",
-    "text": "Course policies\n\nAcademic honesty\nTL;DR: Don’t cheat!\n\nThe job application assignments must be completed individually but you are welcome to discuss the assignment with classmates (e.g., discuss what’s the best way for approaching a problem, what functions are useful for accomplishing a particular task, etc.). However you may not directly share (i.e. via copy/paste or copying) any code or prose with anyone other than myself.\nFor the hack-a-thon, everyone will submit their predictions and give their own presentations. However, you are encouraged to work together. You are allowed to share code with one another. However, everyone should be able to explain what they did and everyone’s projects should be unique in some way. Point reductions will be given if two individuals submit the exact same predictions.\nFor the projects, collaboration within teams is not only allowed, but expected. Communication between teams at a high level is also allowed however you may not share code or components of the project across teams.\nReusing code: Unless explicitly stated otherwise, you may make use of online resources (e.g. StackOverflow) for coding examples on assignments. If you directly use code from an outside source (or use it as inspiration), you must explicitly cite where you obtained the code. Any recycled code that is discovered and is not explicitly cited will be treated as plagiarism.\nUse of artificial intelligence (AI): You should treat AI tools, such as ChatGPT, the same as other online resources. There are two guiding principles that govern how you can use AI in this course:1 (1) Cognitive dimension: Working with AI should not reduce your ability to think clearly. We will practice using AI to facilitate—rather than hinder—learning. (2) Ethical dimension: Students using AI should be transparent about their use and make sure it aligns with academic integrity. In general if the following two things are not true, you are cheating:\n\nYou understand and can explain all of the code you have written down or you don’t and you have cited the source of that code.\nAll of your prose and narrative were written by yourself.\n\n\nIf you are unsure if the use of a particular resource complies with the academic honesty policy, just ask.\nRegardless of course delivery format, it is the responsibility of all students to understand and follow all College of Idaho policies, including academic integrity (e.g., completing one’s own work, following proper citation of sources, adhering to guidance around group work projects, and more). Ignoring these requirements is a violation of the Honor Code.\n\n\nLate work policy\nThe due dates for assignments are there to help you keep up with the course material and to ensure the teaching team can provide feedback within a timely manner. I understand that things come up periodically that could make it difficult to submit an assignment by the deadline.\n\nLate Homework: Homework is completion based and well be accepted without penalty for a week. However, if your homework is turned in after I begin grading it, you will not receive any feedback.\nSchool-Sponsored Events/Illness: If an assignment or meeting must be missed due to a school-sponsored event, you must let me know at least a week ahead of time so that we can schedule a time for you to make up the work before you leave. If an assignment or meeting must be missed due to illness, you must let me know as soon as it is safe for you to do so and before the assignment or meeting if possible. Failure to adhere to this policy will result in a 35% penalty on the corresponding assignment.",
-    "crumbs": [
-      "Syllabus"
-    ]
-  },
-  {
-    "objectID": "course-info/syllabus.html#footnotes",
-    "href": "course-info/syllabus.html#footnotes",
-    "title": "Syllabus",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\nThese guiding principles are based on Course Policies related to ChatGPT and other AI Tools developed by Joel Gladd, Ph.D.↩︎↩︎",
-    "crumbs": [
-      "Syllabus"
+      "Computing",
+      "Python resources"
     ]
   },
   {
@@ -234,20 +146,531 @@
     "href": "index.html",
     "title": "Math 4025: Statistical Machine Learning",
     "section": "",
-    "text": "A study of methods to construct and evaluate predictive models. Topics may include lasso and ridge regression, naive Bayes, random forests, support vector machines, gradient boosting, and neural networks. The course will require a significant data analysis and modeling project. This course uses Python."
+    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)\n    \n\n\n\n\n(This schedule is a placeholder. Please update with your specific course schedule)"
   },
   {
-    "objectID": "index.html#catalog-description",
-    "href": "index.html#catalog-description",
-    "title": "Math 4025: Statistical Machine Learning",
+    "objectID": "slides/02-StatisticalLearning.html#pre-survey",
+    "href": "slides/02-StatisticalLearning.html#pre-survey",
+    "title": "Intro to Machine Learning",
+    "section": "Pre-Survey",
+    "text": "Pre-Survey\nTake 10 minute and fill our this survey.\nIf you chose to opt-out please read as much of this article as you an in 8 minutes and then fill out this survey."
+  },
+  {
+    "objectID": "slides/02-StatisticalLearning.html#data-generating-process",
+    "href": "slides/02-StatisticalLearning.html#data-generating-process",
+    "title": "Intro to Machine Learning",
+    "section": "Data Generating Process",
+    "text": "Data Generating Process\nSuppose we have\n\nFeatures: \\(\\mathbf{X}\\)\nTarget: \\(Y\\)\nGoal: Predict \\(Y\\) using \\(\\mathbf{X}\\)\n\n\n\nData generating process: underlying, unseen and unknowable process that generates \\(Y\\) given \\(\\mathbf{X}\\)"
+  },
+  {
+    "objectID": "slides/02-StatisticalLearning.html#population",
+    "href": "slides/02-StatisticalLearning.html#population",
+    "title": "Intro to Machine Learning",
+    "section": "Population",
+    "text": "Population\nMore mathematically, the “true”/population model can be represented by\n\\[Y=f(\\mathbf{X}) + \\epsilon\\]\nwhere \\(\\epsilon\\) is a random error term (includes measurement error, other discrepancies) independent of \\(\\mathbf{X}\\) and has mean zero.\n\nGOAL: Estimate \\(f\\)"
+  },
+  {
+    "objectID": "slides/02-StatisticalLearning.html#why-estimate-fmathbfx",
+    "href": "slides/02-StatisticalLearning.html#why-estimate-fmathbfx",
+    "title": "Intro to Machine Learning",
+    "section": "Why Estimate \\(f(\\mathbf{X})\\)?",
+    "text": "Why Estimate \\(f(\\mathbf{X})\\)?\nWe wish to know about \\(f(\\mathbf{X})\\) for two reasons:\n\nPrediction: make an educated guess for what \\(y\\) should be given a new \\(x_0\\): \\[\\hat{y}_0=\\hat{f}(x_0) \\\n\\text{or} \\\n\\hat{y}_0=\\hat{C}(x_0)\\]\nInference: Understand the relationship between \\(\\mathbf{X}\\) and \\(Y\\).\n\n\n\nAn ML algorithm that is developed mainly for predictive purposes is often termed as a Black Box algorithm."
+  },
+  {
+    "objectID": "slides/02-StatisticalLearning.html#prediction",
+    "href": "slides/02-StatisticalLearning.html#prediction",
+    "title": "Intro to Machine Learning",
+    "section": "Prediction",
+    "text": "Prediction\nThere are two types of prediction problems:\n\nRegression (response \\(Y\\) is quantitative): Build a model \\(\\hat{Y} = \\hat{f}(\\mathbf{X})\\)\nClassification (response \\(Y\\) is qualitative/categorical): Build a classifier \\(\\hat{Y}=\\hat{C}(\\mathbf{X})\\)\n\n\n\nNote: a “hat”, \\(\\hat{\\phantom{f}}\\), over an object represents an estimate of that object\n\nE.g. \\(\\hat{Y}\\) is an estimate of \\(Y\\) and \\(\\hat{f}\\) is an estimate of \\(f\\)"
+  },
+  {
+    "objectID": "slides/02-StatisticalLearning.html#prediction-and-inference",
+    "href": "slides/02-StatisticalLearning.html#prediction-and-inference",
+    "title": "Intro to Machine Learning",
+    "section": "Prediction and Inference",
+    "text": "Prediction and Inference\nIncome dataset\n\nWhy ML? (from ISLR2)"
+  },
+  {
+    "objectID": "slides/02-StatisticalLearning.html#prediction-and-inference-1",
+    "href": "slides/02-StatisticalLearning.html#prediction-and-inference-1",
+    "title": "Intro to Machine Learning",
+    "section": "Prediction and Inference",
+    "text": "Prediction and Inference\nIncome dataset\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhy ML? (from ISLR2)"
+  },
+  {
+    "objectID": "slides/02-StatisticalLearning.html#question",
+    "href": "slides/02-StatisticalLearning.html#question",
+    "title": "Intro to Machine Learning",
+    "section": "Question!!!",
+    "text": "Question!!!\nBased on the previous two slides, which of the following statements are correct?\n\nQuestionsAnswers\n\n\n\nAs Years of Education increases, Income increases, keeping Seniority fixed.\nAs Years of Education increases, Income decreases, keeping Seniority fixed.\nAs Years of Education increases, Income increases.\nAs Seniority increases, Income increases, keeping Years of Education fixed.\nAs Seniority increases, Income decreases, keeping Years of Education fixed.\nAs Seniority increases, Income increases.\n\n\n\n\nAs Years of Education increases, Income increases, keeping Seniority fixed. TRUE\nAs Years of Education increases, Income decreases, keeping Seniority fixed. FALSE\nAs Years of Education increases, Income increases. TRUE\nAs Seniority increases, Income increases, keeping Years of Education fixed. TRUE\nAs Seniority increases, Income decreases, keeping Years of Education fixed. FALSE\nAs Seniority increases, Income increases. TRUE"
+  },
+  {
+    "objectID": "slides/02-StatisticalLearning.html#discussion",
+    "href": "slides/02-StatisticalLearning.html#discussion",
+    "title": "Intro to Machine Learning",
+    "section": "Discussion",
+    "text": "Discussion\nWhat’s the difference between these two statements:\n\nAs Years of Education increases, Income increases, keeping Seniority fixed.\nAs Years of Education increases, Income increases."
+  },
+  {
+    "objectID": "slides/02-StatisticalLearning.html#how-do-we-estimate-fmathbfx",
+    "href": "slides/02-StatisticalLearning.html#how-do-we-estimate-fmathbfx",
+    "title": "Intro to Machine Learning",
+    "section": "How Do We Estimate \\(f(\\mathbf{X})\\)?",
+    "text": "How Do We Estimate \\(f(\\mathbf{X})\\)?\nBroadly speaking, we have two approaches.\n\nParametric methods\nNon-parametric methods"
+  },
+  {
+    "objectID": "slides/02-StatisticalLearning.html#parametric-methods",
+    "href": "slides/02-StatisticalLearning.html#parametric-methods",
+    "title": "Intro to Machine Learning",
+    "section": "Parametric Methods",
+    "text": "Parametric Methods\n\nAssume a functional form for \\(f(\\mathbf{X})\\)\n\nLinear Regression: \\(f(\\mathbf{X})=\\beta_0 + \\beta_1 \\mathbf{x}_1 + \\beta_2 \\mathbf{x}_2 + \\ldots + \\beta_p \\mathbf{x}_p\\)\nEstimate the parameters \\(\\beta_0, \\beta_1, \\ldots, \\beta_p\\) using labeled data\n\nChoosing \\(\\beta\\)’s that minimize some error metrics is called fitting the model\nThe data we use to fit the model is called our training data"
+  },
+  {
+    "objectID": "slides/02-StatisticalLearning.html#parametric-methods-1",
+    "href": "slides/02-StatisticalLearning.html#parametric-methods-1",
+    "title": "Intro to Machine Learning",
+    "section": "Parametric Methods",
+    "text": "Parametric Methods\n\nParametric model fit (from ISLR2)\n\nWhat are some potential parametric models that could result in this picture?\nNote: Right line is the true relationship"
+  },
+  {
+    "objectID": "slides/02-StatisticalLearning.html#parametric-methods-2",
+    "href": "slides/02-StatisticalLearning.html#parametric-methods-2",
+    "title": "Intro to Machine Learning",
+    "section": "Parametric Methods",
+    "text": "Parametric Methods\nIncome dataset\n\n\n\n\n\n\n\n\n\nTrue relationship\n\n\n\n\n\n\n\nParametric model\n\n\n\n\n\n\nFrom ISLR2\n\n\n\n\n\nWhat are some functions that could have resulted in the model on the right?\n\\(\\text{Income} \\approx \\beta_0 + \\beta_1\\times\\text{Years of Education} + \\beta_2\\times\\text{Seniority}\\)"
+  },
+  {
+    "objectID": "slides/02-StatisticalLearning.html#non-parametric-methods",
+    "href": "slides/02-StatisticalLearning.html#non-parametric-methods",
+    "title": "Intro to Machine Learning",
+    "section": "Non-parametric Methods",
+    "text": "Non-parametric Methods\n\nNon-parametric approach: no explicit assumptions about the functional form of \\(f(\\mathbf{X})\\)\nMuch more observations (compared to a parametric approach) required to fit non-parametric model\n\nIdea: parametric model restricts space of possible answers\n\n\nIncome dataset\n\n\n\n\n\n\n\n\n\nTrue relationship\n\n\n\n\n\n\n\nNon-parametric model fit\n\n\n\n\n\n\nFrom ISLR2"
+  },
+  {
+    "objectID": "slides/02-StatisticalLearning.html#supervised-learning-flexibility-of-models",
+    "href": "slides/02-StatisticalLearning.html#supervised-learning-flexibility-of-models",
+    "title": "Intro to Machine Learning",
+    "section": "Supervised Learning: Flexibility of Models",
+    "text": "Supervised Learning: Flexibility of Models\n\nFlexibility: smoothness of functions\nMore theoretically: how many parameters are there to estimate?\n\n\n\n\n\n\n\n\n\nFigure 1\n\n\n\n\n\nMore flexible \\(\\implies\\) More complex \\(\\implies\\) Less Smooth \\(\\implies\\) Less Restrictive \\(\\implies\\) Less Interpretable"
+  },
+  {
+    "objectID": "slides/02-StatisticalLearning.html#supervised-learning-some-trade-offs",
+    "href": "slides/02-StatisticalLearning.html#supervised-learning-some-trade-offs",
+    "title": "Intro to Machine Learning",
+    "section": "Supervised Learning: Some Trade-offs",
+    "text": "Supervised Learning: Some Trade-offs\n\nPrediction Accuracy versus Interpretability\nGood Fit versus Over-fit or Under-fit\n\n\nTrade-off between flexibility and interpretability (from ISLR2)"
+  },
+  {
+    "objectID": "slides/02-StatisticalLearning.html#supervised-learning-selecting-a-model",
+    "href": "slides/02-StatisticalLearning.html#supervised-learning-selecting-a-model",
+    "title": "Intro to Machine Learning",
+    "section": "Supervised Learning: Selecting a Model",
+    "text": "Supervised Learning: Selecting a Model\n\nWhy so many different ML techniques?\nThere is no free lunch in statistics: All methods have different pros and cons\n\nMust select correct model for each use-case\n\nRelevant questions in model selection:\n\nHow much observations \\(n\\) and variables \\(p\\)?\nWhat is the relative importance is prediction, interpretability, and inference?\nDo we expect relationship to be non-linear?\nRegression or classification?"
+  },
+  {
+    "objectID": "slides/02-StatisticalLearning.html#supervised-learning-assessing-model-performance",
+    "href": "slides/02-StatisticalLearning.html#supervised-learning-assessing-model-performance",
+    "title": "Intro to Machine Learning",
+    "section": "Supervised Learning: Assessing Model Performance",
+    "text": "Supervised Learning: Assessing Model Performance\n\nWhen we estimate \\(f(\\mathbf{X})\\) using \\(\\hat{f}(\\mathbf{X})\\), then,\n\n\\[\n\\underbrace{E\\left[Y-\\hat{Y}\\right]^2}_{Error}=E\\left[f(\\mathbf{X})+\\epsilon - \\hat{f}(\\mathbf{X})\\right]^2=\\underbrace{E\\left[f(\\mathbf{X})-\\hat{f}(\\mathbf{X})\\right]^2}_{Reducible} + \\underbrace{Var(\\epsilon)}_{Irreducible}\n\\]\n\n\\(E[Y-\\hat{Y}]^2\\): Expected (average) squared difference between predicted and actual (observed) response, Mean Squared Error (MSE)\nGoal: find an estimate of \\(f(\\mathbf{X})\\) to minimize the reducible error"
+  },
+  {
+    "objectID": "slides/02-StatisticalLearning.html#supervised-learning-assessing-model-performance-1",
+    "href": "slides/02-StatisticalLearning.html#supervised-learning-assessing-model-performance-1",
+    "title": "Intro to Machine Learning",
+    "section": "Supervised Learning: Assessing Model Performance",
+    "text": "Supervised Learning: Assessing Model Performance\n\n\nLabeled training data \\((x_1,y_1), (x_2, y_2), \\ldots, (x_n,y_n)\\)\n\ni.e. \\(n\\) training observations\n\nFit/train a model from training data\n\n\\(\\hat{y}=\\hat{f}(x)\\), regression\n\\(\\hat{y}=\\hat{C}(x)\\), classification\n\n\nObtain estimates \\(\\hat{f}(x_1), \\hat{f}(x_2), \\ldots, \\hat{f}(x_n)\\) (or, \\(\\hat{C}(x_1), \\hat{C}(x_2), \\ldots, \\hat{C}(x_n)\\)) of training data\nCompute error:\n\nRegression \\[\\text{Training MSE}=\\text{Average}_{Training} \\left(y-\\hat{f}(x)\\right)^2 = \\frac{1}{n} \\displaystyle \\sum_{i=1}^{n} \\left(y_i-\\hat{f}(x_i)\\right)^2\\]\nClassification \\[\n\\begin{aligned}\n\\text{Training Error Rate}\n& = \\text{Average}_{Training} \\ \\left[I \\left(y\\ne\\hat{C}(x)\\right) \\right]\n\\\\\n&= \\frac{1}{n} \\displaystyle \\sum_{i=1}^{n} \\ I\\left(y_i \\ne \\hat{C}(x_i)\\right)\n\\end{aligned}\n\\]"
+  },
+  {
+    "objectID": "slides/02-StatisticalLearning.html#recap",
+    "href": "slides/02-StatisticalLearning.html#recap",
+    "title": "Intro to Machine Learning",
+    "section": "Recap",
+    "text": "Recap\n\nRegression vs. Classification\nParametric vs. non-parametric models\nTraining v. test data\nAssessing regression models: Mean-Squared Error\nTrade-offs:\n\nFlexibility vs. interpretability\nBias vs. variance"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#what-is-machine-learning",
+    "href": "slides/01-big-picture.html#what-is-machine-learning",
+    "title": "The Big Picture",
+    "section": "What is Machine Learning?",
+    "text": "What is Machine Learning?\n\nMachine Learning is the study of tools/techniques for extracting information and making predictions from complex datasets\nThe name machine learning was coined in 1959 by Arthur Samuel\n\n“Field of study that gives computers the ability to learn without being explicitly programmed”"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#what-is-machine-learning-1",
+    "href": "slides/01-big-picture.html#what-is-machine-learning-1",
+    "title": "The Big Picture",
+    "section": "What is Machine Learning?",
+    "text": "What is Machine Learning?\nTom M. Mitchell (1998):\n\nA computer program is said to learn from experience E with respect to some class of tasks T and performance measure P if its performance at tasks in T, as measured by P, improves with experience E."
+  },
+  {
+    "objectID": "slides/01-big-picture.html#what-is-machine-learning-2",
+    "href": "slides/01-big-picture.html#what-is-machine-learning-2",
+    "title": "The Big Picture",
+    "section": "What is Machine Learning?",
+    "text": "What is Machine Learning?\n\nMNIST handwritten digits (from ISLR, James et al.)"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#question",
+    "href": "slides/01-big-picture.html#question",
+    "title": "The Big Picture",
+    "section": "Question!!!",
+    "text": "Question!!!\nSuppose your email program watches which emails you do or do not mark as spam, and based on that learns how to better filter spam. According to Tom Mitchell’s definition, which of the following is the task T, experience E, and performance measure P in this setting?\n\nP The number (or fraction) of emails correctly classified as spam/ham (not spam)\nT Classifying emails as spam or ham\nE Watching you label emails as spam or ham\n\n\n(Take 1 minute to think)"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#statistical-learning-vs-machine-learning-vs-data-science",
+    "href": "slides/01-big-picture.html#statistical-learning-vs-machine-learning-vs-data-science",
+    "title": "The Big Picture",
+    "section": "Statistical Learning vs Machine Learning vs Data Science",
+    "text": "Statistical Learning vs Machine Learning vs Data Science\n\nMachine learning arose as a sub-field of Artificial Intelligence which is a sub-fields of Computer Science\nStatistical learning arose as a sub-field of Statistics\nThere is much overlap, a great deal of “cross-fertilization”\n“Data Science” - Reflects the fact that both statistical and machine learning are about data\n“Machine Learning” or “Data Science” are “fancier” terms"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#statistics-vs-machine-learning",
+    "href": "slides/01-big-picture.html#statistics-vs-machine-learning",
+    "title": "The Big Picture",
+    "section": "Statistics vs Machine Learning",
+    "text": "Statistics vs Machine Learning\n\nStatistics: more concerned with answering why and how things work, making inferences\nMachine/Statistical learning: more concerned with making predictions"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#terminologynotation",
+    "href": "slides/01-big-picture.html#terminologynotation",
+    "title": "The Big Picture",
+    "section": "Terminology/Notation",
+    "text": "Terminology/Notation\nAmes Housing dataset - Contains data on 881 houses in Ames, IA. We are interested in predicting sale price.\nThe first ten observations are shown below.\n\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#terminologynotation-1",
+    "href": "slides/01-big-picture.html#terminologynotation-1",
+    "title": "The Big Picture",
+    "section": "Terminology/Notation",
+    "text": "Terminology/Notation\nDefault dataset - Contains credit card default data on 10,000 individuals. We are interested in predicting whether somebody will default or not.\nTen observations are shown below.\n\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#terminologynotation-2",
+    "href": "slides/01-big-picture.html#terminologynotation-2",
+    "title": "The Big Picture",
+    "section": "Terminology/Notation",
+    "text": "Terminology/Notation\n\nResponse/Target/Outcome - variable we are interested in predicting, denoted as \\(Y\\)\nFeatures/Inputs/Predictors - variables used to predict the response, denoted as \\(X\\)\nFeature Matrix - all features taken together, denoted as \\(\\mathbf{X}\\)\nNumber of data points/observations denoted as \\(n\\)\nNumber of features/inputs/predictors denotes as \\(p\\)\nMissing entries in Python are denoted as NaN (in pandas/numpy)"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#question-1",
+    "href": "slides/01-big-picture.html#question-1",
+    "title": "The Big Picture",
+    "section": "Question!!!",
+    "text": "Question!!!\nFor the Ames Housing and Default datasets:\n\nQuestionsAnswers\n\n\n\nWhat are the corresponding values of \\(n\\) and \\(p\\)?\nWhat will be the dimension of the corresponding response vector \\(Y\\)?\nWhat is the value of the 3rd feature for the 2nd observation?\n\n\n\n\nWhat are the corresponding values of \\(n\\) and \\(p\\)?\n\nAmes: \\(n = 881\\) and \\(p = 9\\)\nDefault: \\(n = 10000\\) and \\(p = 4\\)\n\nWhat will be the dimension of the corresponding response vector \\(Y\\)?\n\nAmes: \\(881\\times 1\\)\nDefault: \\(10000\\times 1\\)\n\nWhat is the value of the 3rd feature for the 2nd observation?\n\nAmes: Attchd\nDefault: 397.5425"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#question-2",
+    "href": "slides/01-big-picture.html#question-2",
+    "title": "The Big Picture",
+    "section": "Question!!!",
+    "text": "Question!!!\nSuppose you have information about 867 cancer patients on their age, tumor size, clump thickness of the tumor, uniformity of cell size, and whether the tumor is malignant or benign. Based on these data, you are interested in building a model to predict the type of tumor (malignant or benign) for future cancer patients.\n\nWhat are the values of \\(n\\) and \\(p\\) in this dataset? \\(n = 867, p = 5\\)\nWhat are the inputs/features?"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#supervised-vs-unsupervised-learning",
+    "href": "slides/01-big-picture.html#supervised-vs-unsupervised-learning",
+    "title": "The Big Picture",
+    "section": "Supervised vs Unsupervised Learning",
+    "text": "Supervised vs Unsupervised Learning\n\nMachine Learning Tasks (from Bunker and Fayez, 2017)"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#supervised-learning",
+    "href": "slides/01-big-picture.html#supervised-learning",
+    "title": "The Big Picture",
+    "section": "Supervised Learning",
+    "text": "Supervised Learning\n\nWe have access to labeled data\nObjective: learn overall pattern of relationship between the inputs (\\(\\mathbf{X}\\)) and response (\\(Y\\)) in order to\n\nInvestigate the relationship between inputs and response\nPredict for potential unseen test cases\nAssess the quality of predictions"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#types-of-supervised-learning",
+    "href": "slides/01-big-picture.html#types-of-supervised-learning",
+    "title": "The Big Picture",
+    "section": "Types of Supervised Learning",
+    "text": "Types of Supervised Learning\nSupervised Learning problems can be categorized into:\n\n\nRegression problems (response is quantitative, continuous)\nClassification problems (response is qualitative, categorical)\nWhat if I have discrete quantitative data (e.g. counts)?\n\nCan use either but one is probably better…\nHow many discrete values are there?\n\nEnough we can think of the response as continuous?\n\nWhat is our goal?\n\nHow important is being exactly correct?"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#unsupervised-learning",
+    "href": "slides/01-big-picture.html#unsupervised-learning",
+    "title": "The Big Picture",
+    "section": "Unsupervised Learning",
+    "text": "Unsupervised Learning\n\nNo response/outcome variable, just \\(\\mathbf{X}\\)\nUnderstand structure within data\n\nfind similar groups of observations based on features (clustering)\nfind a smaller subset of features with the most variation (dimensionality reduction)\n\nNo gold-standard\nEasier to collect unlabeled data\nUseful pre-processing step for supervised learning"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#unsupervised-learning-1",
+    "href": "slides/01-big-picture.html#unsupervised-learning-1",
+    "title": "The Big Picture",
+    "section": "Unsupervised Learning",
+    "text": "Unsupervised Learning\nUS Arrests dataset - Data on arrests for 50 US states.\nThe first ten observations are shown below.\n\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#question-3",
+    "href": "slides/01-big-picture.html#question-3",
+    "title": "The Big Picture",
+    "section": "Question!!!",
+    "text": "Question!!!\n\nFor each of the following, identify whether the problem belongs to the supervised or unsupervised learning paradigm\n\nExamine the statistics of two football teams, and predict which team will win tomorrow’s match (given historical data of teams’ wins/losses to learn from) supervised\nGiven genetic (DNA) data from a person, predict the probability of the person developing diabetes over the next 10 years supervised\nTake a collection of 1000 essays written on the US economy, and find a way to automatically group these essays into a small number of groups of essays that are somehow “similar” or “related” unsupervised\nExamine data on the income and years of education of adults in a neighborhood and build a model to predict the income from years of education supervised"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#recap",
+    "href": "slides/01-big-picture.html#recap",
+    "title": "The Big Picture",
+    "section": "Recap",
+    "text": "Recap\n\nWhat is a Machine Learning algorithm?\n\nT: has task\nP: performance is measured\nE: improves with experience\n\nTerminology:\n\nFeatures\n\n\\(p\\)\n\nTarget\nObservations\n\n\\(n\\)\n\n\nSupervised vs. unsupervised learning\n\nSupervised: data is labeled\nUnsupervised: data is unlabeled"
+  },
+  {
+    "objectID": "slides/00-welcome.html#meet-prof.-friedlander",
+    "href": "slides/00-welcome.html#meet-prof.-friedlander",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Meet Prof. Friedlander!",
+    "text": "Meet Prof. Friedlander!\n\n\nEducation and career journey\n\nGrew up outside New York City\nBS in Math & Statistics from Rice University (Houston, TX)\nBusiness Analyst at Capital One (Plano, TX)\nMS and PhD in Statistics & Operations Research from UNC-Chapel Hill\nPostdoc in Population Genetics at University of Chicago\nAssistant Professor of Math at St. Norbert College (Green Bay, WI)\n\nWork focuses on statistics education, queuing theory, and population genetics\nBig sports fan: NY Knicks, Giants, Rangers, Yankees, UNC Tarheels\nDad of three cute dogs: Allie, Miriam, Tony"
+  },
+  {
+    "objectID": "slides/00-welcome.html#meet-prof.-friedlander-1",
+    "href": "slides/00-welcome.html#meet-prof.-friedlander-1",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Meet Prof. Friedlander!",
+    "text": "Meet Prof. Friedlander!"
+  },
+  {
+    "objectID": "slides/00-welcome.html#tell-me-about-yourself-github",
+    "href": "slides/00-welcome.html#tell-me-about-yourself-github",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Tell me about yourself + GitHub",
+    "text": "Tell me about yourself + GitHub\nCreate a GitHub account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name.\nSend me a Teams Chat with answers to the following questions:\n\nWhat is the GitHub username you just created?\nWhat would you like me to call you?\nWhy are you taking this class?\nWhat are your career goals?\nIs there anything else you would like me to know about you? E.g. athlete, preferred pronouns, accommodations, etc…\nPlease recommend at least one and up to infinity songs for the class playlist."
+  },
+  {
+    "objectID": "slides/00-welcome.html#course-faq",
+    "href": "slides/00-welcome.html#course-faq",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Course FAQ",
+    "text": "Course FAQ\nQ - What background is assumed for the course?\nA - Familiarity with concepts from statistical inference, linear regression, and logistic regression. Some experience with Python or R, especially when it come to manipulating and visualizing data."
+  },
+  {
+    "objectID": "slides/00-welcome.html#course-faq-1",
+    "href": "slides/00-welcome.html#course-faq-1",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Course FAQ",
+    "text": "Course FAQ\nQ - Will we be doing computing?\nA - Yes. We will mostly be using Jupyter notebooks for analysis, but may use Quarto for presentations and project. We will use GitHub for version control and collaboration"
+  },
+  {
+    "objectID": "slides/00-welcome.html#course-faq-2",
+    "href": "slides/00-welcome.html#course-faq-2",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Course FAQ",
+    "text": "Course FAQ\nQ - Will we learn the mathematical theory?\nA - Yes and No. The course is primarily focused on application; however, we will discuss some of the mathematics occasionally."
+  },
+  {
+    "objectID": "slides/00-welcome.html#course-faq-3",
+    "href": "slides/00-welcome.html#course-faq-3",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Course FAQ",
+    "text": "Course FAQ\nQ - What distinguishes this from a 3000-level course?\nA - I expect a high level of independence from you. You should not be relying on me to teach you every small detail from this course. For example, if I tell you about a Python function, I expect that you will be able to figure out how to use it yourself."
+  },
+  {
+    "objectID": "slides/00-welcome.html#course-faq-4",
+    "href": "slides/00-welcome.html#course-faq-4",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Course FAQ",
+    "text": "Course FAQ\nQ - Is there anything else I should know?\nA - Machine learning is a RAPIDLY evolving field. If you want to be successful in this field going forward, you will need to be able to learn things for yourself and SELF-ASSESS whether you know them. There are portions of this course that I have intentionally designed to not give you enough information to solve on your own."
+  },
+  {
+    "objectID": "slides/00-welcome.html#course-learning-objectives",
+    "href": "slides/00-welcome.html#course-learning-objectives",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Course learning objectives",
+    "text": "Course learning objectives\nBy the end of the semester, you will be able to…\n\ntackle predictive modeling problems arising from real data.\nuse Python to fit and evaluate machine learning models.\nassess whether a proposed model is appropriate and describe its limitations.\nuse Jupyter notebooks and Quarto to write reproducible reports and GitHub for version control and collaboration.\neffectively communicate results through writing and oral presentations."
+  },
+  {
+    "objectID": "slides/00-welcome.html#course-toolkit",
+    "href": "slides/00-welcome.html#course-toolkit",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Course toolkit",
+    "text": "Course toolkit\n\nCourse website\n\nCentral hub for the course!\nTour of the website\n\nCanvas\n\nGradebook\n\nGitHub\n\nDistribute assignments\nPlatform for version control and collaboration\n\nMicrosoft Teams\n\nCommunication"
+  },
+  {
+    "objectID": "slides/00-welcome.html#computing-toolkit",
+    "href": "slides/00-welcome.html#computing-toolkit",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Computing toolkit",
+    "text": "Computing toolkit\n\n\n\n\n\n\n\n\n\n\n\nAll analyses using Python\nMostly use Jupyter notebooks (Quarto for projects)\nRecommend using Positron or VS Code\n\n\n\n\n\n\n\n\n\n\n\n\nAccess assignments\nFacilitates version control and collaboration\nAll work in MATH 4025 course classroom"
+  },
+  {
+    "objectID": "slides/00-welcome.html#prepare-participate-practice-perform",
+    "href": "slides/00-welcome.html#prepare-participate-practice-perform",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Prepare, Participate, Practice, Perform",
+    "text": "Prepare, Participate, Practice, Perform\n\n\n\nPrepare: Introduce new content and prepare for lectures by completing the readings and watching videos. Tuesday Quizzes.\nParticipate: Attend and actively participate in lectures, office hours, team meetings\nPractice: Practice applying statistical concepts and computing with team-based homework graded pass/fail. Thursday Presentations.\nPerform: Put together what you’ve learned to analyze real-world data\n\nOne Job Application/Portfolio (individual)\nOne Job Interview (individual)\nOne Midterm Exam\nOne Hack-a-thon/Presentation (individual-ish)\nOne Project & Presentation (team)"
+  },
+  {
+    "objectID": "slides/00-welcome.html#grading",
+    "href": "slides/00-welcome.html#grading",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Grading",
+    "text": "Grading\n\n\n\nCategory\nPercentage\n\n\n\n\nHomework\n10%\n\n\nQuizzes\n10%\n\n\nJob Application\n20%\n\n\nJob Interview\n20%\n\n\nMidterm Exam\n15%\n\n\nHack-a-thon & Presentation\n10%\n\n\nFinal Project\n15%\n\n\n\nSee the syllabus for details on how the final letter grade will be calculated."
+  },
+  {
+    "objectID": "slides/00-welcome.html#support",
+    "href": "slides/00-welcome.html#support",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Support",
+    "text": "Support\n\nAttend office hours\n\nProf. Friedlander office hours\n\nUse email for questions regarding personal matters and/or grades\nSee the Course Support page for more details"
+  },
+  {
+    "objectID": "slides/00-welcome.html#late-homework",
+    "href": "slides/00-welcome.html#late-homework",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Late Homework",
+    "text": "Late Homework\n\nQuizzes/Presentations: Not accepted late without excused absence\nHomework: Pass/Fail\n\nHonest about not finishing? 50%\nDon’t know what you’re doing during presentation? 0%\nDue Thursday before class"
+  },
+  {
+    "objectID": "slides/00-welcome.html#school-sponsored-events",
+    "href": "slides/00-welcome.html#school-sponsored-events",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "School-Sponsored Events",
+    "text": "School-Sponsored Events\n\nExcused absences for event? Email me at least a week in advance\nSick or injured? Email me as soon as it is safe to do so.\n\nDon’t get me sick…\n\nFailure to adhere to this policy gets you a 35% point reduction"
+  },
+  {
+    "objectID": "slides/00-welcome.html#academic-integrity",
+    "href": "slides/00-welcome.html#academic-integrity",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Academic integrity",
+    "text": "Academic integrity\n\nThe College of Idaho maintains that academic honesty and integrity are essential values in the educational process. Operating under an Honor Code philosophy, the College expects conduct rooted in honesty, integrity, and understanding, allowing members of a diverse student body to live together and interact and learn from one another in ways that protect both personal freedom and community standards. Violations of academic honesty are addressed primarily by the instructor and may be referred to the Student Judicial Board.\n\nBy participating in this course, you are agreeing that all your work and conduct will be in accordance with the College of Idaho Honor Code."
+  },
+  {
+    "objectID": "slides/00-welcome.html#collaboration-sharing-code",
+    "href": "slides/00-welcome.html#collaboration-sharing-code",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Collaboration & sharing code",
+    "text": "Collaboration & sharing code\n\nI have policies!"
+  },
+  {
+    "objectID": "slides/00-welcome.html#use-of-artificial-intelligence-ai",
+    "href": "slides/00-welcome.html#use-of-artificial-intelligence-ai",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Use of artificial intelligence (AI)",
+    "text": "Use of artificial intelligence (AI)"
+  },
+  {
+    "objectID": "slides/00-welcome.html#use-of-artificial-intelligence-ai-1",
+    "href": "slides/00-welcome.html#use-of-artificial-intelligence-ai-1",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Use of artificial intelligence (AI)",
+    "text": "Use of artificial intelligence (AI)\n\nAllowed and Encouraged!\n\nUse AI tools to supplement your learning.\n\nYour Responsibility:\n\nYou are responsible for everything you submit.\nMUST be able to explain every line of code.\nMUST be able to explain all results.\n\n\n\n\n\n\n\n\nImportant\n\n\nIf you cannot explain your code or results when asked, it will be treated as if you did not do the work yourself."
+  },
+  {
+    "objectID": "slides/00-welcome.html#in-class-agreements",
+    "href": "slides/00-welcome.html#in-class-agreements",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "In class agreements",
+    "text": "In class agreements\nIf we discuss/agree to something in class or office hours which requires action from me (e.g. “you may turn in your homework late due to a sporting event”), you MUST send me a follow-up message. If you don’t, I will almost certainly forget, and our agreement will be considered null and void."
+  },
+  {
+    "objectID": "slides/00-welcome.html#five-tips-for-success",
+    "href": "slides/00-welcome.html#five-tips-for-success",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Five tips for success",
+    "text": "Five tips for success\n\nComplete all the preparation work (readings and videos) before class.\nAsk questions, come to office hours and help session.\nDo the homework; get started on homework early when possible.\nDon’t procrastinate and don’t let a week pass by with lingering questions.\nStay up-to-date on announcements on Canvas and sent via email."
+  },
+  {
+    "objectID": "slides/00-welcome.html#emails-for-help",
+    "href": "slides/00-welcome.html#emails-for-help",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Emails for help",
+    "text": "Emails for help\nIf you email me about an error please include a screenshot of the error and the code causing the error."
+  },
+  {
+    "objectID": "GEMINI.html",
+    "href": "GEMINI.html",
+    "title": "Gemini Context: Math 4025 (Spring 2026)",
     "section": "",
-    "text": "A study of methods to construct and evaluate predictive models. Topics may include lasso and ridge regression, naive Bayes, random forests, support vector machines, gradient boosting, and neural networks. The course will require a significant data analysis and modeling project. This course uses Python."
+    "text": "This directory contains the source materials for the Statistical Machine Learning (Math 4025) course website for Spring 2026.\n\nCourse: Math 4025 (Spring 2026).\nInstructor: Dr. Eric Friedlander.\nInstitution: College of Idaho.\nPrimary Language: Python (transitioned from R).\nTextbook: ISLP (Introduction to Statistical Learning with Python).\nLive Site: https://EricFriedlander.github.io/math4025sp26/\n\n\n\n\nThe root directory constitutes the active Quarto project.\n\n_archive/: Legacy R-based materials from Spring 2025 (MAT 427). Use for reference only.\n\nslides/: Legacy lecture slides.\nhw/: Legacy homework assignments.\n\ncourse-info/: Course-level documentation.\n\nsyllabus.qmd: Course syllabus (updated with 2026 grading and URL).\noverview.qmd: Course overview (Instructor, Class Meetings).\nsupport.qmd: Support resources.\ncomputing-access.qmd & computing-python-resources.qmd: Computing setup and resources.\n\nslides/: Lecture slides (migrated from archive and converted to Python).\n\n00-welcome.qmd, 01-big-picture.qmd, 02-StatisticalLearning.qmd.\n_metadata.yml: Shared configuration for all slides.\nimages/: Slide-specific images.\n\nhw/: Homework assignments (empty).\ndata/: Course datasets.\n\nschedule.csv: Source of truth for the course schedule.\n\njobs/: Job application assignments (empty).\nprepare/: Preparation materials (empty).\nimages/: Static image assets (e.g., logo).\n_quarto.yml: Main Quarto configuration.\nenvironment.yml: Conda environment definition.\nindex.qmd: Homepage (displays the Course Schedule).\n\n\n\n\n\n\n\nQuarto: Website builder.\nPython: Primary programming language.\nConda/Mamba: Use the math-4025-sp26 environment for all Python code in this workspace.\nVS Code: Primary editor.\n\n\n\n\nThe website is automatically rendered and published to GitHub Pages via a GitHub Action whenever changes are pushed to the main branch. * Workflow file: .github/workflows/publish.yml\n\n\n\nRun these commands from the project root.\n\nPreview Site: bash     quarto preview\nRender Site: bash     quarto render\nPublish Site: bash     quarto publish gh-pages\nRender Specific File: bash     quarto render course-info/syllabus.qmd\n\n\n\n\n\nContent: Written in .qmd (Quarto Markdown).\nCode Blocks: Use {python} blocks.\nTables: Use the show function from the itables library to display Python data frames.\nPlotting: Use plotnine for visualizations (ggplot2 style).\nData Loading: Use pyreadr for .rds files and pyhere for robust relative paths.\nConfiguration: Global settings in _quarto.yml. Sidebar navigation is configured here.\nPaths: Relative paths should ideally generally work, but be mindful of the folder structure (e.g., referencing images from course-info/).\nData: Store raw data in data/.\n\n\n\n\n\nThe project utilizes the Gemini CLI for assistance. * .gemini/prompts/: Stores reusable prompts for common tasks. * sync-context.md: Analyzes project changes, updates documentation, and handles git operations."
   },
   {
-    "objectID": "index.html#instructor",
-    "href": "index.html#instructor",
-    "title": "Math 4025: Statistical Machine Learning",
+    "objectID": "GEMINI.html#project-overview",
+    "href": "GEMINI.html#project-overview",
+    "title": "Gemini Context: Math 4025 (Spring 2026)",
+    "section": "",
+    "text": "This directory contains the source materials for the Statistical Machine Learning (Math 4025) course website for Spring 2026.\n\nCourse: Math 4025 (Spring 2026).\nInstructor: Dr. Eric Friedlander.\nInstitution: College of Idaho.\nPrimary Language: Python (transitioned from R).\nTextbook: ISLP (Introduction to Statistical Learning with Python).\nLive Site: https://EricFriedlander.github.io/math4025sp26/"
+  },
+  {
+    "objectID": "GEMINI.html#directory-structure",
+    "href": "GEMINI.html#directory-structure",
+    "title": "Gemini Context: Math 4025 (Spring 2026)",
+    "section": "",
+    "text": "The root directory constitutes the active Quarto project.\n\n_archive/: Legacy R-based materials from Spring 2025 (MAT 427). Use for reference only.\n\nslides/: Legacy lecture slides.\nhw/: Legacy homework assignments.\n\ncourse-info/: Course-level documentation.\n\nsyllabus.qmd: Course syllabus (updated with 2026 grading and URL).\noverview.qmd: Course overview (Instructor, Class Meetings).\nsupport.qmd: Support resources.\ncomputing-access.qmd & computing-python-resources.qmd: Computing setup and resources.\n\nslides/: Lecture slides (migrated from archive and converted to Python).\n\n00-welcome.qmd, 01-big-picture.qmd, 02-StatisticalLearning.qmd.\n_metadata.yml: Shared configuration for all slides.\nimages/: Slide-specific images.\n\nhw/: Homework assignments (empty).\ndata/: Course datasets.\n\nschedule.csv: Source of truth for the course schedule.\n\njobs/: Job application assignments (empty).\nprepare/: Preparation materials (empty).\nimages/: Static image assets (e.g., logo).\n_quarto.yml: Main Quarto configuration.\nenvironment.yml: Conda environment definition.\nindex.qmd: Homepage (displays the Course Schedule)."
+  },
+  {
+    "objectID": "GEMINI.html#development-usage",
+    "href": "GEMINI.html#development-usage",
+    "title": "Gemini Context: Math 4025 (Spring 2026)",
+    "section": "",
+    "text": "Quarto: Website builder.\nPython: Primary programming language.\nConda/Mamba: Use the math-4025-sp26 environment for all Python code in this workspace.\nVS Code: Primary editor.\n\n\n\n\nThe website is automatically rendered and published to GitHub Pages via a GitHub Action whenever changes are pushed to the main branch. * Workflow file: .github/workflows/publish.yml\n\n\n\nRun these commands from the project root.\n\nPreview Site: bash     quarto preview\nRender Site: bash     quarto render\nPublish Site: bash     quarto publish gh-pages\nRender Specific File: bash     quarto render course-info/syllabus.qmd\n\n\n\n\n\nContent: Written in .qmd (Quarto Markdown).\nCode Blocks: Use {python} blocks.\nTables: Use the show function from the itables library to display Python data frames.\nPlotting: Use plotnine for visualizations (ggplot2 style).\nData Loading: Use pyreadr for .rds files and pyhere for robust relative paths.\nConfiguration: Global settings in _quarto.yml. Sidebar navigation is configured here.\nPaths: Relative paths should ideally generally work, but be mindful of the folder structure (e.g., referencing images from course-info/).\nData: Store raw data in data/."
+  },
+  {
+    "objectID": "GEMINI.html#workflow-automation",
+    "href": "GEMINI.html#workflow-automation",
+    "title": "Gemini Context: Math 4025 (Spring 2026)",
+    "section": "",
+    "text": "The project utilizes the Gemini CLI for assistance. * .gemini/prompts/: Stores reusable prompts for common tasks. * sync-context.md: Analyzes project changes, updates documentation, and handles git operations."
+  },
+  {
+    "objectID": "course-info/overview.html",
+    "href": "course-info/overview.html",
+    "title": "Overview",
+    "section": "",
+    "text": "A study of methods to construct and evaluate predictive models. Topics may include lasso and ridge regression, naive Bayes, random forests, support vector machines, gradient boosting, and neural networks. The course will require a significant data analysis and modeling project. This course uses Python.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "course-info/overview.html#catalog-description",
+    "href": "course-info/overview.html#catalog-description",
+    "title": "Overview",
+    "section": "",
+    "text": "A study of methods to construct and evaluate predictive models. Topics may include lasso and ridge regression, naive Bayes, random forests, support vector machines, gradient boosting, and neural networks. The course will require a significant data analysis and modeling project. This course uses Python.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "course-info/overview.html#instructor",
+    "href": "course-info/overview.html#instructor",
+    "title": "Overview",
     "section": "Instructor",
-    "text": "Instructor\nEric is an Assistant Professor in the Department of Mathematics and Physical Sciences at the College of Idaho. His expertise lies in the areas of probability, statistics, and statistics education. He joined the College of Idaho faculty in 2024 after spending three years as an Assistant Professor at St. Norbert College in De Pere, Wisconsin. He received his bachelor’s degree in mathematics and statistics from Rice University in 2011. After earning his degree, he worked for Capital One for two years in their home loans division before enrolling in graduate school. In 2018, Eric received his Ph.D. in statistics and operations research from the University of North Carolina at Chapel Hill studying under professor Amarjit Budhiraja. His dissertation work focused on modeling and analyzing large systems which arise in industrial engineering (e.g. large server and communication networks). Following his Ph.D., Eric did a postdoc in the Department of Ecology & Evolution at the University of Chicago under the direction of professor Matthias Steinrücken where he used stochastic processes to study natural selection and population genetics.\nOutside of school, Eric is an avid fan of the New York Giants, New York Knicks, and North Carolina Tarheels. In addition, he enjoys comic books, the Fast and the Furious franchise, and spending time with his lovely wife Maria and lovable dogs Allie, Tony, and Miriam."
+    "text": "Instructor\nEric is an Assistant Professor in the Department of Mathematics and Physical Sciences at the College of Idaho. His expertise lies in the areas of probability, statistics, and statistics education. He joined the College of Idaho faculty in 2024 after spending three years as an Assistant Professor at St. Norbert College in De Pere, Wisconsin. He received his bachelor’s degree in mathematics and statistics from Rice University in 2011. After earning his degree, he worked for Capital One for two years in their home loans division before enrolling in graduate school. In 2018, Eric received his Ph.D. in statistics and operations research from the University of North Carolina at Chapel Hill studying under professor Amarjit Budhiraja. His dissertation work focused on modeling and analyzing large systems which arise in industrial engineering (e.g. large server and communication networks). Following his Ph.D., Eric did a postdoc in the Department of Ecology & Evolution at the University of Chicago under the direction of professor Matthias Steinrücken where he used stochastic processes to study natural selection and population genetics.\nOutside of school, Eric is an avid fan of the New York Giants, New York Knicks, and North Carolina Tarheels. In addition, he enjoys comic books, the Fast and the Furious franchise, and spending time with his lovely wife Maria and lovable dogs Allie, Tony, and Miriam.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "course-info/computing-access.html",
+    "href": "course-info/computing-access.html",
+    "title": "Computing access",
+    "section": "",
+    "text": "It is highly recommended that you install Python and VS Code on your own personal computer.\n\nInstall VS Code: Download here.\nInstall Python: Download here.\nInstall Quarto: Download here.",
+    "crumbs": [
+      "Computing",
+      "Computing access"
+    ]
+  },
+  {
+    "objectID": "course-info/computing-access.html#python-vs-code",
+    "href": "course-info/computing-access.html#python-vs-code",
+    "title": "Computing access",
+    "section": "",
+    "text": "It is highly recommended that you install Python and VS Code on your own personal computer.\n\nInstall VS Code: Download here.\nInstall Python: Download here.\nInstall Quarto: Download here.",
+    "crumbs": [
+      "Computing",
+      "Computing access"
+    ]
+  },
+  {
+    "objectID": "course-info/computing-access.html#git-github",
+    "href": "course-info/computing-access.html#git-github",
+    "title": "Computing access",
+    "section": "Git & Github",
+    "text": "Git & Github\nYou need to create a GitHub account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name. Once you have done this, email it to Dr. Friedlander so he can add you to the GitHub Classroom.\n\nSet up your SSH Key\nYou will authenticate GitHub using SSH.\n\n\n\n\n\n\nNote\n\n\n\nYou only need to do this authentication process one time on a single system.\n\n\n(Instructions for setting up SSH keys vary by operating system. Please consult GitHub’s documentation).\n\n\nConfigure git\nYou need to configure git with your name and email.\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"your.email@example.com\"",
+    "crumbs": [
+      "Computing",
+      "Computing access"
+    ]
   }
 ]
