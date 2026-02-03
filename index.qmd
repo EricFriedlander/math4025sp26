@@ -15,13 +15,38 @@ execute:
 import pandas as pd
 from itables import show
 from pyhere import here
+import mistune
 
 # Load the schedule data
-schedule = pd.read_csv(here("data", "schedule.csv"))
+schedule = pd.read_csv(here("course-info", "schedule.csv"))
+
+# Filter for published items
+schedule = schedule[schedule['Publish'] == 'x']
+
+# Remove the Publish column from display
+schedule = schedule.drop(columns=['Publish'])
+
+# Replace all NaN values with empty strings to avoid "NaN" display
+schedule = schedule.fillna("")
+
+# Function to render markdown
+def render_markdown(text):
+    # Handle NaN/None cases
+    if pd.isna(text) or text == "nan" or text == "NaN":
+        return ""
+    
+    to_render = str(text)
+    # mistune adds \n at the end of paragraphs, so we strip it.
+    return mistune.html(to_render).strip()
+
+# Apply markdown rendering to all string columns
+from pandas.api.types import is_string_dtype, is_object_dtype
+
+for col in schedule.columns:
+    if is_string_dtype(schedule[col]) or is_object_dtype(schedule[col]):
+         schedule[col] = schedule[col].apply(render_markdown)
 
 # Display the schedule
-show(schedule, dom='t', classes="display nowrap compact", paging=False)
+show(schedule, dom='t', classes="display nowrap compact", paging=False, allow_html=True)
 ```
-
-*(This schedule is a placeholder. Please update with your specific course schedule)*
 

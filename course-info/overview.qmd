@@ -11,12 +11,9 @@ A study of methods to construct and evaluate predictive models. Topics may inclu
 
 |             |                             |                     |
 |----------------------------|-----------------------------|---------------------------------|
-| **Lecture** | MWF 3:00 - 3:50pm | Cruzen-Murray Library (CML) 208 |
-| **(Optional) Homework Lab** | W 4:00 - 4:50pm (Tentative) | Cruzen-Murray Library (CML) 208 |
-| **Office Hours** | M 9:30 - 10:30am | Boone 126B |
-| **Office Hours** | T 9:00 - 10:00am | Boone 126B |
-| **Office Hours** | W 1:30 - 2:30pm | Boone 126B |
-| **Office Hours** | TH 10:00 - 11:00am | Boone 126B |
+| **Lecture** | MW 3:00 - 4:15pm | Cruzen-Murray Library (CML), 208 |
+
+| **Office Hours** | TBD | |
 
 Office hours are also available by appointment, just email me!
 

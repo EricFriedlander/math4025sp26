@@ -26,13 +26,10 @@ website:
     align: center
     tools: 
       - icon: github
-        href: https://github.com/
+        href: https://classroom.github.com/classrooms/256856191-math4025sp26-classroom
         text: "GitHub"
-      - icon: code-square
-        href: https://code.visualstudio.com/
-        text: "VS Code"
       - icon: person
-        href: https://cofi.instructure.com/
+        href: https://cofi.instructure.com/courses/18105
         text: "Canvas"
     style: "docked"
     search: true
@@ -40,7 +37,6 @@ website:
     contents:
       - course-info/overview.qmd
       - course-info/syllabus.qmd
-      - course-info/support.qmd
       - section: Computing
         contents:
         - href: course-info/computing-access.qmd

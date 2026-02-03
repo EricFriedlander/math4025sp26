@@ -1,0 +1,151 @@
+---
+title: "Homework 1: Exploratory Data Analysis"
+format:
+  html:
+    embed-resources: true
+---
+
+Adapted from "Start teaching with R," created by R Pruim, N J Horton, and D Kaplan, 2013, "Interactive and Dynamic Graphics for Data Analysis," by Dianne Cook and Deborah F. Swayne, Colby Long's DATA 325 Course at Wooster College and Maria Tackett's STA-210 course at Duke University.
+
+## Introduction
+
+In this homework we will familiarize ourselves with the tools that we'll use throughout the course and refresh ourselves on topic related to exploratory data analysis.
+
+## Course Toolkit
+
+The primary tools we'll be using in this course are **Python**, **Positron**, **git**, and **GitHub**. We will be using them throughout the course both to learn the concepts discussed in the course and to analyze real data and come to informed conclusions.
+
+::: callout-note
+**Python** is the programming language. **Positron** is the Integrated Development Environment (IDE) where we write code. **Miniforge/Conda** manages our Python installations and packages.
+:::
+
+::: callout-note
+**Git** is a version control system (like "Track Changes" but for code) and **GitHub** is the cloud hosting service for your Git projects.
+:::
+
+To make versioning simpler, this homework will be completed individually. In the future, you'll learn about collaborating on GitHub.
+
+## Part 1: Setting Up Your Environment
+
+Before we analyze data, we need to set up our computer. This process involves installing a package manager (Miniforge), creating a virtual environment, and installing the necessary libraries.
+
+### 1. Install Miniforge
+We will use **Miniforge** to manage our Python installation. It pre-configures `conda` (package manager) and `mamba` (a faster version of conda) with the `conda-forge` channel, which is the community standard.
+
+1.  Go to the [Miniforge GitHub page](https://github.com/conda-forge/miniforge).
+2.  Download the **Miniforge3** installer for your operating system (Windows, macOS, or Linux).
+3.  Run the installer and follow the prompts.
+    *   *Windows*: Open "Miniforge Prompt" after installation to verify.
+    *   *Mac/Linux*: Open your terminal.
+
+### 2. Create a Conda Environment
+We never want to install packages into our "base" environment. Instead, we create a specific environment for this course.
+
+Open your terminal (or Miniforge Prompt) and run:
+
+```bash
+mamba create -n math4025 python=3.14
+```
+*   `mamba create`: Command to create an environment.
+*   `-n math4025`: Names the environment "math4025".
+*   `python=3.14`: Specifies the Python version.
+
+### 3. Activate the Environment
+To use the environment, you must activate it:
+
+```bash
+mamba activate math4025
+```
+You should see `(math4025)` appear in your prompt.
+
+### 4. Install Packages
+Now we install the tools we need for this assignment.
+
+```bash
+mamba install pandas seaborn matplotlib plotnine itables jupyter polars pyreadr
+```
+*   `pandas`, `polars`: Data manipulation.
+*   `seaborn`, `matplotlib`, `plotnine`: Data visualization.
+*   `itables`: Interactive tables.
+*   `jupyter`: Required to run Notebooks.
+*   `pyreadr`: For reading R datasets.
+
+## Part 2: Setting up Positron & Git
+
+### 1. Install Positron
+We will use **Positron**, a new data science IDE from Posit (makers of RStudio).
+1.  Download and install [Positron](https://positron.posit.co/install.html).
+2.  Open Positron.
+3.  Select your Python Interpreter:
+    *   Open the Command Palette (`Ctrl+Shift+P` or `Cmd+Shift+P`).
+    *   Type `Python: Select Interpreter`.
+    *   Choose the `math4025` environment you just created.
+
+### 2. Configure Git & GitHub
+You need a **Personal Access Token (PAT)** to allow Positron to talk to GitHub securely.
+
+1.  Log in to [GitHub](https://github.com/).
+2.  Go to **Settings** > **Developer settings** > **Personal access tokens** > **Tokens (classic)**.
+3.  **Generate new token (classic)**.
+4.  Name it "Math4025", select the **`repo`** scope, and generate.
+5.  **Copy the token immediately!**
+6.  Configure Git on your machine (run in terminal):
+    ```bash
+    git config --global user.name "Your Name"
+    git config --global user.email "your.email@example.com"
+    ```
+7.  When asked for a password during cloning/pushing, paste your **PAT**.
+
+## Part 3: The Assignment
+
+Now you will create your own Jupyter Notebook to analyze tipping data.
+
+### 1. Clone the Repository
+1.  Go to the course GitHub organization and find your `hw-01-[username]` repo.
+2.  Copy the HTTPS URL.
+3.  In Positron: `Control Palette` > `Tit: Clone` > Paste URL.
+
+### 2. Create Your Notebook
+1.  In Positron, create a new file named `hw01-analysis.ipynb` inside your repository folder.
+2.  Add a Markdown cell at the top with a title "Homework 1: Exploratory Data Analysis" and your name.
+
+### 3. Load the Data
+In your first code cell, import your libraries and load the `tips` dataset from Seaborn.
+
+```python
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from plotnine import *
+from itables import show
+
+tips = sns.load_dataset('tips')
+```
+
+### 4. Understand Your Data
+Use `tips.head()`, `tips.info()`, or `tips.describe()` to explore the dataset.
+
+*   **Question 1**: How many rows (tips) are in the dataset?
+*   **Question 2**: Which days of the week is the restaurant open?
+
+### 5. Numerical Summaries
+Using `groupby`, calculate summary statistics.
+
+*   **Question 3**: What is the median tip amount for "Lunch" vs "Dinner"? (Hint: `tips.groupby('time')['tip'].median()`)
+*   **Question 4**: Create a new column `tip_pct` (tip / total_bill * 100). Calculate the variance of `tip_pct` by day of the week.
+
+### 6. Graphical Summaries
+Create the following plots using the library of your choice (`seaborn` or `plotnine`).
+
+*   **Plot 1**: A bar chart of `sex`.
+*   **Plot 2**: A histogram of `total_bill`.
+*   **Plot 3**: A scatterplot of `total_bill` vs `tip`, colored by `smoker`.
+
+### 7. Exploration
+**final Task**: State a conjecture about tipping behavior (e.g., "People tip more on weekends"). Create **one plot** and **one summary table** to investigate your claim. Write a short sentence interpreting your findings.
+
+## Submission
+1.  Save your notebook.
+2.  In the Source Control tab (Git icon), **Stage** your changes.
+3.  **Commit** with a message like "Finished HW01".
+4.  **Push** to GitHub.

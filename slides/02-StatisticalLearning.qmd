@@ -12,12 +12,6 @@ import seaborn as sns
 from ISLP import load_data
 ```
 
-## Pre-Survey
-
-Take 10 minute and fill our [this survey](https://forms.office.com/Pages/ResponsePage.aspx?id=221GfoWP4U6xMj_yZFxlSQJyt-ruO2lEkG4nYFtEh4RUNE80TE85UlZVQ0FGRjVZNVE1S1kwWVM4WiQlQCNjPTEu).
-
-If you chose to opt-out please read as much of [this article](https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm) as you an in 8 minutes and then fill out [this survey](https://forms.office.com/r/E7nresw72K). 
-
 ## Data Generating Process
 
 Suppose we have

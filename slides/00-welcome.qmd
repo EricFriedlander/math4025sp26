@@ -177,7 +177,6 @@ See the [syllabus](/course-info/syllabus.qmd) for details on how the final lette
 -   Attend office hours
     -   [Prof. Friedlander office hours](/course-info/syllabus.qmd#class-meetings-office-hours)
 -   Use email for questions regarding personal matters and/or grades
--   See the [Course Support](/course-info/support.qmd) page for more details
 
 # Course policies
 
@@ -232,7 +231,7 @@ If we discuss/agree to something in class or office hours which requires action 
 
 1.  Complete all the preparation work (readings and videos) before class.
 
-2.  Ask questions, come to office hours and help session.
+2.  Ask questions, come to office hours.
 
 3.  Do the homework; get started on homework early when possible.
 

@@ -1,11 +1,14 @@
 ---
-title: "Computing Resources"
+title: "Resources"
 ---
+
+## Textbook
+
+-   [Introduction to Statistical Learning with Applications in Python (ISLP)](https://www.statlearning.com/)
 
 ## Python Resources
 
 -   [Python Documentation](https://docs.python.org/3/)
--   [Introduction to Statistical Learning with Applications in Python (ISLP)](https://www.statlearning.com/)
 -   [Quarto Documentation](https://quarto.org/)
 -   [Pandas Documentation](https://pandas.pydata.org/docs/)
 -   [Scikit-Learn Documentation](https://scikit-learn.org/stable/)

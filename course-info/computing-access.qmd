@@ -4,9 +4,9 @@ title: "Computing access"
 
 ## Python & VS Code
 
-It is highly recommended that you install Python and VS Code on your own personal computer.
+It is highly recommended that you install Python and Positron (VS Code is ok) on your own personal computer.
 
-1.  **Install VS Code**: [Download here](https://code.visualstudio.com/).
+1.  **Install Positron**: [Download here](https://positron.posit.co/install.html).
 2.  **Install Python**: [Download here](https://www.python.org/downloads/).
 3.  **Install Quarto**: [Download here](https://quarto.org/docs/get-started/).
 
