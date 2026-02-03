@@ -201,10 +201,10 @@ Dr.&nbsp;Eric Friedlander
 <h2>Terminology/Notation</h2>
 <p><strong>Ames Housing dataset</strong> - Contains data on 881 houses in Ames, IA. We are interested in predicting sale price.</p>
 <p>The first ten <strong>observations</strong> are shown below.</p>
-<div id="fb5c6b62" class="cell" data-execution_count="2">
+<div id="03511594" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_d960c94a_6ba4_440a_b62c_8ffd0568af5d"><tbody><tr>
+<table id="itables_72d9622d_69eb_4098_b6d7_03b4e4693335"><tbody><tr>
     <td style="vertical-align:middle; text-align:left">
     <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
     <g style="fill:#d9d7fc">
@@ -270,11 +270,11 @@ Dr.&nbsp;Eric Friedlander
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_d960c94a_6ba4_440a_b62c_8ffd0568af5d:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_72d9622d_69eb_4098_b6d7_03b4e4693335:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "text_in_header_can_be_selected": true, "order": [], "classes": ["display", "nowrap"], "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>Sale_Price</th>\n      <th>Gr_Liv_Area</th>\n      <th>Garage_Type</th>\n      <th>Garage_Cars</th>\n      <th>Garage_Area</th>\n      <th>Street</th>\n      <th>Utilities</th>\n      <th>Pool_Area</th>\n      <th>Neighborhood</th>\n    </tr>\n  </thead></table>", "data_json": "[[244000, \"2110\", \"Attchd\", 2.0, 522.0, \"Pave\", \"AllPub\", 0, \"North_Ames\"], [213500, \"1338\", \"Attchd\", 2.0, 582.0, \"Pave\", \"AllPub\", 0, \"Stone_Brook\"], [185000, \"1187\", \"Attchd\", 2.0, 420.0, \"Pave\", \"AllPub\", 0, \"Gilbert\"], [394432, \"1856\", \"Attchd\", 3.0, 834.0, \"Pave\", \"AllPub\", 0, \"Stone_Brook\"], [190000, \"1844\", \"Attchd\", 2.0, 546.0, \"Pave\", \"AllPub\", 0, \"Northwest_Ames\"], [149000, \"NaN\", \"Attchd\", 2.0, 480.0, \"Pave\", \"AllPub\", 0, \"North_Ames\"], [149900, \"NaN\", \"Attchd\", 2.0, 500.0, \"Pave\", \"AllPub\", 0, \"North_Ames\"], [127500, \"1069\", \"Attchd\", 2.0, 440.0, \"Pave\", \"AllPub\", 0, \"Northpark_Villa\"], [395192, \"1940\", \"Attchd\", 3.0, 606.0, \"Pave\", \"AllPub\", 0, \"Northridge_Heights\"], [290941, \"1544\", \"Attchd\", 3.0, 868.0, \"Pave\", \"AllPub\", 0, \"Northridge_Heights\"]]"};
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "classes": ["display", "nowrap"], "text_in_header_can_be_selected": true, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>Sale_Price</th>\n      <th>Gr_Liv_Area</th>\n      <th>Garage_Type</th>\n      <th>Garage_Cars</th>\n      <th>Garage_Area</th>\n      <th>Street</th>\n      <th>Utilities</th>\n      <th>Pool_Area</th>\n      <th>Neighborhood</th>\n    </tr>\n  </thead></table>", "data_json": "[[244000, \"2110\", \"Attchd\", 2.0, 522.0, \"Pave\", \"AllPub\", 0, \"North_Ames\"], [213500, \"1338\", \"Attchd\", 2.0, 582.0, \"Pave\", \"AllPub\", 0, \"Stone_Brook\"], [185000, \"1187\", \"Attchd\", 2.0, 420.0, \"Pave\", \"AllPub\", 0, \"Gilbert\"], [394432, \"1856\", \"Attchd\", 3.0, 834.0, \"Pave\", \"AllPub\", 0, \"Stone_Brook\"], [190000, \"1844\", \"Attchd\", 2.0, 546.0, \"Pave\", \"AllPub\", 0, \"Northwest_Ames\"], [149000, \"NaN\", \"Attchd\", 2.0, 480.0, \"Pave\", \"AllPub\", 0, \"North_Ames\"], [149900, \"NaN\", \"Attchd\", 2.0, 500.0, \"Pave\", \"AllPub\", 0, \"North_Ames\"], [127500, \"1069\", \"Attchd\", 2.0, 440.0, \"Pave\", \"AllPub\", 0, \"Northpark_Villa\"], [395192, \"1940\", \"Attchd\", 3.0, 606.0, \"Pave\", \"AllPub\", 0, \"Northridge_Heights\"], [290941, \"1544\", \"Attchd\", 3.0, 868.0, \"Pave\", \"AllPub\", 0, \"Northridge_Heights\"]]"};
         new ITable(table, dt_args);
     });
 </script>
@@ -285,10 +285,10 @@ Dr.&nbsp;Eric Friedlander
 <h2>Terminology/Notation</h2>
 <p><strong>Default dataset</strong> - Contains credit card default data on 10,000 individuals. We are interested in predicting whether somebody will default or not.</p>
 <p>Ten <strong>observations</strong> are shown below.</p>
-<div id="d4670445" class="cell" data-execution_count="3">
+<div id="b079cad7" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_3ee55c26_105e_464d_8952_cd3f87d42539"><tbody><tr>
+<table id="itables_d75a0402_320e_401d_8f48_d76623e7f016"><tbody><tr>
     <td style="vertical-align:middle; text-align:left">
     <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
     <g style="fill:#d9d7fc">
@@ -354,11 +354,11 @@ Dr.&nbsp;Eric Friedlander
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_3ee55c26_105e_464d_8952_cd3f87d42539:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_d75a0402_320e_401d_8f48_d76623e7f016:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "text_in_header_can_be_selected": true, "order": [], "classes": ["display", "nowrap"], "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>default</th>\n      <th>student</th>\n      <th>balance</th>\n      <th>income</th>\n    </tr>\n  </thead></table>", "data_json": "[[9953, \"No\", \"Yes\", 776.54428, 14229.728124], [3850, \"No\", \"No\", 1014.599104, 51438.710199], [4962, \"No\", \"No\", 681.693576, 33327.113035], [3886, \"No\", \"Yes\", 969.898685, 17940.119127], [5437, \"No\", \"Yes\", 1577.083581, 15230.8206], [8517, \"No\", \"Yes\", 1427.940531, 12666.260769], [2041, \"No\", \"No\", 756.160131, 52778.053625], [1989, \"No\", \"No\", 997.809843, 50287.873741], [1933, \"No\", \"No\", 793.829388, 45089.552063], [9984, \"No\", \"No\", 875.24164, 52861.744197]]"};
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "classes": ["display", "nowrap"], "text_in_header_can_be_selected": true, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>default</th>\n      <th>student</th>\n      <th>balance</th>\n      <th>income</th>\n    </tr>\n  </thead></table>", "data_json": "[[9953, \"No\", \"Yes\", 776.54428, 14229.728124], [3850, \"No\", \"No\", 1014.599104, 51438.710199], [4962, \"No\", \"No\", 681.693576, 33327.113035], [3886, \"No\", \"Yes\", 969.898685, 17940.119127], [5437, \"No\", \"Yes\", 1577.083581, 15230.8206], [8517, \"No\", \"Yes\", 1427.940531, 12666.260769], [2041, \"No\", \"No\", 756.160131, 52778.053625], [1989, \"No\", \"No\", 997.809843, 50287.873741], [1933, \"No\", \"No\", 793.829388, 45089.552063], [9984, \"No\", \"No\", 875.24164, 52861.744197]]"};
         new ITable(table, dt_args);
     });
 </script>
@@ -475,10 +475,10 @@ Dr.&nbsp;Eric Friedlander
 <h2>Unsupervised Learning</h2>
 <p><strong>US Arrests dataset</strong> - Data on arrests for 50 US states.</p>
 <p>The first ten observations are shown below.</p>
-<div id="9d9f9fe5" class="cell" data-execution_count="4">
+<div id="ae8074ce" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_4a75bb0f_d23f_4e93_bc5a_a3cafeb1be4f"><tbody><tr>
+<table id="itables_e9c54ceb_aed8_4924_9f4c_240152754080"><tbody><tr>
     <td style="vertical-align:middle; text-align:left">
     <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
     <g style="fill:#d9d7fc">
@@ -544,11 +544,11 @@ Dr.&nbsp;Eric Friedlander
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_4a75bb0f_d23f_4e93_bc5a_a3cafeb1be4f:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_e9c54ceb_aed8_4924_9f4c_240152754080:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "text_in_header_can_be_selected": true, "order": [], "classes": ["display", "nowrap"], "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>Murder</th>\n      <th>Assault</th>\n      <th>UrbanPop</th>\n      <th>Rape</th>\n    </tr>\n    <tr>\n      <th>rownames</th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n    </tr>\n  </thead></table>", "data_json": "[[\"Alabama\", 13.2, 236, 58, 21.2], [\"Alaska\", 10.0, 263, 48, 44.5], [\"Arizona\", 8.1, 294, 80, 31.0], [\"Arkansas\", 8.8, 190, 50, 19.5], [\"California\", 9.0, 276, 91, 40.6], [\"Colorado\", 7.9, 204, 78, 38.7], [\"Connecticut\", 3.3, 110, 77, 11.1], [\"Delaware\", 5.9, 238, 72, 15.8], [\"Florida\", 15.4, 335, 80, 31.9], [\"Georgia\", 17.4, 211, 60, 25.8]]"};
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "classes": ["display", "nowrap"], "text_in_header_can_be_selected": true, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>Murder</th>\n      <th>Assault</th>\n      <th>UrbanPop</th>\n      <th>Rape</th>\n    </tr>\n    <tr>\n      <th>rownames</th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n    </tr>\n  </thead></table>", "data_json": "[[\"Alabama\", 13.2, 236, 58, 21.2], [\"Alaska\", 10.0, 263, 48, 44.5], [\"Arizona\", 8.1, 294, 80, 31.0], [\"Arkansas\", 8.8, 190, 50, 19.5], [\"California\", 9.0, 276, 91, 40.6], [\"Colorado\", 7.9, 204, 78, 38.7], [\"Connecticut\", 3.3, 110, 77, 11.1], [\"Delaware\", 5.9, 238, 72, 15.8], [\"Florida\", 15.4, 335, 80, 31.9], [\"Georgia\", 17.4, 211, 60, 25.8]]"};
         new ITable(table, dt_args);
     });
 </script>
