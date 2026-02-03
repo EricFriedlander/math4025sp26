@@ -29,7 +29,7 @@ author: Eric Friedlander <br> [Much of the content in these slides have been ada
 
 Create a [GitHub](https://github.com/) account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name.
 
-Send me an email with answers to the following questions:
+Send me a Teams Chat with answers to the following questions:
 
 1. What is the GitHub username you just created?
 2. What would you like me to call you?
@@ -44,13 +44,13 @@ Send me an email with answers to the following questions:
 
 **Q - What background is assumed for the course?**
 
-A - Familiarity with concepts from statistical inference, linear regression, and logistic regression. A solid grounding in Python, including `pandas` and `matplotlib`/`seaborn`.
+A - Familiarity with concepts from statistical inference, linear regression, and logistic regression. Some experience with Python or R, especially when it come to manipulating and visualizing data.
 
 ## Course FAQ
 
 **Q - Will we be doing computing?**
 
-A - Yes. We will use the computing language Python for analysis, Quarto for writing up results, and GitHub for version control and collaboration
+A - Yes. We will mostly be using Jupyter notebooks for analysis, but may use Quarto for presentations and project. We will use GitHub for version control and collaboration
 
 ## Course FAQ
 
@@ -60,7 +60,7 @@ A - Yes and No. The course is primarily focused on application; however, we will
 
 ## Course FAQ
 
-**Q - What distinguishes this from a 300-level course?**
+**Q - What distinguishes this from a 3000-level course?**
 
 A - I expect a high level of independence from you. You should not be relying on me to teach you every small detail from this course. For example, if I tell you about a Python function, I expect that you will be able to figure out how to use it yourself.
 
@@ -81,7 +81,7 @@ By the end of the semester, you will be able to...
 
 -   assess whether a proposed model is appropriate and describe its limitations.
 
--   use Quarto to write reproducible reports and GitHub for version control and collaboration.
+-   use Jupyter notebooks and Quarto to write reproducible reports and GitHub for version control and collaboration.
 
 -   effectively communicate results through writing and oral presentations.
 
@@ -94,25 +94,26 @@ By the end of the semester, you will be able to...
     -   **Tour of the website**
 -   [Canvas](https://cofi.instructure.com/)
     -   Gradebook
-    -   Announcements
 -   [GitHub](https://github.com/)
     -   Distribute assignments
     -   Platform for version control and collaboration
+-   Microsoft Teams
+    -   Communication
 
 ## Computing toolkit {.midi}
 
 ::: columns
 ::: {.column width="50%"}
 ::: {.fragment fragment-index="1"}
-![](images/01/rstudio.png){fig-alt="VS Code logo" fig-align="center" width="5.61in" height="1.6in"}
+![](images/01/positron.png){fig-alt="Positron Logo" fig-align="center" width="5.61in" height="1.6in"}
 :::
 
 ::: {.fragment fragment-index="2"}
--   All analyses using Python, a general purpose programming language
+-   All analyses using Python
 
--   Write reproducible reports in Quarto
+-   Mostly use Jupyter notebooks (Quarto for projects)
 
--   Access VS Code through your personal computer (preferred) or the college JupyterHub (if available)
+-   Recommend using **Positron** or **VS Code**
 :::
 :::
 
@@ -126,7 +127,7 @@ By the end of the semester, you will be able to...
 
 -   Facilitates version control and collaboration
 
--   All work in [MATH 4025 course classroom](https://github.com/)
+-   All work in [MATH 4025 course classroom](https://classroom.github.com/classrooms/256856191-math4025sp26-classroom)
 :::
 :::
 :::
@@ -137,17 +138,19 @@ By the end of the semester, you will be able to...
 
 ::: small
 ::: incremental
--   **Prepare:** Introduce new content and prepare for lectures by completing the readings (and sometimes watching the videos)
+-   **Prepare:** Introduce new content and prepare for lectures by completing the readings and watching videos. **Tuesday Quizzes.**
 
 -   **Participate:** Attend and actively participate in lectures, office hours, team meetings
 
--   **Practice:** Practice applying statistical concepts and computing with team-based homework graded for completion
+-   **Practice:** Practice applying statistical concepts and computing with team-based homework graded pass/fail. **Thursday Presentations.**
 
 -   **Perform:** Put together what you've learned to analyze real-world data
 
-    -   Two Job Applications/Portfolios (individual)
+    -   One Job Application/Portfolio (individual)
 
-    -   Two Job Interviews (individual)
+    -   One Job Interview (individual)
+    
+    -   One Midterm Exam
     
     -   One Hack-a-thon/Presentation (individual-ish)
     
@@ -160,11 +163,11 @@ By the end of the semester, you will be able to...
 | Category                   | Percentage |
 |----------------------------|------------|
 | Homework                   | 10%        |
-| Job Application 1          | 15%        |
-| Job Application 2          | 15%        |
-| Job Interview 1            | 15%        |
-| Job Interview 2            | 15%        |
-| Hack-a-thon & Presentation | 15%        |
+| Quizzes                    | 10%        |
+| Job Application            | 20%        |
+| Job Interview              | 20%        |
+| Midterm Exam               | 15%        |
+| Hack-a-thon & Presentation | 10%        |
 | Final Project              | 15%        |
 
 See the [syllabus](/course-info/syllabus.qmd) for details on how the final letter grade will be calculated.
@@ -173,7 +176,6 @@ See the [syllabus](/course-info/syllabus.qmd) for details on how the final lette
 
 -   Attend office hours
     -   [Prof. Friedlander office hours](/course-info/syllabus.qmd#class-meetings-office-hours)
--   [Dedicated homework help session](/course-info/syllabus.qmd#class-meetings-office-hours)
 -   Use email for questions regarding personal matters and/or grades
 -   See the [Course Support](/course-info/support.qmd) page for more details
 
@@ -181,11 +183,11 @@ See the [syllabus](/course-info/syllabus.qmd) for details on how the final lette
 
 ## Late Homework
 
--   One week late (no grade penalty)
--   After I start grading (no feedback)
--   Why should I care about feedback?
-    -   It's how you learn... duh
-    -   You will be repurposing your homeworks for your job applications
+-   **Quizzes/Presentations**: Not accepted late without excused absence
+-   **Homework**: Pass/Fail
+    -   Honest about not finishing? 50%
+    -   Don't know what you're doing during presentation? 0%
+    -   Due Thursday before class
 
 ## School-Sponsored Events
 
@@ -206,23 +208,18 @@ By participating in this course, you are agreeing that all your work and conduct
 
 ## Use of artificial intelligence (AI) {.midi}
 
--   You should treat AI tools, such as ChatGPT, the same as other online resources.
--   There are two guiding principles that govern how you can use AI in this course:[^1]
-    -   \(1\) *Cognitive dimension:* Working with AI should not reduce your ability to think clearly. We will practice using AI to facilitate---rather than hinder---learning.
-    -   \(2\) *Ethical dimension***:** Students using AI should be transparent about their use and make sure it aligns with academic integrity.
-
-[^1]: These guiding principles are based on [*Course Policies related to ChatGPT and other AI Tools*](https://docs.google.com/document/d/1WpCeTyiWCPQ9MNCsFeKMDQLSTsg1oKfNIH6MzoSFXqQ/preview) developed by Joel Gladd, Ph.D.[↩︎](https://sta101-f23.github.io/course-syllabus.html#fnref1)
-
 ## Use of artificial intelligence (AI) {.midi}
 
--   Understand everything you write down
+-   **Allowed and Encouraged!**
+    -   Use AI tools to supplement your learning.
 
--   Tell me where you got it from
-
--   Don't lie about it
+-   **Your Responsibility:**
+    -   You are responsible for everything you submit.
+    -   **MUST** be able to explain every line of code.
+    -   **MUST** be able to explain all results.
 
 ::: callout-important
-In general, you may use AI as a resource as you complete assignments but not to answer the exercises for you. You are ultimately responsible for the work you turn in; it should reflect your understanding of the course content. **Any code or content from your homework is eligible for inclusion during your job interview.**
+If you cannot explain your code or results when asked, it will be treated as if you did not do the work yourself.
 :::
 
 ## In class agreements

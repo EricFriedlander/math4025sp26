@@ -15,28 +15,6 @@ from IPython.display import Markdown
 ```
 
 
-# Having a successful semester in MATH 4025
-
-## Five tips for success
-
-1.  Complete all the preparation work (readings and videos) before class.
-
-2.  Ask questions, come to office hours and help session.
-
-3.  Do the homework; get started on homework early when possible.
-
-4.  Don't procrastinate and don't let a week pass by with lingering questions.
-
-5.  Stay up-to-date on announcements on Canvas and sent via email.
-
-## Emails for help
-
-If you email me about an error please include a screenshot of the error and the code causing the error.
-
-# Questions?
-
-Raise your hand or email me.
-
 # Machine Learning
 
 ## What is Machine Learning?

@@ -1,0 +1,28 @@
+---
+title: "Overview"
+---
+
+# Overview
+
+## Catalog Description
+A study of methods to construct and evaluate predictive models. Topics may include lasso and ridge regression, naive Bayes, random forests, support vector machines, gradient boosting, and neural networks. The course will require a significant data analysis and modeling project. This course uses Python.
+
+# Class meetings
+
+|             |                             |                     |
+|----------------------------|-----------------------------|---------------------------------|
+| **Lecture** | MWF 3:00 - 3:50pm | Cruzen-Murray Library (CML) 208 |
+| **(Optional) Homework Lab** | W 4:00 - 4:50pm (Tentative) | Cruzen-Murray Library (CML) 208 |
+| **Office Hours** | M 9:30 - 10:30am | Boone 126B |
+| **Office Hours** | T 9:00 - 10:00am | Boone 126B |
+| **Office Hours** | W 1:30 - 2:30pm | Boone 126B |
+| **Office Hours** | TH 10:00 - 11:00am | Boone 126B |
+
+Office hours are also available by appointment, just email me!
+
+
+## Instructor
+
+Eric is an Assistant Professor in the Department of Mathematics and Physical Sciences at the College of Idaho. His expertise lies in the areas of probability, statistics, and statistics education. He joined the College of Idaho faculty in 2024 after spending three years as an Assistant Professor at St. Norbert College in De Pere, Wisconsin. He received his bachelor’s degree in mathematics and statistics from Rice University in 2011. After earning his degree, he worked for Capital One for two years in their home loans division before enrolling in graduate school. In 2018, Eric received his Ph.D. in statistics and operations research from the University of North Carolina at Chapel Hill studying under professor Amarjit Budhiraja. His dissertation work focused on modeling and analyzing large systems which arise in industrial engineering (e.g. large server and communication networks). Following his Ph.D., Eric did a postdoc in the Department of Ecology & Evolution at the University of Chicago under the direction of professor Matthias Steinrücken where he used stochastic processes to study natural selection and population genetics. 
+
+Outside of school, Eric is an avid fan of the New York Giants, New York Knicks, and North Carolina Tarheels. In addition, he enjoys comic books, the Fast and the Furious franchise, and spending time with his lovely wife Maria and lovable dogs Allie, Tony, and Miriam.

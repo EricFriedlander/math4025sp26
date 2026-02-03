@@ -18,7 +18,7 @@ The root directory constitutes the active Quarto project.
     *   `hw/`: Legacy homework assignments.
 *   `course-info/`: Course-level documentation.
     *   `syllabus.qmd`: Course syllabus (updated with 2026 grading and URL).
-    *   `schedule.qmd`: Course schedule.
+    *   `overview.qmd`: Course overview (Instructor, Class Meetings).
     *   `support.qmd`: Support resources.
     *   `computing-access.qmd` & `computing-python-resources.qmd`: Computing setup and resources.
 *   `slides/`: Lecture slides (migrated from archive and converted to Python).
@@ -26,13 +26,14 @@ The root directory constitutes the active Quarto project.
     *   `_metadata.yml`: Shared configuration for all slides.
     *   `images/`: Slide-specific images.
 *   `hw/`: Homework assignments (empty).
-*   `data/`: Course datasets (empty).
+*   `data/`: Course datasets.
+    *   `schedule.csv`: Source of truth for the course schedule.
 *   `jobs/`: Job application assignments (empty).
 *   `prepare/`: Preparation materials (empty).
 *   `images/`: Static image assets (e.g., logo).
 *   `_quarto.yml`: Main Quarto configuration.
 *   `environment.yml`: Conda environment definition.
-*   `index.qmd`: Homepage.
+*   `index.qmd`: Homepage (displays the Course Schedule).
 
 ## Development & Usage
 
