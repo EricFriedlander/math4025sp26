@@ -73,8 +73,6 @@ If we discuss/agree to something in class or office hours which requires action 
 
 If you have questions about assignment extensions or accommodations, please email <efriedlander@collegeofidaho.edu>. Please see [Late work policy] for more information. **If you email me about an error please include a screenshot of the error and the code causing the error.** Barring extenuating circumstances, I will respond to course emails within 48 hours Monday - Friday. Response time may be slower for emails sent Friday evening - Sunday.
 
-Check out the [Support](support.qmd) page for more resources.
-
 ## Textbook
 
 The official textbook for this course is:
