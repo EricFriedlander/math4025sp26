@@ -4,7 +4,7 @@
     "href": "course-info/syllabus.html",
     "title": "Syllabus",
     "section": "",
-    "text": "Lecture\nMWF 3:00 - 3:50pm\nCruzen-Murray Library (CML) 208\n\n\n(Optional) Homework Lab\nW 4:00 - 4:50pm (Tentative)\nCruzen-Murray Library (CML) 208\n\n\nOffice Hours\nM 9:30 - 10:30am\nBoone 126B\n\n\nOffice Hours\nT 9:00 - 10:00am\nBoone 126B\n\n\nOffice Hours\nW 1:30 - 2:30pm\nBoone 126B\n\n\nOffice Hours\nTH 10:00 - 11:00am\nBoone 126B\n\n\n\nOffice hours are also available by appointment, just email me!\n\n\n\n\nInstructor: Dr. Eric Friedlander\nOffice: Boone 126B\nEmail: efriedlander@collegeofidaho.edu",
+    "text": "Lecture\nMW 3:00 - 4:15pm\nCruzen-Murray Library (CML), 208\n\n\n\nOffice Hours | TBD | |\nOffice hours are also available by appointment, just email me!\n\n\n\n\nInstructor: Dr. Eric Friedlander\nOffice: Boone 126B\nEmail: efriedlander@collegeofidaho.edu",
     "crumbs": [
       "Syllabus"
     ]
@@ -14,7 +14,7 @@
     "href": "course-info/syllabus.html#course-info",
     "title": "Syllabus",
     "section": "",
-    "text": "Lecture\nMWF 3:00 - 3:50pm\nCruzen-Murray Library (CML) 208\n\n\n(Optional) Homework Lab\nW 4:00 - 4:50pm (Tentative)\nCruzen-Murray Library (CML) 208\n\n\nOffice Hours\nM 9:30 - 10:30am\nBoone 126B\n\n\nOffice Hours\nT 9:00 - 10:00am\nBoone 126B\n\n\nOffice Hours\nW 1:30 - 2:30pm\nBoone 126B\n\n\nOffice Hours\nTH 10:00 - 11:00am\nBoone 126B\n\n\n\nOffice hours are also available by appointment, just email me!\n\n\n\n\nInstructor: Dr. Eric Friedlander\nOffice: Boone 126B\nEmail: efriedlander@collegeofidaho.edu",
+    "text": "Lecture\nMW 3:00 - 4:15pm\nCruzen-Murray Library (CML), 208\n\n\n\nOffice Hours | TBD | |\nOffice hours are also available by appointment, just email me!\n\n\n\n\nInstructor: Dr. Eric Friedlander\nOffice: Boone 126B\nEmail: efriedlander@collegeofidaho.edu",
     "crumbs": [
       "Syllabus"
     ]
@@ -80,80 +80,118 @@
     ]
   },
   {
-    "objectID": "course-info/support.html",
-    "href": "course-info/support.html",
-    "title": "Course support",
+    "objectID": "course-info/overview.html",
+    "href": "course-info/overview.html",
+    "title": "Overview",
     "section": "",
-    "text": "We expect everyone will have questions at some point in the semester, so we want to make sure you can identify when that is and feel comfortable seeking help.",
+    "text": "A study of methods to construct and evaluate predictive models. Topics may include lasso and ridge regression, naive Bayes, random forests, support vector machines, gradient boosting, and neural networks. The course will require a significant data analysis and modeling project. This course uses Python.",
     "crumbs": [
-      "Course support"
+      "Overview"
     ]
   },
   {
-    "objectID": "course-info/support.html#lectures",
-    "href": "course-info/support.html#lectures",
-    "title": "Course support",
-    "section": "Lectures",
-    "text": "Lectures\nIf you have a question during lecture, feel free to ask it! There are likely other students with the same question, so by asking you will create a learning opportunity for everyone.",
-    "crumbs": [
-      "Course support"
-    ]
-  },
-  {
-    "objectID": "course-info/support.html#office-hours-homework-lab",
-    "href": "course-info/support.html#office-hours-homework-lab",
-    "title": "Course support",
-    "section": "Office hours + Homework Lab",
-    "text": "Office hours + Homework Lab\nDr. Friedlander is here to help you be successful in the course. You are encouraged to attend office hours and the homework lab during the times posted on the home page to ask questions about the course content and assignments. A lot of questions are most effectively answered in-person, so office hours are a valuable resource. I encourage you to take advantage of them!",
-    "crumbs": [
-      "Course support"
-    ]
-  },
-  {
-    "objectID": "course-info/support.html#email",
-    "href": "course-info/support.html#email",
-    "title": "Course support",
-    "section": "Email",
-    "text": "Email\nIf you have questions about personal matters or course content, you may email Dr. Friedlander at efriedlander@collegeofidaho.edu. If you email me about an error please include a screenshot of the error and the code causing the error. Barring extenuating circumstances, I will respond to course emails within 48 hours Monday - Friday. Response time may be slower for emails sent Friday evening - Sunday.",
-    "crumbs": [
-      "Course support"
-    ]
-  },
-  {
-    "objectID": "course-info/computing-python-resources.html",
-    "href": "course-info/computing-python-resources.html",
-    "title": "Computing Resources",
+    "objectID": "course-info/overview.html#catalog-description",
+    "href": "course-info/overview.html#catalog-description",
+    "title": "Overview",
     "section": "",
-    "text": "Python Documentation\nIntroduction to Statistical Learning with Applications in Python (ISLP)\nQuarto Documentation\nPandas Documentation\nScikit-Learn Documentation",
+    "text": "A study of methods to construct and evaluate predictive models. Topics may include lasso and ridge regression, naive Bayes, random forests, support vector machines, gradient boosting, and neural networks. The course will require a significant data analysis and modeling project. This course uses Python.",
     "crumbs": [
-      "Computing",
-      "Python resources"
+      "Overview"
     ]
   },
   {
-    "objectID": "course-info/computing-python-resources.html#python-resources",
-    "href": "course-info/computing-python-resources.html#python-resources",
-    "title": "Computing Resources",
-    "section": "",
-    "text": "Python Documentation\nIntroduction to Statistical Learning with Applications in Python (ISLP)\nQuarto Documentation\nPandas Documentation\nScikit-Learn Documentation",
+    "objectID": "course-info/overview.html#instructor",
+    "href": "course-info/overview.html#instructor",
+    "title": "Overview",
+    "section": "Instructor",
+    "text": "Instructor\nEric is an Assistant Professor in the Department of Mathematics and Physical Sciences at the College of Idaho. His expertise lies in the areas of probability, statistics, and statistics education. He joined the College of Idaho faculty in 2024 after spending three years as an Assistant Professor at St. Norbert College in De Pere, Wisconsin. He received his bachelor’s degree in mathematics and statistics from Rice University in 2011. After earning his degree, he worked for Capital One for two years in their home loans division before enrolling in graduate school. In 2018, Eric received his Ph.D. in statistics and operations research from the University of North Carolina at Chapel Hill studying under professor Amarjit Budhiraja. His dissertation work focused on modeling and analyzing large systems which arise in industrial engineering (e.g. large server and communication networks). Following his Ph.D., Eric did a postdoc in the Department of Ecology & Evolution at the University of Chicago under the direction of professor Matthias Steinrücken where he used stochastic processes to study natural selection and population genetics.\nOutside of school, Eric is an avid fan of the New York Giants, New York Knicks, and North Carolina Tarheels. In addition, he enjoys comic books, the Fast and the Furious franchise, and spending time with his lovely wife Maria and lovable dogs Allie, Tony, and Miriam.",
     "crumbs": [
-      "Computing",
-      "Python resources"
+      "Overview"
     ]
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Math 4025: Statistical Machine Learning",
+    "objectID": "GEMINI.html",
+    "href": "GEMINI.html",
+    "title": "Gemini Context: Math 4025 (Spring 2026)",
     "section": "",
-    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)\n    \n\n\n\n\n(This schedule is a placeholder. Please update with your specific course schedule)"
+    "text": "This directory contains the source materials for the Statistical Machine Learning (Math 4025) course website for Spring 2026.\n\nCourse: Math 4025 (Spring 2026).\nInstructor: Dr. Eric Friedlander.\nInstitution: College of Idaho.\nPrimary Language: Python (transitioned from R).\nTextbook: ISLP (Introduction to Statistical Learning with Python).\nLive Site: https://EricFriedlander.github.io/math4025sp26/\n\n\n\n\nThe root directory constitutes the active Quarto project.\n\n_archive/: Legacy R-based materials from Spring 2025 (MAT 427). Use for reference only.\n\nslides/: Legacy lecture slides.\nhw/: Legacy homework assignments.\n\ncourse-info/: Course-level documentation.\n\nsyllabus.qmd: Course syllabus (updated with 2026 grading and URL).\noverview.qmd: Course overview (Instructor, Class Meetings).\nsupport.qmd: Support resources.\ncomputing-access.qmd & computing-python-resources.qmd: Computing setup and resources.\n\nslides/: Lecture slides (migrated from archive and converted to Python).\n\n00-welcome.qmd, 01-big-picture.qmd, 02-StatisticalLearning.qmd.\n_metadata.yml: Shared configuration for all slides.\nimages/: Slide-specific images.\n\nhw/: Homework assignments (empty).\ndata/: Course datasets.\ndata/: Course datasets.\n\nschedule.csv: Source of truth for the course schedule. (Moved to course-info/)\n\njobs/: Job application assignments (empty).\nprepare/: Preparation materials (empty).\nimages/: Static image assets (e.g., logo).\n_quarto.yml: Main Quarto configuration.\nenvironment.yml: Conda environment definition.\nindex.qmd: Homepage (displays the Course Schedule).\n\n\n\n\n\n\n\nQuarto: Website builder.\nPython: Primary programming language.\nConda/Mamba: Use the math-4025-sp26 environment for all Python code in this workspace.\nVS Code: Primary editor.\n\n\n\n\nThe website is automatically rendered and published to GitHub Pages via a GitHub Action whenever changes are pushed to the main branch. * Workflow file: .github/workflows/publish.yml\n\n\n\nRun these commands from the project root.\n\nPreview Site: bash     quarto preview\nRender Site: bash     quarto render\nPublish Site: bash     quarto publish gh-pages\nRender Specific File: bash     quarto render course-info/syllabus.qmd\n\n\n\n\n\nContent: Written in .qmd (Quarto Markdown).\nCode Blocks: Use {python} blocks.\nTables: Use the show function from the itables library to display Python data frames.\nPlotting: Use plotnine for visualizations (ggplot2 style).\nData Loading: Use pyreadr for .rds files and pyhere for robust relative paths.\nConfiguration: Global settings in _quarto.yml. Sidebar navigation is configured here.\nPaths: Relative paths should ideally generally work, but be mindful of the folder structure (e.g., referencing images from course-info/).\nData: Store raw data in data/.\n\n\n\n\n\nThe project utilizes the Gemini CLI for assistance. * .gemini/prompts/: Stores reusable prompts for common tasks. * sync-context.md: Analyzes project changes, updates documentation, and handles git operations."
   },
   {
-    "objectID": "slides/02-StatisticalLearning.html#pre-survey",
-    "href": "slides/02-StatisticalLearning.html#pre-survey",
-    "title": "Intro to Machine Learning",
-    "section": "Pre-Survey",
-    "text": "Pre-Survey\nTake 10 minute and fill our this survey.\nIf you chose to opt-out please read as much of this article as you an in 8 minutes and then fill out this survey."
+    "objectID": "GEMINI.html#project-overview",
+    "href": "GEMINI.html#project-overview",
+    "title": "Gemini Context: Math 4025 (Spring 2026)",
+    "section": "",
+    "text": "This directory contains the source materials for the Statistical Machine Learning (Math 4025) course website for Spring 2026.\n\nCourse: Math 4025 (Spring 2026).\nInstructor: Dr. Eric Friedlander.\nInstitution: College of Idaho.\nPrimary Language: Python (transitioned from R).\nTextbook: ISLP (Introduction to Statistical Learning with Python).\nLive Site: https://EricFriedlander.github.io/math4025sp26/"
+  },
+  {
+    "objectID": "GEMINI.html#directory-structure",
+    "href": "GEMINI.html#directory-structure",
+    "title": "Gemini Context: Math 4025 (Spring 2026)",
+    "section": "",
+    "text": "The root directory constitutes the active Quarto project.\n\n_archive/: Legacy R-based materials from Spring 2025 (MAT 427). Use for reference only.\n\nslides/: Legacy lecture slides.\nhw/: Legacy homework assignments.\n\ncourse-info/: Course-level documentation.\n\nsyllabus.qmd: Course syllabus (updated with 2026 grading and URL).\noverview.qmd: Course overview (Instructor, Class Meetings).\nsupport.qmd: Support resources.\ncomputing-access.qmd & computing-python-resources.qmd: Computing setup and resources.\n\nslides/: Lecture slides (migrated from archive and converted to Python).\n\n00-welcome.qmd, 01-big-picture.qmd, 02-StatisticalLearning.qmd.\n_metadata.yml: Shared configuration for all slides.\nimages/: Slide-specific images.\n\nhw/: Homework assignments (empty).\ndata/: Course datasets.\ndata/: Course datasets.\n\nschedule.csv: Source of truth for the course schedule. (Moved to course-info/)\n\njobs/: Job application assignments (empty).\nprepare/: Preparation materials (empty).\nimages/: Static image assets (e.g., logo).\n_quarto.yml: Main Quarto configuration.\nenvironment.yml: Conda environment definition.\nindex.qmd: Homepage (displays the Course Schedule)."
+  },
+  {
+    "objectID": "GEMINI.html#development-usage",
+    "href": "GEMINI.html#development-usage",
+    "title": "Gemini Context: Math 4025 (Spring 2026)",
+    "section": "",
+    "text": "Quarto: Website builder.\nPython: Primary programming language.\nConda/Mamba: Use the math-4025-sp26 environment for all Python code in this workspace.\nVS Code: Primary editor.\n\n\n\n\nThe website is automatically rendered and published to GitHub Pages via a GitHub Action whenever changes are pushed to the main branch. * Workflow file: .github/workflows/publish.yml\n\n\n\nRun these commands from the project root.\n\nPreview Site: bash     quarto preview\nRender Site: bash     quarto render\nPublish Site: bash     quarto publish gh-pages\nRender Specific File: bash     quarto render course-info/syllabus.qmd\n\n\n\n\n\nContent: Written in .qmd (Quarto Markdown).\nCode Blocks: Use {python} blocks.\nTables: Use the show function from the itables library to display Python data frames.\nPlotting: Use plotnine for visualizations (ggplot2 style).\nData Loading: Use pyreadr for .rds files and pyhere for robust relative paths.\nConfiguration: Global settings in _quarto.yml. Sidebar navigation is configured here.\nPaths: Relative paths should ideally generally work, but be mindful of the folder structure (e.g., referencing images from course-info/).\nData: Store raw data in data/."
+  },
+  {
+    "objectID": "GEMINI.html#workflow-automation",
+    "href": "GEMINI.html#workflow-automation",
+    "title": "Gemini Context: Math 4025 (Spring 2026)",
+    "section": "",
+    "text": "The project utilizes the Gemini CLI for assistance. * .gemini/prompts/: Stores reusable prompts for common tasks. * sync-context.md: Analyzes project changes, updates documentation, and handles git operations."
+  },
+  {
+    "objectID": "hw/01-hw-eda.html",
+    "href": "hw/01-hw-eda.html",
+    "title": "Homework 1: Exploratory Data Analysis",
+    "section": "",
+    "text": "Adapted from “Start teaching with R,” created by R Pruim, N J Horton, and D Kaplan, 2013, “Interactive and Dynamic Graphics for Data Analysis,” by Dianne Cook and Deborah F. Swayne, Colby Long’s DATA 325 Course at Wooster College and Maria Tackett’s STA-210 course at Duke University."
+  },
+  {
+    "objectID": "hw/01-hw-eda.html#introduction",
+    "href": "hw/01-hw-eda.html#introduction",
+    "title": "Homework 1: Exploratory Data Analysis",
+    "section": "Introduction",
+    "text": "Introduction\nIn this homework we will familiarize ourselves with the tools that we’ll use throughout the course and refresh ourselves on topic related to exploratory data analysis."
+  },
+  {
+    "objectID": "hw/01-hw-eda.html#course-toolkit",
+    "href": "hw/01-hw-eda.html#course-toolkit",
+    "title": "Homework 1: Exploratory Data Analysis",
+    "section": "Course Toolkit",
+    "text": "Course Toolkit\nThe primary tools we’ll be using in this course are Python, Positron, git, and GitHub. We will be using them throughout the course both to learn the concepts discussed in the course and to analyze real data and come to informed conclusions.\n\n\n\n\n\n\nNote\n\n\n\nPython is the programming language. Positron is the Integrated Development Environment (IDE) where we write code. Miniforge/Conda manages our Python installations and packages.\n\n\n\n\n\n\n\n\nNote\n\n\n\nGit is a version control system (like “Track Changes” but for code) and GitHub is the cloud hosting service for your Git projects.\n\n\nTo make versioning simpler, this homework will be completed individually. In the future, you’ll learn about collaborating on GitHub."
+  },
+  {
+    "objectID": "hw/01-hw-eda.html#part-1-setting-up-your-environment",
+    "href": "hw/01-hw-eda.html#part-1-setting-up-your-environment",
+    "title": "Homework 1: Exploratory Data Analysis",
+    "section": "Part 1: Setting Up Your Environment",
+    "text": "Part 1: Setting Up Your Environment\nBefore we analyze data, we need to set up our computer. This process involves installing a package manager (Miniforge), creating a virtual environment, and installing the necessary libraries.\n\n1. Install Miniforge\nWe will use Miniforge to manage our Python installation. It pre-configures conda (package manager) and mamba (a faster version of conda) with the conda-forge channel, which is the community standard.\n\nGo to the Miniforge GitHub page.\nDownload the Miniforge3 installer for your operating system (Windows, macOS, or Linux).\nRun the installer and follow the prompts.\n\nWindows: Open “Miniforge Prompt” after installation to verify.\nMac/Linux: Open your terminal.\n\n\n\n\n2. Create a Conda Environment\nWe never want to install packages into our “base” environment. Instead, we create a specific environment for this course.\nOpen your terminal (or Miniforge Prompt) and run:\nmamba create -n math4025 python=3.14\n\nmamba create: Command to create an environment.\n-n math4025: Names the environment “math4025”.\npython=3.14: Specifies the Python version.\n\n\n\n3. Activate the Environment\nTo use the environment, you must activate it:\nmamba activate math4025\nYou should see (math4025) appear in your prompt.\n\n\n4. Install Packages\nNow we install the tools we need for this assignment.\nmamba install pandas seaborn matplotlib plotnine itables jupyter polars pyreadr\n\npandas, polars: Data manipulation.\nseaborn, matplotlib, plotnine: Data visualization.\nitables: Interactive tables.\njupyter: Required to run Notebooks.\npyreadr: For reading R datasets."
+  },
+  {
+    "objectID": "hw/01-hw-eda.html#part-2-setting-up-positron-git",
+    "href": "hw/01-hw-eda.html#part-2-setting-up-positron-git",
+    "title": "Homework 1: Exploratory Data Analysis",
+    "section": "Part 2: Setting up Positron & Git",
+    "text": "Part 2: Setting up Positron & Git\n\n1. Install Positron\nWe will use Positron, a new data science IDE from Posit (makers of RStudio). 1. Download and install Positron. 2. Open Positron. 3. Select your Python Interpreter: * Open the Command Palette (Ctrl+Shift+P or Cmd+Shift+P). * Type Python: Select Interpreter. * Choose the math4025 environment you just created.\n\n\n2. Configure Git & GitHub\nYou need a Personal Access Token (PAT) to allow Positron to talk to GitHub securely.\n\nLog in to GitHub.\nGo to Settings &gt; Developer settings &gt; Personal access tokens &gt; Tokens (classic).\nGenerate new token (classic).\nName it “Math4025”, select the repo scope, and generate.\nCopy the token immediately!\nConfigure Git on your machine (run in terminal): bash     git config --global user.name \"Your Name\"     git config --global user.email \"your.email@example.com\"\nWhen asked for a password during cloning/pushing, paste your PAT."
+  },
+  {
+    "objectID": "hw/01-hw-eda.html#part-3-the-assignment",
+    "href": "hw/01-hw-eda.html#part-3-the-assignment",
+    "title": "Homework 1: Exploratory Data Analysis",
+    "section": "Part 3: The Assignment",
+    "text": "Part 3: The Assignment\nNow you will create your own Jupyter Notebook to analyze tipping data.\n\n1. Clone the Repository\n\nGo to the course GitHub organization and find your hw-01-[username] repo.\nCopy the HTTPS URL.\nIn Positron: Control Palette &gt; Tit: Clone &gt; Paste URL.\n\n\n\n2. Create Your Notebook\n\nIn Positron, create a new file named hw01-analysis.ipynb inside your repository folder.\nAdd a Markdown cell at the top with a title “Homework 1: Exploratory Data Analysis” and your name.\n\n\n\n3. Load the Data\nIn your first code cell, import your libraries and load the tips dataset from Seaborn.\nimport pandas as pd\nimport seaborn as sns\nimport matplotlib.pyplot as plt\nfrom plotnine import *\nfrom itables import show\n\ntips = sns.load_dataset('tips')\n\n\n4. Understand Your Data\nUse tips.head(), tips.info(), or tips.describe() to explore the dataset.\n\nQuestion 1: How many rows (tips) are in the dataset?\nQuestion 2: Which days of the week is the restaurant open?\n\n\n\n5. Numerical Summaries\nUsing groupby, calculate summary statistics.\n\nQuestion 3: What is the median tip amount for “Lunch” vs “Dinner”? (Hint: tips.groupby('time')['tip'].median())\nQuestion 4: Create a new column tip_pct (tip / total_bill * 100). Calculate the variance of tip_pct by day of the week.\n\n\n\n6. Graphical Summaries\nCreate the following plots using the library of your choice (seaborn or plotnine).\n\nPlot 1: A bar chart of sex.\nPlot 2: A histogram of total_bill.\nPlot 3: A scatterplot of total_bill vs tip, colored by smoker.\n\n\n\n7. Exploration\nfinal Task: State a conjecture about tipping behavior (e.g., “People tip more on weekends”). Create one plot and one summary table to investigate your claim. Write a short sentence interpreting your findings."
+  },
+  {
+    "objectID": "hw/01-hw-eda.html#submission",
+    "href": "hw/01-hw-eda.html#submission",
+    "title": "Homework 1: Exploratory Data Analysis",
+    "section": "Submission",
+    "text": "Submission\n\nSave your notebook.\nIn the Source Control tab (Git icon), Stage your changes.\nCommit with a message like “Finished HW01”.\nPush to GitHub."
   },
   {
     "objectID": "slides/02-StatisticalLearning.html#data-generating-process",
@@ -566,7 +604,7 @@
     "href": "slides/00-welcome.html#five-tips-for-success",
     "title": "Welcome to MATH 4025: Statistical Machine Learning",
     "section": "Five tips for success",
-    "text": "Five tips for success\n\nComplete all the preparation work (readings and videos) before class.\nAsk questions, come to office hours and help session.\nDo the homework; get started on homework early when possible.\nDon’t procrastinate and don’t let a week pass by with lingering questions.\nStay up-to-date on announcements on Canvas and sent via email."
+    "text": "Five tips for success\n\nComplete all the preparation work (readings and videos) before class.\nAsk questions, come to office hours.\nDo the homework; get started on homework early when possible.\nDon’t procrastinate and don’t let a week pass by with lingering questions.\nStay up-to-date on announcements on Canvas and sent via email."
   },
   {
     "objectID": "slides/00-welcome.html#emails-for-help",
@@ -576,68 +614,43 @@
     "text": "Emails for help\nIf you email me about an error please include a screenshot of the error and the code causing the error."
   },
   {
-    "objectID": "GEMINI.html",
-    "href": "GEMINI.html",
-    "title": "Gemini Context: Math 4025 (Spring 2026)",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Math 4025: Statistical Machine Learning",
     "section": "",
-    "text": "This directory contains the source materials for the Statistical Machine Learning (Math 4025) course website for Spring 2026.\n\nCourse: Math 4025 (Spring 2026).\nInstructor: Dr. Eric Friedlander.\nInstitution: College of Idaho.\nPrimary Language: Python (transitioned from R).\nTextbook: ISLP (Introduction to Statistical Learning with Python).\nLive Site: https://EricFriedlander.github.io/math4025sp26/\n\n\n\n\nThe root directory constitutes the active Quarto project.\n\n_archive/: Legacy R-based materials from Spring 2025 (MAT 427). Use for reference only.\n\nslides/: Legacy lecture slides.\nhw/: Legacy homework assignments.\n\ncourse-info/: Course-level documentation.\n\nsyllabus.qmd: Course syllabus (updated with 2026 grading and URL).\noverview.qmd: Course overview (Instructor, Class Meetings).\nsupport.qmd: Support resources.\ncomputing-access.qmd & computing-python-resources.qmd: Computing setup and resources.\n\nslides/: Lecture slides (migrated from archive and converted to Python).\n\n00-welcome.qmd, 01-big-picture.qmd, 02-StatisticalLearning.qmd.\n_metadata.yml: Shared configuration for all slides.\nimages/: Slide-specific images.\n\nhw/: Homework assignments (empty).\ndata/: Course datasets.\n\nschedule.csv: Source of truth for the course schedule.\n\njobs/: Job application assignments (empty).\nprepare/: Preparation materials (empty).\nimages/: Static image assets (e.g., logo).\n_quarto.yml: Main Quarto configuration.\nenvironment.yml: Conda environment definition.\nindex.qmd: Homepage (displays the Course Schedule).\n\n\n\n\n\n\n\nQuarto: Website builder.\nPython: Primary programming language.\nConda/Mamba: Use the math-4025-sp26 environment for all Python code in this workspace.\nVS Code: Primary editor.\n\n\n\n\nThe website is automatically rendered and published to GitHub Pages via a GitHub Action whenever changes are pushed to the main branch. * Workflow file: .github/workflows/publish.yml\n\n\n\nRun these commands from the project root.\n\nPreview Site: bash     quarto preview\nRender Site: bash     quarto render\nPublish Site: bash     quarto publish gh-pages\nRender Specific File: bash     quarto render course-info/syllabus.qmd\n\n\n\n\n\nContent: Written in .qmd (Quarto Markdown).\nCode Blocks: Use {python} blocks.\nTables: Use the show function from the itables library to display Python data frames.\nPlotting: Use plotnine for visualizations (ggplot2 style).\nData Loading: Use pyreadr for .rds files and pyhere for robust relative paths.\nConfiguration: Global settings in _quarto.yml. Sidebar navigation is configured here.\nPaths: Relative paths should ideally generally work, but be mindful of the folder structure (e.g., referencing images from course-info/).\nData: Store raw data in data/.\n\n\n\n\n\nThe project utilizes the Gemini CLI for assistance. * .gemini/prompts/: Stores reusable prompts for common tasks. * sync-context.md: Analyzes project changes, updates documentation, and handles git operations."
+    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)"
   },
   {
-    "objectID": "GEMINI.html#project-overview",
-    "href": "GEMINI.html#project-overview",
-    "title": "Gemini Context: Math 4025 (Spring 2026)",
+    "objectID": "course-info/computing-python-resources.html",
+    "href": "course-info/computing-python-resources.html",
+    "title": "Resources",
     "section": "",
-    "text": "This directory contains the source materials for the Statistical Machine Learning (Math 4025) course website for Spring 2026.\n\nCourse: Math 4025 (Spring 2026).\nInstructor: Dr. Eric Friedlander.\nInstitution: College of Idaho.\nPrimary Language: Python (transitioned from R).\nTextbook: ISLP (Introduction to Statistical Learning with Python).\nLive Site: https://EricFriedlander.github.io/math4025sp26/"
-  },
-  {
-    "objectID": "GEMINI.html#directory-structure",
-    "href": "GEMINI.html#directory-structure",
-    "title": "Gemini Context: Math 4025 (Spring 2026)",
-    "section": "",
-    "text": "The root directory constitutes the active Quarto project.\n\n_archive/: Legacy R-based materials from Spring 2025 (MAT 427). Use for reference only.\n\nslides/: Legacy lecture slides.\nhw/: Legacy homework assignments.\n\ncourse-info/: Course-level documentation.\n\nsyllabus.qmd: Course syllabus (updated with 2026 grading and URL).\noverview.qmd: Course overview (Instructor, Class Meetings).\nsupport.qmd: Support resources.\ncomputing-access.qmd & computing-python-resources.qmd: Computing setup and resources.\n\nslides/: Lecture slides (migrated from archive and converted to Python).\n\n00-welcome.qmd, 01-big-picture.qmd, 02-StatisticalLearning.qmd.\n_metadata.yml: Shared configuration for all slides.\nimages/: Slide-specific images.\n\nhw/: Homework assignments (empty).\ndata/: Course datasets.\n\nschedule.csv: Source of truth for the course schedule.\n\njobs/: Job application assignments (empty).\nprepare/: Preparation materials (empty).\nimages/: Static image assets (e.g., logo).\n_quarto.yml: Main Quarto configuration.\nenvironment.yml: Conda environment definition.\nindex.qmd: Homepage (displays the Course Schedule)."
-  },
-  {
-    "objectID": "GEMINI.html#development-usage",
-    "href": "GEMINI.html#development-usage",
-    "title": "Gemini Context: Math 4025 (Spring 2026)",
-    "section": "",
-    "text": "Quarto: Website builder.\nPython: Primary programming language.\nConda/Mamba: Use the math-4025-sp26 environment for all Python code in this workspace.\nVS Code: Primary editor.\n\n\n\n\nThe website is automatically rendered and published to GitHub Pages via a GitHub Action whenever changes are pushed to the main branch. * Workflow file: .github/workflows/publish.yml\n\n\n\nRun these commands from the project root.\n\nPreview Site: bash     quarto preview\nRender Site: bash     quarto render\nPublish Site: bash     quarto publish gh-pages\nRender Specific File: bash     quarto render course-info/syllabus.qmd\n\n\n\n\n\nContent: Written in .qmd (Quarto Markdown).\nCode Blocks: Use {python} blocks.\nTables: Use the show function from the itables library to display Python data frames.\nPlotting: Use plotnine for visualizations (ggplot2 style).\nData Loading: Use pyreadr for .rds files and pyhere for robust relative paths.\nConfiguration: Global settings in _quarto.yml. Sidebar navigation is configured here.\nPaths: Relative paths should ideally generally work, but be mindful of the folder structure (e.g., referencing images from course-info/).\nData: Store raw data in data/."
-  },
-  {
-    "objectID": "GEMINI.html#workflow-automation",
-    "href": "GEMINI.html#workflow-automation",
-    "title": "Gemini Context: Math 4025 (Spring 2026)",
-    "section": "",
-    "text": "The project utilizes the Gemini CLI for assistance. * .gemini/prompts/: Stores reusable prompts for common tasks. * sync-context.md: Analyzes project changes, updates documentation, and handles git operations."
-  },
-  {
-    "objectID": "course-info/overview.html",
-    "href": "course-info/overview.html",
-    "title": "Overview",
-    "section": "",
-    "text": "A study of methods to construct and evaluate predictive models. Topics may include lasso and ridge regression, naive Bayes, random forests, support vector machines, gradient boosting, and neural networks. The course will require a significant data analysis and modeling project. This course uses Python.",
+    "text": "Introduction to Statistical Learning with Applications in Python (ISLP)",
     "crumbs": [
-      "Overview"
+      "Computing",
+      "Python resources"
     ]
   },
   {
-    "objectID": "course-info/overview.html#catalog-description",
-    "href": "course-info/overview.html#catalog-description",
-    "title": "Overview",
+    "objectID": "course-info/computing-python-resources.html#textbook",
+    "href": "course-info/computing-python-resources.html#textbook",
+    "title": "Resources",
     "section": "",
-    "text": "A study of methods to construct and evaluate predictive models. Topics may include lasso and ridge regression, naive Bayes, random forests, support vector machines, gradient boosting, and neural networks. The course will require a significant data analysis and modeling project. This course uses Python.",
+    "text": "Introduction to Statistical Learning with Applications in Python (ISLP)",
     "crumbs": [
-      "Overview"
+      "Computing",
+      "Python resources"
     ]
   },
   {
-    "objectID": "course-info/overview.html#instructor",
-    "href": "course-info/overview.html#instructor",
-    "title": "Overview",
-    "section": "Instructor",
-    "text": "Instructor\nEric is an Assistant Professor in the Department of Mathematics and Physical Sciences at the College of Idaho. His expertise lies in the areas of probability, statistics, and statistics education. He joined the College of Idaho faculty in 2024 after spending three years as an Assistant Professor at St. Norbert College in De Pere, Wisconsin. He received his bachelor’s degree in mathematics and statistics from Rice University in 2011. After earning his degree, he worked for Capital One for two years in their home loans division before enrolling in graduate school. In 2018, Eric received his Ph.D. in statistics and operations research from the University of North Carolina at Chapel Hill studying under professor Amarjit Budhiraja. His dissertation work focused on modeling and analyzing large systems which arise in industrial engineering (e.g. large server and communication networks). Following his Ph.D., Eric did a postdoc in the Department of Ecology & Evolution at the University of Chicago under the direction of professor Matthias Steinrücken where he used stochastic processes to study natural selection and population genetics.\nOutside of school, Eric is an avid fan of the New York Giants, New York Knicks, and North Carolina Tarheels. In addition, he enjoys comic books, the Fast and the Furious franchise, and spending time with his lovely wife Maria and lovable dogs Allie, Tony, and Miriam.",
+    "objectID": "course-info/computing-python-resources.html#python-resources",
+    "href": "course-info/computing-python-resources.html#python-resources",
+    "title": "Resources",
+    "section": "Python Resources",
+    "text": "Python Resources\n\nPython Documentation\nQuarto Documentation\nPandas Documentation\nScikit-Learn Documentation",
     "crumbs": [
-      "Overview"
+      "Computing",
+      "Python resources"
     ]
   },
   {
@@ -645,7 +658,7 @@
     "href": "course-info/computing-access.html",
     "title": "Computing access",
     "section": "",
-    "text": "It is highly recommended that you install Python and VS Code on your own personal computer.\n\nInstall VS Code: Download here.\nInstall Python: Download here.\nInstall Quarto: Download here.",
+    "text": "It is highly recommended that you install Python and Positron (VS Code is ok) on your own personal computer.\n\nInstall Positron: Download here.\nInstall Python: Download here.\nInstall Quarto: Download here.",
     "crumbs": [
       "Computing",
       "Computing access"
@@ -656,7 +669,7 @@
     "href": "course-info/computing-access.html#python-vs-code",
     "title": "Computing access",
     "section": "",
-    "text": "It is highly recommended that you install Python and VS Code on your own personal computer.\n\nInstall VS Code: Download here.\nInstall Python: Download here.\nInstall Quarto: Download here.",
+    "text": "It is highly recommended that you install Python and Positron (VS Code is ok) on your own personal computer.\n\nInstall Positron: Download here.\nInstall Python: Download here.\nInstall Quarto: Download here.",
     "crumbs": [
       "Computing",
       "Computing access"
