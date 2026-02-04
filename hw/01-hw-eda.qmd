@@ -1,8 +1,5 @@
 ---
 title: "Homework 1: Exploratory Data Analysis"
-format:
-  html:
-    embed-resources: true
 ---
 
 Adapted from "Start teaching with R," created by R Pruim, N J Horton, and D Kaplan, 2013, "Interactive and Dynamic Graphics for Data Analysis," by Dianne Cook and Deborah F. Swayne, Colby Long's DATA 325 Course at Wooster College and Maria Tackett's STA-210 course at Duke University.
@@ -74,6 +71,7 @@ mamba install pandas seaborn matplotlib plotnine itables jupyter polars pyreadr
 
 ### 1. Install Positron
 We will use **Positron**, a new data science IDE from Posit (makers of RStudio).
+
 1.  Download and install [Positron](https://positron.posit.co/install.html).
 2.  Open Positron.
 3.  Select your Python Interpreter:
@@ -90,10 +88,10 @@ You need a **Personal Access Token (PAT)** to allow Positron to talk to GitHub s
 4.  Name it "Math4025", select the **`repo`** scope, and generate.
 5.  **Copy the token immediately!**
 6.  Configure Git on your machine (run in terminal):
-    ```bash
-    git config --global user.name "Your Name"
-    git config --global user.email "your.email@example.com"
-    ```
+```bash
+git config --global user.name "Your Github Username"
+git config --global user.email "your.email@example.com"
+```
 7.  When asked for a password during cloning/pushing, paste your **PAT**.
 
 ## Part 3: The Assignment
@@ -101,9 +99,9 @@ You need a **Personal Access Token (PAT)** to allow Positron to talk to GitHub s
 Now you will create your own Jupyter Notebook to analyze tipping data.
 
 ### 1. Clone the Repository
-1.  Go to the course GitHub organization and find your `hw-01-[username]` repo.
+1.  Go to the course [GitHub assignment](https://classroom.github.com/a/lqxGMOZJ).
 2.  Copy the HTTPS URL.
-3.  In Positron: `Control Palette` > `Tit: Clone` > Paste URL.
+3.  In Positron: `Control Palette` > `Git: Clone` > Paste URL.
 
 ### 2. Create Your Notebook
 1.  In Positron, create a new file named `hw01-analysis.ipynb` inside your repository folder.
@@ -121,6 +119,26 @@ from itables import show
 
 tips = sns.load_dataset('tips')
 ```
+
+### 4. Committing changes
+
+Now, go to the Source Control extension in the left-hand panel.
+
+If you have made changes to your files, you should see it listed here. Clicking on these files shows you the difference between the last committed state of the document and its current state including changes. You should see deletions in red and additions in green.
+
+If you're happy with these changes, we'll prepare the changes to be pushed to your remote repository. First, stage your changes by clicking the `+` button next to the file you want to stage. Next, write a meaningful commit message (for instance, "update author name") in the Commit message box. Finally, click Commit. Note that every commit needs to have a commit message associated with it.
+
+You don't have to commit after every change, as this would get quite tedious. You should commit states that are meaningful to you for inspection, comparison, or restoration.
+
+In the first few assignments I will nudge you when to commit and in some cases, what commit message to use. As the semester progresses we will let you make these decisions.
+
+Now let's make sure all the changes went to GitHub. Go to your GitHub repo and refresh the page. You should see your commit message next to the updated files. If you see this, all your changes are on GitHub and you're good to go!
+
+### 5. Push changes
+
+Now that you have made an update and committed this change, it's time to push these changes to your repo on GitHub.
+
+In order to push your changes to GitHub, you must have staged your commit to be pushed. 
 
 ### 4. Understand Your Data
 Use `tips.head()`, `tips.info()`, or `tips.describe()` to explore the dataset.
