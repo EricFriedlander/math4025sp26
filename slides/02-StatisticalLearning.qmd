@@ -90,36 +90,10 @@ Why ML? (from ISLR2)
 
 ## [Question!!!]{style="color:blue"} {.smaller}
 
-Based on the previous two slides, which of the following statements are
-correct?
+Consider the previous two slides:
 
-::: panel-tabset
-## Questions
-
-1.  As `Years of Education` increases, `Income` increases, keeping
-    `Seniority` fixed.
-2.  As `Years of Education` increases, `Income` decreases, keeping
-    `Seniority` fixed.
-3.  As `Years of Education` increases, `Income` increases.
-4.  As `Seniority` increases, `Income` increases, keeping
-    `Years of Education` fixed.
-5.  As `Seniority` increases, `Income` decreases, keeping
-    `Years of Education` fixed.
-6.  As `Seniority` increases, `Income` increases.
-
-## Answers
-
-1.  As `Years of Education` increases, `Income` increases, keeping
-    `Seniority` fixed. **TRUE**
-2.  As `Years of Education` increases, `Income` decreases, keeping
-    `Seniority` fixed. **FALSE**
-3.  As `Years of Education` increases, `Income` increases. **TRUE**
-4.  As `Seniority` increases, `Income` increases, keeping
-    `Years of Education` fixed. **TRUE**
-5.  As `Seniority` increases, `Income` decreases, keeping
-    `Years of Education` fixed. **FALSE**
-6.  As `Seniority` increases, `Income` increases. **TRUE**
-:::
+1. What happens to `Income` as `Years of Education` increases? What is the difference between the information that the three plots (combine the first two) give you in answering this questions?
+2. 1. What happens to `Income` as `Seniority` increases? What is the difference between the information that the three plots (combine the first two) give you in answering this questions?
 
 ## Discussion
 
@@ -127,15 +101,7 @@ What's the difference between these two statements:
 
 1.  As `Years of Education` increases, `Income` increases, keeping
     `Seniority` fixed.
-2.  As `Years of Education` increases, `Income` increases.
-
-<!-- ## [Question!!!]{style="color:blue"} {.smaller} -->
-
-<!-- Which of the following statements are correct? -->
-
-<!-- 1. The increase in `Income` resulting from increase in `Years of Education` keeping other variables fixed is **more** than the increase in `Income` resulting from increase in `Seniority` keeping other variables fixed. -->
-
-<!-- 2. The increase in `Income` resulting from increase in `Years of Education` keeping other variables fixed is **less** than the increase in `Income` resulting from increase in `Seniority` keeping other variables fixed. -->
+2.  As `Years of Education` increases, `Income` increases, without accounting for `Seniority`.
 
 ## How Do We Estimate $f(\mathbf{X})$?
 
@@ -252,8 +218,7 @@ g3 = (
     # Non-linear Model (requires 'statsmodels' installed)
     + geom_smooth(
         aes(color="'non-linear model'"),
-        formula='y ~ np.sqrt(x) + np.sin(x)', 
-        method='lm',
+        span=0.25,
         se=False
     )
     + scale_color_manual(

@@ -3122,7 +3122,7 @@
     "href": "slides/02-StatisticalLearning.html#recap",
     "title": "MATH 427: Intro to Machine Learning",
     "section": "Recap",
-    "text": "Recap\n\nRegression vs. Classification\nParametric vs. non-parametric models\nTraining v. test data\nAssessing regression models: Mean-Squared Error\nTrade-offs:\n\nFlexibility vs. interpretability\nBias vs. variance\n\n\n\n\n\n\n🔗 MAT 427 - Spring 2025 - Schedule"
+    "text": "Recap\n\nRegression vs. Classification\nParametric vs. non-parametric models\nTraining v. test data\nAssessing regression models: Mean-Squared Error\nTrade-offs:\n\nFlexibility vs. interpretability\nBias vs. variance"
   },
   {
     "objectID": "slides/15-wfsets-selection.html#computational-set-up",

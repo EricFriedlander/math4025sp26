@@ -275,6 +275,7 @@ Create the following charts using `matplotlib`, `seaborn`, and `plotnine`.
 
 - Bar chart of `PartySize`
 - A stacked bar chart of `Weekday` broken down by `Smoker`
+- A standardized bar chart of `Weekday` broken down by `Smoker`
 - A histogram of `Tip` using 100 bins
 
 ### Exercise 9
@@ -286,7 +287,9 @@ We can also summarize this numerical data broken down by one of the categorical 
 
 #### `matplotlib`
 
-```{r}
+`matplotlib` offloads a lot of the data prepartion to you so you'll usually have to do some processing using `pandas`.
+
+```{python}
 #| eval: false
 
 # Prepare data: Create a list of 'Tip' arrays, one for each 'Weekday'
@@ -345,7 +348,11 @@ plt.show()
 
 #### `seaborn`
 
+`seaborn` codee looks a lot like `matplotlib` but takes care of most of the processing for you. However, `seaborn` tends to be a really slow package.
+
 ```{python}
+#| eval: false
+
 # --- Plot 1: Boxplot ---
 plt.figure()
 sns.boxplot(data=tips, x='Weekday', y='Tip')
@@ -376,6 +383,8 @@ plt.show()
 
 #### `plotnine`
 
+`plotnine` mimicks `ggplot2` syntax (mostly). Note that you'll have to wrap your plots in parenthesis because Python can't follow the line breaks in the same way as R. In addition, if you want to create multiple plots in the same cell, you have two options. One option is to convert your `plotnine` plots into `matplotlib` objects using the `.draw()` method to convert a `plotnine` object into a `matplotlib` figure or `._draw_using_figure(fig, [ax])` to assign the `plotnine` object to an existing axis within a `matplotlib` figure. The second is to use `brick` from the package [`patchworklib`](https://github.com/ponnhide/patchworklib) which allows you to arrange figures.
+
 ```{python}
 #| eval: false
 # --- Plot 1: Boxplot ---
@@ -400,9 +409,7 @@ plt.show()
     + labs(title="Tips by Day of the Week", x="Day of the Week", y="Tips")
 )
 
-# --- Plot 4: Sina Equivalent ---
-# geom_sina() does not exist in Plotnine yet. 
-# We simulate it by overlaying jittered points on a violin.
+# --- Plot 4: Sina ---
 (
     ggplot(tips, aes(x='Weekday', y='Tip'))
     + geom_sina()

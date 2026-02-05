@@ -25,7 +25,7 @@ The root directory constitutes the active Quarto project.
     *   `00-welcome.qmd`, `01-big-picture.qmd`, `02-StatisticalLearning.qmd`.
     *   `_metadata.yml`: Shared configuration for all slides.
     *   `images/`: Slide-specific images.
-*   `hw/`: Homework assignments (empty).
+*   `hw/`: Homework assignments (e.g., `01-hw-eda.qmd`).
 *   `data/`: Course datasets.
 *   `jobs/`: Job application assignments (empty).
 *   `prepare/`: Preparation materials (empty).
@@ -70,7 +70,8 @@ Run these commands from the **project root**.
 *   **Content:** Written in `.qmd` (Quarto Markdown).
 *   **Code Blocks:** Use `{python}` blocks.
 *   **Tables:** Use the `show` function from the `itables` library to display Python data frames.
-*   **Plotting:** Use `plotnine` for visualizations (ggplot2 style).
+*   **Plotting:** Use `plotnine` for visualizations (ggplot2 style), but `seaborn` and `matplotlib` are also available.
+*   **Data Manipulation:** `pandas` is primary; `polars` is available.
 *   **Data Loading:** Use `pyreadr` for `.rds` files and `pyhere` for robust relative paths.
 *   **Configuration:** Global settings in `_quarto.yml`. Sidebar navigation is configured here.
 *   **Paths:** Relative paths should ideally generally work, but be mindful of the folder structure (e.g., referencing images from `course-info/`).

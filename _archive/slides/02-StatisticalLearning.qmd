@@ -230,46 +230,7 @@ From ISLR2
 -   Flexibility: smoothness of functions
 -   More theoretically: how many parameters are there to estimate?
 
-```{r}
-#| echo: FALSE
-#| r-stretch: TRUE
-#| fig-align: 'center'
 
-set.seed(208)
-
-# simulate data
-
-x <- runif(n = 100, min = 20, max = 40)   # input/predictor
-
-e <- rnorm(n = 100, mean = 0, sd = 1)  # error
-
-a <- 3
-
-b <- 0.87
-
-c <- 0.5
-
-fx <- a + (b * sqrt(x)) + (c * sin(x))   # true function
-
-y <- fx + e    # observed responses
-
-toy_data <- data.frame(input = x, true_form = fx, response = y)   # create data frame to store values
-
-
-# plot linear model (red) and non-linear model (blue) 
-g3 <- ggplot(data = toy_data, aes(x = input, y = response)) + 
-  geom_point() + 
-  geom_function(fun = function(x) a+(b*sqrt(x))+(c*sin(x)), aes(color = "true model"), linewidth = 1.5) + 
-  geom_smooth(method = "lm", se = FALSE, aes(color = "linear model")) + 
-  geom_smooth(formula = y ~ sqrt(x) + sin(x), se = FALSE, aes(color = "non-linear model")) +
-  scale_color_manual(values = c("true model" = "red", "linear model" = "blue", "non-linear model" = "green")) + 
-  theme(legend.title = element_blank(),
-       text = element_text(size=20)) +
-  labs(title = "Comparing two models", y = "y", x = "x")
-
-g3
-
-```
 
 [More flexible $\implies$ More complex $\implies$ Less Smooth $\implies$
 Less Restrictive $\implies$ Less Interpretable
