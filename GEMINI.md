@@ -6,7 +6,7 @@ This directory contains the source materials for the **Statistical Machine Learn
 *   **Course:** Math 4025 (Spring 2026).
 *   **Instructor:** Dr. Eric Friedlander.
 *   **Institution:** College of Idaho.
-*   **Primary Language:** Python (transitioned from R).
+*   **Primary Language:** Python (primary), with R used for the schedule (`index.qmd`).
 *   **Textbook:** ISLP (Introduction to Statistical Learning with Python).
 *   **Live Site:** https://EricFriedlander.github.io/math4025sp26/
 
@@ -31,15 +31,18 @@ The root directory constitutes the active Quarto project.
 *   `prepare/`: Preparation materials (empty).
 *   `images/`: Static image assets (e.g., logo).
 *   `_quarto.yml`: Main Quarto configuration.
-*   `environment.yml`: Conda environment definition.
-*   `index.qmd`: Homepage (displays the Course Schedule).
+*   `environment.yml`: Conda environment definition (Python).
+*   `renv.lock`, `.Rprofile`, `renv/`: R environment definition (renv).
+*   `index.qmd`: Homepage (displays the Course Schedule via R/gt).
 
 ## Development & Usage
 
 ### 1. Tools
 *   **Quarto:** Website builder.
 *   **Python:** Primary programming language.
+*   **R:** Used for specific components (e.g., schedule generation).
 *   **Conda/Mamba:** Use the `math-4025-sp26` environment for all Python code in this workspace.
+*   **renv:** Manages R dependencies.
 *   **VS Code:** Primary editor.
 
 ### 2. Automatic Deployment
@@ -68,8 +71,8 @@ Run these commands from the **project root**.
 
 ### 3. Key Conventions
 *   **Content:** Written in `.qmd` (Quarto Markdown).
-*   **Code Blocks:** Use `{python}` blocks.
-*   **Tables:** Use the `show` function from the `itables` library to display Python data frames.
+*   **Code Blocks:** Use `{python}` blocks primarily; `{r}` blocks for schedule.
+*   **Tables:** Use the `show` function from the `itables` library (Python) or `gt` (R) for display.
 *   **Plotting:** Use `plotnine` for visualizations (ggplot2 style), but `seaborn` and `matplotlib` are also available.
 *   **Data Manipulation:** `pandas` is primary; `polars` is available.
 *   **Data Loading:** Use `pyreadr` for `.rds` files and `pyhere` for robust relative paths.

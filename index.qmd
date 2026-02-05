@@ -1,52 +1,72 @@
 ---
 title: "Math 4025: Statistical Machine Learning"
 subtitle: "Spring 2026 - Dr. Eric Friedlander"
-navbar: false
-execute:
+execute: 
   freeze: false
 ---
 
 *This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.*
 
-```{python}
+```{r}
 #| echo: false
 #| message: false
 #| warning: false
-import pandas as pd
-from itables import show
-from pyhere import here
-import mistune
-
-# Load the schedule data
-schedule = pd.read_csv(here("course-info", "schedule.csv"))
-
-# Filter for published items
-schedule = schedule[schedule['Publish'] == 'x']
-
-# Remove the Publish column from display
-schedule = schedule.drop(columns=['Publish'])
-
-# Replace all NaN values with empty strings to avoid "NaN" display
-schedule = schedule.fillna("")
-
-# Function to render markdown
-def render_markdown(text):
-    # Handle NaN/None cases
-    if pd.isna(text) or text == "nan" or text == "NaN":
-        return ""
-    
-    to_render = str(text)
-    # mistune adds \n at the end of paragraphs, so we strip it.
-    return mistune.html(to_render).strip()
-
-# Apply markdown rendering to all string columns
-from pandas.api.types import is_string_dtype, is_object_dtype
-
-for col in schedule.columns:
-    if is_string_dtype(schedule[col]) or is_object_dtype(schedule[col]):
-         schedule[col] = schedule[col].apply(render_markdown)
-
-# Display the schedule
-show(schedule, dom='t', classes="display nowrap compact", paging=False, allow_html=True)
+library(gt)
+library(tidyverse)
+d <- read_csv(here::here("course-info", "schedule.csv"))
 ```
+
+```{r}
+#| echo: false
+
+d |>
+  filter(Publish == "x") |>
+  select(-Publish) |>
+  mutate(due = mdy(due)) |>
+  gt() |>
+  fmt_date(due, date_style = 31) |>
+  sub_missing(columns = c(week, due, topic, reading, slides, video, assignment), missing_text = "") |>
+  cols_align(
+    align = "center", 
+    columns = c(week)
+  ) |>
+  cols_align(
+    align = "center", 
+    columns = c(due)
+  ) |>
+  cols_align(
+    align = "left", 
+    columns = c(topic, reading, slides, video)
+  ) |>
+  tab_style(
+    style = cell_borders(
+      sides = "right",
+      color = "#D3D3D3",
+      style = "solid"
+    ),
+    locations = cells_body(
+      columns = c(due, type, topic, reading, slides, video)
+    )
+  ) |>
+  fmt_markdown(
+    columns = c(type, topic, reading, slides, video)
+  ) |>
+  cols_width(
+    week ~ px(45),
+    due ~ px(300), 
+    reading ~ px(150),
+    topic ~ px(300),
+    slides ~ px(300),
+    video ~ px(300)
+  ) |>
+  cols_label_with(fn = function(x) {
+      janitor::make_clean_names(x, case = "title") |>
+        toupper() |>
+        stringr::str_replace_all("^|$", "**") |>
+        md()
+    }) |>
+  tab_options(table.font.size = 13) |>
+  opt_row_striping()
+```
+
 
