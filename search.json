@@ -296,7 +296,7 @@
     "href": "slides/02-StatisticalLearning.html#parametric-methods",
     "title": "Intro to Machine Learning",
     "section": "Parametric Methods",
-    "text": "Parametric Methods\n\nAssume a functional form for \\(f(\\mathbf{X})\\)\n\nLinear Regression: \\(f(\\mathbf{X})=\\beta_0 + \\beta_1 \\mathbf{x}_1 + \\beta_2 \\mathbf{x}_2 + \\ldots + \\beta_p \\mathbf{x}_p\\)\nEstimate the parameters \\(\\beta_0, \\beta_1, \\ldots, \\beta_p\\) using labeled data\n\nChoosing \\(\\beta\\)’s that minimize some error metrics is called fitting the model\nThe data we use to fit the model is called our training data"
+    "text": "Parametric Methods\n\nAssume a functional form for \\(f(\\mathbf{X})\\)\n\nLinear Regression: \\(f(\\mathbf{X})=\\beta_0 + \\beta_1 \\mathbf{x}_1 + \\beta_2 \\mathbf{x}_2 + \\ldots + \\beta_p \\mathbf{x}_p\\)\nEstimate the parameters \\(\\beta_0, \\beta_1, \\ldots, \\beta_p\\) using labeled data\n\nChoosing \\(\\beta\\)’s that minimize some error metrics is called fitting or training the model\nThe data we use to fit the model is called our training data"
   },
   {
     "objectID": "slides/02-StatisticalLearning.html#parametric-methods-1",
@@ -338,7 +338,7 @@
     "href": "slides/02-StatisticalLearning.html#supervised-learning-selecting-a-model",
     "title": "Intro to Machine Learning",
     "section": "Supervised Learning: Selecting a Model",
-    "text": "Supervised Learning: Selecting a Model\n\nWhy so many different ML techniques?\nThere is no free lunch in statistics: All methods have different pros and cons\n\nMust select correct model for each use-case\n\nRelevant questions in model selection:\n\nHow much observations \\(n\\) and variables \\(p\\)?\nWhat is the relative importance is prediction, interpretability, and inference?\nDo we expect relationship to be non-linear?\nRegression or classification?"
+    "text": "Supervised Learning: Selecting a Model\n\nWhy so many different ML techniques?\nThere is no free lunch in statistics: All methods have different pros and cons\n\nMust select correct model for each use-case\n\nRelevant questions in model selection:\n\nHow many observations \\(n\\) and variables \\(p\\)?\nWhat is the relative importance is prediction, interpretability, and inference?\nDo we expect relationship to be non-linear?\nRegression or classification?"
   },
   {
     "objectID": "slides/02-StatisticalLearning.html#supervised-learning-assessing-model-performance",
@@ -359,7 +359,7 @@
     "href": "slides/02-StatisticalLearning.html#recap",
     "title": "Intro to Machine Learning",
     "section": "Recap",
-    "text": "Recap\n\nRegression vs. Classification\nParametric vs. non-parametric models\nTraining v. test data\nAssessing regression models: Mean-Squared Error\nTrade-offs:\n\nFlexibility vs. interpretability\nBias vs. variance"
+    "text": "Recap\n\nRegression vs. Classification\nParametric vs. non-parametric models\nTraining v. test data\nAssessing regression models: Mean-Squared Error\nTrade-offs: Flexibility vs. interpretability"
   },
   {
     "objectID": "slides/01-big-picture.html#what-is-machine-learning",
