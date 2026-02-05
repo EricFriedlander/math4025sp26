@@ -2,6 +2,17 @@
 title: "Homework 1: Exploratory Data Analysis"
 ---
 
+```{python}
+#| echo: false
+#| include: false
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import numpy as np
+
+tips = sns.load_dataset("tips")
+```
+
 Adapted from "Start teaching with R," created by R Pruim, N J Horton, and D Kaplan, 2013, "Interactive and Dynamic Graphics for Data Analysis," by Dianne Cook and Deborah F. Swayne, Colby Long's DATA 325 Course at Wooster College and Maria Tackett's STA-210 course at Duke University.
 
 ## Introduction
@@ -22,11 +33,32 @@ The primary tools we'll be using in this course are **Python**, **Positron**, **
 
 To make versioning simpler, this homework will be completed individually. In the future, you'll learn about collaborating on GitHub.
 
-## Part 1: Setting Up Your Environment
+## Exploratory Data Analysis
+
+One of the most important components of data science is exploratory data analysis. I really like the following definition, which comes from [this article](https://towardsdatascience.com/exploratory-data-analysis-8fc1cb20fd15) (though it's probably not the original source).
+
+> Exploratory Data Analysis refers to the critical process of performing initial investigations on data so as to discover patterns, spot anomalies, to test hypotheses and to check assumptions with the help of summary statistics and graphical representations.
+
+Before you begin your exploratory analysis, you may already have a particular question in mind. For example, you might work for an online retailer and want to develop a model to predict which purchased items will be returned. Or, you may not have a particular question in mind. Instead, you might just be asked to look at browsing data for several customers and figure out some way to increase purchases. In either case, before you construct a fancy model, you need to explore and understand your data. This is how you gain new insights and determine if an idea is worth pursuing.
+
+## Learning goals
+
+By the end of the homework, you will...
+
+-   Be familiar with the workflow using Python and GitHub
+-   Gain practice writing a reproducible report using Jupyter notebooks
+-   Practice version control using GitHub
+-   Be able to create numerical and visual summaries of data
+-   Use those summaries
+
+# Getting Started
+
+## Setting Up Your Environment
 
 Before we analyze data, we need to set up our computer. This process involves installing a package manager (Miniforge), creating a virtual environment, and installing the necessary libraries.
 
-### 1. Install Miniforge
+### Install Miniforge
+
 We will use **Miniforge** to manage our Python installation. It pre-configures `conda` (package manager) and `mamba` (a faster version of conda) with the `conda-forge` channel, which is the community standard.
 
 1.  Go to the [Miniforge GitHub page](https://github.com/conda-forge/miniforge).
@@ -35,7 +67,7 @@ We will use **Miniforge** to manage our Python installation. It pre-configures `
     *   *Windows*: Open "Miniforge Prompt" after installation to verify.
     *   *Mac/Linux*: Open your terminal.
 
-### 2. Create a Conda Environment
+### Create a Conda Environment
 We never want to install packages into our "base" environment. Instead, we create a specific environment for this course.
 
 Open your terminal (or Miniforge Prompt) and run:
@@ -47,7 +79,7 @@ mamba create -n math4025 python=3.14
 *   `-n math4025`: Names the environment "math4025".
 *   `python=3.14`: Specifies the Python version.
 
-### 3. Activate the Environment
+### Activate the Environment
 To use the environment, you must activate it:
 
 ```bash
@@ -55,21 +87,20 @@ mamba activate math4025
 ```
 You should see `(math4025)` appear in your prompt.
 
-### 4. Install Packages
+### Install Packages
 Now we install the tools we need for this assignment.
 
 ```bash
-mamba install pandas seaborn matplotlib plotnine itables jupyter polars pyreadr
+mamba install pandas seaborn matplotlib plotnine itables jupyter pyreadr
 ```
-*   `pandas`, `polars`: Data manipulation.
+*   `pandas`: Data manipulation.
 *   `seaborn`, `matplotlib`, `plotnine`: Data visualization.
 *   `itables`: Interactive tables.
 *   `jupyter`: Required to run Notebooks.
-*   `pyreadr`: For reading R datasets.
 
-## Part 2: Setting up Positron & Git
+## Setting up Positron & Git
 
-### 1. Install Positron
+### Install Positron
 We will use **Positron**, a new data science IDE from Posit (makers of RStudio).
 
 1.  Download and install [Positron](https://positron.posit.co/install.html).
@@ -79,7 +110,8 @@ We will use **Positron**, a new data science IDE from Posit (makers of RStudio).
     *   Type `Python: Select Interpreter`.
     *   Choose the `math4025` environment you just created.
 
-### 2. Configure Git & GitHub
+### Configure Git & GitHub
+
 You need a **Personal Access Token (PAT)** to allow Positron to talk to GitHub securely.
 
 1.  Log in to [GitHub](https://github.com/).
@@ -94,25 +126,25 @@ git config --global user.email "your.email@example.com"
 ```
 7.  When asked for a password during cloning/pushing, paste your **PAT**.
 
-## Part 3: The Assignment
+## The Assignment
 
 Now you will create your own Jupyter Notebook to analyze tipping data.
 
-### 1. Clone the Repository
+### Clone the Repository
+
 1.  Go to the course [GitHub assignment](https://classroom.github.com/a/lqxGMOZJ).
 2.  Copy the HTTPS URL.
 3.  In Positron: `Control Palette` > `Git: Clone` > Paste URL.
 
-### 2. Create Your Notebook
+### Create Your Notebook
+
 1.  In Positron, create a new file named `hw01-analysis.ipynb` inside your repository folder.
 2.  Add a Markdown cell at the top with a title "Homework 1: Exploratory Data Analysis" and your name.
 
 
-## Part 4: Understand Your Data
+## Understand Your Data
 
-Today we will be working with the `tips` data set which is in the `seaborn` package. The data in the `tips` dataset is information recorded by one waiter about each tip he received over a period of a few months working in a restaurant. We would like to use this data to address the question, *"What factors affect tipping behavior?"*
-
-### 3. Loading the data
+Today we will be working with the `TIPS` data set which is in the `regclass` R package. I've saved the data as a csv and included it in the repo for this assignment. The data in the `TIPS` dataset is information recorded by one waiter about each tip he received over a period of a few months working in a restaurant. We would like to use this data to address the question, *"What factors affect tipping behavior?"*
 
 In python you can `import` packages in a few ways:
 
@@ -123,16 +155,18 @@ In python you can `import` packages in a few ways:
 
 Common conventions in data science:
 
-```python
+```{python}
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
 ```
 
-In your Jupyter notebook, create a code cell at the top and load `pandas`, `seaborn`, `matplotlib.pyplot`, . Then use the following line of code to load the `tips` dataset from the `seaborn` package `tips = sns.load_dataset("tips")`.
+### Exercise 1
 
-### 4. Committing changes
+In your Jupyter notebook, create a code cell at the top and load `pandas`, `seaborn`, and `matplotlib.pyplot`.
+
+### Committing changes
 
 Now, go to the Source Control extension in the left-hand panel.
 
@@ -146,7 +180,7 @@ In the first few assignments I will nudge you when to commit and in some cases, 
 
 Now let's make sure all the changes went to GitHub. Go to your GitHub repo and refresh the page. You should see your commit message next to the updated files. If you see this, all your changes are on GitHub and you're good to go!
 
-### 5. Push changes
+### Push changes
 
 Now that you have made an update and committed this change, it's time to push these changes to your repo on GitHub. There are a few ways to do this, if you're new to Git raise your hand or ask someone near you.
 
@@ -162,26 +196,220 @@ Eventually you'll be better off using git from the terminal or command line:
 - `git pull` to pull changes from your remote repo
 
 
-### 6. Initial Exploration
+### Exercise 2
 
 When exploring a new data set, it’s important to first understand the basics. What format is our data in? What types of information are included in the data set? How many observations are there?
 
-Use `tips.head()`, `tips.info()`, or `tips.describe()` to explore the dataset.
+In the Python ecosystem, data sets are usually stored in a 2-dimensional structure called a **DataFrame**. The `pandas` library has long been the industry standard for data manipulation. After importing these libraries, you can get an idea of the structure of a data set using `df.info()`, and you can peek at the first few rows with `df.head()`. If you're used to using R, one thing you'll notice that all of these data manipulations are *methods* rather than functions. Create a code chunk and use these functions (and others) to better understand the data. Use `tips.head()`, `tips.info()`, or `tips.describe()` to explore the dataset. How many tips are recorded in this data set?
 
-### 7. Numerical Summaries
-Using `groupby`, calculate summary statistics.
+### Exercise 3
 
-*   **Question 3**: What is the median tip amount for "Lunch" vs "Dinner"? (Hint: `tips.groupby('time')['tip'].median()`)
-*   **Question 4**: Create a new column `tip_pct` (tip / total_bill * 100). Calculate the variance of `tip_pct` by day of the week.
+Often, a data set will come with a *code book* which gives more complete information about the structure of the data, the meaning of variables, and how the data were collected. In this case, most of the column names are pretty self explanatory.
 
-### 6. Graphical Summaries
+| Variable        | Description                               |
+|-----------------|-------------------------------------------|
+| `TipPercentage` | the gratuity, as a percentage of the bill |
+| `Bill`          | the cost of the meal in US dollars        |
+| `Tip`           | the tip in US dollars                     |
+| `Gender`        | gender of the bill payer                  |
+| `Smoker`        | whether the party included smokers        |
+| `Weekday`       | day of the week                           |
+| `Time`          | time the bill was paid                    |
+| `PartySize`     | size of the party                         |
+
+Even though the column names are self-explanatory, we might have more questions about the data. For example, we might conjecture that people tip differently for breakfast and lunch, but our data only tells us if the bill was paid at "Day" or "Night." State another reasonable conjecture about a factor that might affect tipping behavior. What additional information would be helpful to explore that conjecture?
+
+::: {.callout-warning title="Render-Commit-Push"}
+This is a good place to render, commit, and push changes to your GitHub repo. Write an informative commit message (e.g. "Complete exercises 1 - 3"), and push every file to GitHub.
+:::
+
+# Numerical Summaries
+
+Now we'd like to start looking closely at the data set to develop some ideas about what factors might affect tipping. In **pandas**, basic descriptive statistics have intuitive names like `mean()`, `median()`, `std()`, and `quantile()`. When exploring your data, you typically use these methods directly on a DataFrame or Series, often in conjunction with `agg()` (similar to `summarize` in the tidyverse) to compute multiple statistics at once. We can apply these functions to an entire DataFrame or isolate a specific column using bracket notation.
+
+
+### Exercise 4
+
+Use some of these summaries to answer the following. How many smokers are in the data set? How fancy do you think restaurant is? Is it possible to tell from this summary how many different shifts the waiter worked? Why or why not?
+
+Before we try to write any code, **write down the operations you want to do to get the answers**. For example, *count the number of rows in which the `Smoker` column has `Yes`*. We'll then translate that into code.
+
+### Exercise 5
+
+As we start to explore different questions, we might want to know things about interactions between variables. Like, are tips larger during the day or at night? Or does gender or smoking status matter for how much people spend and how much they tip? In **pandas**, you can calculate statistics within groups using the `groupby` method followed by an aggregation function.
+
+Calculate the variance of the tip percentage broken down by day of the week. Do you notice anything unusual? Explore the data and determine a possible cause for this.
+
+
+### Exercise 6
+
 Create the following plots using the library of your choice (`seaborn` or `plotnine`).
 
 *   **Plot 1**: A bar chart of `sex`.
 *   **Plot 2**: A histogram of `total_bill`.
 *   **Plot 3**: A scatterplot of `total_bill` vs `tip`, colored by `smoker`.
 
-### 7. Exploration
+### Exercise 7
+
+Which day of the week has the highest *percentage* of tables that are smokers? Hint: look at documentation and use Google to figure out how to create table proportions.
+
+::: {.callout-warning title="Render-Commit-Push"}
+This is a good place to render, commit, and push changes to your hw-eda repo on GitHub. Write an informative commit message (e.g. "Completed exercises 4 - 6"), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty.
+:::
+
+## Graphical Summaries
+
+Graphical summaries are a key tool in exploratory data analysis to to help you understand your data. They also help you communicate insights about your data to others. For example, we might want to display relationships about some of our categorical variables. So we could start by graphing different party sizes in our data set.
+
+There are a few different packages for generating plots in Python:
+
+- `matplotlib`: The foundational "grandfather" of Python plotting, offering granular low-level control for creating static, publication-quality figures, though often requiring verbose code.
+- `seaborn`: A high-level wrapper built on `matplotlib` that simplifies statistical visualization (like heatmaps and regression plots) with beautiful default themes and fewer lines of code.
+- `plotnine`: A strict implementation of the "Grammar of Graphics" (mimicking R's `ggplot2`), designed for users who prefer building plots by logically layering data, aesthetics, and geometries.
+- `plotly`: The best choice for **interactive** and web-ready charts, allowing users to zoom, pan, and hover over data points, making it ideal for dashboards.
+
+
+## Exercise 8
+
+Create the following charts using `matplotlib`, `seaborn`, and `plotnine`.
+
+- Bar chart of `PartySize`
+- A stacked bar chart of `Weekday` broken down by `Smoker`
+- A histogram of `Tip` using 100 bins
+
+### Exercise 9
+
+Notice that there are a few "spikes" in the histogram above. What do you think is causing this?
+
+We can also summarize this numerical data broken down by one of the categorical variables using boxplots, violin plots, or sina plots. 
+
+
+#### `matplotlib`
+
+```{r}
+#| eval: false
+
+# Prepare data: Create a list of 'Tip' arrays, one for each 'Weekday'
+days = tips['Weekday'].unique()
+data_by_day = [tips[tips['Weekday'] == d]['Tip'] for d in days]
+
+# --- Plot 1: Boxplot ---
+plt.figure()
+plt.boxplot(data_by_day, labels=days)
+plt.title("Tips by Day of the Week")
+plt.xlabel("Day of the Week")
+plt.ylabel("Tips")
+plt.show()
+
+# --- Plot 2: Boxplot + Jitter ---
+plt.figure()
+plt.boxplot(data_by_day, labels=days, showfliers=False) # Hide outliers to avoid dupes
+# Add jitter manually
+for i, d in enumerate(days):
+    y = tips[tips['Weekday'] == d]['Tip']
+    x = np.random.normal(i + 1, 0.04, size=len(y)) # i+1 because boxplot is 1-indexed
+    plt.scatter(x, y, alpha=0.5, s=10, color='grey')
+plt.title("Tips by Day of the Week")
+plt.xlabel("Day of the Week")
+plt.ylabel("Tips")
+plt.show()
+
+# --- Plot 3: Violin ---
+plt.figure()
+plt.violinplot(data_by_day, showmeans=False, showmedians=True)
+plt.xticks(ticks=range(1, len(days) + 1), labels=days)
+plt.title("Tips by Day of the Week")
+plt.xlabel("Day of the Week")
+plt.ylabel("Tips")
+plt.show()
+
+# --- Plot 4: Sina Plot Approximation ---
+# Matplotlib has no native Sina plot. 
+# A common approximation is a Violin plot with inner points (or a swarm plot).
+# Here we just show the violin (density) with scatter overlay.
+plt.figure()
+parts = plt.violinplot(data_by_day, showextrema=False)
+for pc in parts['bodies']:
+    pc.set_facecolor('#D43F3A')
+    pc.set_alpha(0.3)
+for i, d in enumerate(days):
+    y = tips[tips['Weekday'] == d]['Tip']
+    x = np.random.normal(i + 1, 0.04, size=len(y))
+    plt.scatter(x, y, alpha=0.6, s=10)
+plt.xticks(ticks=range(1, len(days) + 1), labels=days)
+plt.title("Tips by Day of the Week")
+plt.xlabel("Day of the Week")
+plt.ylabel("Tips")
+plt.show()
+```
+
+#### `seaborn`
+
+```{python}
+# --- Plot 1: Boxplot ---
+plt.figure()
+sns.boxplot(data=tips, x='Weekday', y='Tip')
+plt.title("Tips by Day of the Week")
+plt.show()
+
+# --- Plot 2: Boxplot + Jitter ---
+plt.figure()
+sns.boxplot(data=tips, x='Weekday', y='Tip', fliersize=0) # Hide outliers
+sns.stripplot(data=tips, x='Weekday', y='Tip', jitter=True, color='black', alpha=0.5)
+plt.title("Tips by Day of the Week")
+plt.show()
+
+# --- Plot 3: Violin ---
+plt.figure()
+sns.violinplot(data=tips, x='Weekday', y='Tip')
+plt.title("Tips by Day of the Week")
+plt.show()
+
+# --- Plot 4: Sina Equivalent (Swarmplot or Violin+Strip) ---
+# Seaborn uses 'swarmplot' for non-overlapping points (beeswarm style)
+plt.figure()
+sns.violinplot(data=tips, x='Weekday', y='Tip', inner=None, color=".8")
+sns.stripplot(data=tips, x='Weekday', y='Tip', jitter=True)
+plt.title("Tips by Day of the Week")
+plt.show()
+```
+
+#### `plotnine`
+
+```{python}
+#| eval: false
+# --- Plot 1: Boxplot ---
+(
+    ggplot(tips, aes(x='Weekday', y='Tip'))
+    + geom_boxplot()
+    + labs(title="Tips by Day of the Week", x="Day of the Week", y="Tips")
+)
+
+# --- Plot 2: Boxplot + Jitter ---
+(
+    ggplot(tips, aes(x='Weekday', y='Tip'))
+    + geom_boxplot(outlier_shape=None) # Hide outliers so they aren't plotted twice
+    + geom_jitter(width=0.2)
+    + labs(title="Tips by Day of the Week", x="Day of the Week", y="Tips")
+)
+
+# --- Plot 3: Violin ---
+(
+    ggplot(tips, aes(x='Weekday', y='Tip'))
+    + geom_violin()
+    + labs(title="Tips by Day of the Week", x="Day of the Week", y="Tips")
+)
+
+# --- Plot 4: Sina Equivalent ---
+# geom_sina() does not exist in Plotnine yet. 
+# We simulate it by overlaying jittered points on a violin.
+(
+    ggplot(tips, aes(x='Weekday', y='Tip'))
+    + geom_sina()
+    + labs(title="Tips by Day of the Week", x="Day of the Week", y="Tips")
+)
+```
+
 **final Task**: State a conjecture about tipping behavior (e.g., "People tip more on weekends"). Create **one plot** and **one summary table** to investigate your claim. Write a short sentence interpreting your findings.
 
 ## Submission

@@ -316,40 +316,98 @@ TIPS |>
 Notice that there are a few "spikes" in the histogram above. What do you think is causing this?
 :::
 
-We can also summarize this numerical data broken down by one of the categorical variables using boxplots, violin plots, or sina plots. Note that to create sina plots we need the `ggforce` package.
+We can also summarize this numerical data broken down by one of the categorical variables using boxplots, violin plots, or sina plots.
+
+#### `matplotlib`
 
 ```{r}
 #| fig.align: 'center'
+#| code-fold: true
+#| eval: false
 
-TIPS |> 
-  ggplot(aes(x=Weekday, y=Tip)) +
-  geom_boxplot() +
-  labs(title = "Tips by Day of the Week", 
-       x = "Day of the Week",
-       y = "Tips")
+# Prepare data: Create a list of 'Tip' arrays, one for each 'Weekday'
+days = tips['Weekday'].unique()
+data_by_day = [tips[tips['Weekday'] == d]['Tip'] for d in days]
 
-TIPS |> 
-  ggplot(aes(x=Weekday, y=Tip)) +
-  geom_boxplot() +
-  geom_jitter() +
-  labs(title = "Tips by Day of the Week", 
-       x = "Day of the Week",
-       y = "Tips")
+# --- Plot 1: Boxplot ---
+plt.figure()
+plt.boxplot(data_by_day, labels=days)
+plt.title("Tips by Day of the Week")
+plt.xlabel("Day of the Week")
+plt.ylabel("Tips")
+plt.show()
 
-TIPS |> 
-  ggplot(aes(x=Weekday, y=Tip)) +
-  geom_violin() +
-  labs(title = "Tips by Day of the Week", 
-       x = "Day of the Week",
-       y = "Tips")
+# --- Plot 2: Boxplot + Jitter ---
+plt.figure()
+plt.boxplot(data_by_day, labels=days, showfliers=False) # Hide outliers to avoid dupes
+# Add jitter manually
+for i, d in enumerate(days):
+    y = tips[tips['Weekday'] == d]['Tip']
+    x = np.random.normal(i + 1, 0.04, size=len(y)) # i+1 because boxplot is 1-indexed
+    plt.scatter(x, y, alpha=0.5, s=10, color='grey')
+plt.title("Tips by Day of the Week")
+plt.xlabel("Day of the Week")
+plt.ylabel("Tips")
+plt.show()
 
-library(ggforce)
-TIPS |> 
-  ggplot(aes(x=Weekday, y=Tip)) +
-  geom_sina() +
-  labs(title = "Tips by Day of the Week", 
-       x = "Day of the Week",
-       y = "Tips")
+# --- Plot 3: Violin ---
+plt.figure()
+plt.violinplot(data_by_day, showmeans=False, showmedians=True)
+plt.xticks(ticks=range(1, len(days) + 1), labels=days)
+plt.title("Tips by Day of the Week")
+plt.xlabel("Day of the Week")
+plt.ylabel("Tips")
+plt.show()
+
+# --- Plot 4: Sina Plot Approximation ---
+# Matplotlib has no native Sina plot. 
+# A common approximation is a Violin plot with inner points (or a swarm plot).
+# Here we just show the violin (density) with scatter overlay.
+plt.figure()
+parts = plt.violinplot(data_by_day, showextrema=False)
+for pc in parts['bodies']:
+    pc.set_facecolor('#D43F3A')
+    pc.set_alpha(0.3)
+for i, d in enumerate(days):
+    y = tips[tips['Weekday'] == d]['Tip']
+    x = np.random.normal(i + 1, 0.04, size=len(y))
+    plt.scatter(x, y, alpha=0.6, s=10)
+plt.xticks(ticks=range(1, len(days) + 1), labels=days)
+plt.title("Tips by Day of the Week")
+plt.xlabel("Day of the Week")
+plt.ylabel("Tips")
+plt.show()
+```
+
+#### `seaborn`
+
+```{python}
+# --- Plot 1: Boxplot ---
+plt.figure()
+sns.boxplot(data=tips, x='Weekday', y='Tip')
+plt.title("Tips by Day of the Week")
+plt.show()
+
+# --- Plot 2: Boxplot + Jitter ---
+plt.figure()
+sns.boxplot(data=tips, x='Weekday', y='Tip', fliersize=0) # Hide outliers
+sns.stripplot(data=tips, x='Weekday', y='Tip', jitter=True, color='black', alpha=0.5)
+plt.title("Tips by Day of the Week")
+plt.show()
+
+# --- Plot 3: Violin ---
+plt.figure()
+sns.violinplot(data=tips, x='Weekday', y='Tip')
+plt.title("Tips by Day of the Week")
+plt.show()
+
+# --- Plot 4: Sina Equivalent (Swarmplot or Violin+Strip) ---
+# Seaborn uses 'swarmplot' for non-overlapping points (beeswarm style)
+plt.figure()
+sns.violinplot(data=tips, x='Weekday', y='Tip', inner=None, color=".8")
+sns.stripplot(data=tips, x='Weekday', y='Tip', jitter=True)
+plt.title("Tips by Day of the Week")
+plt.show()
 ```
 
 Or we can visualize the relationship between a lot of our numerical variables at once.
