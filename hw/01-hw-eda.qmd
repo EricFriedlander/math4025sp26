@@ -107,18 +107,30 @@ Now you will create your own Jupyter Notebook to analyze tipping data.
 1.  In Positron, create a new file named `hw01-analysis.ipynb` inside your repository folder.
 2.  Add a Markdown cell at the top with a title "Homework 1: Exploratory Data Analysis" and your name.
 
-### 3. Load the Data
-In your first code cell, import your libraries and load the `tips` dataset from Seaborn.
+
+## Part 4: Understand Your Data
+
+Today we will be working with the `tips` data set which is in the `seaborn` package. The data in the `tips` dataset is information recorded by one waiter about each tip he received over a period of a few months working in a restaurant. We would like to use this data to address the question, *"What factors affect tipping behavior?"*
+
+### 3. Loading the data
+
+In python you can `import` packages in a few ways:
+
+- `import pandas` will import pandas. Every time you want to use pandas you'll have to prepend `pandas.` (e.g. `pandas.read_csv()`)
+- `import pandas as pd` will import pandas and allow you to use the shorthand `pd` (e.g. `pd.read_csv()`)
+- `from pandas import *` will import everything from pandas (e.g. `read_csv()`)
+- `from pandas import read_csv()` will import only `read_csv()` (e.g. `read_csv()` will work but no other `pandas` functions will work)
+
+Common conventions in data science:
 
 ```python
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-from plotnine import *
-from itables import show
-
-tips = sns.load_dataset('tips')
+import numpy as np
 ```
+
+In your Jupyter notebook, create a code cell at the top and load `pandas`, `seaborn`, `matplotlib.pyplot`, . Then use the following line of code to load the `tips` dataset from the `seaborn` package `tips = sns.load_dataset("tips")`.
 
 ### 4. Committing changes
 
@@ -136,17 +148,27 @@ Now let's make sure all the changes went to GitHub. Go to your GitHub repo and r
 
 ### 5. Push changes
 
-Now that you have made an update and committed this change, it's time to push these changes to your repo on GitHub.
+Now that you have made an update and committed this change, it's time to push these changes to your repo on GitHub. There are a few ways to do this, if you're new to Git raise your hand or ask someone near you.
 
 In order to push your changes to GitHub, you must have staged your commit to be pushed. 
 
-### 4. Understand Your Data
+#### Using the Command Line
+
+Eventually you'll be better off using git from the terminal or command line:
+
+- `git add files-you-want-to-stage` or `git add .` to stage all files that have changed
+- `git commit -m "This is your commit message"`
+- `git push` to push your changes
+- `git pull` to pull changes from your remote repo
+
+
+### 6. Initial Exploration
+
+When exploring a new data set, it’s important to first understand the basics. What format is our data in? What types of information are included in the data set? How many observations are there?
+
 Use `tips.head()`, `tips.info()`, or `tips.describe()` to explore the dataset.
 
-*   **Question 1**: How many rows (tips) are in the dataset?
-*   **Question 2**: Which days of the week is the restaurant open?
-
-### 5. Numerical Summaries
+### 7. Numerical Summaries
 Using `groupby`, calculate summary statistics.
 
 *   **Question 3**: What is the median tip amount for "Lunch" vs "Dinner"? (Hint: `tips.groupby('time')['tip'].median()`)
