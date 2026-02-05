@@ -223,7 +223,7 @@ ul.task-list li input[type="checkbox"] {
 <li><code>_metadata.yml</code>: Shared configuration for all slides.</li>
 <li><code>images/</code>: Slide-specific images.</li>
 </ul></li>
-<li><code>hw/</code>: Homework assignments (empty).</li>
+<li><code>hw/</code>: Homework assignments (e.g., <code>01-hw-eda.qmd</code>).</li>
 <li><code>data/</code>: Course datasets.</li>
 <li><code>jobs/</code>: Job application assignments (empty).</li>
 <li><code>prepare/</code>: Preparation materials (empty).</li>
@@ -264,7 +264,8 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Content:</strong> Written in <code>.qmd</code> (Quarto Markdown).</li>
 <li><strong>Code Blocks:</strong> Use <code>{python}</code> blocks.</li>
 <li><strong>Tables:</strong> Use the <code>show</code> function from the <code>itables</code> library to display Python data frames.</li>
-<li><strong>Plotting:</strong> Use <code>plotnine</code> for visualizations (ggplot2 style).</li>
+<li><strong>Plotting:</strong> Use <code>plotnine</code> for visualizations (ggplot2 style), but <code>seaborn</code> and <code>matplotlib</code> are also available.</li>
+<li><strong>Data Manipulation:</strong> <code>pandas</code> is primary; <code>polars</code> is available.</li>
 <li><strong>Data Loading:</strong> Use <code>pyreadr</code> for <code>.rds</code> files and <code>pyhere</code> for robust relative paths.</li>
 <li><strong>Configuration:</strong> Global settings in <code>_quarto.yml</code>. Sidebar navigation is configured here.</li>
 <li><strong>Paths:</strong> Relative paths should ideally generally work, but be mindful of the folder structure (e.g., referencing images from <code>course-info/</code>).</li>
