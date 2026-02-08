@@ -22,11 +22,11 @@ The root directory constitutes the active Quarto project.
     *   `computing-access.qmd` & `computing-python-resources.qmd`: Computing setup and resources.
     *   `schedule.csv`: Source of truth for the course schedule.
 *   `slides/`: Lecture slides (migrated from archive and converted to Python).
-    *   `00-welcome.qmd`, `01-big-picture.qmd`, `02-StatisticalLearning.qmd`.
+    *   `00-welcome.qmd`, `01-big-picture.qmd`, `02-StatisticalLearning.qmd`, `03-SLR-Gradient_Desc.qmd`, `04-MultipleRegression.qmd`, `05-knn.qmd`.
     *   `_metadata.yml`: Shared configuration for all slides.
     *   `images/`: Slide-specific images.
 *   `hw/`: Homework assignments (e.g., `01-hw-eda.qmd`).
-*   `data/`: Course datasets.
+*   `data/`: Course datasets (e.g., `house_prices.csv`, `outlets.csv`, `tips.csv`, `AmesHousing.rds`).
 *   `jobs/`: Job application assignments (empty).
 *   `prepare/`: Preparation materials (empty).
 *   `images/`: Static image assets (e.g., logo).

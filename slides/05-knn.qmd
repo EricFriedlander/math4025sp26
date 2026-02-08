@@ -1,0 +1,384 @@
+---
+title: 'Math 4025: Data Splitting + KNN'
+---
+
+
+## Computational Setup
+
+```{python}
+#| echo: true
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+from sklearn.datasets import fetch_openml
+import matplotlib.pyplot as plt
+from plotnine import *
+from itables import show
+```
+
+## Comparing Models: Data Splitting {.smaller}
+
+- Split `ames` data set into two parts
+  + Training set: randomly selected proportion $p$ (typically 50-90%) of data used for fitting model
+  + Test set: randomly selected proportion $1-p$ of data used for estimating prediction error
+- If comparing A LOT of models, split into *three* parts to prevent **information leakage**
+  + Training set: randomly selected proportion $p$ (typically 50-90%) of data used for fitting model
+  + Validation set: randomly selected proportion $q$ (typically 20-30%) of data used to choosing tuning parameters
+  + Test set: randomly selected proportion $1-p-q$ of data used for estimating prediction error
+- Idea: use data your model hasn't seen to get more accurate estimate of error and prevent overfitting
+
+## Comparing Models: Data Splitting with `scikit-learn` {.smaller}
+
+```{python}
+# Load ames dataset from sklearn
+ames_data = fetch_openml(name="house_prices", as_frame=True)
+ames = ames_data.frame
+
+np.random.seed(4025)  # Why?
+
+# Split data 70/30
+ames_train, ames_test = train_test_split(
+    ames, 
+    test_size=0.30, 
+    random_state=4025
+)
+
+print(f"Training set size: {len(ames_train)}")
+print(f"Test set size: {len(ames_test)}")
+```
+
+- In scikit-learn, use `stratify` parameter for classification tasks
+- For regression, random splitting is typically sufficient
+
+## Linear Regression: Comparing Models {.smaller}
+
+- Let's create three models with `SalePrice` as the response:
+  + **fit1**: a linear regression model with `BedroomAbvGr`  as the only predictor
+  + **fit2**: a linear regression model with `GrLivArea` as the only predictor
+  + **fit3** (similar to model in previous slides): a multiple regression model with `GrLivArea` and `BedroomAbvGr` as predictors
+  + **fit4**: super flexible model which fits a 10th degree polynomial to `GrLivArea` and a 2nd degree polynomial to `BedroomAbvGr`
+
+```{python}
+# Prepare target variable
+y_train = ames_train["SalePrice"]
+y_test = ames_test["SalePrice"]
+
+# Fit 1: Only BedroomAbvGr
+fit1 = LinearRegression().fit(ames_train[["BedroomAbvGr"]], y_train)
+
+# Fit 2: Only GrLivArea
+fit2 = LinearRegression().fit(ames_train[["GrLivArea"]], y_train)
+
+# Fit 3: Both predictors
+fit3 = LinearRegression().fit(ames_train[["GrLivArea", "BedroomAbvGr"]], y_train)
+
+# Fit 4: Polynomial features (10th degree for GrLivArea, 2nd for BedroomAbvGr)
+poly_liv = PolynomialFeatures(degree=10, include_bias=False)
+poly_bed = PolynomialFeatures(degree=2, include_bias=False)
+
+X_train_poly = np.hstack([
+    poly_liv.fit_transform(ames_train[["GrLivArea"]]),
+    poly_bed.fit_transform(ames_train[["BedroomAbvGr"]])
+])
+fit4 = LinearRegression().fit(X_train_poly, y_train)
+```
+
+## Computing MSE {.smaller}
+
+```{python}
+# Function to compute MSE
+def compute_mse(y_true, y_pred):
+    return np.mean((y_true - y_pred) ** 2)
+
+# Fit 1
+fit1_train_mse = compute_mse(y_train, fit1.predict(ames_train[["BedroomAbvGr"]]))
+fit1_test_mse = compute_mse(y_test, fit1.predict(ames_test[["BedroomAbvGr"]]))
+
+# Fit 2
+fit2_train_mse = compute_mse(y_train, fit2.predict(ames_train[["GrLivArea"]]))
+fit2_test_mse = compute_mse(y_test, fit2.predict(ames_test[["GrLivArea"]]))
+
+# Fit 3
+fit3_train_mse = compute_mse(y_train, fit3.predict(ames_train[["GrLivArea", "BedroomAbvGr"]]))
+fit3_test_mse = compute_mse(y_test, fit3.predict(ames_test[["GrLivArea", "BedroomAbvGr"]]))
+
+# Fit 4
+X_test_poly = np.hstack([
+    poly_liv.transform(ames_test[["GrLivArea"]]),
+    poly_bed.transform(ames_test[["BedroomAbvGr"]])
+])
+fit4_train_mse = compute_mse(y_train, fit4.predict(X_train_poly))
+fit4_test_mse = compute_mse(y_test, fit4.predict(X_test_poly))
+```
+
+## [Question]{style="color:blue"}
+
+Without looking at the numbers
+
+1. Do we know which of the following is the smallest: `fit1_train_mse`, `fit2_train_mse`, `fit3_train_mse`, `fit4_train_mse`? [Yes, `fit4_train_mse`]{.fragment .fade-in}
+2. Do we know which of the following is the smallest: `fit1_test_mse`, `fit2_test_mse`, `fit3_test_mse`, `fit4_test_mse`? [No]{.fragment .fade-in}
+
+## Choosing a Model {.smaller}
+
+::::{.columns}
+:::{.column}
+```{python}
+# Training Errors
+train_mses = [fit1_train_mse, fit2_train_mse, fit3_train_mse, fit4_train_mse]
+print("Training MSEs:", [f"{mse:.0f}" for mse in train_mses])
+print(f"Best training: fit{np.argmin(train_mses) + 1}")
+
+# Test Errors
+test_mses = [fit1_test_mse, fit2_test_mse, fit3_test_mse, fit4_test_mse]
+print("\nTest MSEs:", [f"{mse:.0f}" for mse in test_mses])
+print(f"Best test: fit{np.argmin(test_mses) + 1}")
+```
+:::
+:::{.column}
+- `fit4` has the lowest training MSE (to be expected)
+- `fit3` has the lowest test MSE
+  + We would choose `fit3`
+- Anything else interesting we see?
+:::
+::::
+
+# K-Nearest Neighbors
+
+## Regression: Conditional Averaging {.smaller}
+
+**Restaurant Outlets Profit dataset**
+
+```{python}
+#| echo: false
+outlets = pd.read_csv("../data/outlets.csv")  # load dataset
+
+(
+    ggplot(outlets, aes(x="population", y="profit"))
+    + geom_point()  # create scatterplot
+    + geom_smooth(method="lm", se=False)  # add the SLR line
+)
+```
+
+
+What is a good value of $\hat{f}(x)$ (expected profit), say at $x=6$?
+
+A possible choice is the **average of the observed responses** at $x=6$. But we may not observe responses for certain $x$ values.
+
+
+## K-Nearest Neighbors (KNN) Regression  {.smaller}
+
+- Non-parametric approach
+- Formally: Given a value for $K$ and a test data point $x_0$,
+$$\hat{f}(x_0)=\dfrac{1}{K} \sum_{x_i \in \mathcal{N}_0} y_i=\text{Average} \ \left(y_i \ \text{for all} \ i:\ x_i \in \mathcal{N}_0\right) $$
+where $\mathcal{N}_0$ is the set of the $K$ training observations closest to $x_0$.
+- Informally, average together the $K$ "closest" observations in your training set
+- "Closeness": usually use the **Euclidean metric** to measure distance
+- Euclidean distance between $\mathbf{X}_i=(x_{i1}, x_{i2}, \ldots, x_{ip})$ and $\mathbf{x}_j=(x_{j1}, x_{j2}, \ldots, x_{jp})$:
+$$||\mathbf{x}_i-\mathbf{x}_j||_2 = \sqrt{(x_{i1}-x_{j1})^2 + (x_{i2}-x_{j2})^2 + \ldots + (x_{ip}-x_{jp    })^2}$$
+
+## [KNN Regression (single predictor): Fit]{.r-fit-text} {.smaller}
+
+::::{.columns}
+:::{.column}
+**$K=1$**
+```{python}
+# 1-NN regression
+knnfit1 = KNeighborsRegressor(n_neighbors=1)
+knnfit1.fit(outlets[["population"]], outlets["profit"])
+
+# 1-NN prediction at population = 6
+pred_1nn = knnfit1.predict([[6]])
+print(f"1-NN prediction at x=6: {pred_1nn[0]:.4f}")
+```
+
+```{python}
+#| echo: false
+# Visualization for K=1
+outlets_viz = outlets.copy()
+outlets_viz["dist"] = np.abs(outlets_viz["population"] - 6)
+outlets_viz["is_knn"] = outlets_viz["dist"] <= outlets_viz["dist"].min()
+
+(
+    ggplot(outlets_viz, aes(x="population", y="profit", color="is_knn"))
+    + geom_point(size=3)
+    + geom_vline(xintercept=6)
+    + theme(text=element_text(size=20))
+)
+```
+
+
+:::
+:::{.column}
+**$K=5$**
+```{python}
+# 5-NN regression
+knnfit5 = KNeighborsRegressor(n_neighbors=5)
+knnfit5.fit(outlets[["population"]], outlets["profit"])
+
+# 5-NN prediction at population = 6
+pred_5nn = knnfit5.predict([[6]])
+print(f"5-NN prediction at x=6: {pred_5nn[0]:.4f}")
+```
+
+```{python}
+#| echo: false
+# Visualization for K=5
+outlets_viz = outlets.copy()
+outlets_viz["dist"] = np.abs(outlets_viz["population"] - 6)
+threshold = outlets_viz["dist"].nsmallest(5).max()
+outlets_viz["is_knn"] = outlets_viz["dist"] <= threshold
+
+(
+    ggplot(outlets_viz, aes(x="population", y="profit", color="is_knn"))
+    + geom_point(size=3)
+    + geom_vline(xintercept=6)
+    + theme(text=element_text(size=20))
+)
+```
+:::
+::::
+
+## Regression Methods: Comparison
+
+```{python}
+#| echo: false
+
+# Fit SLR model
+slrfit = LinearRegression()
+slrfit.fit(outlets[["population"]], outlets["profit"])
+
+# Create sequence of population values for predictions
+pop_seq = np.linspace(outlets["population"].min(), outlets["population"].max(), 100)
+pop_df = pd.DataFrame({"population": pop_seq})
+
+# Obtain predictions for all points
+preds_linear = slrfit.predict(pop_df[["population"]])
+preds_knn1 = knnfit1.predict(pop_df[["population"]])
+preds_knn5 = knnfit5.predict(pop_df[["population"]])
+
+# Create predictions dataframe
+predictions = pd.DataFrame({
+    "population": np.tile(pop_seq, 3),
+    "profit": np.concatenate([preds_linear, preds_knn1, preds_knn5]),
+    "Method": ["linear"] * len(pop_seq) + ["knn_1"] * len(pop_seq) + ["knn_5"] * len(pop_seq)
+})
+
+# Plot the three models
+(
+    ggplot(outlets, aes(x="population", y="profit"))
+    + geom_point()
+    + geom_line(predictions, aes(x="population", y="profit", color="Method", linetype="Method"), size=1)
+)
+```
+
+
+## <span style="color:blue">Question!!!</span>
+
+As $K$ in KNN regression increases:
+
+- the flexibility of the fit ([decreases]{.fragment .highlight-red} /increases)
+- the bias of the fit (decreases/[increases]{.fragment .highlight-red} )
+- the variance of the fit ([decreases]{.fragment .highlight-red}/increases)
+
+
+## [K-Nearest Neighbors Regression (multiple predictors)]{.r-fit-text} {.smaller}
+
+- Let's look at the `ames` data
+```{python}
+#| echo: true
+
+show(ames[["SalePrice", "GrLivArea", "BedroomAbvGr"]].head())
+```
+:::{.fragment}
+:::{.incremental}
+- Should 1 square foot count the same as 1 bedroom?
+- Need to **center and scale** (freq. just say scale)
+  + subtract mean from each predictor
+  + divide by standard deviation of each predictor
+  + compares apples-to-apples
+:::
+:::
+
+## Scaling in Python
+
+```{python}
+# Scale predictors using StandardScaler
+scaler = StandardScaler()
+
+# Fit and transform
+ames_scaled = pd.DataFrame({
+    "size_scaled": scaler.fit_transform(ames[["GrLivArea"]])[:, 0],
+    "num_bedrooms_scaled": scaler.fit_transform(ames[["BedroomAbvGr"]])[:, 0],
+    "price": ames["SalePrice"].values
+})
+
+show(ames_scaled.head())
+```
+
+## Question...
+
+:::{.incremental}
+-   What about the training and test sets?
+-   Need to scale BOTH sets based on the mean and standard deviation of the training set...
+-   Discussion: Why?
+-   Discussion: Why don't I need to center and scale `Sale_Price`?
+:::
+
+## Scaling Revisited
+
+```{python}
+# Create scalers fitted ONLY on training data
+scaler_size = StandardScaler()
+scaler_bedrooms = StandardScaler()
+
+# Fit scalers on training data and transform
+ames_train_scaled = pd.DataFrame({
+    "size_scaled": scaler_size.fit_transform(ames_train[["GrLivArea"]])[:, 0],
+    "num_bedrooms_scaled": scaler_bedrooms.fit_transform(ames_train[["BedroomAbvGr"]])[:, 0],
+    "price": ames_train["SalePrice"].values
+})
+
+# Transform test data using training parameters (no fit!)
+ames_test_scaled = pd.DataFrame({
+    "size_scaled": scaler_size.transform(ames_test[["GrLivArea"]])[:, 0],
+    "num_bedrooms_scaled": scaler_bedrooms.transform(ames_test[["BedroomAbvGr"]])[:, 0],
+    "price": ames_test["SalePrice"].values
+})
+```
+
+-   Next time: using `Pipeline` in `scikit-learn` to simplify this process
+
+## [K-Nearest Neighbors Regression (multiple predictors)]{.r-fit-text} {.smaller}
+
+
+```{python}
+# 10-NN regression
+knnfit10 = KNeighborsRegressor(n_neighbors=10)
+knnfit10.fit(
+    ames_train_scaled[["size_scaled", "num_bedrooms_scaled"]], 
+    ames_train_scaled["price"]
+)
+```
+
+- Test Point: `GrLivArea` = 2000 square feet, and `BedroomAbvGr` = 3, then
+
+```{python}
+# Scale the test point using training parameters
+test_point = pd.DataFrame({
+    "GrLivArea": [2000],
+    "BedroomAbvGr": [3]
+})
+
+test_point_scaled = np.array([
+    scaler_size.transform(test_point[["GrLivArea"]])[0, 0],
+    scaler_bedrooms.transform(test_point[["BedroomAbvGr"]])[0, 0]
+]).reshape(1, -1)
+
+# Obtain 10-NN prediction
+prediction = knnfit10.predict(test_point_scaled)
+print(f"Predicted Sale Price: ${prediction[0]:,.2f}")
+```
+

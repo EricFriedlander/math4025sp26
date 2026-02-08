@@ -1,0 +1,330 @@
+---
+title: 'Math 4025: Multiple Linear Regression + Data Splitting'
+---
+
+
+## Computational Setup
+
+```{python}
+#| echo: true
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+import seaborn as sns
+from itables import show
+```
+
+## [Question!!!]{style="color:blue"}
+
+As a model's flexibility increases:
+
+::: panel-tabset
+
+## Questions
+
+1. its variance (increases/decreases)
+2. its bias  (increases/decreases)
+3. its training MSE  (increases/decreases)
+4. its test MSE  (describe)
+
+## Answers
+1. its variance  (**increases**)
+2. its bias  (**decreases**)
+3. its training MSE  (**decreases**)
+4. its test MSE  (**decreases at first, then increases and the model starts to overfit, U-shaped**)
+
+:::
+
+
+
+<!-- ## Bias-Variance Trade-Off App {.smaller} -->
+
+<!-- When Dr. F tell you, navigate to [this app](https://efriedlander.shinyapps.io/BVTappRegression/) -->
+
+<!-- -   Select your assigned data set and look at the second row of plots -->
+<!--   +   Which order polynomials have the lowest Bias, Variance, training MSE, and test MSE -->
+<!--       +   Which order polynomial would you say is best? -->
+<!--   +   Scroll down to the last row of plots and discuss how these images support your answers -->
+<!--   +   Repeat this process for different amounts of noise? -->
+<!--   +   Return to the first row of plots and select three different order polynomials based on your answers above... is the bias variance trade-off visible in this plot? -->
+
+
+# Modeling in Python
+
+## Outlet Data {.smaller} 
+
+Suppose the CEO of a restaurant franchise is considering opening new outlets in different cities. They would like to expand their business to cities that give them higher profits with the assumption that highly populated cities will probably yield higher profits.
+
+They have data on the population (in 100,000) and profit (in $1,000) at 97 cities where they currently have outlets.
+
+```{python}
+outlets = pd.read_csv("../data/outlets.csv")
+show(outlets.head())  # first six observations of the dataset
+```
+
+## Python as an open-source language
+
+- Python is an open source language
+  + Advantages:
+    + Packages for almost anything you want
+    + "Cutting edge" methods rolled out quickly and early
+  + Disadvantages
+    + Many packages (especially new ones) may have bugs
+    + Lots of syntactical diversity
+    + Syntax is frequently dependent on the needs of the person who wrote the package and conventions at the time the package was created
+    
+## Enter `pandas` and `plotnine`
+
+> pandas is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool.
+
+> plotnine is an implementation of a grammar of graphics in Python based on ggplot2.
+
+- `pandas` is for manipulating data
+- `plotnine` is for visualizing data (similar to ggplot2)
+
+## Enter `scikit-learn`
+
+> Scikit-learn is a simple and efficient tools for predictive data analysis built on NumPy, SciPy, and matplotlib.
+
+- `scikit-learn` (often imported as `sklearn`) provides a unified framework for building machine learning models in Python
+- Similar philosophy to `tidymodels` in R: consistent API across different model types
+
+## Back to linear regression
+
+```{python}
+from plotnine import ggplot, aes, geom_point, geom_smooth
+
+(
+    ggplot(outlets, aes(x="population", y="profit"))
+    + geom_point()  # create scatterplot
+    + geom_smooth(method="lm", se=False)  # add the regression line
+)
+```
+
+## Classic Linear Regression in Python {.smaller}
+
+::::{.columns}
+:::{.column}
+```{python}
+import statsmodels.formula.api as smf
+
+outlets_model = smf.ols("profit ~ population", data=outlets).fit()
+print(outlets_model.params)
+```
+:::
+
+:::{.column}
+
+This corresponds to the model:
+
+$$
+\begin{aligned}
+\text{Profit}  &= -3.90 + 1.19\times\text{Population}\\
+\hat{Y}_i &= -3.90 + 1.19X_i
+\end{aligned}
+$$
+i.e. $\hat{\beta}_0 = -3.90$ and $\hat{\beta}_1 = 1.19$
+:::
+::::
+
+## Modeling with `scikit-learn`
+
+1. Import the model class (e.g. `LinearRegression`, `LogisticRegression`)
+
+2. Instantiate the model with desired hyperparameters
+
+3. Fit the model to data using `.fit(X, y)`
+
+4. Make predictions using `.predict(X_new)`
+
+## Linear Regression with `scikit-learn`
+
+```{python}
+#| code-line-numbers: "|2|5|8|11"
+
+# Import the model class
+from sklearn.linear_model import LinearRegression
+
+# Instantiate the model
+lm_model = LinearRegression()
+
+# Prepare the data (scikit-learn expects 2D arrays for X)
+X = outlets[["population"]]  # double brackets to keep as DataFrame
+y = outlets["profit"]
+
+# Fit the model
+lm_model_fit = lm_model.fit(X, y)
+```
+
+## Linear Regression with `scikit-learn`
+
+```{python}
+# Display the coefficients
+print(f"Intercept: {lm_model_fit.intercept_:.4f}")
+print(f"Coefficient for population: {lm_model_fit.coef_[0]:.4f}")
+```
+
+Same model as before:
+
+$$
+\begin{aligned}
+\text{Profit}  &= -3.90 + 1.19\times\text{Population}\\
+\hat{Y}_i &= -3.90 + 1.19X_i
+\end{aligned}
+$$
+
+
+
+## Linear Regression in Python: Prediction
+
+```{python}
+# Generate new data
+np.random.seed(42)
+new_cities = pd.DataFrame({"population": np.random.normal(7, 3, 100)})
+
+# Make predictions
+predictions = lm_model_fit.predict(new_cities[["population"]])
+new_cities["predicted_profit"] = predictions
+
+show(new_cities.head(10))
+```
+
+Note: New data must be a DataFrame with the same column names as the training data
+
+
+# Multiple Linear Regression
+
+## Multiple Linear Regression
+
+- Response: $Y$
+- Predictor Variables: $X_1, X_2, \ldots, X_p$
+- Assume true relationship:
+
+$$
+\begin{aligned}
+Y&=f(\mathbf{X}) + \epsilon\\
+&=\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \epsilon
+\end{aligned}
+$$
+where $\beta_j$ quantifies the association between the $j^{th}$ predictor and the response.
+
+
+
+## [Multiple Linear Regression: Estimating Parameters]{.r-fit-text} {.smaller}
+
+- Suppose $\hat{\beta}_0, \hat{\beta}_1, \ldots, \hat{\beta}_p$ are estimates of $\beta_0, \beta_1, \ldots, \beta_p$
+- Training Data:
+  + Observed response: $y_i$ for $i=1,\ldots,n$
+  + Observed predictors: $x_{1i}, x_{2i}, \ldots x_{pi}$ for $i=1,\ldots, n$
+- Predicted response: 
+$$\hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1x_{1i} + \ldots + \hat{\beta}_px_{pi} \text{ for } i=1, \ldots, n$$
+- Residuals: $e_i = \hat{y}_i - y_i$ for $i=1, \ldots, n$
+- Mean Squared Error (MSE): $MSE =\dfrac{e^2_1+e^2_2+\ldots+e^2_n}{n}$
+
+## [Multiple Linear Regression: Estimating Parameters]{.r-fit-text}
+
+- **Goal:** Use *training data* to find $\hat{\beta}_0, \hat{\beta}_1, \ldots, \hat{\beta}_p$ that minimizes MSE
+  + $\hat{\beta}_i$'s called **least-squares estimators**
+  + Since minimizing MSE $\implies$ MSE is called **cost/loss function**
+- Can use calculus or gradient descent to find $\hat{\beta}_i$'s
+
+
+
+## House Prices dataset {.smaller}
+
+- `size` is in square feet
+- `num_bedrooms` is a count
+- `price` is in $1,000's
+
+```{python}
+house_prices = pd.read_csv("../data/house_prices.csv")
+show(house_prices.head(6))  # print first 6 observations
+```
+
+
+## Multiple Linear Regression
+
+Some Exploratory Data Analysis (EDA)
+
+```{python}
+# Correlation plot using seaborn
+sns.pairplot(house_prices)
+plt.show()
+```
+
+## Multiple Linear Regression in Python {.smaller}
+
+```{python}
+# Prepare the data
+X_house = house_prices[["size", "num_bedrooms"]]
+y_house = house_prices["price"]
+
+# Fit the model
+mlr_model = LinearRegression()
+house_price_mlr = mlr_model.fit(X_house, y_house)
+
+# Display coefficients
+coef_df = pd.DataFrame({
+    "term": ["Intercept", "size", "num_bedrooms"],
+    "estimate": [house_price_mlr.intercept_] + list(house_price_mlr.coef_)
+})
+show(coef_df)
+```
+
+## [Multiple Linear Regression: Interpreting Parameters]{.r-fit-text} {.smaller}
+
+- $\hat{\beta}_0=89.5978$: The intercept $\implies$ a house with 0 square feet and 0 bedrooms would cost approximately \$89,598.80. Is this meaningful in context? [Not really]{.fragment .fade-in}
+- $\hat{\beta}_1=0.1392$: With `num_bedrooms` remaining fixed, an additional 1 square foot of `size` leads to an increase in `price` by approximately \$139.20.
+- $\hat{\beta}_2=-8.7379$: With `size` remaining fixed, an additional bedroom leads to an decrease in `price` of approximately \$8,737.90.
+
+. . .
+
+- Hmm.... that's a little weird...
+- **Simpson's Paradox:** when relationship between two variables disappears or reverses when controlling for a third, **confounding variable**
+
+## [Multiple Linear Regression: Interpreting Parameters]{.r-fit-text}
+
+:::{.incremental}
+- Write down our model in mathematical notation
+- $\text{price} = 89.5978 + 0.1392\times\text{size} - 8.7379\times\text{num\_bedrooms}$
+- $Y = 89.5978 + 0.1392X_1 - 8.7379X_2$
+:::
+
+
+## Multiple Linear Regression: Prediction {.smaller}
+
+- Prediction of `price` when `size` is 2000 square feet for a house with 3 bedrooms
+- $\text{sales} = 89.5978 + 0.1392\times2000 - 8.7379\times3 = 341.7841$
+
+. . .
+
+```{python}
+# Make prediction
+new_house = pd.DataFrame({"size": [2000], "num_bedrooms": [3]})
+prediction = house_price_mlr.predict(new_house)
+print(f"Predicted price: {prediction[0]:.4f}")
+```
+- Why don't these match exactly? [**rounding**]{.fragment .fade-in}
+
+
+## Linear Regression: Comparing Models {.smaller}
+
+:::{.fragment}
+:::{.incremental}
+- Many methods for comparing regression models from your regression course
+- Today: Data splitting
+- First: New Data
+:::
+:::
+:::{.fragment}
+- **ames housing data**
+  + Many variables
+  + Focus on:
+    * `Sale_Price`: in dollars
+    * `Gr_Liv_Area`: size in square feet
+    * `Bedroom_AbvGr`: number of bedrooms above grade
+:::
+
+
+
