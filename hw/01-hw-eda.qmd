@@ -2,22 +2,11 @@
 title: "Homework 1: Exploratory Data Analysis"
 ---
 
-```{python}
-#| echo: false
-#| include: false
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-import numpy as np
-
-tips = sns.load_dataset("tips")
-```
-
 Adapted from "Start teaching with R," created by R Pruim, N J Horton, and D Kaplan, 2013, "Interactive and Dynamic Graphics for Data Analysis," by Dianne Cook and Deborah F. Swayne, Colby Long's DATA 325 Course at Wooster College and Maria Tackett's STA-210 course at Duke University.
 
-## Introduction
+# Introduction
 
-In this homework we will familiarize ourselves with the tools that we'll use throughout the course and refresh ourselves on topic related to exploratory data analysis.
+In this homework we will familiarize ourselves with the tools that we'll use throughout the course and refresh ourselves on topics related to exploratory data analysis.
 
 ## Course Toolkit
 
@@ -47,7 +36,7 @@ By the end of the homework, you will...
 
 -   Be familiar with the workflow using Python and GitHub
 -   Gain practice writing a reproducible report using Jupyter notebooks
--   Practice version control using GitHub
+-   Practice version control using GitHub and Conda/Mamba
 -   Be able to create numerical and visual summaries of data
 -   Use those summaries
 
@@ -66,11 +55,11 @@ We will use **Miniforge** to manage our Python installation. It pre-configures `
 3.  Run the installer and follow the prompts.
     *   *Windows*: Open "Miniforge Prompt" after installation to verify.
     *   *Mac/Linux*: Open your terminal.
+4.  If you're on Mac or Linux run the following in your terminal if you're on Windows write it in the provided **Miniforge Prompt**:
+    * `conda config --set auto_activate_base false`
 
 ### Create a Conda Environment
-We never want to install packages into our "base" environment. Instead, we create a specific environment for this course.
-
-Open your terminal (or Miniforge Prompt) and run:
+We never want to install packages into our "base" environment. Instead, we create a specific environment for this course. Open your terminal (or Miniforge Prompt) and run:
 
 ```bash
 mamba create -n math4025 python=3.14
@@ -91,14 +80,20 @@ You should see `(math4025)` appear in your prompt.
 Now we install the tools we need for this assignment.
 
 ```bash
-mamba install pandas seaborn matplotlib plotnine itables jupyter pyreadr
+mamba install pandas numpy seaborn matplotlib plotnine jupyter
 ```
-*   `pandas`: Data manipulation.
+*   `pandas`, `numpy`: Data manipulation.
 *   `seaborn`, `matplotlib`, `plotnine`: Data visualization.
-*   `itables`: Interactive tables.
 *   `jupyter`: Required to run Notebooks.
 
+In the future, any time you want to install a package:
+
+- Make sure your `math4025` environment is activated
+- Install it using `mamba install name-of-package`
+
 ## Setting up Positron & Git
+
+If you've already set up Positron and Git in a previous course, you can skip this section.
 
 ### Install Positron
 We will use **Positron**, a new data science IDE from Posit (makers of RStudio).
@@ -126,65 +121,91 @@ git config --global user.email "your.email@example.com"
 ```
 7.  When asked for a password during cloning/pushing, paste your **PAT**.
 
-## The Assignment
+# The Assignment
 
 Now you will create your own Jupyter Notebook to analyze tipping data.
 
 ### Clone the Repository
 
 1.  Go to the course [GitHub assignment](https://classroom.github.com/a/lqxGMOZJ).
-2.  Copy the HTTPS URL.
+2.  Copy the URL.
 3.  In Positron: `Control Palette` > `Git: Clone` > Paste URL.
+4.  When deciding where to save the work from this class:
+    -  **DON'T STORE YOUR WORK IN A FOLDER THE AUTOMATICALLY SYNCS WITH ONEDRIVE, DROPBOX, ETC.**
+    -  I recommend creating a folder on your computer dedicated to this class
+    -  Make each assignment a sub-folder in this folder.
 
 ### Create Your Notebook
 
 1.  In Positron, create a new file named `hw01-analysis.ipynb` inside your repository folder.
-2.  Add a Markdown cell at the top with a title "Homework 1: Exploratory Data Analysis" and your name.
+2.  In the top right corner of the notebook you should see a button that says "Select Kernel". Click that button, you should see an option for the mamba environment that you've created. You should always use this one.
+3.  In Jupyter notebooks, there are two different types of cells: 
+    -   **markdown** cells that allow you to write markdown. This is where you will write all of your prose and interpretation. [Here is a good markdown cheatsheet](https://www.markdownguide.org/cheat-sheet/).
+    -   **code** cells that allow you to write python code.  Be careful when you are running your code cells. If you run them out of order, notebook may not work that way you want when a new person runs the whole notebook in order.
+4.  Add a Markdown cell at the top with a title "Homework 1: Exploratory Data Analysis" and your name. You can use \# symbols to create headings. The more you add the smaller the heading will be.
 
 
 ## Understand Your Data
 
 Today we will be working with the `TIPS` data set which is in the `regclass` R package. I've saved the data as a csv and included it in the repo for this assignment. The data in the `TIPS` dataset is information recorded by one waiter about each tip he received over a period of a few months working in a restaurant. We would like to use this data to address the question, *"What factors affect tipping behavior?"*
 
-In python you can `import` packages in a few ways:
+### Loading packages in `Python`
 
-- `import pandas` will import pandas. Every time you want to use pandas you'll have to prepend `pandas.` (e.g. `pandas.read_csv()`)
+We will need to leverage several different python packages to analyze our data.In python you can `import` packages in a few ways. Consider the following ways of importing the `pandas` package, which is the primary package we will use to manipulate data:
+
+- `import pandas` will import pandas. Every time you want to use a pandas function you'll have to prepend `pandas.` (e.g. `pandas.read_csv()`)
 - `import pandas as pd` will import pandas and allow you to use the shorthand `pd` (e.g. `pd.read_csv()`)
-- `from pandas import *` will import everything from pandas (e.g. `read_csv()`)
+- `from pandas import *` will import every function from pandas (e.g. `read_csv()`). In general, it's not a good idea to do this as you may create unintended conflicts if multiple packages have functions with the same name.
 - `from pandas import read_csv()` will import only `read_csv()` (e.g. `read_csv()` will work but no other `pandas` functions will work)
 
 Common conventions in data science:
 
 ```{python}
+#| eval: false
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
+import plotnine as p9
 ```
 
 ### Exercise 1
 
-In your Jupyter notebook, create a code cell at the top and load `pandas`, `seaborn`, and `matplotlib.pyplot`.
+::: {.callout-tip title="Task"}
+In your Jupyter notebook, create a code cell at the top and load `pandas`. When you need to load a new package, I recommend returning to this cell and importing it here rather that in the first cell that you need it. 
 
-### Committing changes
+After you've loaded `pandas` create a new markdown cell where you describe the goal of the notebook and the data. Do not write any code, but I suggest referencing [the documentation](https://cran.r-project.org/web/packages/regclass/regclass.pdf) for this data set and writing down any relevant details. Finally, create a new code cell and load the tips data using `pd.read_csv()`.
+:::
 
-Now, go to the Source Control extension in the left-hand panel.
+## Using git to track your changes
 
-If you have made changes to your files, you should see it listed here. Clicking on these files shows you the difference between the last committed state of the document and its current state including changes. You should see deletions in red and additions in green.
+There are two ways to do this. You can either do this from the **Source Control** extension for Positron or from the command line (I've outlined both below). While the Positron extension is perfectly acceptable for this class, it is probably a good idea to learn to use the command line at some point if your plan it to do more data science.
 
-If you're happy with these changes, we'll prepare the changes to be pushed to your remote repository. First, stage your changes by clicking the `+` button next to the file you want to stage. Next, write a meaningful commit message (for instance, "update author name") in the Commit message box. Finally, click Commit. Note that every commit needs to have a commit message associated with it.
+### Using Source Control Extension
+
+Click onthe Source Control extension in the left-hand panel.
+
+#### Staging your changes
+
+Before we move on ensure that you DO NOT COMMIT YOUR CHANGES WITHOUT A COMMIT MESSAGE. This will make sense in a minute, but if you see a button that says "Commit", don't click it until you've finished reading this section.
+
+If you have made changes to your files, you should see it listed here. Clicking on these files shows you the difference between the last committed state of the document and its current state, including changes. You should see deletions in red and additions in green.
+
+If you're happy with these changes, we'll prepare the changes to be pushed to your remote repository. Stage your changes by clicking the `+` button next to the file you want to stage. When you do this you are preparing to save these changes to your version history.
+
+#### Committing changes
+
+When you *commit* changes, you add the changes you've staged to the version history of your repository.
+Write a meaningful commit message (for instance, "update author name") in the Commit message box. Finally, click Commit. Note that every commit needs to have a commit message associated with it. **DO NOT CLICK COMMIT WITHOUT WRITING A COMMIT MESSAGE**.
 
 You don't have to commit after every change, as this would get quite tedious. You should commit states that are meaningful to you for inspection, comparison, or restoration.
 
 In the first few assignments I will nudge you when to commit and in some cases, what commit message to use. As the semester progresses we will let you make these decisions.
 
-Now let's make sure all the changes went to GitHub. Go to your GitHub repo and refresh the page. You should see your commit message next to the updated files. If you see this, all your changes are on GitHub and you're good to go!
+#### Pushing changes
 
-### Push changes
+Go to your GitHub repo and refresh the page. Uh oh! You probably don't see that changes you've made yet. This is because you still need to *push* your changes to Github. There are a few ways to do this, if you're new to Git raise your hand.
 
-Now that you have made an update and committed this change, it's time to push these changes to your repo on GitHub. There are a few ways to do this, if you're new to Git raise your hand or ask someone near you.
-
-In order to push your changes to GitHub, you must have staged your commit to be pushed. 
 
 #### Using the Command Line
 
@@ -200,24 +221,19 @@ Eventually you'll be better off using git from the terminal or command line:
 
 When exploring a new data set, it’s important to first understand the basics. What format is our data in? What types of information are included in the data set? How many observations are there?
 
-In the Python ecosystem, data sets are usually stored in a 2-dimensional structure called a **DataFrame**. The `pandas` library has long been the industry standard for data manipulation. After importing these libraries, you can get an idea of the structure of a data set using `df.info()`, and you can peek at the first few rows with `df.head()`. If you're used to using R, one thing you'll notice that all of these data manipulations are *methods* rather than functions. Create a code chunk and use these functions (and others) to better understand the data. Use `tips.head()`, `tips.info()`, or `tips.describe()` to explore the dataset. How many tips are recorded in this data set?
+In the Python ecosystem, data sets are usually stored in a 2-dimensional structure called a **DataFrame**. The `pandas` library has long been the industry standard for data manipulation. You can find more the documentation [here](https://pandas.pydata.org/docs/index.html) and a quick tutorial can be found [here](https://pandas.pydata.org/docs/user_guide/10min.html). If you're coming from R, you may find [this webpage](https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_r.html#compare-with-r) helpful (I've bookmarked it). Suppose you've loaded a dataset using `pd.read_csv()` and called it `df`. After importing this `pandas` (which you've done), you can get an idea of the structure of a data set using `df.info()`, and you can peek at the first few rows with `df.head()`. If you're used to using R, one thing you'll notice that all of these data manipulations are *methods* rather than functions. Create a code chunk and use these functions (and others) to better understand the data. Use `tips.head()`, `tips.info()`, or `tips.describe()` to explore the dataset. 
+
+::: {.callout-tip title="Task"}
+Use the above functions to determin the number of tips recorded in this data set? Ensure it matches the description of the data from the documentation.
+:::
 
 ### Exercise 3
 
-Often, a data set will come with a *code book* which gives more complete information about the structure of the data, the meaning of variables, and how the data were collected. In this case, most of the column names are pretty self explanatory.
+Often, a data set will come with a *code book* which gives more complete information about the structure of the data, the meaning of variables, and how the data were collected. You can find descriptions for this data in the documentation linked above.
 
-| Variable        | Description                               |
-|-----------------|-------------------------------------------|
-| `TipPercentage` | the gratuity, as a percentage of the bill |
-| `Bill`          | the cost of the meal in US dollars        |
-| `Tip`           | the tip in US dollars                     |
-| `Gender`        | gender of the bill payer                  |
-| `Smoker`        | whether the party included smokers        |
-| `Weekday`       | day of the week                           |
-| `Time`          | time the bill was paid                    |
-| `PartySize`     | size of the party                         |
-
-Even though the column names are self-explanatory, we might have more questions about the data. For example, we might conjecture that people tip differently for breakfast and lunch, but our data only tells us if the bill was paid at "Day" or "Night." State another reasonable conjecture about a factor that might affect tipping behavior. What additional information would be helpful to explore that conjecture?
+::: {.callout-tip title="Task"}
+Even though the column names are self-explanatory, we might have more questions about the data. For example, we might conjecture that people tip differently for breakfast and lunch, but our data only tells us if the bill was paid at "Day" or "Night." State another reasonable conjecture about a factor that might affect tipping behavior. What additional information would be helpful to explore that conjecture? Do not write any code.
+:::
 
 ::: {.callout-warning title="Render-Commit-Push"}
 This is a good place to render, commit, and push changes to your GitHub repo. Write an informative commit message (e.g. "Complete exercises 1 - 3"), and push every file to GitHub.
@@ -230,60 +246,55 @@ Now we'd like to start looking closely at the data set to develop some ideas abo
 
 ### Exercise 4
 
-Use some of these summaries to answer the following. How many smokers are in the data set? How fancy do you think restaurant is? Is it possible to tell from this summary how many different shifts the waiter worked? Why or why not?
+::: {.callout-tip title="Task"}
+Use some of these summaries to answer the following. How many smokers are in the data set? How fancy do you think this restaurant is? Is it possible to tell from this summary how many different shifts the waiter worked? Why or why not?
 
-Before we try to write any code, **write down the operations you want to do to get the answers**. For example, *count the number of rows in which the `Smoker` column has `Yes`*. We'll then translate that into code.
+Before we try to write any code, **write down the operations you want to do to get the answers**. For example, *count the number of rows in which the `Smoker` column has `Yes`*. Then translate those into code.
+:::
 
 ### Exercise 5
 
+
 As we start to explore different questions, we might want to know things about interactions between variables. Like, are tips larger during the day or at night? Or does gender or smoking status matter for how much people spend and how much they tip? In **pandas**, you can calculate statistics within groups using the `groupby` method followed by an aggregation function.
 
+::: {.callout-tip title="Task"}
 Calculate the variance of the tip percentage broken down by day of the week. Do you notice anything unusual? Explore the data and determine a possible cause for this.
+:::
+
+::: {.callout-warning title="Render-Commit-Push"}
+This is a good place to render, commit, and push changes to your hw-eda repo on GitHub. Write an informative commit message (e.g. "Complete exercises 2 - 5"), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty.
+:::
+
+# Graphical Summaries
+
+Graphical summaries are a key tool in exploratory data analysis to to help you understand your data. They also help you communicate insights about your data to others. For example, we might want to display relationships about some of our categorical variables. So we could start by graphing different party sizes in our data set. In general, graphical summaries are preferable to numerical summaries. The human brain is better at recognizing visual patterns than it is in parsing numbers.
+
+There are a few different packages for generating plots in Python:
+
+- [`matplotlib`](https://matplotlib.org/): The foundational "grandfather" of Python plotting, offering granular low-level control for creating static, publication-quality figures, though often requiring verbose code.
+- [`seaborn`](https://seaborn.pydata.org/): A high-level wrapper built on `matplotlib` that simplifies statistical visualization (like heatmaps and regression plots) with beautiful default themes and fewer lines of code.
+- [`plotnine`](https://plotnine.org/): A strict implementation of the "Grammar of Graphics" (mimicking R's `ggplot2`), designed for users who prefer building plots by logically layering data, aesthetics, and geometries.
+- [`plotly`](https://plotly.com/): The best choice for **interactive** and web-ready charts, allowing users to zoom, pan, and hover over data points, making it ideal for dashboards.
 
 
 ### Exercise 6
 
-Create the following plots using the library of your choice (`seaborn` or `plotnine`).
+::: {.callout-tip title="Task"}
+Create the following plots using the library of your choice (I recommend against `plotly`) unless you already know how to use it). Remember that you will need to import the packages.
 
 *   **Plot 1**: A bar chart of `sex`.
 *   **Plot 2**: A histogram of `total_bill`.
 *   **Plot 3**: A scatterplot of `total_bill` vs `tip`, colored by `smoker`.
-
-### Exercise 7
-
-Which day of the week has the highest *percentage* of tables that are smokers? Hint: look at documentation and use Google to figure out how to create table proportions.
-
-::: {.callout-warning title="Render-Commit-Push"}
-This is a good place to render, commit, and push changes to your hw-eda repo on GitHub. Write an informative commit message (e.g. "Completed exercises 4 - 6"), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty.
 :::
 
-## Graphical Summaries
 
-Graphical summaries are a key tool in exploratory data analysis to to help you understand your data. They also help you communicate insights about your data to others. For example, we might want to display relationships about some of our categorical variables. So we could start by graphing different party sizes in our data set.
+## Bivariate Plots
 
-There are a few different packages for generating plots in Python:
+We may also be interested in comparing variables. To do so we should consider the following scenarios:
 
-- `matplotlib`: The foundational "grandfather" of Python plotting, offering granular low-level control for creating static, publication-quality figures, though often requiring verbose code.
-- `seaborn`: A high-level wrapper built on `matplotlib` that simplifies statistical visualization (like heatmaps and regression plots) with beautiful default themes and fewer lines of code.
-- `plotnine`: A strict implementation of the "Grammar of Graphics" (mimicking R's `ggplot2`), designed for users who prefer building plots by logically layering data, aesthetics, and geometries.
-- `plotly`: The best choice for **interactive** and web-ready charts, allowing users to zoom, pan, and hover over data points, making it ideal for dashboards.
-
-
-## Exercise 8
-
-Create the following charts using `matplotlib`, `seaborn`, and `plotnine`.
-
-- Bar chart of `PartySize`
-- A stacked bar chart of `Weekday` broken down by `Smoker`
-- A standardized bar chart of `Weekday` broken down by `Smoker`
-- A histogram of `Tip` using 100 bins
-
-### Exercise 9
-
-Notice that there are a few "spikes" in the histogram above. What do you think is causing this?
-
-We can also summarize this numerical data broken down by one of the categorical variables using boxplots, violin plots, or sina plots. 
-
+- Categorical vs. categorical: your best bet is some kind of bar chart. If you're interested in showing proportions or rates, use a standardized bar chart, if not, use a stacked bar chart or a dodged bar chart.
+- Categorical vs. numerical: there are many options here. Simplest would be boxplots, but this can often obscure information. Better plots would be boxplots with a jitter plot overlay, sina plots, or violin plots. See the code below for how to implement these is `matplotlib`, `seaborn`, and `plotnine`.
+- Numerical vs. Numerical: a good ole-fashioned scatter plot.
 
 #### `matplotlib`
 
@@ -297,41 +308,34 @@ days = tips['Weekday'].unique()
 data_by_day = [tips[tips['Weekday'] == d]['Tip'] for d in days]
 
 # --- Plot 1: Boxplot ---
-plt.figure()
-plt.boxplot(data_by_day, labels=days)
+plt.boxplot(data_by_day, tick_labels=days)
 plt.title("Tips by Day of the Week")
 plt.xlabel("Day of the Week")
 plt.ylabel("Tips")
-plt.show()
 
 # --- Plot 2: Boxplot + Jitter ---
-plt.figure()
-plt.boxplot(data_by_day, labels=days, showfliers=False) # Hide outliers to avoid dupes
-# Add jitter manually
+plt.boxplot(data_by_day, tick_labels=days)
+# Doesn't have jitter plot so must add jitter manually
 for i, d in enumerate(days):
     y = tips[tips['Weekday'] == d]['Tip']
     x = np.random.normal(i + 1, 0.04, size=len(y)) # i+1 because boxplot is 1-indexed
-    plt.scatter(x, y, alpha=0.5, s=10, color='grey')
+    plt.scatter(x, y)
 plt.title("Tips by Day of the Week")
 plt.xlabel("Day of the Week")
 plt.ylabel("Tips")
-plt.show()
 
 # --- Plot 3: Violin ---
-plt.figure()
 plt.violinplot(data_by_day, showmeans=False, showmedians=True)
 plt.xticks(ticks=range(1, len(days) + 1), labels=days)
 plt.title("Tips by Day of the Week")
 plt.xlabel("Day of the Week")
 plt.ylabel("Tips")
-plt.show()
 
 # --- Plot 4: Sina Plot Approximation ---
 # Matplotlib has no native Sina plot. 
 # A common approximation is a Violin plot with inner points (or a swarm plot).
 # Here we just show the violin (density) with scatter overlay.
-plt.figure()
-parts = plt.violinplot(data_by_day, showextrema=False)
+parts = plt.violinplot(data_by_day)
 for pc in parts['bodies']:
     pc.set_facecolor('#D43F3A')
     pc.set_alpha(0.3)
@@ -343,42 +347,33 @@ plt.xticks(ticks=range(1, len(days) + 1), labels=days)
 plt.title("Tips by Day of the Week")
 plt.xlabel("Day of the Week")
 plt.ylabel("Tips")
-plt.show()
 ```
 
 #### `seaborn`
 
-`seaborn` codee looks a lot like `matplotlib` but takes care of most of the processing for you. However, `seaborn` tends to be a really slow package.
+`seaborn` codee looks a lot like `matplotlib` but takes care of most of the processing for you. However, `seaborn` tends to be a slow package. 
 
 ```{python}
 #| eval: false
 
 # --- Plot 1: Boxplot ---
-plt.figure()
 sns.boxplot(data=tips, x='Weekday', y='Tip')
 plt.title("Tips by Day of the Week")
-plt.show()
 
 # --- Plot 2: Boxplot + Jitter ---
-plt.figure()
 sns.boxplot(data=tips, x='Weekday', y='Tip', fliersize=0) # Hide outliers
 sns.stripplot(data=tips, x='Weekday', y='Tip', jitter=True, color='black', alpha=0.5)
 plt.title("Tips by Day of the Week")
-plt.show()
 
 # --- Plot 3: Violin ---
-plt.figure()
 sns.violinplot(data=tips, x='Weekday', y='Tip')
 plt.title("Tips by Day of the Week")
-plt.show()
 
 # --- Plot 4: Sina Equivalent (Swarmplot or Violin+Strip) ---
 # Seaborn uses 'swarmplot' for non-overlapping points (beeswarm style)
-plt.figure()
 sns.violinplot(data=tips, x='Weekday', y='Tip', inner=None, color=".8")
 sns.stripplot(data=tips, x='Weekday', y='Tip', jitter=True)
 plt.title("Tips by Day of the Week")
-plt.show()
 ```
 
 #### `plotnine`
@@ -394,7 +389,7 @@ plt.show()
     + labs(title="Tips by Day of the Week", x="Day of the Week", y="Tips")
 )
 
-# --- Plot 2: Boxplot + Jitter ---
+# --- Plot 2: BoxpFlot + Jitter ---
 (
     ggplot(tips, aes(x='Weekday', y='Tip'))
     + geom_boxplot(outlier_shape=None) # Hide outliers so they aren't plotted twice
@@ -417,10 +412,58 @@ plt.show()
 )
 ```
 
-**final Task**: State a conjecture about tipping behavior (e.g., "People tip more on weekends"). Create **one plot** and **one summary table** to investigate your claim. Write a short sentence interpreting your findings.
+### Pairplots
 
-## Submission
-1.  Save your notebook.
-2.  In the Source Control tab (Git icon), **Stage** your changes.
-3.  **Commit** with a message like "Finished HW01".
-4.  **Push** to GitHub.
+Look at the documentation for `seaborn`'s [`pairplot`](https://seaborn.pydata.org/generated/seaborn.pairplot.html) and [`PairGrid`](https://seaborn.pydata.org/generated/seaborn.PairGrid.html).
+
+::: {.callout-warning title="Render-Commit-Push"}
+This is a good place to render, commit, and push changes to your GitHub repo. Write an informative commit message (e.g. "Complete exercises 1 - 3"), and push every file to GitHub.
+:::
+
+
+### Exercise 7
+
+::: {.callout-tip title="Task"}
+Create the following charts.
+
+- Bar chart of `PartySize`
+- A stacked bar chart of `Weekday` broken down by `Smoker`
+- A standardized bar chart of `Weekday` broken down by `Smoker`
+- A histogram of `Tip` using 100 bins
+- A plot of `Tip` vs. `Smoker`
+- At least one scatter plot
+:::
+
+### Exercise 8
+
+::: {.callout-tip title="Task"}
+Use your new found skills to figure out which day of the week has the highest *percentage* of tables that are smokers? Hint: look at documentation and use Google to figure out how to create proportions.
+:::
+
+### Exercise 9
+
+::: {.callout-tip title="Task"}
+Notice that there are a few "spikes" in the histogram above. What do you think is causing this?
+:::
+
+::: {.callout-warning title="Render-Commit-Push"}
+This is a good place to render, commit, and push changes to your GitHub repo. Write an informative commit message (e.g. "Completed exercise 6-9"), and push every file to GitHub.
+:::
+
+
+## Exercise 10
+
+::: {.callout-tip title="Task"}
+Using the skills you learned above. Conduct a thorough exploration of the question *What factors effect tipping behavior?*. Be prepared to present your exploration in class on Thursday. You can present directly from your Jupyter notebook. For your exploration to be complete the following conditions must be met:
+
+1. An observer should have no additional questions about the data.
+2. You should avoid displaying any unnecessary information.
+:::
+
+::: {.callout-warning title="Render-Commit-Push"}
+This is a good place to render, commit, and push changes to your GitHub repo. Write an informative commit message (e.g. "Completed exercises assignment"), and push every file to GitHub.
+:::
+
+::: callout-caution
+Before you're done with you work, make sure you look it over one last time to make sure the rendered document looks like you want it to! I recommend re-running the notebook from the top. I can't tell you how often students turn in work and their output doesn't match their prose or the output definitely doesn't look the way they wanted it to.
+:::
