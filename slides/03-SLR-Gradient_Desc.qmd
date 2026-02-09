@@ -466,5 +466,13 @@ MSE &= \dfrac{e^2_1+e^2_2+\ldots+e^2_n}{n}\\
   \end{aligned}
   $$
 
+## Recap
+
+-   **Bias-Variance Trade-off**: Total error is composed of variance, (squared) bias, and irreducible error.
+-   **Linear Regression**: Assumes a linear relationship between features and target.
+-   **Loss Function**: Usually Mean Squared Error (MSE) for regression.
+-   **Gradient Descent**: An optimization algorithm that iteratively updates parameters to minimize the loss function.
+-   **Learning Rate**: Controls the size of the steps taken during gradient descent.
+
 
 
