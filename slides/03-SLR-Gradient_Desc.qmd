@@ -180,7 +180,7 @@ Practice!
 - Suppose we have $\hat{\beta}_0$ and $\hat{\beta}_1$
 - Observed response: $y_i$ for $i=1,\ldots,n$
 - Predicted response: $\hat{y}_i$ for $i=1, \ldots, n$
-- Residual: $e_i = \hat{y}_i - y_i$ for $i=1, \ldots, n$
+- Residual: $e_i = y_i - \hat{y}_i$ for $i=1, \ldots, n$
 - **Mean Squared Error (MSE)**: $MSE =\dfrac{e^2_1+e^2_2+\ldots+e^2_n}{n}$  also known as the **loss/cost function**
 - **GOAL**: Find $\hat{\beta}_0$ and $\hat{\beta}_1$ which minimizes $MSE$
 :::
@@ -196,7 +196,7 @@ Practice!
 ## Gradient Descent Algorithm {.smaller}
 
 - Think of the MSE as a function of $\hat{\beta}_0$ and $\hat{\beta}_1$
-  + $\text{MSE} = \frac{\sum (y_i - \hat{\beta}_0 - \hat{\beta}_1)^2}{n}$
+  + $\text{MSE} = \frac{\sum (y_i - (\hat{\beta}_0 + \hat{\beta}_1 x_i))^2}{n}$
 
 ```{python}
 #| echo: false
@@ -233,7 +233,7 @@ fig.update_layout(
 fig.show()
 ```
 
-## Gradient Descent Algorithm {.smaller}
+## Gradient Descent Algorithm {.smaller .scrollable}
 
 ```{python}
 #| echo: false
@@ -436,16 +436,16 @@ p_large.show()
 - **Objective**: We want to find $\hat{\beta}_0$ and $\hat{\beta}_1$ which minimizes
 - $$\begin{aligned}
 MSE &= \dfrac{e^2_1+e^2_2+\ldots+e^2_n}{n}\\ 
-&= \dfrac{(\hat{y}_1 - y_1)^2 +  (\hat{y}_2 - y_2)^2 + \ldots + (\hat{y}_n - y_n)^2}{n}
+&= \dfrac{(y_1 - \hat{y}_1)^2 +  (y_2 - \hat{y}_2)^2 + \ldots + (y_n - \hat{y}_n)^2}{n}
 \end{aligned}$$
-- $$MSE = \dfrac{(\hat{\beta}_0 + \hat{\beta}_1 \ x_1 - y_1)^2 +  (\hat{\beta}_0 + \hat{\beta}_1 \ x_2 - y_2)^2 + \ldots + (\hat{\beta}_0 + \hat{\beta}_1 \ x_n - y_n)^2}{n}$$
-- $$MSE = \displaystyle \dfrac{1}{n}\sum_{i=1}^{n} (\hat{\beta}_0 + \hat{\beta}_1 \ x_i - y_i)^2 = \displaystyle \dfrac{1}{n}\sum_{i=1}^{n} (\hat{y}_i - y_i)^2 = \displaystyle \dfrac{1}{n}\sum_{i=1}^{n} (e_i)^2$$
+- $$MSE = \dfrac{(y_1 - (\hat{\beta}_0 + \hat{\beta}_1 \ x_1))^2 +  (y_2 - (\hat{\beta}_0 + \hat{\beta}_1 \ x_2))^2 + \ldots + (y_n - (\hat{\beta}_0 + \hat{\beta}_1 \ x_n))^2}{n}$$
+- $$MSE = \displaystyle \dfrac{1}{n}\sum_{i=1}^{n} (y_i - (\hat{\beta}_0 + \hat{\beta}_1 \ x_i))^2 = \displaystyle \dfrac{1}{n}\sum_{i=1}^{n} (y_i - \hat{y}_i)^2 = \displaystyle \dfrac{1}{n}\sum_{i=1}^{n} (e_i)^2$$
 
 ## Gradient Descent for Linear Regression {.smaller}
 
 - To compute gradient, need partial derivatives of $MSE$ with respect to $\hat{\beta}_0$ and $\hat{\beta}_1$.
-- $$\text{gradient of MSE with respect to} \ \hat{\beta}_0 = \dfrac{2}{n} \displaystyle \sum_{i=1}^{n} (\hat{\beta}_0 + \hat{\beta}_1 \ x_i - y_i) = \dfrac{2}{n} \displaystyle \sum_{i=1}^{n} (\hat{y}_i - y_i)$$
-- $$\text{gradient of MSE with respect to} \ \hat{\beta}_1 = \dfrac{2}{n} \displaystyle \sum_{i=1}^{n} x_i (\hat{\beta}_0 + \hat{\beta}_1 \ x_i - y_i) = \dfrac{2}{n} \displaystyle \sum_{i=1}^{n} x_i (\hat{y}_i - y_i)$$
+- $$\text{partial derivative of MSE w.r.t.} \ \hat{\beta}_0 = -\dfrac{2}{n} \displaystyle \sum_{i=1}^{n} (y_i - (\hat{\beta}_0 + \hat{\beta}_1 \ x_i)) = -\dfrac{2}{n} \displaystyle \sum_{i=1}^{n} (y_i - \hat{y}_i)$$
+- $$\text{partial derivative of MSE w.r.t.} \ \hat{\beta}_1 = -\dfrac{2}{n} \displaystyle \sum_{i=1}^{n} x_i (y_i - (\hat{\beta}_0 + \hat{\beta}_1 \ x_i)) = -\dfrac{2}{n} \displaystyle \sum_{i=1}^{n} x_i (y_i - \hat{y}_i)$$
 
 ## Gradient Descent for Linear Regression {.smaller}
 
@@ -455,14 +455,14 @@ MSE &= \dfrac{e^2_1+e^2_2+\ldots+e^2_n}{n}\\
     \begin{aligned}
     \hat{\beta}_0 \ \text{(new)} 
     &= \hat{\beta}_0 \ \text{(old)}- \bigg(\text{step size} \times \text{derivative w.r.t} \ \hat{\beta}_0\bigg)\\ 
-    &= \hat{\beta}_0 \ \text{(old)}- \bigg(\text{step size} \times \dfrac{2}{n} \displaystyle \sum_{i=1}^{n} (\hat{y}_i - y_i)\bigg)
+    &= \hat{\beta}_0 \ \text{(old)} + \bigg(\text{step size} \times \dfrac{2}{n} \displaystyle \sum_{i=1}^{n} (y_i - \hat{y}_i)\bigg)
     \end{aligned}
     $$
   + For $\hat{\beta}_1$:
   $$
   \begin{aligned}
   \hat{\beta}_1  \ \text{(new)} &= \hat{\beta}_1  \ \text{(old)} - \bigg(\text{step size} \times \text{derivative w.r.t} \ \hat{\beta}_1 \bigg)\\
-  &= \hat{\beta}_1  \ \text{(old)} - \bigg(\text{step size} \times \dfrac{2}{n} \displaystyle \sum_{i=1}^{n} x_i (\hat{y}_i - y_i)\bigg)
+  &= \hat{\beta}_1  \ \text{(old)} + \bigg(\text{step size} \times \dfrac{2}{n} \displaystyle \sum_{i=1}^{n} x_i (y_i - \hat{y}_i)\bigg)
   \end{aligned}
   $$
 
