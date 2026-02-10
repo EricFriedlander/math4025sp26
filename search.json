@@ -4,7 +4,7 @@
     "href": "course-info/syllabus.html",
     "title": "Syllabus",
     "section": "",
-    "text": "Lecture\nMW 3:00 - 4:15pm\nCruzen-Murray Library (CML), 208\n\n\n\nOffice Hours | M 3:45 - 4:45pm | Boone 126B |\nOffice Hours | W 8:30 - 10:00am | Boone 126B |\nOffice Hours | TH 10:00 - 11:30am | Boone 126B |\nOffice hours are also available by appointment, just email me!\n\n\n\n\nInstructor: Dr. Eric Friedlander\nOffice: Boone 126B\nEmail: efriedlander@collegeofidaho.edu",
+    "text": "Lecture\nMW 3:00 - 4:15pm\nCruzen-Murray Library (CML), 208\n\n\nOffice Hours\nM 3:45 - 4:45pm\nBoone 126B\n\n\nOffice Hours\nW 8:30 - 10:00am\nBoone 126B\n\n\nOffice Hours\nTH 10:00 - 11:30am\nBoone 126B\n\n\n\nOffice hours are also available by appointment, just email me!\n\n\n\n\nInstructor: Dr. Eric Friedlander\nOffice: Boone 126B\nEmail: efriedlander@collegeofidaho.edu",
     "crumbs": [
       "Syllabus"
     ]
@@ -14,7 +14,7 @@
     "href": "course-info/syllabus.html#course-info",
     "title": "Syllabus",
     "section": "",
-    "text": "Lecture\nMW 3:00 - 4:15pm\nCruzen-Murray Library (CML), 208\n\n\n\nOffice Hours | M 3:45 - 4:45pm | Boone 126B |\nOffice Hours | W 8:30 - 10:00am | Boone 126B |\nOffice Hours | TH 10:00 - 11:30am | Boone 126B |\nOffice hours are also available by appointment, just email me!\n\n\n\n\nInstructor: Dr. Eric Friedlander\nOffice: Boone 126B\nEmail: efriedlander@collegeofidaho.edu",
+    "text": "Lecture\nMW 3:00 - 4:15pm\nCruzen-Murray Library (CML), 208\n\n\nOffice Hours\nM 3:45 - 4:45pm\nBoone 126B\n\n\nOffice Hours\nW 8:30 - 10:00am\nBoone 126B\n\n\nOffice Hours\nTH 10:00 - 11:30am\nBoone 126B\n\n\n\nOffice hours are also available by appointment, just email me!\n\n\n\n\nInstructor: Dr. Eric Friedlander\nOffice: Boone 126B\nEmail: efriedlander@collegeofidaho.edu",
     "crumbs": [
       "Syllabus"
     ]
@@ -1108,7 +1108,10 @@
     "href": "index.html",
     "title": "Math 4025: Statistical Machine Learning",
     "section": "",
-    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n\n\n\n\nWEEK\nDUE\nTYPE\nTOPIC\nREADING\nSLIDES\nVIDEO\nASSIGNMENT\n\n\n\n\n1\n\n\nLecture\nWelcome\n\n\n00-welcome\n\n\n\n\n\n\n1\nThu, Feb 5\nLecture\nThe Big Picture\nChapter 1: ISLP  syllabus\n01-big-picture\n\n\n\n\n\n\n1\nTue, Feb 10\nLecture\nWhat Is Statistical Learning\nChapter 2: ISLP\n02-statistical-learning\n\n\n\n\n\n\n2\nThu, Feb 12\nHomework\nHW: 1 EDA\n\n\n\n\n\n\n01-hw-eda\n\n\n3\nTue, Feb 17\nLecture\nSLR & Gradient Descent\nClick here for readings\n03-slr-gradient-descent"
+    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n\n\n\n\nWEEK\nDUE\nTYPE\nTOPIC\nREADING\nSLIDES\nVIDEO\nASSIGNMENT\n\n\n\n\n1\n\n\nLecture\nWelcome\n\n\n00-welcome\n\n\n\n\n\n\n1\nThu, Feb 5\nLecture\nThe Big Picture\nChapter 1: ISLP  syllabus\n01-big-picture\n\n\n\n\n\n\n1\nTue, Feb 10\nLecture\nWhat Is Statistical Learning\nChapter 2: ISLP\n02-statistical-learning\n\n\n\n\n\n\n2\nThu, Feb 12\nHomework\nHW: 1 EDA\n\n\n\n\n\n\n01-hw-eda\n\n\n3\nTue, Feb 17\nLecture\nSLR & Gradient Descent\nClick here for readings\n03-slr-gradient-descent",
+    "crumbs": [
+      "Schedule"
+    ]
   },
   {
     "objectID": "course-info/computing-python-resources.html",
