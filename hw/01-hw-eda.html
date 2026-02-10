@@ -472,7 +472,7 @@ Note
 <li><code>from pandas import read_csv()</code> will import only <code>read_csv()</code> (e.g.&nbsp;<code>read_csv()</code> will work but no other <code>pandas</code> functions will work)</li>
 </ul>
 <p>Common conventions in data science:</p>
-<div id="c721649f" class="cell" data-execution_count="1">
+<div id="4f9b19ab" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -676,7 +676,7 @@ Task
 <section id="matplotlib" class="level4">
 <h4 class="anchored" data-anchor-id="matplotlib"><code>matplotlib</code></h4>
 <p><code>matplotlib</code> offloads a lot of the data prepartion to you so you’ll usually have to do some processing using <code>pandas</code>.</p>
-<div id="d9738f89" class="cell" data-execution_count="2">
+<div id="0565f6df" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data: Create a list of 'Tip' arrays, one for each 'Weekday'</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>days <span class="op">=</span> tips[<span class="st">'Weekday'</span>].unique()</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>data_by_day <span class="op">=</span> [tips[tips[<span class="st">'Weekday'</span>] <span class="op">==</span> d][<span class="st">'Tip'</span>] <span class="cf">for</span> d <span class="kw">in</span> days]</span>
@@ -726,7 +726,7 @@ Task
 <section id="seaborn" class="level4">
 <h4 class="anchored" data-anchor-id="seaborn"><code>seaborn</code></h4>
 <p><code>seaborn</code> codee looks a lot like <code>matplotlib</code> but takes care of most of the processing for you. However, <code>seaborn</code> tends to be a slow package.</p>
-<div id="82f5c0b8" class="cell" data-execution_count="3">
+<div id="3ae835e4" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 1: Boxplot ---</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span>
@@ -734,23 +734,24 @@ Task
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 2: Boxplot + Jitter ---</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>, fliersize<span class="op">=</span><span class="dv">0</span>) <span class="co"># Hide outliers</span></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>sns.stripplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>, jitter<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 3: Violin ---</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>sns.violinplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 4: Sina Equivalent (Swarmplot or Violin+Strip) ---</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Seaborn uses 'swarmplot' for non-overlapping points (beeswarm style)</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>sns.violinplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>, inner<span class="op">=</span><span class="va">None</span>, color<span class="op">=</span><span class="st">".8"</span>)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>sns.stripplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>, jitter<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>sns.swarmplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>, color<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 3: Violin ---</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>sns.violinplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 4: Sina Equivalent (Swarmplot or Violin+Strip) ---</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Seaborn uses 'swarmplot' for non-overlapping points (beeswarm style)</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>sns.violinplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>, inner<span class="op">=</span><span class="va">None</span>, color<span class="op">=</span><span class="st">".8"</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>sns.stripplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>, jitter<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="plotnine" class="level4">
 <h4 class="anchored" data-anchor-id="plotnine"><code>plotnine</code></h4>
 <p><code>plotnine</code> mimicks <code>ggplot2</code> syntax (mostly). Note that you’ll have to wrap your plots in parenthesis because Python can’t follow the line breaks in the same way as R. In addition, if you want to create multiple plots in the same cell, you have two options. One option is to convert your <code>plotnine</code> plots into <code>matplotlib</code> objects using the <code>.draw()</code> method to convert a <code>plotnine</code> object into a <code>matplotlib</code> figure or <code>._draw_using_figure(fig, [ax])</code> to assign the <code>plotnine</code> object to an existing axis within a <code>matplotlib</code> figure. The second is to use <code>brick</code> from the package <a href="https://github.com/ponnhide/patchworklib"><code>patchworklib</code></a> which allows you to arrange figures.</p>
-<div id="1c4be191" class="cell" data-execution_count="4">
+<div id="6c00d5c8" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 1: Boxplot ---</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    ggplot(tips, aes(x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>))</span>
