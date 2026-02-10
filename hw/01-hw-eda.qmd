@@ -365,6 +365,7 @@ plt.title("Tips by Day of the Week")
 # --- Plot 2: Boxplot + Jitter ---
 sns.boxplot(data=tips, x='Weekday', y='Tip', fliersize=0) # Hide outliers
 sns.stripplot(data=tips, x='Weekday', y='Tip', jitter=True, color='black', alpha=0.5)
+sns.swarmplot(data=tips, x='Weekday', y='Tip', color='black', alpha=0.5)
 plt.title("Tips by Day of the Week")
 
 # --- Plot 3: Violin ---
