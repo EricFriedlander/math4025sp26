@@ -196,7 +196,7 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Course:</strong> Math 4025 (Spring 2026).</li>
 <li><strong>Instructor:</strong> Dr.&nbsp;Eric Friedlander.</li>
 <li><strong>Institution:</strong> College of Idaho.</li>
-<li><strong>Primary Language:</strong> Python (transitioned from R).</li>
+<li><strong>Primary Language:</strong> Python (primary), with R used for the schedule (<code>index.qmd</code>).</li>
 <li><strong>Textbook:</strong> ISLP (Introduction to Statistical Learning with Python).</li>
 <li><strong>Live Site:</strong> https://EricFriedlander.github.io/math4025sp26/</li>
 </ul>
@@ -212,25 +212,26 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 <li><code>course-info/</code>: Course-level documentation.
 <ul>
-<li><code>syllabus.qmd</code>: Course syllabus (updated with 2026 grading and URL).</li>
-<li><code>overview.qmd</code>: Course overview (Instructor, Class Meetings).</li>
+<li><code>syllabus.qmd</code>: Course syllabus (updated with 2026 grading, URL, and office hours).</li>
+<li><code>overview.qmd</code>: Course overview (Instructor, Class Meetings, and office hours).</li>
 <li><code>computing-access.qmd</code> &amp; <code>computing-python-resources.qmd</code>: Computing setup and resources.</li>
 <li><code>schedule.csv</code>: Source of truth for the course schedule.</li>
 </ul></li>
 <li><code>slides/</code>: Lecture slides (migrated from archive and converted to Python).
 <ul>
-<li><code>00-welcome.qmd</code>, <code>01-big-picture.qmd</code>, <code>02-StatisticalLearning.qmd</code>.</li>
+<li><code>00-welcome.qmd</code>, <code>01-big-picture.qmd</code>, <code>02-StatisticalLearning.qmd</code>, <code>03-SLR-Gradient_Desc.qmd</code>, <code>04-MultipleRegression.qmd</code>, <code>05-knn.qmd</code>.</li>
 <li><code>_metadata.yml</code>: Shared configuration for all slides.</li>
 <li><code>images/</code>: Slide-specific images.</li>
 </ul></li>
 <li><code>hw/</code>: Homework assignments (e.g., <code>01-hw-eda.qmd</code>).</li>
-<li><code>data/</code>: Course datasets.</li>
+<li><code>data/</code>: Course datasets (e.g., <code>house_prices.csv</code>, <code>outlets.csv</code>, <code>tips.csv</code>, <code>AmesHousing.rds</code>).</li>
 <li><code>jobs/</code>: Job application assignments (empty).</li>
 <li><code>prepare/</code>: Preparation materials (empty).</li>
 <li><code>images/</code>: Static image assets (e.g., logo).</li>
 <li><code>_quarto.yml</code>: Main Quarto configuration.</li>
-<li><code>environment.yml</code>: Conda environment definition.</li>
-<li><code>index.qmd</code>: Homepage (displays the Course Schedule).</li>
+<li><code>environment.yml</code>: Conda environment definition (Python).</li>
+<li><code>renv.lock</code>, <code>.Rprofile</code>, <code>renv/</code>: R environment definition (renv).</li>
+<li><code>index.qmd</code>: Homepage (displays the Course Schedule via R/gt).</li>
 </ul>
 </section>
 <section id="development-usage" class="level2">
@@ -240,7 +241,9 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><strong>Quarto:</strong> Website builder.</li>
 <li><strong>Python:</strong> Primary programming language.</li>
+<li><strong>R:</strong> Used for specific components (e.g., schedule generation).</li>
 <li><strong>Conda/Mamba:</strong> Use the <code>math-4025-sp26</code> environment for all Python code in this workspace.</li>
+<li><strong>renv:</strong> Manages R dependencies.</li>
 <li><strong>VS Code:</strong> Primary editor.</li>
 </ul>
 </section>
@@ -262,8 +265,8 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="key-conventions">3. Key Conventions</h3>
 <ul>
 <li><strong>Content:</strong> Written in <code>.qmd</code> (Quarto Markdown).</li>
-<li><strong>Code Blocks:</strong> Use <code>{python}</code> blocks.</li>
-<li><strong>Tables:</strong> Use the <code>show</code> function from the <code>itables</code> library to display Python data frames.</li>
+<li><strong>Code Blocks:</strong> Use <code>{python}</code> blocks primarily; <code>{r}</code> blocks for schedule.</li>
+<li><strong>Tables:</strong> Use the <code>show</code> function from the <code>itables</code> library (Python) or <code>gt</code> (R) for display.</li>
 <li><strong>Plotting:</strong> Use <code>plotnine</code> for visualizations (ggplot2 style), but <code>seaborn</code> and <code>matplotlib</code> are also available.</li>
 <li><strong>Data Manipulation:</strong> <code>pandas</code> is primary; <code>polars</code> is available.</li>
 <li><strong>Data Loading:</strong> Use <code>pyreadr</code> for <code>.rds</code> files and <code>pyhere</code> for robust relative paths.</li>

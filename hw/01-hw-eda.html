@@ -199,10 +199,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
   <li><a href="#course-toolkit" id="toc-course-toolkit" class="nav-link" data-scroll-target="#course-toolkit">Course Toolkit</a></li>
   <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis">Exploratory Data Analysis</a></li>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning goals</a></li>
+  </ul></li>
   <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting Started</a>
   <ul class="collapse">
   <li><a href="#setting-up-your-environment" id="toc-setting-up-your-environment" class="nav-link" data-scroll-target="#setting-up-your-environment">Setting Up Your Environment</a>
@@ -217,16 +219,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#install-positron" id="toc-install-positron" class="nav-link" data-scroll-target="#install-positron">Install Positron</a></li>
   <li><a href="#configure-git-github" id="toc-configure-git-github" class="nav-link" data-scroll-target="#configure-git-github">Configure Git &amp; GitHub</a></li>
   </ul></li>
+  </ul></li>
   <li><a href="#the-assignment" id="toc-the-assignment" class="nav-link" data-scroll-target="#the-assignment">The Assignment</a>
   <ul class="collapse">
   <li><a href="#clone-the-repository" id="toc-clone-the-repository" class="nav-link" data-scroll-target="#clone-the-repository">Clone the Repository</a></li>
   <li><a href="#create-your-notebook" id="toc-create-your-notebook" class="nav-link" data-scroll-target="#create-your-notebook">Create Your Notebook</a></li>
-  </ul></li>
   <li><a href="#understand-your-data" id="toc-understand-your-data" class="nav-link" data-scroll-target="#understand-your-data">Understand Your Data</a>
   <ul class="collapse">
+  <li><a href="#loading-packages-in-python" id="toc-loading-packages-in-python" class="nav-link" data-scroll-target="#loading-packages-in-python">Loading packages in <code>Python</code></a></li>
   <li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1">Exercise 1</a></li>
-  <li><a href="#committing-changes" id="toc-committing-changes" class="nav-link" data-scroll-target="#committing-changes">Committing changes</a></li>
-  <li><a href="#push-changes" id="toc-push-changes" class="nav-link" data-scroll-target="#push-changes">Push changes</a></li>
+  </ul></li>
+  <li><a href="#using-git-to-track-your-changes" id="toc-using-git-to-track-your-changes" class="nav-link" data-scroll-target="#using-git-to-track-your-changes">Using git to track your changes</a>
+  <ul class="collapse">
+  <li><a href="#using-source-control-extension" id="toc-using-source-control-extension" class="nav-link" data-scroll-target="#using-source-control-extension">Using Source Control Extension</a></li>
   <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2">Exercise 2</a></li>
   <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3">Exercise 3</a></li>
   </ul></li>
@@ -235,14 +240,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4">Exercise 4</a></li>
   <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5">Exercise 5</a></li>
-  <li><a href="#exercise-6" id="toc-exercise-6" class="nav-link" data-scroll-target="#exercise-6">Exercise 6</a></li>
-  <li><a href="#exercise-7" id="toc-exercise-7" class="nav-link" data-scroll-target="#exercise-7">Exercise 7</a></li>
-  <li><a href="#graphical-summaries" id="toc-graphical-summaries" class="nav-link" data-scroll-target="#graphical-summaries">Graphical Summaries</a></li>
-  <li><a href="#exercise-8" id="toc-exercise-8" class="nav-link" data-scroll-target="#exercise-8">Exercise 8</a>
+  </ul></li>
+  <li><a href="#graphical-summaries" id="toc-graphical-summaries" class="nav-link" data-scroll-target="#graphical-summaries">Graphical Summaries</a>
   <ul class="collapse">
+  <li><a href="#exercise-6" id="toc-exercise-6" class="nav-link" data-scroll-target="#exercise-6">Exercise 6</a></li>
+  <li><a href="#bivariate-plots" id="toc-bivariate-plots" class="nav-link" data-scroll-target="#bivariate-plots">Bivariate Plots</a>
+  <ul class="collapse">
+  <li><a href="#pairplots" id="toc-pairplots" class="nav-link" data-scroll-target="#pairplots">Pairplots</a></li>
+  <li><a href="#exercise-7" id="toc-exercise-7" class="nav-link" data-scroll-target="#exercise-7">Exercise 7</a></li>
+  <li><a href="#exercise-8" id="toc-exercise-8" class="nav-link" data-scroll-target="#exercise-8">Exercise 8</a></li>
   <li><a href="#exercise-9" id="toc-exercise-9" class="nav-link" data-scroll-target="#exercise-9">Exercise 9</a></li>
   </ul></li>
-  <li><a href="#submission" id="toc-submission" class="nav-link" data-scroll-target="#submission">Submission</a></li>
+  <li><a href="#exercise-10" id="toc-exercise-10" class="nav-link" data-scroll-target="#exercise-10">Exercise 10</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/hw/01-hw-eda.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -270,10 +279,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Adapted from “Start teaching with R,” created by R Pruim, N J Horton, and D Kaplan, 2013, “Interactive and Dynamic Graphics for Data Analysis,” by Dianne Cook and Deborah F. Swayne, Colby Long’s DATA 325 Course at Wooster College and Maria Tackett’s STA-210 course at Duke University.</p>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>In this homework we will familiarize ourselves with the tools that we’ll use throughout the course and refresh ourselves on topic related to exploratory data analysis.</p>
-</section>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>In this homework we will familiarize ourselves with the tools that we’ll use throughout the course and refresh ourselves on topics related to exploratory data analysis.</p>
 <section id="course-toolkit" class="level2">
 <h2 class="anchored" data-anchor-id="course-toolkit">Course Toolkit</h2>
 <p>The primary tools we’ll be using in this course are <strong>Python</strong>, <strong>Positron</strong>, <strong>git</strong>, and <strong>GitHub</strong>. We will be using them throughout the course both to learn the concepts discussed in the course and to analyze real data and come to informed conclusions.</p>
@@ -319,10 +327,11 @@ Note
 <ul>
 <li>Be familiar with the workflow using Python and GitHub</li>
 <li>Gain practice writing a reproducible report using Jupyter notebooks</li>
-<li>Practice version control using GitHub</li>
+<li>Practice version control using GitHub and Conda/Mamba</li>
 <li>Be able to create numerical and visual summaries of data</li>
 <li>Use those summaries</li>
 </ul>
+</section>
 </section>
 <section id="getting-started" class="level1">
 <h1>Getting Started</h1>
@@ -340,12 +349,15 @@ Note
 <li><em>Windows</em>: Open “Miniforge Prompt” after installation to verify.</li>
 <li><em>Mac/Linux</em>: Open your terminal.</li>
 </ul></li>
+<li>If you’re on Mac or Linux run the following in your terminal if you’re on Windows write it in the provided <strong>Miniforge Prompt</strong>:
+<ul>
+<li><code>conda config --set auto_activate_base false</code></li>
+</ul></li>
 </ol>
 </section>
 <section id="create-a-conda-environment" class="level3">
 <h3 class="anchored" data-anchor-id="create-a-conda-environment">Create a Conda Environment</h3>
-<p>We never want to install packages into our “base” environment. Instead, we create a specific environment for this course.</p>
-<p>Open your terminal (or Miniforge Prompt) and run:</p>
+<p>We never want to install packages into our “base” environment. Instead, we create a specific environment for this course. Open your terminal (or Miniforge Prompt) and run:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> create <span class="at">-n</span> math4025 python=3.14</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li><code>mamba create</code>: Command to create an environment.</li>
@@ -362,17 +374,22 @@ Note
 <section id="install-packages" class="level3">
 <h3 class="anchored" data-anchor-id="install-packages">Install Packages</h3>
 <p>Now we install the tools we need for this assignment.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> install pandas seaborn matplotlib plotnine itables jupyter pyreadr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> install pandas numpy seaborn matplotlib plotnine jupyter</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
-<li><code>pandas</code>: Data manipulation.</li>
+<li><code>pandas</code>, <code>numpy</code>: Data manipulation.</li>
 <li><code>seaborn</code>, <code>matplotlib</code>, <code>plotnine</code>: Data visualization.</li>
-<li><code>itables</code>: Interactive tables.</li>
 <li><code>jupyter</code>: Required to run Notebooks.</li>
+</ul>
+<p>In the future, any time you want to install a package:</p>
+<ul>
+<li>Make sure your <code>math4025</code> environment is activated</li>
+<li>Install it using <code>mamba install name-of-package</code></li>
 </ul>
 </section>
 </section>
 <section id="setting-up-positron-git" class="level2">
 <h2 class="anchored" data-anchor-id="setting-up-positron-git">Setting up Positron &amp; Git</h2>
+<p>If you’ve already set up Positron and Git in a previous course, you can skip this section.</p>
 <section id="install-positron" class="level3">
 <h3 class="anchored" data-anchor-id="install-positron">Install Positron</h3>
 <p>We will use <strong>Positron</strong>, a new data science IDE from Posit (makers of RStudio).</p>
@@ -405,59 +422,98 @@ Note
 </ol>
 </section>
 </section>
-<section id="the-assignment" class="level2">
-<h2 class="anchored" data-anchor-id="the-assignment">The Assignment</h2>
+</section>
+<section id="the-assignment" class="level1">
+<h1>The Assignment</h1>
 <p>Now you will create your own Jupyter Notebook to analyze tipping data.</p>
 <section id="clone-the-repository" class="level3">
 <h3 class="anchored" data-anchor-id="clone-the-repository">Clone the Repository</h3>
 <ol type="1">
 <li>Go to the course <a href="https://classroom.github.com/a/lqxGMOZJ">GitHub assignment</a>.</li>
-<li>Copy the HTTPS URL.</li>
+<li>Copy the URL.</li>
 <li>In Positron: <code>Control Palette</code> &gt; <code>Git: Clone</code> &gt; Paste URL.</li>
+<li>When deciding where to save the work from this class:
+<ul>
+<li><strong>DON’T STORE YOUR WORK IN A FOLDER THE AUTOMATICALLY SYNCS WITH ONEDRIVE, DROPBOX, ETC.</strong></li>
+<li>I recommend creating a folder on your computer dedicated to this class</li>
+<li>Make each assignment a sub-folder in this folder.</li>
+</ul></li>
 </ol>
 </section>
 <section id="create-your-notebook" class="level3">
 <h3 class="anchored" data-anchor-id="create-your-notebook">Create Your Notebook</h3>
 <ol type="1">
 <li>In Positron, create a new file named <code>hw01-analysis.ipynb</code> inside your repository folder.</li>
-<li>Add a Markdown cell at the top with a title “Homework 1: Exploratory Data Analysis” and your name.</li>
+<li>In the top right corner of the notebook you should see a button that says “Select Kernel”. Click that button, you should see an option for the mamba environment that you’ve created. You should always use this one.</li>
+<li>In Jupyter notebooks, there are two different types of cells:
+<ul>
+<li><strong>markdown</strong> cells that allow you to write markdown. This is where you will write all of your prose and interpretation. <a href="https://www.markdownguide.org/cheat-sheet/">Here is a good markdown cheatsheet</a>.</li>
+<li><strong>code</strong> cells that allow you to write python code. Be careful when you are running your code cells. If you run them out of order, notebook may not work that way you want when a new person runs the whole notebook in order.</li>
+</ul></li>
+<li>Add a Markdown cell at the top with a title “Homework 1: Exploratory Data Analysis” and your name. You can use # symbols to create headings. The more you add the smaller the heading will be.</li>
 </ol>
-</section>
 </section>
 <section id="understand-your-data" class="level2">
 <h2 class="anchored" data-anchor-id="understand-your-data">Understand Your Data</h2>
 <p>Today we will be working with the <code>TIPS</code> data set which is in the <code>regclass</code> R package. I’ve saved the data as a csv and included it in the repo for this assignment. The data in the <code>TIPS</code> dataset is information recorded by one waiter about each tip he received over a period of a few months working in a restaurant. We would like to use this data to address the question, <em>“What factors affect tipping behavior?”</em></p>
-<p>In python you can <code>import</code> packages in a few ways:</p>
+<section id="loading-packages-in-python" class="level3">
+<h3 class="anchored" data-anchor-id="loading-packages-in-python">Loading packages in <code>Python</code></h3>
+<p>We will need to leverage several different python packages to analyze our data.In python you can <code>import</code> packages in a few ways. Consider the following ways of importing the <code>pandas</code> package, which is the primary package we will use to manipulate data:</p>
 <ul>
-<li><code>import pandas</code> will import pandas. Every time you want to use pandas you’ll have to prepend <code>pandas.</code> (e.g.&nbsp;<code>pandas.read_csv()</code>)</li>
+<li><code>import pandas</code> will import pandas. Every time you want to use a pandas function you’ll have to prepend <code>pandas.</code> (e.g.&nbsp;<code>pandas.read_csv()</code>)</li>
 <li><code>import pandas as pd</code> will import pandas and allow you to use the shorthand <code>pd</code> (e.g.&nbsp;<code>pd.read_csv()</code>)</li>
-<li><code>from pandas import *</code> will import everything from pandas (e.g.&nbsp;<code>read_csv()</code>)</li>
+<li><code>from pandas import *</code> will import every function from pandas (e.g.&nbsp;<code>read_csv()</code>). In general, it’s not a good idea to do this as you may create unintended conflicts if multiple packages have functions with the same name.</li>
 <li><code>from pandas import read_csv()</code> will import only <code>read_csv()</code> (e.g.&nbsp;<code>read_csv()</code> will work but no other <code>pandas</code> functions will work)</li>
 </ul>
 <p>Common conventions in data science:</p>
-<div id="ea568595" class="cell" data-execution_count="2">
+<div id="d9cbfbf4" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotnine <span class="im">as</span> p9</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
 <section id="exercise-1" class="level3">
 <h3 class="anchored" data-anchor-id="exercise-1">Exercise 1</h3>
-<p>In your Jupyter notebook, create a code cell at the top and load <code>pandas</code>, <code>seaborn</code>, and <code>matplotlib.pyplot</code>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Task">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Task
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In your Jupyter notebook, create a code cell at the top and load <code>pandas</code>. When you need to load a new package, I recommend returning to this cell and importing it here rather that in the first cell that you need it.</p>
+<p>After you’ve loaded <code>pandas</code> create a new markdown cell where you describe the goal of the notebook and the data. Do not write any code, but I suggest referencing <a href="https://cran.r-project.org/web/packages/regclass/regclass.pdf">the documentation</a> for this data set and writing down any relevant details. Finally, create a new code cell and load the tips data using <code>pd.read_csv()</code>.</p>
+</div>
+</div>
 </section>
-<section id="committing-changes" class="level3">
-<h3 class="anchored" data-anchor-id="committing-changes">Committing changes</h3>
-<p>Now, go to the Source Control extension in the left-hand panel.</p>
-<p>If you have made changes to your files, you should see it listed here. Clicking on these files shows you the difference between the last committed state of the document and its current state including changes. You should see deletions in red and additions in green.</p>
-<p>If you’re happy with these changes, we’ll prepare the changes to be pushed to your remote repository. First, stage your changes by clicking the <code>+</code> button next to the file you want to stage. Next, write a meaningful commit message (for instance, “update author name”) in the Commit message box. Finally, click Commit. Note that every commit needs to have a commit message associated with it.</p>
+</section>
+<section id="using-git-to-track-your-changes" class="level2">
+<h2 class="anchored" data-anchor-id="using-git-to-track-your-changes">Using git to track your changes</h2>
+<p>There are two ways to do this. You can either do this from the <strong>Source Control</strong> extension for Positron or from the command line (I’ve outlined both below). While the Positron extension is perfectly acceptable for this class, it is probably a good idea to learn to use the command line at some point if your plan it to do more data science.</p>
+<section id="using-source-control-extension" class="level3">
+<h3 class="anchored" data-anchor-id="using-source-control-extension">Using Source Control Extension</h3>
+<p>Click onthe Source Control extension in the left-hand panel.</p>
+<section id="staging-your-changes" class="level4">
+<h4 class="anchored" data-anchor-id="staging-your-changes">Staging your changes</h4>
+<p>Before we move on ensure that you DO NOT COMMIT YOUR CHANGES WITHOUT A COMMIT MESSAGE. This will make sense in a minute, but if you see a button that says “Commit”, don’t click it until you’ve finished reading this section.</p>
+<p>If you have made changes to your files, you should see it listed here. Clicking on these files shows you the difference between the last committed state of the document and its current state, including changes. You should see deletions in red and additions in green.</p>
+<p>If you’re happy with these changes, we’ll prepare the changes to be pushed to your remote repository. Stage your changes by clicking the <code>+</code> button next to the file you want to stage. When you do this you are preparing to save these changes to your version history.</p>
+</section>
+<section id="committing-changes" class="level4">
+<h4 class="anchored" data-anchor-id="committing-changes">Committing changes</h4>
+<p>When you <em>commit</em> changes, you add the changes you’ve staged to the version history of your repository. Write a meaningful commit message (for instance, “update author name”) in the Commit message box. Finally, click Commit. Note that every commit needs to have a commit message associated with it. <strong>DO NOT CLICK COMMIT WITHOUT WRITING A COMMIT MESSAGE</strong>.</p>
 <p>You don’t have to commit after every change, as this would get quite tedious. You should commit states that are meaningful to you for inspection, comparison, or restoration.</p>
 <p>In the first few assignments I will nudge you when to commit and in some cases, what commit message to use. As the semester progresses we will let you make these decisions.</p>
-<p>Now let’s make sure all the changes went to GitHub. Go to your GitHub repo and refresh the page. You should see your commit message next to the updated files. If you see this, all your changes are on GitHub and you’re good to go!</p>
 </section>
-<section id="push-changes" class="level3">
-<h3 class="anchored" data-anchor-id="push-changes">Push changes</h3>
-<p>Now that you have made an update and committed this change, it’s time to push these changes to your repo on GitHub. There are a few ways to do this, if you’re new to Git raise your hand or ask someone near you.</p>
-<p>In order to push your changes to GitHub, you must have staged your commit to be pushed.</p>
+<section id="pushing-changes" class="level4">
+<h4 class="anchored" data-anchor-id="pushing-changes">Pushing changes</h4>
+<p>Go to your GitHub repo and refresh the page. Uh oh! You probably don’t see that changes you’ve made yet. This is because you still need to <em>push</em> your changes to Github. There are a few ways to do this, if you’re new to Git raise your hand.</p>
+</section>
 <section id="using-the-command-line" class="level4">
 <h4 class="anchored" data-anchor-id="using-the-command-line">Using the Command Line</h4>
 <p>Eventually you’ll be better off using git from the terminal or command line:</p>
@@ -472,54 +528,37 @@ Note
 <section id="exercise-2" class="level3">
 <h3 class="anchored" data-anchor-id="exercise-2">Exercise 2</h3>
 <p>When exploring a new data set, it’s important to first understand the basics. What format is our data in? What types of information are included in the data set? How many observations are there?</p>
-<p>In the Python ecosystem, data sets are usually stored in a 2-dimensional structure called a <strong>DataFrame</strong>. The <code>pandas</code> library has long been the industry standard for data manipulation. After importing these libraries, you can get an idea of the structure of a data set using <code>df.info()</code>, and you can peek at the first few rows with <code>df.head()</code>. If you’re used to using R, one thing you’ll notice that all of these data manipulations are <em>methods</em> rather than functions. Create a code chunk and use these functions (and others) to better understand the data. Use <code>tips.head()</code>, <code>tips.info()</code>, or <code>tips.describe()</code> to explore the dataset. How many tips are recorded in this data set?</p>
+<p>In the Python ecosystem, data sets are usually stored in a 2-dimensional structure called a <strong>DataFrame</strong>. The <code>pandas</code> library has long been the industry standard for data manipulation. You can find more the documentation <a href="https://pandas.pydata.org/docs/index.html">here</a> and a quick tutorial can be found <a href="https://pandas.pydata.org/docs/user_guide/10min.html">here</a>. If you’re coming from R, you may find <a href="https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_r.html#compare-with-r">this webpage</a> helpful (I’ve bookmarked it). Suppose you’ve loaded a dataset using <code>pd.read_csv()</code> and called it <code>df</code>. After importing this <code>pandas</code> (which you’ve done), you can get an idea of the structure of a data set using <code>df.info()</code>, and you can peek at the first few rows with <code>df.head()</code>. If you’re used to using R, one thing you’ll notice that all of these data manipulations are <em>methods</em> rather than functions. Create a code chunk and use these functions (and others) to better understand the data. Use <code>tips.head()</code>, <code>tips.info()</code>, or <code>tips.describe()</code> to explore the dataset.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Task">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Task
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the above functions to determin the number of tips recorded in this data set? Ensure it matches the description of the data from the documentation.</p>
+</div>
+</div>
 </section>
 <section id="exercise-3" class="level3">
 <h3 class="anchored" data-anchor-id="exercise-3">Exercise 3</h3>
-<p>Often, a data set will come with a <em>code book</em> which gives more complete information about the structure of the data, the meaning of variables, and how the data were collected. In this case, most of the column names are pretty self explanatory.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Variable</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>TipPercentage</code></td>
-<td>the gratuity, as a percentage of the bill</td>
-</tr>
-<tr class="even">
-<td><code>Bill</code></td>
-<td>the cost of the meal in US dollars</td>
-</tr>
-<tr class="odd">
-<td><code>Tip</code></td>
-<td>the tip in US dollars</td>
-</tr>
-<tr class="even">
-<td><code>Gender</code></td>
-<td>gender of the bill payer</td>
-</tr>
-<tr class="odd">
-<td><code>Smoker</code></td>
-<td>whether the party included smokers</td>
-</tr>
-<tr class="even">
-<td><code>Weekday</code></td>
-<td>day of the week</td>
-</tr>
-<tr class="odd">
-<td><code>Time</code></td>
-<td>time the bill was paid</td>
-</tr>
-<tr class="even">
-<td><code>PartySize</code></td>
-<td>size of the party</td>
-</tr>
-</tbody>
-</table>
-<p>Even though the column names are self-explanatory, we might have more questions about the data. For example, we might conjecture that people tip differently for breakfast and lunch, but our data only tells us if the bill was paid at “Day” or “Night.” State another reasonable conjecture about a factor that might affect tipping behavior. What additional information would be helpful to explore that conjecture?</p>
+<p>Often, a data set will come with a <em>code book</em> which gives more complete information about the structure of the data, the meaning of variables, and how the data were collected. You can find descriptions for this data in the documentation linked above.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Task">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Task
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Even though the column names are self-explanatory, we might have more questions about the data. For example, we might conjecture that people tip differently for breakfast and lunch, but our data only tells us if the bill was paid at “Day” or “Night.” State another reasonable conjecture about a factor that might affect tipping behavior. What additional information would be helpful to explore that conjecture? Do not write any code.</p>
+</div>
+</div>
 <div class="callout callout-style-default callout-warning callout-titled" title="Render-Commit-Push">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -541,26 +580,37 @@ Render-Commit-Push
 <p>Now we’d like to start looking closely at the data set to develop some ideas about what factors might affect tipping. In <strong>pandas</strong>, basic descriptive statistics have intuitive names like <code>mean()</code>, <code>median()</code>, <code>std()</code>, and <code>quantile()</code>. When exploring your data, you typically use these methods directly on a DataFrame or Series, often in conjunction with <code>agg()</code> (similar to <code>summarize</code> in the tidyverse) to compute multiple statistics at once. We can apply these functions to an entire DataFrame or isolate a specific column using bracket notation.</p>
 <section id="exercise-4" class="level3">
 <h3 class="anchored" data-anchor-id="exercise-4">Exercise 4</h3>
-<p>Use some of these summaries to answer the following. How many smokers are in the data set? How fancy do you think restaurant is? Is it possible to tell from this summary how many different shifts the waiter worked? Why or why not?</p>
-<p>Before we try to write any code, <strong>write down the operations you want to do to get the answers</strong>. For example, <em>count the number of rows in which the <code>Smoker</code> column has <code>Yes</code></em>. We’ll then translate that into code.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Task">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Task
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use some of these summaries to answer the following. How many smokers are in the data set? How fancy do you think this restaurant is? Is it possible to tell from this summary how many different shifts the waiter worked? Why or why not?</p>
+<p>Before we try to write any code, <strong>write down the operations you want to do to get the answers</strong>. For example, <em>count the number of rows in which the <code>Smoker</code> column has <code>Yes</code></em>. Then translate those into code.</p>
+</div>
+</div>
 </section>
 <section id="exercise-5" class="level3">
 <h3 class="anchored" data-anchor-id="exercise-5">Exercise 5</h3>
 <p>As we start to explore different questions, we might want to know things about interactions between variables. Like, are tips larger during the day or at night? Or does gender or smoking status matter for how much people spend and how much they tip? In <strong>pandas</strong>, you can calculate statistics within groups using the <code>groupby</code> method followed by an aggregation function.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Task">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Task
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Calculate the variance of the tip percentage broken down by day of the week. Do you notice anything unusual? Explore the data and determine a possible cause for this.</p>
-</section>
-<section id="exercise-6" class="level3">
-<h3 class="anchored" data-anchor-id="exercise-6">Exercise 6</h3>
-<p>Create the following plots using the library of your choice (<code>seaborn</code> or <code>plotnine</code>).</p>
-<ul>
-<li><strong>Plot 1</strong>: A bar chart of <code>sex</code>.</li>
-<li><strong>Plot 2</strong>: A histogram of <code>total_bill</code>.</li>
-<li><strong>Plot 3</strong>: A scatterplot of <code>total_bill</code> vs <code>tip</code>, colored by <code>smoker</code>.</li>
-</ul>
-</section>
-<section id="exercise-7" class="level3">
-<h3 class="anchored" data-anchor-id="exercise-7">Exercise 7</h3>
-<p>Which day of the week has the highest <em>percentage</em> of tables that are smokers? Hint: look at documentation and use Google to figure out how to create table proportions.</p>
+</div>
+</div>
 <div class="callout callout-style-default callout-warning callout-titled" title="Render-Commit-Push">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -571,169 +621,290 @@ Render-Commit-Push
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This is a good place to render, commit, and push changes to your hw-eda repo on GitHub. Write an informative commit message (e.g.&nbsp;“Completed exercises 4 - 6”), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty.</p>
+<p>This is a good place to render, commit, and push changes to your hw-eda repo on GitHub. Write an informative commit message (e.g.&nbsp;“Complete exercises 2 - 5”), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty.</p>
 </div>
 </div>
 </section>
-<section id="graphical-summaries" class="level2">
-<h2 class="anchored" data-anchor-id="graphical-summaries">Graphical Summaries</h2>
-<p>Graphical summaries are a key tool in exploratory data analysis to to help you understand your data. They also help you communicate insights about your data to others. For example, we might want to display relationships about some of our categorical variables. So we could start by graphing different party sizes in our data set.</p>
+</section>
+<section id="graphical-summaries" class="level1">
+<h1>Graphical Summaries</h1>
+<p>Graphical summaries are a key tool in exploratory data analysis to to help you understand your data. They also help you communicate insights about your data to others. For example, we might want to display relationships about some of our categorical variables. So we could start by graphing different party sizes in our data set. In general, graphical summaries are preferable to numerical summaries. The human brain is better at recognizing visual patterns than it is in parsing numbers.</p>
 <p>There are a few different packages for generating plots in Python:</p>
 <ul>
-<li><code>matplotlib</code>: The foundational “grandfather” of Python plotting, offering granular low-level control for creating static, publication-quality figures, though often requiring verbose code.</li>
-<li><code>seaborn</code>: A high-level wrapper built on <code>matplotlib</code> that simplifies statistical visualization (like heatmaps and regression plots) with beautiful default themes and fewer lines of code.</li>
-<li><code>plotnine</code>: A strict implementation of the “Grammar of Graphics” (mimicking R’s <code>ggplot2</code>), designed for users who prefer building plots by logically layering data, aesthetics, and geometries.</li>
-<li><code>plotly</code>: The best choice for <strong>interactive</strong> and web-ready charts, allowing users to zoom, pan, and hover over data points, making it ideal for dashboards.</li>
+<li><a href="https://matplotlib.org/"><code>matplotlib</code></a>: The foundational “grandfather” of Python plotting, offering granular low-level control for creating static, publication-quality figures, though often requiring verbose code.</li>
+<li><a href="https://seaborn.pydata.org/"><code>seaborn</code></a>: A high-level wrapper built on <code>matplotlib</code> that simplifies statistical visualization (like heatmaps and regression plots) with beautiful default themes and fewer lines of code.</li>
+<li><a href="https://plotnine.org/"><code>plotnine</code></a>: A strict implementation of the “Grammar of Graphics” (mimicking R’s <code>ggplot2</code>), designed for users who prefer building plots by logically layering data, aesthetics, and geometries.</li>
+<li><a href="https://plotly.com/"><code>plotly</code></a>: The best choice for <strong>interactive</strong> and web-ready charts, allowing users to zoom, pan, and hover over data points, making it ideal for dashboards.</li>
 </ul>
-</section>
-<section id="exercise-8" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-8">Exercise 8</h2>
-<p>Create the following charts using <code>matplotlib</code>, <code>seaborn</code>, and <code>plotnine</code>.</p>
+<section id="exercise-6" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-6">Exercise 6</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="Task">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Task
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Create the following plots using the library of your choice (I recommend against <code>plotly</code>) unless you already know how to use it). Remember that you will need to import the packages.</p>
 <ul>
-<li>Bar chart of <code>PartySize</code></li>
-<li>A stacked bar chart of <code>Weekday</code> broken down by <code>Smoker</code></li>
-<li>A standardized bar chart of <code>Weekday</code> broken down by <code>Smoker</code></li>
-<li>A histogram of <code>Tip</code> using 100 bins</li>
+<li><strong>Plot 1</strong>: A bar chart of <code>sex</code>.</li>
+<li><strong>Plot 2</strong>: A histogram of <code>total_bill</code>.</li>
+<li><strong>Plot 3</strong>: A scatterplot of <code>total_bill</code> vs <code>tip</code>, colored by <code>smoker</code>.</li>
 </ul>
-<section id="exercise-9" class="level3">
-<h3 class="anchored" data-anchor-id="exercise-9">Exercise 9</h3>
-<p>Notice that there are a few “spikes” in the histogram above. What do you think is causing this?</p>
-<p>We can also summarize this numerical data broken down by one of the categorical variables using boxplots, violin plots, or sina plots.</p>
+</div>
+</div>
+</section>
+<section id="bivariate-plots" class="level2">
+<h2 class="anchored" data-anchor-id="bivariate-plots">Bivariate Plots</h2>
+<p>We may also be interested in comparing variables. To do so we should consider the following scenarios:</p>
+<ul>
+<li>Categorical vs.&nbsp;categorical: your best bet is some kind of bar chart. If you’re interested in showing proportions or rates, use a standardized bar chart, if not, use a stacked bar chart or a dodged bar chart.</li>
+<li>Categorical vs.&nbsp;numerical: there are many options here. Simplest would be boxplots, but this can often obscure information. Better plots would be boxplots with a jitter plot overlay, sina plots, or violin plots. See the code below for how to implement these is <code>matplotlib</code>, <code>seaborn</code>, and <code>plotnine</code>.</li>
+<li>Numerical vs.&nbsp;Numerical: a good ole-fashioned scatter plot.</li>
+</ul>
 <section id="matplotlib" class="level4">
 <h4 class="anchored" data-anchor-id="matplotlib"><code>matplotlib</code></h4>
 <p><code>matplotlib</code> offloads a lot of the data prepartion to you so you’ll usually have to do some processing using <code>pandas</code>.</p>
-<div id="b5af0365" class="cell" data-execution_count="3">
+<div id="faca5306" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data: Create a list of 'Tip' arrays, one for each 'Weekday'</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>days <span class="op">=</span> tips[<span class="st">'Weekday'</span>].unique()</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>data_by_day <span class="op">=</span> [tips[tips[<span class="st">'Weekday'</span>] <span class="op">==</span> d][<span class="st">'Tip'</span>] <span class="cf">for</span> d <span class="kw">in</span> days]</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 1: Boxplot ---</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.boxplot(data_by_day, labels<span class="op">=</span>days)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Day of the Week"</span>)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Tips"</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 2: Boxplot + Jitter ---</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>plt.boxplot(data_by_day, labels<span class="op">=</span>days, showfliers<span class="op">=</span><span class="va">False</span>) <span class="co"># Hide outliers to avoid dupes</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Add jitter manually</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, d <span class="kw">in</span> <span class="bu">enumerate</span>(days):</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> tips[tips[<span class="st">'Weekday'</span>] <span class="op">==</span> d][<span class="st">'Tip'</span>]</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.random.normal(i <span class="op">+</span> <span class="dv">1</span>, <span class="fl">0.04</span>, size<span class="op">=</span><span class="bu">len</span>(y)) <span class="co"># i+1 because boxplot is 1-indexed</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    plt.scatter(x, y, alpha<span class="op">=</span><span class="fl">0.5</span>, s<span class="op">=</span><span class="dv">10</span>, color<span class="op">=</span><span class="st">'grey'</span>)</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Day of the Week"</span>)</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Tips"</span>)</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 3: Violin ---</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>plt.violinplot(data_by_day, showmeans<span class="op">=</span><span class="va">False</span>, showmedians<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>plt.xticks(ticks<span class="op">=</span><span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(days) <span class="op">+</span> <span class="dv">1</span>), labels<span class="op">=</span>days)</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Day of the Week"</span>)</span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Tips"</span>)</span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 4: Sina Plot Approximation ---</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Matplotlib has no native Sina plot. </span></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co"># A common approximation is a Violin plot with inner points (or a swarm plot).</span></span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Here we just show the violin (density) with scatter overlay.</span></span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>parts <span class="op">=</span> plt.violinplot(data_by_day, showextrema<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> pc <span class="kw">in</span> parts[<span class="st">'bodies'</span>]:</span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    pc.set_facecolor(<span class="st">'#D43F3A'</span>)</span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>    pc.set_alpha(<span class="fl">0.3</span>)</span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, d <span class="kw">in</span> <span class="bu">enumerate</span>(days):</span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> tips[tips[<span class="st">'Weekday'</span>] <span class="op">==</span> d][<span class="st">'Tip'</span>]</span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.random.normal(i <span class="op">+</span> <span class="dv">1</span>, <span class="fl">0.04</span>, size<span class="op">=</span><span class="bu">len</span>(y))</span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>    plt.scatter(x, y, alpha<span class="op">=</span><span class="fl">0.6</span>, s<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>plt.xticks(ticks<span class="op">=</span><span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(days) <span class="op">+</span> <span class="dv">1</span>), labels<span class="op">=</span>days)</span>
-<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span>
-<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Day of the Week"</span>)</span>
-<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Tips"</span>)</span>
-<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.boxplot(data_by_day, tick_labels<span class="op">=</span>days)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Day of the Week"</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Tips"</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 2: Boxplot + Jitter ---</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.boxplot(data_by_day, tick_labels<span class="op">=</span>days)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Doesn't have jitter plot so must add jitter manually</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, d <span class="kw">in</span> <span class="bu">enumerate</span>(days):</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> tips[tips[<span class="st">'Weekday'</span>] <span class="op">==</span> d][<span class="st">'Tip'</span>]</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.random.normal(i <span class="op">+</span> <span class="dv">1</span>, <span class="fl">0.04</span>, size<span class="op">=</span><span class="bu">len</span>(y)) <span class="co"># i+1 because boxplot is 1-indexed</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    plt.scatter(x, y)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Day of the Week"</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Tips"</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 3: Violin ---</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>plt.violinplot(data_by_day, showmeans<span class="op">=</span><span class="va">False</span>, showmedians<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>plt.xticks(ticks<span class="op">=</span><span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(days) <span class="op">+</span> <span class="dv">1</span>), labels<span class="op">=</span>days)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Day of the Week"</span>)</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Tips"</span>)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 4: Sina Plot Approximation ---</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Matplotlib has no native Sina plot. </span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co"># A common approximation is a Violin plot with inner points (or a swarm plot).</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Here we just show the violin (density) with scatter overlay.</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>parts <span class="op">=</span> plt.violinplot(data_by_day)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> pc <span class="kw">in</span> parts[<span class="st">'bodies'</span>]:</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    pc.set_facecolor(<span class="st">'#D43F3A'</span>)</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    pc.set_alpha(<span class="fl">0.3</span>)</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, d <span class="kw">in</span> <span class="bu">enumerate</span>(days):</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> tips[tips[<span class="st">'Weekday'</span>] <span class="op">==</span> d][<span class="st">'Tip'</span>]</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.random.normal(i <span class="op">+</span> <span class="dv">1</span>, <span class="fl">0.04</span>, size<span class="op">=</span><span class="bu">len</span>(y))</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    plt.scatter(x, y, alpha<span class="op">=</span><span class="fl">0.6</span>, s<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>plt.xticks(ticks<span class="op">=</span><span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(days) <span class="op">+</span> <span class="dv">1</span>), labels<span class="op">=</span>days)</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Day of the Week"</span>)</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Tips"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="seaborn" class="level4">
 <h4 class="anchored" data-anchor-id="seaborn"><code>seaborn</code></h4>
-<p><code>seaborn</code> codee looks a lot like <code>matplotlib</code> but takes care of most of the processing for you. However, <code>seaborn</code> tends to be a really slow package.</p>
-<div id="71a6e4a0" class="cell" data-execution_count="4">
+<p><code>seaborn</code> codee looks a lot like <code>matplotlib</code> but takes care of most of the processing for you. However, <code>seaborn</code> tends to be a slow package.</p>
+<div id="b4d2d37a" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 1: Boxplot ---</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 2: Boxplot + Jitter ---</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>, fliersize<span class="op">=</span><span class="dv">0</span>) <span class="co"># Hide outliers</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>sns.stripplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>, jitter<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 2: Boxplot + Jitter ---</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>, fliersize<span class="op">=</span><span class="dv">0</span>) <span class="co"># Hide outliers</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>sns.stripplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>, jitter<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 3: Violin ---</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>sns.violinplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 3: Violin ---</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>sns.violinplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 4: Sina Equivalent (Swarmplot or Violin+Strip) ---</span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Seaborn uses 'swarmplot' for non-overlapping points (beeswarm style)</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>sns.violinplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>, inner<span class="op">=</span><span class="va">None</span>, color<span class="op">=</span><span class="st">".8"</span>)</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>sns.stripplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>, jitter<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 4: Sina Equivalent (Swarmplot or Violin+Strip) ---</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Seaborn uses 'swarmplot' for non-overlapping points (beeswarm style)</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>sns.violinplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>, inner<span class="op">=</span><span class="va">None</span>, color<span class="op">=</span><span class="st">".8"</span>)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>sns.stripplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>, jitter<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tips by Day of the Week"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="plotnine" class="level4">
 <h4 class="anchored" data-anchor-id="plotnine"><code>plotnine</code></h4>
 <p><code>plotnine</code> mimicks <code>ggplot2</code> syntax (mostly). Note that you’ll have to wrap your plots in parenthesis because Python can’t follow the line breaks in the same way as R. In addition, if you want to create multiple plots in the same cell, you have two options. One option is to convert your <code>plotnine</code> plots into <code>matplotlib</code> objects using the <code>.draw()</code> method to convert a <code>plotnine</code> object into a <code>matplotlib</code> figure or <code>._draw_using_figure(fig, [ax])</code> to assign the <code>plotnine</code> object to an existing axis within a <code>matplotlib</code> figure. The second is to use <code>brick</code> from the package <a href="https://github.com/ponnhide/patchworklib"><code>patchworklib</code></a> which allows you to arrange figures.</p>
-<div id="06ec8029" class="cell" data-execution_count="5">
+<div id="d686304f" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 1: Boxplot ---</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    ggplot(tips, aes(x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>))</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> geom_boxplot()</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> labs(title<span class="op">=</span><span class="st">"Tips by Day of the Week"</span>, x<span class="op">=</span><span class="st">"Day of the Week"</span>, y<span class="op">=</span><span class="st">"Tips"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    p9.ggplot(tips, aes(x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_boxplot()</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.labs(title<span class="op">=</span><span class="st">"Tips by Day of the Week"</span>, x<span class="op">=</span><span class="st">"Day of the Week"</span>, y<span class="op">=</span><span class="st">"Tips"</span>)</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 2: Boxplot + Jitter ---</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 2: BoxpFlot + Jitter ---</span></span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    ggplot(tips, aes(x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>))</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> geom_boxplot(outlier_shape<span class="op">=</span><span class="va">None</span>) <span class="co"># Hide outliers so they aren't plotted twice</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> geom_jitter(width<span class="op">=</span><span class="fl">0.2</span>)</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> labs(title<span class="op">=</span><span class="st">"Tips by Day of the Week"</span>, x<span class="op">=</span><span class="st">"Day of the Week"</span>, y<span class="op">=</span><span class="st">"Tips"</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    p9.ggplot(tips, aes(x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>))</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_boxplot(outlier_shape<span class="op">=</span><span class="va">None</span>) <span class="co"># Hide outliers so they aren't plotted twice</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_jitter(width<span class="op">=</span><span class="fl">0.2</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.labs(title<span class="op">=</span><span class="st">"Tips by Day of the Week"</span>, x<span class="op">=</span><span class="st">"Day of the Week"</span>, y<span class="op">=</span><span class="st">"Tips"</span>)</span>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 3: Violin ---</span></span>
 <span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    ggplot(tips, aes(x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>))</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> geom_violin()</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> labs(title<span class="op">=</span><span class="st">"Tips by Day of the Week"</span>, x<span class="op">=</span><span class="st">"Day of the Week"</span>, y<span class="op">=</span><span class="st">"Tips"</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    p9.ggplot(tips, aes(x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>))</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_violin()</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.labs(title<span class="op">=</span><span class="st">"Tips by Day of the Week"</span>, x<span class="op">=</span><span class="st">"Day of the Week"</span>, y<span class="op">=</span><span class="st">"Tips"</span>)</span>
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot 4: Sina ---</span></span>
 <span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    ggplot(tips, aes(x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>))</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> geom_sina()</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> labs(title<span class="op">=</span><span class="st">"Tips by Day of the Week"</span>, x<span class="op">=</span><span class="st">"Day of the Week"</span>, y<span class="op">=</span><span class="st">"Tips"</span>)</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    p9.ggplot(tips, aes(x<span class="op">=</span><span class="st">'Weekday'</span>, y<span class="op">=</span><span class="st">'Tip'</span>))</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_sina()</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.labs(title<span class="op">=</span><span class="st">"Tips by Day of the Week"</span>, x<span class="op">=</span><span class="st">"Day of the Week"</span>, y<span class="op">=</span><span class="st">"Tips"</span>)</span>
 <span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>final Task</strong>: State a conjecture about tipping behavior (e.g., “People tip more on weekends”). Create <strong>one plot</strong> and <strong>one summary table</strong> to investigate your claim. Write a short sentence interpreting your findings.</p>
+</section>
+<section id="pairplots" class="level3">
+<h3 class="anchored" data-anchor-id="pairplots">Pairplots</h3>
+<p>Look at the documentation for <code>seaborn</code>’s <a href="https://seaborn.pydata.org/generated/seaborn.pairplot.html"><code>pairplot</code></a> and <a href="https://seaborn.pydata.org/generated/seaborn.PairGrid.html"><code>PairGrid</code></a>.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Render-Commit-Push">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Render-Commit-Push
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is a good place to render, commit, and push changes to your GitHub repo. Write an informative commit message (e.g.&nbsp;“Complete exercises 1 - 3”), and push every file to GitHub.</p>
+</div>
+</div>
+</section>
+<section id="exercise-7" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-7">Exercise 7</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="Task">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Task
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Create the following charts.</p>
+<ul>
+<li>Bar chart of <code>PartySize</code></li>
+<li>A stacked bar chart of <code>Weekday</code> broken down by <code>Smoker</code></li>
+<li>A standardized bar chart of <code>Weekday</code> broken down by <code>Smoker</code></li>
+<li>A histogram of <code>Tip</code> using 100 bins</li>
+<li>A plot of <code>Tip</code> vs.&nbsp;<code>Smoker</code></li>
+<li>At least one scatter plot</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="exercise-8" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-8">Exercise 8</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="Task">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Task
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use your new found skills to figure out which day of the week has the highest <em>percentage</em> of tables that are smokers? Hint: look at documentation and use Google to figure out how to create proportions.</p>
+</div>
+</div>
+</section>
+<section id="exercise-9" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-9">Exercise 9</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="Task">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Task
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notice that there are a few “spikes” in the histogram above. What do you think is causing this?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Render-Commit-Push">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Render-Commit-Push
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is a good place to render, commit, and push changes to your GitHub repo. Write an informative commit message (e.g.&nbsp;“Completed exercise 6-9”), and push every file to GitHub.</p>
+</div>
+</div>
 </section>
 </section>
-</section>
-<section id="submission" class="level2">
-<h2 class="anchored" data-anchor-id="submission">Submission</h2>
+<section id="exercise-10" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-10">Exercise 10</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Task">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Task
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using the skills you learned above. Conduct a thorough exploration of the question <em>What factors effect tipping behavior?</em>. Be prepared to present your exploration in class on Thursday. You can present directly from your Jupyter notebook. For your exploration to be complete the following conditions must be met:</p>
 <ol type="1">
-<li>Save your notebook.</li>
-<li>In the Source Control tab (Git icon), <strong>Stage</strong> your changes.</li>
-<li><strong>Commit</strong> with a message like “Finished HW01”.</li>
-<li><strong>Push</strong> to GitHub.</li>
+<li>An observer should have no additional questions about the data.</li>
+<li>You should avoid displaying any unnecessary information.</li>
 </ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Render-Commit-Push">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Render-Commit-Push
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is a good place to render, commit, and push changes to your GitHub repo. Write an informative commit message (e.g.&nbsp;“Completed exercises assignment”), and push every file to GitHub.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before you’re done with you work, make sure you look it over one last time to make sure the rendered document looks like you want it to! I recommend re-running the notebook from the top. I can’t tell you how often students turn in work and their output doesn’t match their prose or the output definitely doesn’t look the way they wanted it to.</p>
+</div>
+</div>
 
 
 </section>
