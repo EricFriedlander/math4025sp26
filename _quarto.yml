@@ -37,6 +37,8 @@ website:
     contents:
       - course-info/overview.qmd
       - course-info/syllabus.qmd
+      - href: index.qmd
+        text: Schedule
       - section: Computing
         contents:
         - href: course-info/computing-access.qmd
