@@ -166,6 +166,8 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
+from plotnint import *
+# OR
 import plotnine as p9
 ```
 
@@ -384,31 +386,31 @@ plt.title("Tips by Day of the Week")
 #| eval: false
 # --- Plot 1: Boxplot ---
 (
-    p9.ggplot(tips, aes(x='Weekday', y='Tip'))
-    + p9.geom_boxplot()
-    + p9.labs(title="Tips by Day of the Week", x="Day of the Week", y="Tips")
+    ggplot(tips, aes(x='Weekday', y='Tip'))
+    + geom_boxplot()
+    + labs(title="Tips by Day of the Week", x="Day of the Week", y="Tips")
 )
 
 # --- Plot 2: BoxpFlot + Jitter ---
 (
-    p9.ggplot(tips, aes(x='Weekday', y='Tip'))
-    + p9.geom_boxplot(outlier_shape=None) # Hide outliers so they aren't plotted twice
-    + p9.geom_jitter(width=0.2)
-    + p9.labs(title="Tips by Day of the Week", x="Day of the Week", y="Tips")
+    ggplot(tips, aes(x='Weekday', y='Tip'))
+    + geom_boxplot(outlier_shape=None) # Hide outliers so they aren't plotted twice
+    + geom_jitter(width=0.2)
+    + labs(title="Tips by Day of the Week", x="Day of the Week", y="Tips")
 )
 
 # --- Plot 3: Violin ---
 (
-    p9.ggplot(tips, aes(x='Weekday', y='Tip'))
-    + p9.geom_violin()
-    + p9.labs(title="Tips by Day of the Week", x="Day of the Week", y="Tips")
+    ggplot(tips, aes(x='Weekday', y='Tip'))
+    + geom_violin()
+    + labs(title="Tips by Day of the Week", x="Day of the Week", y="Tips")
 )
 
 # --- Plot 4: Sina ---
 (
-    p9.ggplot(tips, aes(x='Weekday', y='Tip'))
-    + p9.geom_sina()
-    + p9.labs(title="Tips by Day of the Week", x="Day of the Week", y="Tips")
+    ggplot(tips, aes(x='Weekday', y='Tip'))
+    + geom_sina()
+    + labs(title="Tips by Day of the Week", x="Day of the Week", y="Tips")
 )
 ```
 

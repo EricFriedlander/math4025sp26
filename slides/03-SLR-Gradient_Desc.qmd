@@ -224,9 +224,9 @@ fig = go.Figure(data=[go.Surface(z=grid_mat, x=b1, y=b0, cmin=min_val, cmax=max_
 
 fig.update_layout(
     scene=dict(
-        xaxis=dict(range=[min(b1), max(b1)], title=r"$\beta_1$"),
-        yaxis=dict(range=[min(b0), max(b0)], title=r"$\beta_0$"),
-        zaxis=dict(range=[min_val, max_val], title="MSE")
+        xaxis=dict(title="β₁"), # Use subscript 1: \u2081
+        yaxis=dict(title="β₀"), # Use subscript 0: \u2080
+        zaxis=dict(title="MSE")
     )
 )
 
