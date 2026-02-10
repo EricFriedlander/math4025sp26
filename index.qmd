@@ -36,7 +36,7 @@ d |>
   ) |>
   cols_align(
     align = "left", 
-    columns = c(topic, reading, slides, video)
+    columns = c(topic, reading, slides, video, assignment)
   ) |>
   tab_style(
     style = cell_borders(
@@ -45,11 +45,11 @@ d |>
       style = "solid"
     ),
     locations = cells_body(
-      columns = c(due, type, topic, reading, slides, video)
+      columns = c(due, type, topic, reading, slides, video, assignment)
     )
   ) |>
   fmt_markdown(
-    columns = c(type, topic, reading, slides, video)
+    columns = c(type, topic, reading, slides, video, assignment)
   ) |>
   cols_width(
     week ~ px(45),
