@@ -87,7 +87,7 @@ What is our goal in supervised learning?
 -   Model fit on training data $\hat{f}(x)$
 -   "True" relationship: $Y=f(x)+\epsilon$
 -   $(x_0^{test}, y_0^{test})$: test observation
--   Bias-Variance Trade-Off (Theoretical)
+-   [Bias-Variance Trade-Off (Theoretical)](https://efriedlander.shinyapps.io/BVTappRegression/)
     $$\underbrace{E\left(y_0^{test}-\hat{f}(x_0^{test})\right)^2}_{total \ error}=\underbrace{Var\left(\hat{f}(x_0^{test})\right)}_{source \ 1} + \underbrace{\left[Bias\left(\hat{f}(x_0^{test})\right)\right]^2}_{source \ 2}+\underbrace{Var(\epsilon)}_{source \ 3}$$
     where
     $Bias\left(\hat{f}(x_0)\right)=E\left(\hat{f}(x_0)\right)-f(x_0)$
