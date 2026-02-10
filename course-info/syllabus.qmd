@@ -12,7 +12,6 @@ format:
 |             |                             |                     |
 |----------------------------|-----------------------------|---------------------------------|
 | **Lecture** | MW 3:00 - 4:15pm | Cruzen-Murray Library (CML), 208 |
-
 | **Office Hours** | M 3:45 - 4:45pm | Boone 126B |
 | **Office Hours** | W 8:30 - 10:00am | Boone 126B |
 | **Office Hours** | TH 10:00 - 11:30am | Boone 126B |
