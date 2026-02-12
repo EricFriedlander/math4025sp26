@@ -247,7 +247,7 @@
     "href": "slides/05-data-splitting.html#linear-regression-comparing-models",
     "title": "Math 4025: Data Splitting",
     "section": "Linear Regression: Comparing Models",
-    "text": "Linear Regression: Comparing Models\n\nLet’s create five models with Sale_Price as the response:\n\nfit1: a linear regression model with Bedroom_Abv_Gr as the only predictor\nfit2: a linear regression model with Gr_Liv_Area as the only predictor\nfit3 (similar to model in previous slides): a multiple regression model with Gr_Liv_Area and Bedroom_Abv_Gr as predictors\nfit4: a multiple regression model with Gr_Liv_Area and Bedroom_Abv_Gr, and an interaction term\nfit5: super flexible model which fits a 10th degree polynomial to Gr_Liv_Area and a 2nd degree polynomial to Bedroom_Abv_Gr\n\nWe can use PolynomialFeatures\n\n\nPractice!"
+    "text": "Linear Regression: Comparing Models\n\nLet’s create five models with Sale_Price as the response:\n\nfit1: a linear regression model with Bedroom_Abv_Gr as the only predictor\nfit2: a linear regression model with Gr_Liv_Area as the only predictor\nfit3 (similar to model in previous slides): a multiple regression model with Gr_Liv_Area and Bedroom_Abv_Gr as predictors\nfit4: a multiple regression model with Gr_Liv_Area and Bedroom_Abv_Gr, and an interaction term\n\nPractice!"
   },
   {
     "objectID": "slides/05-data-splitting.html#computing-mse",
@@ -261,7 +261,7 @@
     "href": "slides/05-data-splitting.html#question",
     "title": "Math 4025: Data Splitting",
     "section": "Question",
-    "text": "Question\nWithout looking at the numbers\n\nDo we know which of the following is the smallest: fit1_train_mse, fit2_train_mse, fit3_train_mse, `fit5_train_mse? Yes, fit5_train_mse\nDo we know which of the following is the smallest: fit1_test_mse, fit2_test_mse, fit3_test_mse, fit5_test_mse? No"
+    "text": "Question\nWithout looking at the numbers\n\nDo we know which of the following is the smallest: fit1_train_mse, fit2_train_mse, fit3_train_mse, `fit4_train_mse? Yes, fit4_train_mse\nDo we know which of the following is the smallest: fit1_test_mse, fit2_test_mse, fit3_test_mse, fit4_test_mse? No"
   },
   {
     "objectID": "slides/05-data-splitting.html#choosing-a-model",

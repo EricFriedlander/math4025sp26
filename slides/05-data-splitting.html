@@ -174,10 +174,6 @@ Dr.&nbsp;Eric Friedlander
 <li><strong>fit2</strong>: a linear regression model with <code>Gr_Liv_Area</code> as the only predictor</li>
 <li><strong>fit3</strong> (similar to model in previous slides): a multiple regression model with <code>Gr_Liv_Area</code> and <code>Bedroom_Abv_Gr</code> as predictors</li>
 <li><strong>fit4</strong>: a multiple regression model with <code>Gr_Liv_Area</code> and <code>Bedroom_Abv_Gr</code>, and an interaction term</li>
-<li><strong>fit5</strong>: super flexible model which fits a 10th degree polynomial to <code>Gr_Liv_Area</code> and a 2nd degree polynomial to <code>Bedroom_Abv_Gr</code>
-<ul>
-<li>We can use <code>PolynomialFeatures</code></li>
-</ul></li>
 </ul></li>
 <li>Practice!</li>
 </ul>
@@ -193,8 +189,8 @@ Dr.&nbsp;Eric Friedlander
 <h2><span style="color:blue">Question</span></h2>
 <p>Without looking at the numbers</p>
 <ol type="1">
-<li>Do we know which of the following is the smallest: <code>fit1_train_mse</code>, <code>fit2_train_mse</code>, <code>fit3_train_mse</code>, `<code>fit5_train_mse</code>? <span class="fragment fade-in">Yes, <code>fit5_train_mse</code></span></li>
-<li>Do we know which of the following is the smallest: <code>fit1_test_mse</code>, <code>fit2_test_mse</code>, <code>fit3_test_mse</code>, <code>fit5_test_mse</code>? <span class="fragment fade-in">No</span></li>
+<li>Do we know which of the following is the smallest: <code>fit1_train_mse</code>, <code>fit2_train_mse</code>, <code>fit3_train_mse</code>, `<code>fit4_train_mse</code>? <span class="fragment fade-in">Yes, <code>fit4_train_mse</code></span></li>
+<li>Do we know which of the following is the smallest: <code>fit1_test_mse</code>, <code>fit2_test_mse</code>, <code>fit3_test_mse</code>, <code>fit4_test_mse</code>? <span class="fragment fade-in">No</span></li>
 </ol>
 </section>
 <section id="choosing-a-model" class="slide level2 smaller">
