@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-html/tabby.min.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -188,7 +188,7 @@
       margin-right: 0; 
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
   
   <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 </head>
@@ -210,7 +210,7 @@ Dr.&nbsp;Eric Friedlander
 </section>
 <section id="computational-setup" class="slide level2">
 <h2>Computational Setup</h2>
-<div id="10963ce7" class="cell" data-execution_count="1">
+<div id="128c1a88" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
@@ -242,7 +242,7 @@ Dr.&nbsp;Eric Friedlander
 </section>
 <section id="comparing-models-data-splitting-with-scikit-learn" class="slide level2 smaller">
 <h2>Comparing Models: Data Splitting with <code>scikit-learn</code></h2>
-<div id="50a4f2cf" class="cell" data-execution_count="2">
+<div id="4edf674e" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="co"># Load ames dataset from sklearn</span></span>
 <span id="cb2-2"><a></a>ames_data <span class="op">=</span> fetch_openml(name<span class="op">=</span><span class="st">"house_prices"</span>, as_frame<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb2-3"><a></a>ames <span class="op">=</span> ames_data.frame</span>
@@ -279,7 +279,7 @@ Test set size: 438</code></pre>
 <li><strong>fit4</strong>: super flexible model which fits a 10th degree polynomial to <code>GrLivArea</code> and a 2nd degree polynomial to <code>BedroomAbvGr</code></li>
 </ul></li>
 </ul>
-<div id="933ad3e4" class="cell" data-execution_count="3">
+<div id="063856b7" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="co"># Prepare target variable</span></span>
 <span id="cb4-2"><a></a>y_train <span class="op">=</span> ames_train[<span class="st">"SalePrice"</span>]</span>
 <span id="cb4-3"><a></a>y_test <span class="op">=</span> ames_test[<span class="st">"SalePrice"</span>]</span>
@@ -306,7 +306,7 @@ Test set size: 438</code></pre>
 </section>
 <section id="computing-mse" class="slide level2 smaller">
 <h2>Computing MSE</h2>
-<div id="f07ae2b1" class="cell" data-execution_count="4">
+<div id="dbd88984" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="co"># Function to compute MSE</span></span>
 <span id="cb5-2"><a></a><span class="kw">def</span> compute_mse(y_true, y_pred):</span>
 <span id="cb5-3"><a></a>    <span class="cf">return</span> np.mean((y_true <span class="op">-</span> y_pred) <span class="op">**</span> <span class="dv">2</span>)</span>
@@ -344,7 +344,7 @@ Test set size: 438</code></pre>
 <h2>Choosing a Model</h2>
 <div class="columns">
 <div class="column">
-<div id="e51dce14" class="cell" data-execution_count="5">
+<div id="ca03fb33" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="co"># Training Errors</span></span>
 <span id="cb6-2"><a></a>train_mses <span class="op">=</span> [fit1_train_mse, fit2_train_mse, fit3_train_mse, fit4_train_mse]</span>
 <span id="cb6-3"><a></a><span class="bu">print</span>(<span class="st">"Training MSEs:"</span>, [<span class="ss">f"</span><span class="sc">{</span>mse<span class="sc">:.0f}</span><span class="ss">"</span> <span class="cf">for</span> mse <span class="kw">in</span> train_mses])</span>
@@ -381,7 +381,7 @@ Best test: fit3</code></pre>
 <section id="regression-conditional-averaging" class="slide level2 smaller">
 <h2>Regression: Conditional Averaging</h2>
 <p><strong>Restaurant Outlets Profit dataset</strong></p>
-<div id="e613cf17" class="cell" data-execution_count="6">
+<div id="58550b2c" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div>
 <figure>
@@ -408,7 +408,7 @@ Best test: fit3</code></pre>
 <div class="columns">
 <div class="column">
 <p><strong><span class="math inline">\(K=1\)</span></strong></p>
-<div id="5b2fa64a" class="cell" data-execution_count="7">
+<div id="1802001f" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="co"># 1-NN regression</span></span>
 <span id="cb8-2"><a></a>knnfit1 <span class="op">=</span> KNeighborsRegressor(n_neighbors<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb8-3"><a></a>knnfit1.fit(outlets[[<span class="st">"population"</span>]], outlets[<span class="st">"profit"</span>])</span>
@@ -420,7 +420,7 @@ Best test: fit3</code></pre>
 <pre><code>1-NN prediction at x=6: 0.9270</code></pre>
 </div>
 </div>
-<div id="157368b5" class="cell" data-execution_count="8">
+<div id="ab1847ef" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 <figure>
@@ -431,7 +431,7 @@ Best test: fit3</code></pre>
 </div>
 </div><div class="column">
 <p><strong><span class="math inline">\(K=5\)</span></strong></p>
-<div id="233cac98" class="cell" data-execution_count="9">
+<div id="b40f1c92" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a><span class="co"># 5-NN regression</span></span>
 <span id="cb10-2"><a></a>knnfit5 <span class="op">=</span> KNeighborsRegressor(n_neighbors<span class="op">=</span><span class="dv">5</span>)</span>
 <span id="cb10-3"><a></a>knnfit5.fit(outlets[[<span class="st">"population"</span>]], outlets[<span class="st">"profit"</span>])</span>
@@ -443,7 +443,7 @@ Best test: fit3</code></pre>
 <pre><code>5-NN prediction at x=6: 5.7699</code></pre>
 </div>
 </div>
-<div id="8083aca0" class="cell" data-execution_count="10">
+<div id="35666ddc" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 <figure>
@@ -456,7 +456,7 @@ Best test: fit3</code></pre>
 </section>
 <section id="regression-methods-comparison" class="slide level2">
 <h2>Regression Methods: Comparison</h2>
-<div id="82404ad6" class="cell" data-execution_count="11">
+<div id="6aa494f1" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 <figure>
@@ -480,11 +480,11 @@ Best test: fit3</code></pre>
 <ul>
 <li>Let’s look at the <code>ames</code> data</li>
 </ul>
-<div id="28d13fea" class="cell" data-execution_count="12">
+<div id="0c303c78" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a>show(ames[[<span class="st">"SalePrice"</span>, <span class="st">"GrLivArea"</span>, <span class="st">"BedroomAbvGr"</span>]].head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_c5dd9379_43ca_47f4_a352_806e00341a48"><tbody><tr>
+<table id="itables_f4791b36_8c83_4bad_8440_56bbb0a619e0"><tbody><tr>
     <td style="vertical-align:middle; text-align:left">
     <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
     <g style="fill:#d9d7fc">
@@ -550,11 +550,11 @@ Best test: fit3</code></pre>
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_c5dd9379_43ca_47f4_a352_806e00341a48:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_f4791b36_8c83_4bad_8440_56bbb0a619e0:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "text_in_header_can_be_selected": true, "classes": ["display", "nowrap"], "order": [], "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>SalePrice</th>\n      <th>GrLivArea</th>\n      <th>BedroomAbvGr</th>\n    </tr>\n  </thead></table>", "data_json": "[[208500, 1710, 3], [181500, 1262, 3], [223500, 1786, 3], [140000, 1717, 3], [250000, 2198, 4]]"};
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "classes": ["display", "nowrap"], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "text_in_header_can_be_selected": true, "order": [], "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>SalePrice</th>\n      <th>GrLivArea</th>\n      <th>BedroomAbvGr</th>\n    </tr>\n  </thead></table>", "data_json": "[[208500, 1710, 3], [181500, 1262, 3], [223500, 1786, 3], [140000, 1717, 3], [250000, 2198, 4]]"};
         new ITable(table, dt_args);
     });
 </script>
@@ -576,7 +576,7 @@ Best test: fit3</code></pre>
 </section>
 <section id="scaling-in-python" class="slide level2">
 <h2>Scaling in Python</h2>
-<div id="cdc94184" class="cell" data-execution_count="13">
+<div id="040db951" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a><span class="co"># Scale predictors using StandardScaler</span></span>
 <span id="cb13-2"><a></a>scaler <span class="op">=</span> StandardScaler()</span>
 <span id="cb13-3"><a></a></span>
@@ -590,7 +590,7 @@ Best test: fit3</code></pre>
 <span id="cb13-11"><a></a>show(ames_scaled.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_e8620737_762f_459c_a5b3_92b682faef1d"><tbody><tr>
+<table id="itables_b89465f2_d9dd_4533_b6cd_b2b81f32c51c"><tbody><tr>
     <td style="vertical-align:middle; text-align:left">
     <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
     <g style="fill:#d9d7fc">
@@ -656,11 +656,11 @@ Best test: fit3</code></pre>
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_e8620737_762f_459c_a5b3_92b682faef1d:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_b89465f2_d9dd_4533_b6cd_b2b81f32c51c:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "text_in_header_can_be_selected": true, "classes": ["display", "nowrap"], "order": [], "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>size_scaled</th>\n      <th>num_bedrooms_scaled</th>\n      <th>price</th>\n    </tr>\n  </thead></table>", "data_json": "[[0.370333, 0.163779, 208500], [-0.482512, 0.163779, 181500], [0.515013, 0.163779, 223500], [0.383659, 0.163779, 140000], [1.299326, 1.390023, 250000]]"};
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "classes": ["display", "nowrap"], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "text_in_header_can_be_selected": true, "order": [], "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>size_scaled</th>\n      <th>num_bedrooms_scaled</th>\n      <th>price</th>\n    </tr>\n  </thead></table>", "data_json": "[[0.370333, 0.163779, 208500], [-0.482512, 0.163779, 181500], [0.515013, 0.163779, 223500], [0.383659, 0.163779, 140000], [1.299326, 1.390023, 250000]]"};
         new ITable(table, dt_args);
     });
 </script>
@@ -680,7 +680,7 @@ Best test: fit3</code></pre>
 </section>
 <section id="scaling-revisited" class="slide level2">
 <h2>Scaling Revisited</h2>
-<div id="c69aab78" class="cell" data-execution_count="14">
+<div id="05d1bc86" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a><span class="co"># Create scalers fitted ONLY on training data</span></span>
 <span id="cb14-2"><a></a>scaler_size <span class="op">=</span> StandardScaler()</span>
 <span id="cb14-3"><a></a>scaler_bedrooms <span class="op">=</span> StandardScaler()</span>
@@ -705,7 +705,7 @@ Best test: fit3</code></pre>
 </section>
 <section id="k-nearest-neighbors-regression-multiple-predictors-1" class="slide level2 smaller">
 <h2><span class="r-fit-text">K-Nearest Neighbors Regression (multiple predictors)</span></h2>
-<div id="c2fb26e5" class="cell" data-execution_count="15">
+<div id="8e97b8dc" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a><span class="co"># 10-NN regression</span></span>
 <span id="cb15-2"><a></a>knnfit10 <span class="op">=</span> KNeighborsRegressor(n_neighbors<span class="op">=</span><span class="dv">10</span>)</span>
 <span id="cb15-3"><a></a>knnfit10.fit(</span>
@@ -1508,7 +1508,7 @@ forceTheme('sk-container-id-1');</script>
 <ul>
 <li>Test Point: <code>GrLivArea</code> = 2000 square feet, and <code>BedroomAbvGr</code> = 3, then</li>
 </ul>
-<div id="59c40898" class="cell" data-execution_count="16">
+<div id="5817541f" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a><span class="co"># Scale the test point using training parameters</span></span>
 <span id="cb16-2"><a></a>test_point <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb16-3"><a></a>    <span class="st">"GrLivArea"</span>: [<span class="dv">2000</span>],</span>
