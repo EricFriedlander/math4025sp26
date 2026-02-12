@@ -791,119 +791,119 @@
   {
     "objectID": "slides/04-MultipleRegression.html#question",
     "href": "slides/04-MultipleRegression.html#question",
-    "title": "Math 4025: Multiple Linear Regression + Data Splitting",
+    "title": "Math 4025: Multiple Linear Regression",
     "section": "Question!!!",
     "text": "Question!!!\nAs a model’s flexibility increases:\n\nQuestionsAnswers\n\n\n\nits variance (increases/decreases)\nits bias (increases/decreases)\nits training MSE (increases/decreases)\nits test MSE (describe)\n\n\n\n\nits variance (increases)\nits bias (decreases)\nits training MSE (decreases)\nits test MSE (decreases at first, then increases and the model starts to overfit, U-shaped)"
   },
   {
     "objectID": "slides/04-MultipleRegression.html#outlet-data",
     "href": "slides/04-MultipleRegression.html#outlet-data",
-    "title": "Math 4025: Multiple Linear Regression + Data Splitting",
+    "title": "Math 4025: Multiple Linear Regression",
     "section": "Outlet Data",
     "text": "Outlet Data\nSuppose the CEO of a restaurant franchise is considering opening new outlets in different cities. They would like to expand their business to cities that give them higher profits with the assumption that highly populated cities will probably yield higher profits.\nThey have data on the population (in 100,000) and profit (in $1,000) at 97 cities where they currently have outlets."
   },
   {
     "objectID": "slides/04-MultipleRegression.html#scikit-learn",
     "href": "slides/04-MultipleRegression.html#scikit-learn",
-    "title": "Math 4025: Multiple Linear Regression + Data Splitting",
+    "title": "Math 4025: Multiple Linear Regression",
     "section": "scikit-learn",
     "text": "scikit-learn\n\nScikit-learn is a simple and efficient tools for predictive data analysis built on NumPy, SciPy, and matplotlib.\n\n\nscikit-learn (often imported as sklearn) provides a unified framework for building machine learning models in Python"
   },
   {
     "objectID": "slides/04-MultipleRegression.html#back-to-linear-regression",
     "href": "slides/04-MultipleRegression.html#back-to-linear-regression",
-    "title": "Math 4025: Multiple Linear Regression + Data Splitting",
+    "title": "Math 4025: Multiple Linear Regression",
     "section": "Back to linear regression",
-    "text": "Back to linear regression\nGoal: Select \\(\\hat{\\beta}_0\\) (intercept) and \\(\\hat{\\beta}_1\\) (slope) that minimize"
+    "text": "Back to linear regression\n\n\n\n\n\n\n\n\n\nGoal: Select \\(\\hat{\\beta}_0\\) (intercept) and \\(\\hat{\\beta}_1\\) (slope) that minimize"
   },
   {
     "objectID": "slides/04-MultipleRegression.html#modeling-with-scikit-learn",
     "href": "slides/04-MultipleRegression.html#modeling-with-scikit-learn",
-    "title": "Math 4025: Multiple Linear Regression + Data Splitting",
+    "title": "Math 4025: Multiple Linear Regression",
     "section": "Modeling with scikit-learn",
     "text": "Modeling with scikit-learn\n\nImport the model class (e.g. LinearRegression, LogisticRegression)\nInstantiate the model with desired hyperparameters\nFit the model to data using .fit(X, y)\nDo stuff with the model (e.g. display coefficients, make predictions)"
   },
   {
     "objectID": "slides/04-MultipleRegression.html#linear-regression-with-scikit-learn",
     "href": "slides/04-MultipleRegression.html#linear-regression-with-scikit-learn",
-    "title": "Math 4025: Multiple Linear Regression + Data Splitting",
+    "title": "Math 4025: Multiple Linear Regression",
     "section": "Linear Regression with scikit-learn",
     "text": "Linear Regression with scikit-learn\nPractice!"
   },
   {
     "objectID": "slides/04-MultipleRegression.html#linear-regression-with-scikit-learn-1",
     "href": "slides/04-MultipleRegression.html#linear-regression-with-scikit-learn-1",
-    "title": "Math 4025: Multiple Linear Regression + Data Splitting",
+    "title": "Math 4025: Multiple Linear Regression",
     "section": "Linear Regression with scikit-learn",
     "text": "Linear Regression with scikit-learn\nOur model\n\\[\n\\begin{aligned}\n\\text{Profit}  &= -3.90 + 1.19\\times\\text{Population}\\\\\n\\hat{Y}_i &= -3.90 + 1.19X_i\n\\end{aligned}\n\\]"
   },
   {
     "objectID": "slides/04-MultipleRegression.html#linear-regression-in-python-prediction",
     "href": "slides/04-MultipleRegression.html#linear-regression-in-python-prediction",
-    "title": "Math 4025: Multiple Linear Regression + Data Splitting",
+    "title": "Math 4025: Multiple Linear Regression",
     "section": "Linear Regression in Python: Prediction",
     "text": "Linear Regression in Python: Prediction\nPractice!\n\nNote: New data must be a DataFrame with the same column names as the training data"
   },
   {
     "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-1",
     "href": "slides/04-MultipleRegression.html#multiple-linear-regression-1",
-    "title": "Math 4025: Multiple Linear Regression + Data Splitting",
+    "title": "Math 4025: Multiple Linear Regression",
     "section": "Multiple Linear Regression",
     "text": "Multiple Linear Regression\n\nResponse: \\(Y\\)\nPredictor Variables: \\(X_1, X_2, \\ldots, X_p\\)\nAssume true relationship:\n\n\\[\n\\begin{aligned}\nY&=f(\\mathbf{X}) + \\epsilon\\\\\n&=\\beta_0 + \\beta_1 X_1 + \\beta_2 X_2 + \\ldots + \\beta_p X_p + \\epsilon\n\\end{aligned}\n\\] where \\(\\beta_j\\) quantifies the association between the \\(j^{th}\\) predictor and the response."
   },
   {
     "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-estimating-parameters",
     "href": "slides/04-MultipleRegression.html#multiple-linear-regression-estimating-parameters",
-    "title": "Math 4025: Multiple Linear Regression + Data Splitting",
+    "title": "Math 4025: Multiple Linear Regression",
     "section": "Multiple Linear Regression: Estimating Parameters",
     "text": "Multiple Linear Regression: Estimating Parameters\n\nSuppose \\(\\hat{\\beta}_0, \\hat{\\beta}_1, \\ldots, \\hat{\\beta}_p\\) are estimates of \\(\\beta_0, \\beta_1, \\ldots, \\beta_p\\)\nTraining Data:\n\nObserved response: \\(y_i\\) for \\(i=1,\\ldots,n\\)\nObserved predictors: \\(x_{1i}, x_{2i}, \\ldots x_{pi}\\) for \\(i=1,\\ldots, n\\)\n\nPredicted response: \\[\\hat{y}_i = \\hat{\\beta}_0 + \\hat{\\beta}_1x_{1i} + \\ldots + \\hat{\\beta}_px_{pi} \\text{ for } i=1, \\ldots, n\\]\nResiduals: \\(e_i = y_i - \\hat{y}_i\\) for \\(i=1, \\ldots, n\\)\nMean Squared Error (MSE): \\(MSE =\\dfrac{e^2_1+e^2_2+\\ldots+e^2_n}{n}\\)"
   },
   {
     "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-estimating-parameters-1",
     "href": "slides/04-MultipleRegression.html#multiple-linear-regression-estimating-parameters-1",
-    "title": "Math 4025: Multiple Linear Regression + Data Splitting",
+    "title": "Math 4025: Multiple Linear Regression",
     "section": "Multiple Linear Regression: Estimating Parameters",
     "text": "Multiple Linear Regression: Estimating Parameters\n\nGoal: Use training data to find \\(\\hat{\\beta}_0, \\hat{\\beta}_1, \\ldots, \\hat{\\beta}_p\\) that minimizes MSE\n\n\\(\\hat{\\beta}_i\\)’s called least-squares estimators\nSince minimizing MSE \\(\\implies\\) MSE is called cost/loss function\n\nCan use calculus or gradient descent to find \\(\\hat{\\beta}_i\\)’s"
   },
   {
     "objectID": "slides/04-MultipleRegression.html#house-prices-dataset",
     "href": "slides/04-MultipleRegression.html#house-prices-dataset",
-    "title": "Math 4025: Multiple Linear Regression + Data Splitting",
+    "title": "Math 4025: Multiple Linear Regression",
     "section": "House Prices dataset",
     "text": "House Prices dataset\n\nsize is in square feet\nnum_bedrooms is a count\nprice is in $1,000’s"
   },
   {
     "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-in-python",
     "href": "slides/04-MultipleRegression.html#multiple-linear-regression-in-python",
-    "title": "Math 4025: Multiple Linear Regression + Data Splitting",
+    "title": "Math 4025: Multiple Linear Regression",
     "section": "Multiple Linear Regression in Python",
     "text": "Multiple Linear Regression in Python\n\nPractice!"
   },
   {
     "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-interpreting-parameters",
     "href": "slides/04-MultipleRegression.html#multiple-linear-regression-interpreting-parameters",
-    "title": "Math 4025: Multiple Linear Regression + Data Splitting",
+    "title": "Math 4025: Multiple Linear Regression",
     "section": "Multiple Linear Regression: Interpreting Parameters",
     "text": "Multiple Linear Regression: Interpreting Parameters\n\n\\(\\hat{\\beta}_0=89.5978\\): The intercept \\(\\implies\\) a house with 0 square feet and 0 bedrooms would cost approximately $89,598.80. Is this meaningful in context? Not really\n\\(\\hat{\\beta}_1=0.1392\\): With num_bedrooms remaining fixed, an additional 1 square foot of size leads to an increase in price by approximately $139.20.\n\\(\\hat{\\beta}_2=-8.7379\\): With size remaining fixed, an additional bedroom leads to an decrease in price of approximately $8,737.90.\n\n\n\nHmm…. that’s a little weird…\nSimpson’s Paradox: when relationship between two variables disappears or reverses when controlling for a third, confounding variable"
   },
   {
     "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-interpreting-parameters-1",
     "href": "slides/04-MultipleRegression.html#multiple-linear-regression-interpreting-parameters-1",
-    "title": "Math 4025: Multiple Linear Regression + Data Splitting",
+    "title": "Math 4025: Multiple Linear Regression",
     "section": "Multiple Linear Regression: Interpreting Parameters",
     "text": "Multiple Linear Regression: Interpreting Parameters\n\n\nWrite down our model in mathematical notation\n\\(\\text{price} = 89.5978 + 0.1392\\times\\text{size} - 8.7379\\times\\text{num_bedrooms}\\)\n\\(Y = 89.5978 + 0.1392X_1 - 8.7379X_2\\)"
   },
   {
     "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-prediction",
     "href": "slides/04-MultipleRegression.html#multiple-linear-regression-prediction",
-    "title": "Math 4025: Multiple Linear Regression + Data Splitting",
+    "title": "Math 4025: Multiple Linear Regression",
     "section": "Multiple Linear Regression: Prediction",
     "text": "Multiple Linear Regression: Prediction\n\nPrediction of price when size is 2000 square feet for a house with 3 bedrooms\n\\(\\text{sales} = 89.5978 + 0.1392\\times2000 - 8.7379\\times3 = 341.7841\\)\n\n\n\nLet’s use Python to make this same prediction\nWhy don’t these match exactly? rounding"
   },
   {
     "objectID": "slides/04-MultipleRegression.html#recap-1",
     "href": "slides/04-MultipleRegression.html#recap-1",
-    "title": "Math 4025: Multiple Linear Regression + Data Splitting",
+    "title": "Math 4025: Multiple Linear Regression",
     "section": "Recap",
     "text": "Recap\n\nBias-Variance Trade-off: As flexibility increases, variance increases and bias decreases.\nscikit-learn Workflow:\n\nImport model class.\nInstantiate with hyperparameters.\nFit to training data (.fit(X, y)).\nPredict or inspect coefficients (.predict(), .coef_, .intercept_).\n\nMultiple Linear Regression: Extends simple linear regression to multiple predictors.\nInterpreting Coefficients: \\(\\hat{\\beta}_j\\) is the expected change in \\(Y\\) for a one-unit increase in \\(X_j\\), holding all other predictors constant.\nSimpson’s Paradox: Relationships can change or reverse when accounting for confounders."
   },
