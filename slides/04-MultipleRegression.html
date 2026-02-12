@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-html/tabby.min.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -28,71 +28,6 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-    /* CSS for syntax highlighting */
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        color: #aaaaaa;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-    div.sourceCode
-      { color: #003b4f; background-color: #f1f3f5; }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span { color: #003b4f; } /* Normal */
-    code span.al { color: #ad0000; } /* Alert */
-    code span.an { color: #5e5e5e; } /* Annotation */
-    code span.at { color: #657422; } /* Attribute */
-    code span.bn { color: #ad0000; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #20794d; } /* Char */
-    code span.cn { color: #8f5902; } /* Constant */
-    code span.co { color: #5e5e5e; } /* Comment */
-    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
-    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
-    code span.dt { color: #ad0000; } /* DataType */
-    code span.dv { color: #ad0000; } /* DecVal */
-    code span.er { color: #ad0000; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #ad0000; } /* Float */
-    code span.fu { color: #4758ab; } /* Function */
-    code span.im { color: #00769e; } /* Import */
-    code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
-    code span.op { color: #5e5e5e; } /* Operator */
-    code span.ot { color: #003b4f; } /* Other */
-    code span.pp { color: #ad0000; } /* Preprocessor */
-    code span.sc { color: #5e5e5e; } /* SpecialChar */
-    code span.ss { color: #20794d; } /* SpecialString */
-    code span.st { color: #20794d; } /* String */
-    code span.va { color: #111111; } /* Variable */
-    code span.vs { color: #20794d; } /* VerbatimString */
-    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-72811bd306436bae30bfb620bac545c3.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -188,9 +123,6 @@
       margin-right: 0; 
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
-  
-  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -207,17 +139,6 @@ Dr.&nbsp;Eric Friedlander
 </div>
 </div>
 
-</section>
-<section id="computational-setup" class="slide level2">
-<h2>Computational Setup</h2>
-<div id="37b4f912" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
-<span id="cb1-4"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-5"><a></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-6"><a></a><span class="im">from</span> itables <span class="im">import</span> show</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
 <section id="question" class="slide level2">
 <h2><span style="color:blue">Question!!!</span></h2>
@@ -261,173 +182,24 @@ Dr.&nbsp;Eric Friedlander
 <h2>Outlet Data</h2>
 <p>Suppose the CEO of a restaurant franchise is considering opening new outlets in different cities. They would like to expand their business to cities that give them higher profits with the assumption that highly populated cities will probably yield higher profits.</p>
 <p>They have data on the population (in 100,000) and profit (in $1,000) at 97 cities where they currently have outlets.</p>
-<div id="445276f3" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>outlets <span class="op">=</span> pd.read_csv(<span class="st">"../data/outlets.csv"</span>)</span>
-<span id="cb2-2"><a></a>show(outlets.head())  <span class="co"># first six observations of the dataset</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<!--| quarto-html-table-processing: none -->
-<table id="itables_2b48f82a_299a_44e7_84a5_bc9d99ddfed0"><tbody><tr>
-    <td style="vertical-align:middle; text-align:left">
-    <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
-    <g style="fill:#d9d7fc">
-        <path d="M100,400H500V357H100Z"></path>
-        <path d="M100,300H400V257H100Z"></path>
-        <path d="M0,200H400V157H0Z"></path>
-        <path d="M100,100H500V57H100Z"></path>
-        <path d="M100,350H500V307H100Z"></path>
-        <path d="M100,250H400V207H100Z"></path>
-        <path d="M0,150H400V107H0Z"></path>
-        <path d="M100,50H500V7H100Z"></path>
-    </g>
-    <g style="fill:#1a1366;stroke:#1a1366;">
-   <rect x="100" y="7" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="0" y="107" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="207" width="300" height="43">
-    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="307" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
-  </rect>
-        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
-            <g transform="translate(45 50) rotate(-45)">
-                <circle r="33" cx="0" cy="0"></circle>
-                <rect x="-8" y="32" width="16" height="30"></rect>
-            </g>
-
-            <g transform="translate(450 152)">
-                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
-                <rect x="-15" y="-40" width="60" height="60"></rect>
-            </g>
-
-            <g transform="translate(50 352)">
-                <polygon points="-35,-5 0,-40 35,-5"></polygon>
-                <polygon points="-35,10 0,45 35,10"></polygon>
-            </g>
-
-            <g transform="translate(75 250)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-
-            <g transform="translate(425 250) rotate(180)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-        </g>
-    </g>
-</svg>
-</a>
-    Loading ITables v2.6.2 from the internet...
-    (need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
-    </tr></tbody></table>
-<link href="https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.css" rel="stylesheet">
-<script type="module">
-    import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
-
-    document.querySelectorAll("#itables_2b48f82a_299a_44e7_84a5_bc9d99ddfed0:not(.dataTable)").forEach(table => {
-        if (!(table instanceof HTMLTableElement))
-            return;
-
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "text_in_header_can_be_selected": true, "classes": ["display", "nowrap"], "order": [], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>population</th>\n      <th>profit</th>\n    </tr>\n  </thead></table>", "data_json": "[[6.1101, 17.592], [5.5277, 9.1302], [8.5186, 13.662], [7.0032, 11.854], [5.8598, 6.8233]]"};
-        new ITable(table, dt_args);
-    });
-</script>
-</div>
-</div>
+<!-- ```{python}
+#| echo: false
+outlets = pd.read_csv("../data/outlets.csv")
+show(outlets.head())  # first six observations of the dataset
+``` -->
 </section>
-<section id="python-as-an-open-source-language" class="slide level2">
-<h2>Python as an open-source language</h2>
-<ul>
-<li>Python is an open source language
-<ul>
-<li>Advantages:
-<ul>
-<li>Packages for almost anything you want</li>
-<li>“Cutting edge” methods rolled out quickly and early</li>
-</ul></li>
-<li>Disadvantages
-<ul>
-<li>Many packages (especially new ones) may have bugs</li>
-<li>Lots of syntactical diversity</li>
-<li>Syntax is frequently dependent on the needs of the person who wrote the package and conventions at the time the package was created</li>
-</ul></li>
-</ul></li>
-</ul>
-</section>
-<section id="enter-pandas-and-plotnine" class="slide level2">
-<h2>Enter <code>pandas</code> and <code>plotnine</code></h2>
-<blockquote>
-<p>pandas is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool.</p>
-</blockquote>
-<blockquote>
-<p>plotnine is an implementation of a grammar of graphics in Python based on ggplot2.</p>
-</blockquote>
-<ul>
-<li><code>pandas</code> is for manipulating data</li>
-<li><code>plotnine</code> is for visualizing data (similar to ggplot2)</li>
-</ul>
-</section>
-<section id="enter-scikit-learn" class="slide level2">
-<h2>Enter <code>scikit-learn</code></h2>
+<section id="scikit-learn" class="slide level2">
+<h2><code>scikit-learn</code></h2>
 <blockquote>
 <p>Scikit-learn is a simple and efficient tools for predictive data analysis built on NumPy, SciPy, and matplotlib.</p>
 </blockquote>
 <ul>
 <li><code>scikit-learn</code> (often imported as <code>sklearn</code>) provides a unified framework for building machine learning models in Python</li>
-<li>Similar philosophy to <code>tidymodels</code> in R: consistent API across different model types</li>
 </ul>
 </section>
 <section id="back-to-linear-regression" class="slide level2">
 <h2>Back to linear regression</h2>
-<div id="8ebe0659" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="im">from</span> plotnine <span class="im">import</span> ggplot, aes, geom_point, geom_smooth</span>
-<span id="cb3-2"><a></a></span>
-<span id="cb3-3"><a></a>(</span>
-<span id="cb3-4"><a></a>    ggplot(outlets, aes(x<span class="op">=</span><span class="st">"population"</span>, y<span class="op">=</span><span class="st">"profit"</span>))</span>
-<span id="cb3-5"><a></a>    <span class="op">+</span> geom_point()  <span class="co"># create scatterplot</span></span>
-<span id="cb3-6"><a></a>    <span class="op">+</span> geom_smooth(method<span class="op">=</span><span class="st">"lm"</span>, se<span class="op">=</span><span class="va">False</span>)  <span class="co"># add the regression line</span></span>
-<span id="cb3-7"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
-<div>
-<figure>
-<p><img data-src="04-MultipleRegression_files/figure-revealjs/cell-4-output-1.png" width="960" height="480"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="classic-linear-regression-in-python" class="slide level2 smaller">
-<h2>Classic Linear Regression in Python</h2>
-<div class="columns">
-<div class="column">
-<div id="e54aa8b8" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
-<span id="cb4-2"><a></a></span>
-<span id="cb4-3"><a></a>outlets_model <span class="op">=</span> smf.ols(<span class="st">"profit ~ population"</span>, data<span class="op">=</span>outlets).fit()</span>
-<span id="cb4-4"><a></a><span class="bu">print</span>(outlets_model.params)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Intercept    -3.895781
-population    1.193034
-dtype: float64</code></pre>
-</div>
-</div>
-</div><div class="column">
-<p>This corresponds to the model:</p>
-<p><span class="math display">\[
-\begin{aligned}
-\text{Profit}  &amp;= -3.90 + 1.19\times\text{Population}\\
-\hat{Y}_i &amp;= -3.90 + 1.19X_i
-\end{aligned}
-\]</span> i.e.&nbsp;<span class="math inline">\(\hat{\beta}_0 = -3.90\)</span> and <span class="math inline">\(\hat{\beta}_1 = 1.19\)</span></p>
-</div></div>
+<p><strong>Goal:</strong> Select <span class="math inline">\(\hat{\beta}_0\)</span> (intercept) and <span class="math inline">\(\hat{\beta}_1\)</span> (slope) that minimize</p>
 </section>
 <section id="modeling-with-scikit-learn" class="slide level2">
 <h2>Modeling with <code>scikit-learn</code></h2>
@@ -435,38 +207,16 @@ dtype: float64</code></pre>
 <li><p>Import the model class (e.g.&nbsp;<code>LinearRegression</code>, <code>LogisticRegression</code>)</p></li>
 <li><p>Instantiate the model with desired hyperparameters</p></li>
 <li><p>Fit the model to data using <code>.fit(X, y)</code></p></li>
-<li><p>Make predictions using <code>.predict(X_new)</code></p></li>
+<li><p>Do stuff with the model (e.g.&nbsp;display coefficients, make predictions)</p></li>
 </ol>
 </section>
 <section id="linear-regression-with-scikit-learn" class="slide level2">
 <h2>Linear Regression with <code>scikit-learn</code></h2>
-<div id="96d44846" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6" data-code-line-numbers="|2|5|8|11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="co"># Import the model class</span></span>
-<span id="cb6-2"><a></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
-<span id="cb6-3"><a></a></span>
-<span id="cb6-4"><a></a><span class="co"># Instantiate the model</span></span>
-<span id="cb6-5"><a></a>lm_model <span class="op">=</span> LinearRegression()</span>
-<span id="cb6-6"><a></a></span>
-<span id="cb6-7"><a></a><span class="co"># Prepare the data (scikit-learn expects 2D arrays for X)</span></span>
-<span id="cb6-8"><a></a>X <span class="op">=</span> outlets[[<span class="st">"population"</span>]]  <span class="co"># double brackets to keep as DataFrame</span></span>
-<span id="cb6-9"><a></a>y <span class="op">=</span> outlets[<span class="st">"profit"</span>]</span>
-<span id="cb6-10"><a></a></span>
-<span id="cb6-11"><a></a><span class="co"># Fit the model</span></span>
-<span id="cb6-12"><a></a>lm_model_fit <span class="op">=</span> lm_model.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p>Practice!</p>
 </section>
 <section id="linear-regression-with-scikit-learn-1" class="slide level2">
 <h2>Linear Regression with <code>scikit-learn</code></h2>
-<div id="758acdb3" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="co"># Display the coefficients</span></span>
-<span id="cb7-2"><a></a><span class="bu">print</span>(<span class="ss">f"Intercept: </span><span class="sc">{</span>lm_model_fit<span class="sc">.</span>intercept_<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb7-3"><a></a><span class="bu">print</span>(<span class="ss">f"Coefficient for population: </span><span class="sc">{</span>lm_model_fit<span class="sc">.</span>coef_[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Intercept: -3.8958
-Coefficient for population: 1.1930</code></pre>
-</div>
-</div>
-<p>Same model as before:</p>
+<p>Our model</p>
 <p><span class="math display">\[
 \begin{aligned}
 \text{Profit}  &amp;= -3.90 + 1.19\times\text{Population}\\
@@ -476,94 +226,18 @@ Coefficient for population: 1.1930</code></pre>
 </section>
 <section id="linear-regression-in-python-prediction" class="slide level2">
 <h2>Linear Regression in Python: Prediction</h2>
-<div id="e224ca06" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a><span class="co"># Generate new data</span></span>
-<span id="cb9-2"><a></a>np.random.seed(<span class="dv">42</span>)</span>
-<span id="cb9-3"><a></a>new_cities <span class="op">=</span> pd.DataFrame({<span class="st">"population"</span>: np.random.normal(<span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">100</span>)})</span>
-<span id="cb9-4"><a></a></span>
-<span id="cb9-5"><a></a><span class="co"># Make predictions</span></span>
-<span id="cb9-6"><a></a>predictions <span class="op">=</span> lm_model_fit.predict(new_cities[[<span class="st">"population"</span>]])</span>
-<span id="cb9-7"><a></a>new_cities[<span class="st">"predicted_profit"</span>] <span class="op">=</span> predictions</span>
-<span id="cb9-8"><a></a></span>
-<span id="cb9-9"><a></a>show(new_cities.head(<span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<!--| quarto-html-table-processing: none -->
-<table id="itables_a5f157a4_c73d_4c5e_8841_f1d563b01ac9"><tbody><tr>
-    <td style="vertical-align:middle; text-align:left">
-    <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
-    <g style="fill:#d9d7fc">
-        <path d="M100,400H500V357H100Z"></path>
-        <path d="M100,300H400V257H100Z"></path>
-        <path d="M0,200H400V157H0Z"></path>
-        <path d="M100,100H500V57H100Z"></path>
-        <path d="M100,350H500V307H100Z"></path>
-        <path d="M100,250H400V207H100Z"></path>
-        <path d="M0,150H400V107H0Z"></path>
-        <path d="M100,50H500V7H100Z"></path>
-    </g>
-    <g style="fill:#1a1366;stroke:#1a1366;">
-   <rect x="100" y="7" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="0" y="107" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="207" width="300" height="43">
-    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="307" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
-  </rect>
-        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
-            <g transform="translate(45 50) rotate(-45)">
-                <circle r="33" cx="0" cy="0"></circle>
-                <rect x="-8" y="32" width="16" height="30"></rect>
-            </g>
+<p>Practice!</p>
+<!-- ```{python}
+# Generate new data
+np.random.seed(42)
+new_cities = pd.DataFrame({"population": np.random.normal(7, 3, 100)})
 
-            <g transform="translate(450 152)">
-                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
-                <rect x="-15" y="-40" width="60" height="60"></rect>
-            </g>
+# Make predictions
+predictions = lm_model_fit.predict(new_cities[["population"]])
+new_cities["predicted_profit"] = predictions
 
-            <g transform="translate(50 352)">
-                <polygon points="-35,-5 0,-40 35,-5"></polygon>
-                <polygon points="-35,10 0,45 35,10"></polygon>
-            </g>
-
-            <g transform="translate(75 250)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-
-            <g transform="translate(425 250) rotate(180)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-        </g>
-    </g>
-</svg>
-</a>
-    Loading ITables v2.6.2 from the internet...
-    (need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
-    </tr></tbody></table>
-<link href="https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.css" rel="stylesheet">
-<script type="module">
-    import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
-
-    document.querySelectorAll("#itables_a5f157a4_c73d_4c5e_8841_f1d563b01ac9:not(.dataTable)").forEach(table => {
-        if (!(table instanceof HTMLTableElement))
-            return;
-
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "text_in_header_can_be_selected": true, "classes": ["display", "nowrap"], "order": [], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>population</th>\n      <th>predicted_profit</th>\n    </tr>\n  </thead></table>", "data_json": "[[8.490142, 6.233245], [6.585207, 3.960593], [8.943066, 6.773597], [11.56909, 9.906532], [6.29754, 3.617396], [6.297589, 3.617455], [11.737638, 10.107617], [9.302304, 7.202181], [5.591577, 2.775158], [8.62768, 6.397332]]"};
-        new ITable(table, dt_args);
-    });
-</script>
-</div>
-</div>
+show(new_cities.head(10))
+``` -->
 <p>Note: New data must be a DataFrame with the same column names as the training data</p>
 </section></section>
 <section>
@@ -595,7 +269,7 @@ Y&amp;=f(\mathbf{X}) + \epsilon\\
 <li>Observed predictors: <span class="math inline">\(x_{1i}, x_{2i}, \ldots x_{pi}\)</span> for <span class="math inline">\(i=1,\ldots, n\)</span></li>
 </ul></li>
 <li>Predicted response: <span class="math display">\[\hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1x_{1i} + \ldots + \hat{\beta}_px_{pi} \text{ for } i=1, \ldots, n\]</span></li>
-<li>Residuals: <span class="math inline">\(e_i = \hat{y}_i - y_i\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span></li>
+<li>Residuals: <span class="math inline">\(e_i = y_i - \hat{y}_i\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span></li>
 <li>Mean Squared Error (MSE): <span class="math inline">\(MSE =\dfrac{e^2_1+e^2_2+\ldots+e^2_n}{n}\)</span></li>
 </ul>
 </section>
@@ -617,199 +291,26 @@ Y&amp;=f(\mathbf{X}) + \epsilon\\
 <li><code>num_bedrooms</code> is a count</li>
 <li><code>price</code> is in $1,000’s</li>
 </ul>
-<div id="5ced9203" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>house_prices <span class="op">=</span> pd.read_csv(<span class="st">"../data/house_prices.csv"</span>)</span>
-<span id="cb10-2"><a></a>show(house_prices.head(<span class="dv">6</span>))  <span class="co"># print first 6 observations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<!--| quarto-html-table-processing: none -->
-<table id="itables_eced40b6_32f5_4315_b563_629d29000cc7"><tbody><tr>
-    <td style="vertical-align:middle; text-align:left">
-    <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
-    <g style="fill:#d9d7fc">
-        <path d="M100,400H500V357H100Z"></path>
-        <path d="M100,300H400V257H100Z"></path>
-        <path d="M0,200H400V157H0Z"></path>
-        <path d="M100,100H500V57H100Z"></path>
-        <path d="M100,350H500V307H100Z"></path>
-        <path d="M100,250H400V207H100Z"></path>
-        <path d="M0,150H400V107H0Z"></path>
-        <path d="M100,50H500V7H100Z"></path>
-    </g>
-    <g style="fill:#1a1366;stroke:#1a1366;">
-   <rect x="100" y="7" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="0" y="107" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="207" width="300" height="43">
-    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="307" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
-  </rect>
-        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
-            <g transform="translate(45 50) rotate(-45)">
-                <circle r="33" cx="0" cy="0"></circle>
-                <rect x="-8" y="32" width="16" height="30"></rect>
-            </g>
-
-            <g transform="translate(450 152)">
-                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
-                <rect x="-15" y="-40" width="60" height="60"></rect>
-            </g>
-
-            <g transform="translate(50 352)">
-                <polygon points="-35,-5 0,-40 35,-5"></polygon>
-                <polygon points="-35,10 0,45 35,10"></polygon>
-            </g>
-
-            <g transform="translate(75 250)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-
-            <g transform="translate(425 250) rotate(180)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-        </g>
-    </g>
-</svg>
-</a>
-    Loading ITables v2.6.2 from the internet...
-    (need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
-    </tr></tbody></table>
-<link href="https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.css" rel="stylesheet">
-<script type="module">
-    import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
-
-    document.querySelectorAll("#itables_eced40b6_32f5_4315_b563_629d29000cc7:not(.dataTable)").forEach(table => {
-        if (!(table instanceof HTMLTableElement))
-            return;
-
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "text_in_header_can_be_selected": true, "classes": ["display", "nowrap"], "order": [], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>size</th>\n      <th>num_bedrooms</th>\n      <th>price</th>\n    </tr>\n  </thead></table>", "data_json": "[[2104, 3, 399.9], [1600, 3, 329.9], [2400, 3, 369.0], [1416, 2, 232.0], [3000, 4, 539.9], [1985, 4, 299.9]]"};
-        new ITable(table, dt_args);
-    });
-</script>
-</div>
-</div>
-</section>
-<section id="multiple-linear-regression-2" class="slide level2">
-<h2>Multiple Linear Regression</h2>
-<p>Some Exploratory Data Analysis (EDA)</p>
-<div id="f66ecf2a" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="co"># Correlation plot using seaborn</span></span>
-<span id="cb11-2"><a></a>sns.pairplot(house_prices)</span>
-<span id="cb11-3"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="04-MultipleRegression_files/figure-revealjs/cell-10-output-1.png" width="710" height="709"></p>
-</figure>
-</div>
-</div>
-</div>
 </section>
 <section id="multiple-linear-regression-in-python" class="slide level2 smaller">
 <h2>Multiple Linear Regression in Python</h2>
-<div id="660c75af" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a><span class="co"># Prepare the data</span></span>
-<span id="cb12-2"><a></a>X_house <span class="op">=</span> house_prices[[<span class="st">"size"</span>, <span class="st">"num_bedrooms"</span>]]</span>
-<span id="cb12-3"><a></a>y_house <span class="op">=</span> house_prices[<span class="st">"price"</span>]</span>
-<span id="cb12-4"><a></a></span>
-<span id="cb12-5"><a></a><span class="co"># Fit the model</span></span>
-<span id="cb12-6"><a></a>mlr_model <span class="op">=</span> LinearRegression()</span>
-<span id="cb12-7"><a></a>house_price_mlr <span class="op">=</span> mlr_model.fit(X_house, y_house)</span>
-<span id="cb12-8"><a></a></span>
-<span id="cb12-9"><a></a><span class="co"># Display coefficients</span></span>
-<span id="cb12-10"><a></a>coef_df <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb12-11"><a></a>    <span class="st">"term"</span>: [<span class="st">"Intercept"</span>, <span class="st">"size"</span>, <span class="st">"num_bedrooms"</span>],</span>
-<span id="cb12-12"><a></a>    <span class="st">"estimate"</span>: [house_price_mlr.intercept_] <span class="op">+</span> <span class="bu">list</span>(house_price_mlr.coef_)</span>
-<span id="cb12-13"><a></a>})</span>
-<span id="cb12-14"><a></a>show(coef_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<!--| quarto-html-table-processing: none -->
-<table id="itables_4f9ae291_8d9d_4450_bc5d_ff92ef854610"><tbody><tr>
-    <td style="vertical-align:middle; text-align:left">
-    <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
-    <g style="fill:#d9d7fc">
-        <path d="M100,400H500V357H100Z"></path>
-        <path d="M100,300H400V257H100Z"></path>
-        <path d="M0,200H400V157H0Z"></path>
-        <path d="M100,100H500V57H100Z"></path>
-        <path d="M100,350H500V307H100Z"></path>
-        <path d="M100,250H400V207H100Z"></path>
-        <path d="M0,150H400V107H0Z"></path>
-        <path d="M100,50H500V7H100Z"></path>
-    </g>
-    <g style="fill:#1a1366;stroke:#1a1366;">
-   <rect x="100" y="7" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="0" y="107" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="207" width="300" height="43">
-    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="307" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
-  </rect>
-        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
-            <g transform="translate(45 50) rotate(-45)">
-                <circle r="33" cx="0" cy="0"></circle>
-                <rect x="-8" y="32" width="16" height="30"></rect>
-            </g>
+<!-- ```{python}
+# Prepare the data
+X_house = house_prices[["size", "num_bedrooms"]]
+y_house = house_prices["price"]
 
-            <g transform="translate(450 152)">
-                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
-                <rect x="-15" y="-40" width="60" height="60"></rect>
-            </g>
+# Fit the model
+mlr_model = LinearRegression()
+house_price_mlr = mlr_model.fit(X_house, y_house)
 
-            <g transform="translate(50 352)">
-                <polygon points="-35,-5 0,-40 35,-5"></polygon>
-                <polygon points="-35,10 0,45 35,10"></polygon>
-            </g>
-
-            <g transform="translate(75 250)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-
-            <g transform="translate(425 250) rotate(180)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-        </g>
-    </g>
-</svg>
-</a>
-    Loading ITables v2.6.2 from the internet...
-    (need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
-    </tr></tbody></table>
-<link href="https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.css" rel="stylesheet">
-<script type="module">
-    import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
-
-    document.querySelectorAll("#itables_4f9ae291_8d9d_4450_bc5d_ff92ef854610:not(.dataTable)").forEach(table => {
-        if (!(table instanceof HTMLTableElement))
-            return;
-
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "text_in_header_can_be_selected": true, "classes": ["display", "nowrap"], "order": [], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>term</th>\n      <th>estimate</th>\n    </tr>\n  </thead></table>", "data_json": "[[\"Intercept\", 89.597766], [\"size\", 0.139211], [\"num_bedrooms\", -8.737915]]"};
-        new ITable(table, dt_args);
-    });
-</script>
-</div>
-</div>
+# Display coefficients
+coef_df = pd.DataFrame({
+    "term": ["Intercept", "size", "num_bedrooms"],
+    "estimate": [house_price_mlr.intercept_] + list(house_price_mlr.coef_)
+})
+show(coef_df)
+``` -->
+<p>Practice!</p>
 </section>
 <section id="multiple-linear-regression-interpreting-parameters" class="slide level2 smaller">
 <h2><span class="r-fit-text">Multiple Linear Regression: Interpreting Parameters</span></h2>
@@ -830,7 +331,7 @@ Y&amp;=f(\mathbf{X}) + \epsilon\\
 <div>
 <ul>
 <li class="fragment">Write down our model in mathematical notation</li>
-<li class="fragment"><span class="math inline">\(\text{price} = 89.5978 + 0.1392\times\text{size} - 8.7379\times\text{num\_bedrooms}\)</span></li>
+<li class="fragment"><span class="math inline">\(\text{price} = 89.5978 + 0.1392\times\text{size} - 8.7379\times\text{num_bedrooms}\)</span></li>
 <li class="fragment"><span class="math inline">\(Y = 89.5978 + 0.1392X_1 - 8.7379X_2\)</span></li>
 </ul>
 </div>
@@ -842,45 +343,32 @@ Y&amp;=f(\mathbf{X}) + \epsilon\\
 <li><span class="math inline">\(\text{sales} = 89.5978 + 0.1392\times2000 - 8.7379\times3 = 341.7841\)</span></li>
 </ul>
 <div class="fragment">
-<div id="c0557091" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a><span class="co"># Make prediction</span></span>
-<span id="cb13-2"><a></a>new_house <span class="op">=</span> pd.DataFrame({<span class="st">"size"</span>: [<span class="dv">2000</span>], <span class="st">"num_bedrooms"</span>: [<span class="dv">3</span>]})</span>
-<span id="cb13-3"><a></a>prediction <span class="op">=</span> house_price_mlr.predict(new_house)</span>
-<span id="cb13-4"><a></a><span class="bu">print</span>(<span class="ss">f"Predicted price: </span><span class="sc">{</span>prediction[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Predicted price: 341.8053</code></pre>
-</div>
-</div>
 <ul>
+<li>Let’s use Python to make this same prediction</li>
 <li>Why don’t these match exactly? <span class="fragment fade-in"><strong>rounding</strong></span></li>
 </ul>
 </div>
+</section></section>
+<section>
+<section id="recap" class="title-slide slide level1 center">
+<h1>Recap</h1>
+
 </section>
-<section id="linear-regression-comparing-models" class="slide level2 smaller">
-<h2>Linear Regression: Comparing Models</h2>
-<div class="fragment">
-<div>
+<section id="recap-1" class="slide level2 smaller">
+<h2>Recap</h2>
 <ul>
-<li class="fragment">Many methods for comparing regression models from your regression course</li>
-<li class="fragment">Today: Data splitting</li>
-<li class="fragment">First: New Data</li>
+<li><strong>Bias-Variance Trade-off</strong>: As flexibility increases, variance increases and bias decreases.</li>
+<li><strong><code>scikit-learn</code> Workflow</strong>:
+<ol type="1">
+<li>Import model class.</li>
+<li>Instantiate with hyperparameters.</li>
+<li>Fit to training data (<code>.fit(X, y)</code>).</li>
+<li>Predict or inspect coefficients (<code>.predict()</code>, <code>.coef_</code>, <code>.intercept_</code>).</li>
+</ol></li>
+<li><strong>Multiple Linear Regression</strong>: Extends simple linear regression to multiple predictors.</li>
+<li><strong>Interpreting Coefficients</strong>: <span class="math inline">\(\hat{\beta}_j\)</span> is the expected change in <span class="math inline">\(Y\)</span> for a one-unit increase in <span class="math inline">\(X_j\)</span>, <strong>holding all other predictors constant</strong>.</li>
+<li><strong>Simpson’s Paradox</strong>: Relationships can change or reverse when accounting for confounders.</li>
 </ul>
-</div>
-</div>
-<div class="fragment">
-<ul>
-<li><strong>ames housing data</strong>
-<ul>
-<li>Many variables</li>
-<li>Focus on:
-<ul>
-<li><code>Sale_Price</code>: in dollars</li>
-<li><code>Gr_Liv_Area</code>: size in square feet</li>
-<li><code>Bedroom_AbvGr</code>: number of bedrooms above grade</li>
-</ul></li>
-</ul></li>
-</ul>
-</div>
 
 
 </section></section>
