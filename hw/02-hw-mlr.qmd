@@ -1,0 +1,217 @@
+---
+title: "Homework 2: Intro to Regression"
+---
+
+# Introduction
+
+In this homework, you will practice multiple linear regression by working with the data set `Carseats` from the package `ISLR2`. In addition, you will practice collaborating with a team over GitHub.
+
+## Learning goals
+
+By the end of the homework, you will...
+
+-   Be able to collaborate with teammates on the same document using GitHub
+-   Gain practice writing a reproducible report using a Jupyter Notebook
+-   Fit and interpret linear models using `scikit-learn`
+-   Split data using `scikit-learn`
+-   Compare and evaluate different linear models
+
+# Getting Started
+
+The process of collaborating over GitHub is similar to when you completed your work alone. You will clone the repo to you computer, do your work, and then stage, commit, and push changes to GitHub. Once you push changes to GitHub, your partners should be able to then pull your changes to their computer.
+
+## Teams
+
+You can find your team for this assignment on Canvas in the **People** section. The group set is called **HW2**. Your group will consist of 2-3 people and has been randomly generated. But first, some rules:
+
+1.  You and your team members should be in the same physical room when you complete this assignment.
+2.  You should all contribute to each problem, but to receive credit you must rotate who actually writes down the answers.
+3.  In order to receive credit, you must have a commit after each exercise by the correct member of your team.
+4.  For now, don't try to edit the same document at the same time. We will cover that in later homeworks.
+
+## Clone the repo & start new Jupyter Notebook
+
+The following directions will guide you through the process of setting up your homework to work as a group.
+
+## Exercise 0.1
+
+::: {.callout-tip title="Question"}
+In your group, decide on a team name. Then have **one member of your group**:
+
+1.  [Click this link](https://classroom.github.com/a/3cnqO-bh) to accept the assignment and enter your team name.
+2.  Clone the repository to your computer (Positron -> Source Control -> Clone).
+3.  Create a NEW Jupyter Notebook called `hw02-mlr.ipynb` in the repository folder.
+
+Once this is complete, the other two members can do the same thing, being careful to join the already created team on GitHub classroom.
+:::
+
+## Exercise 0.2
+
+::: {.callout-tip title="Question"}
+Have the first member of your group add a collected cell with the following information, then render (save), commit, and push the changes back to your GitHub repository.
+:::
+
+-   Team Name: [Make one up and enter here]
+-   Member 1: [Insert Name]
+-   Member 2: [Insert Name]
+-   Member 3: [Insert Name/Delete line if you only have two members]
+
+# The Data
+
+This data set contains simulated data of child car seat sales at 400 different stores. Your prediction task in this homework will be to predict `Sales` from some combination of the other variables.
+
+## Exercise 1
+
+::: {.callout-tip title="Question"}
+All members of your group should install the `ISLP` package if they haven't (it is installed in the course environment).
+
+Have the second member of your group pull the changes made by member 1. Before completing this question.
+
+Load the `Carseats` dataset from the `ISLP` package:
+```python
+from ISLP import load_data
+Carseats = load_data('Carseats')
+```
+Based on your knowledge of the world, which features do you think will be most predictive of `Sales`. Hint: You can inspect the column names and types using `Carseats.info()` or `Carseats.head()`.
+
+Once you have completed this, have the second member save, commit, and push the changes to GitHub.
+:::
+
+# Data Splitting
+
+## Exercise 2
+
+::: {.callout-tip title="Question"}
+Have the second member of your group pull the changes made by member 1 and member 2. Before completing this question.
+
+Use `scikit-learn` to create a training and test set from the `Carseats` data using a 70-30 split. Note that this is a random process so you will get different partitions every time you split your data. As a result, it is considered good practice to set your seed so that the results a reproducible. For this homework please use `random_state=427`.
+
+```python
+from sklearn.model_selection import train_test_split
+# Define X (predictors) and y (response)
+# X = ...
+# y = ...
+# X_train, X_test, y_train, y_test = train_test_split(..., test_size=0.3, random_state=427)
+```
+For the training set, what quantitative variable is most highly correlated with `Sales`, our target variable?
+
+Once you have completed this, have the third member save, commit, and push the changes to GitHub.
+:::
+
+## Committing Changes
+
+::: callout-tip-warning
+You should continue in this manner, rotating who completes each question in order from member 1 to member 2 to member 3 and back to member 1 for the remainder of the assignment. In order to receive credit, you must have a commit after each exercise by the correct member of your team.
+:::
+
+# Fitting Our First Model
+
+In predictive modeling, we often begin with a simple baseline model, to which we compare other models. Any more complicated model must outperform the baseline model to be considered useful.
+
+## Exercise 3
+
+::: {.callout-tip title="Question"}
+Fit a linear regression model predicting `Sales` using the variable you identified in Exercise 2. Write down the resulting model in the form: $$Price = \beta_0 + \beta_1\times Variable$$ Don't forget to use your training set rather than the full data to train your model.
+
+```python
+from sklearn.linear_model import LinearRegression
+# model = LinearRegression()
+# model.fit(...)
+```
+:::
+
+# Gradient Descent
+
+## Exercise 4 (Hard)
+
+::: {.callout-tip title="Question"}
+Re-estimate the parameters (i.e. the intercept and slope) for the model above using gradient descent. Your estimates should be similar to those in Exercise 3 but likely won't be EXACTLY the same. Your solution should include the following:
+
+1.  Initialize the values of your $\beta$'s.
+2.  Initialize the step size.
+3.  Initialize your tolerance (i.e. the stopping criteria).
+4.  Enter a loop. For each iteration in the loop:
+    a.  Compute the partial derivatives for $\beta_0$ and $\beta_1$ (gradients).
+    b.  Update the values of $\beta_0$ and $\beta_1$.
+    c.  Check to see if the change in your estimates is smaller than your tolerance. If it is, exit the loop, otherwise continue.
+:::
+
+# Evaluating Our Model
+
+Let's now see how our model performs.
+
+## Exercise 5
+
+::: {.callout-tip title="Question"}
+Compute the RMSE (Root Mean Squared Error) for your baseline model on both the training and test set and report them.
+
+```python
+from sklearn.metrics import mean_squared_error
+import numpy as np
+# rmse = np.sqrt(mean_squared_error(y_true, y_pred))
+```
+:::
+
+The second primary metric that we can use to assess the accuracy of regression models is called the **coefficient of determination**, denoted $R^2$. $R^2$ is the proportion of variance (information) in our target variable that is explained by our model.
+
+https://scikit-learn.org/stable/modules/generated/sklearn.metrics.r2_score.html
+
+## Exercise 6
+
+::: {.callout-tip title="Question"}
+What proportion of the variation in `Sales` is explained by our baseline model for the training and validation sets? Use `r2_score` from `sklearn.metrics` or the `.score()` method of your model.
+:::
+
+# Categorical Predictors
+
+Let's start to expand our model a bit by adding the predictor `US`.
+
+## Exercise 7
+
+::: {.callout-tip title="Question"}
+Build a two-input linear model for `Sales` by adding `US` in addition to the variable you selected above.
+
+Note: `scikit-learn` requires all inputs to be numerical. You will need to convert the `US` column into a dummy variable (0s and 1s) before fitting the model. You can use `pd.get_dummies(..., drop_first=True)` for this.
+
+```python
+# Create new DataFrame with selected variables
+# Convert categorical variables to dummies
+# X_train_new = ...
+# model.fit(X_train_new, y_train)
+```
+
+Is the coefficient for your original variable the same or different than it was in our baseline model?
+:::
+
+Notice that when you use `drop_first=True`, one level is left out and becomes the *reference level*. In this case, if `US` takes values 'No' and 'Yes', `drop_first=True` typically drops 'No', making it the reference. The coefficient for `US_Yes` then represents the change in Sales associated with being in the US compared to not being in the US, holding other variables constant.
+
+Let's now assess the accuracy of our new model.
+
+## Exercise 8
+
+::: {.callout-tip title="Question"}
+Compute the RMSE and $R^2$ values for this new model on both the training and validation sets. How do these compare to the baseline model?
+:::
+
+# Overfitting and the Bias-Variance Trade-Off
+
+Now let's see what happens if we add in ALL of the predictors to our model. This is sometimes referred to as the **full model**.
+
+## Exercise 9
+
+::: {.callout-tip title="Question"}
+Fit a model using all of the predictors in your training data. Call the model `lmfull`.
+*Note*: You will need to handle ALL categorical variables in the dataset (e.g., `ShelveLoc`, `Urban`, `US`) by converting them to dummy variables before splitting and fitting.
+
+Assess the model's accuracy on the training data and the test data, comparing it to the previous models we've fit, and comment on your results.
+:::
+
+You should notice that while the accuracy metrics on the training data drastically improve, there is little to no difference in the metrics for the test set. This is because of a phenomenon known as **overfitting**. Overfitting occurs when your model starts matching the training TOO well. A good visualization of an overfit model is Figure 2 in [the Wikipedia article for overfitting](https://en.wikipedia.org/wiki/Overfitting). As you include more variables/information in your model, your performance will ALWAYS increase on your training data. This is one of the reasons we always use holdout sets. Eventually your model will begin to over-align to the noise in your training data and the accuracy on holdout sets will be level off and in most cases begin to degrade.
+
+When modeling there are two related trade-offs that you need to consider. The first is the trade-off between prediction accuracy and interpretability. In general, one can typically create models with better prediction accuracy by sacrificing interpretability (e.g. by including more variables in your model, transforming these variables, etc.). Another trade-off is something called the bias-variance trade-off. As we increase the complexity of a model, we allow it to account for more and more intricate patterns in our data. In theory, this allows the model to mimic more complex relationships between our predictors and our target variables, reducing **bias**. On the other hand, more complex models typically have more parameters which need to be estimated which require more data to estimate accurately. When you increase the complexity of a model you usually increase the variance of the estimates of model parameters and the predictions the model makes. In other words, the model will be much more sensitive to the noise in the data that you have. Bias and variance will both decrease the accuracy of your model so you should try to minimize both. However, past a certain point, it will be a trade-off between the two.
+
+## Exercise 10
+
+::: {.callout-tip title="Question"}
+Find and fit a model on the training data which outperforms all the models we fit so far when evaluated on the test set. Briefly summarize your results. The "best" model will receive a high-five from Dr. Friedlander. Feel free to use any techniques we've learned in this class, up to this point. I encourage you to try out different data transformations like polynomials (see `sklearn.preprocessing.PolynomialFeatures`).
+:::

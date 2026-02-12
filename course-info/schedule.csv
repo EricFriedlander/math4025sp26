@@ -4,4 +4,5 @@ x,1,2/5/2026,Lecture,The Big Picture,[Chapter 1: ISLP](https://www.statlearning.
 x,1,2/10/2026,Lecture,What Is Statistical Learning,Chapter 2: ISLP,[02-statistical-learning](slides/02-StatisticalLearning.html),,
 x,2,2/12/2026,Homework,HW: 1 EDA,,,,[01-hw-eda](hw/01-hw-eda.html)
 x,3,2/17/2026,Lecture,SLR & Gradient Descent,[Click here for readings](prepare/prepare-03.html),[03-slr-gradient-descent](slides/03-SLR-Gradient_Desc.html),[03-video](https://www.youtube.com/watch?v=5YQxLMI-mX0),
-,,,,,,,,
+x,3,2/17/2026,Lecture,Linear Regression,[Click here for readings](prepare/prepare-04.html),[04-MultipleRegression](slides/04-MultipleRegression.html),[04-video](https://youtu.be/BN3vkdUFQg8),
+x,3,2/17/2026,Lecture,Data Splitting,,[05-data-splitting](slides/05-data-splitting.html),[05-video](https://youtu.be/WZvANauLG38),

@@ -1,18 +1,19 @@
 ---
-title: 'Math 4025: Multiple Linear Regression + Data Splitting'
+title: 'Math 4025: Multiple Linear Regression'
 ---
 
 
-## Computational Setup
 
-```{python}
-#| echo: true
+```{python setup}
+#| echo: false
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 import seaborn as sns
-from itables import show
+from plotnine import *
+
+outlets = pd.read_csv("../data/outlets.csv")
 ```
 
 ## [Question!!!]{style="color:blue"}
@@ -58,42 +59,22 @@ Suppose the CEO of a restaurant franchise is considering opening new outlets in 
 
 They have data on the population (in 100,000) and profit (in $1,000) at 97 cities where they currently have outlets.
 
-```{python}
+<!-- ```{python}
+#| echo: false
 outlets = pd.read_csv("../data/outlets.csv")
 show(outlets.head())  # first six observations of the dataset
-```
+``` -->
 
-## Python as an open-source language
-
-- Python is an open source language
-  + Advantages:
-    + Packages for almost anything you want
-    + "Cutting edge" methods rolled out quickly and early
-  + Disadvantages
-    + Many packages (especially new ones) may have bugs
-    + Lots of syntactical diversity
-    + Syntax is frequently dependent on the needs of the person who wrote the package and conventions at the time the package was created
-    
-## Enter `pandas` and `plotnine`
-
-> pandas is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool.
-
-> plotnine is an implementation of a grammar of graphics in Python based on ggplot2.
-
-- `pandas` is for manipulating data
-- `plotnine` is for visualizing data (similar to ggplot2)
-
-## Enter `scikit-learn`
+## `scikit-learn`
 
 > Scikit-learn is a simple and efficient tools for predictive data analysis built on NumPy, SciPy, and matplotlib.
 
 - `scikit-learn` (often imported as `sklearn`) provides a unified framework for building machine learning models in Python
-- Similar philosophy to `tidymodels` in R: consistent API across different model types
 
 ## Back to linear regression
 
 ```{python}
-from plotnine import ggplot, aes, geom_point, geom_smooth
+#| echo: false
 
 (
     ggplot(outlets, aes(x="population", y="profit"))
@@ -102,31 +83,9 @@ from plotnine import ggplot, aes, geom_point, geom_smooth
 )
 ```
 
-## Classic Linear Regression in Python {.smaller}
 
-::::{.columns}
-:::{.column}
-```{python}
-import statsmodels.formula.api as smf
+**Goal:** Select $\hat{\beta}_0$ (intercept) and $\hat{\beta}_1$ (slope) that minimize
 
-outlets_model = smf.ols("profit ~ population", data=outlets).fit()
-print(outlets_model.params)
-```
-:::
-
-:::{.column}
-
-This corresponds to the model:
-
-$$
-\begin{aligned}
-\text{Profit}  &= -3.90 + 1.19\times\text{Population}\\
-\hat{Y}_i &= -3.90 + 1.19X_i
-\end{aligned}
-$$
-i.e. $\hat{\beta}_0 = -3.90$ and $\hat{\beta}_1 = 1.19$
-:::
-::::
 
 ## Modeling with `scikit-learn`
 
@@ -136,36 +95,15 @@ i.e. $\hat{\beta}_0 = -3.90$ and $\hat{\beta}_1 = 1.19$
 
 3. Fit the model to data using `.fit(X, y)`
 
-4. Make predictions using `.predict(X_new)`
+4. Do stuff with the model (e.g. display coefficients, make predictions)
 
 ## Linear Regression with `scikit-learn`
 
-```{python}
-#| code-line-numbers: "|2|5|8|11"
-
-# Import the model class
-from sklearn.linear_model import LinearRegression
-
-# Instantiate the model
-lm_model = LinearRegression()
-
-# Prepare the data (scikit-learn expects 2D arrays for X)
-X = outlets[["population"]]  # double brackets to keep as DataFrame
-y = outlets["profit"]
-
-# Fit the model
-lm_model_fit = lm_model.fit(X, y)
-```
+Practice!
 
 ## Linear Regression with `scikit-learn`
 
-```{python}
-# Display the coefficients
-print(f"Intercept: {lm_model_fit.intercept_:.4f}")
-print(f"Coefficient for population: {lm_model_fit.coef_[0]:.4f}")
-```
-
-Same model as before:
+Our model
 
 $$
 \begin{aligned}
@@ -178,7 +116,9 @@ $$
 
 ## Linear Regression in Python: Prediction
 
-```{python}
+Practice!
+
+<!-- ```{python}
 # Generate new data
 np.random.seed(42)
 new_cities = pd.DataFrame({"population": np.random.normal(7, 3, 100)})
@@ -188,7 +128,7 @@ predictions = lm_model_fit.predict(new_cities[["population"]])
 new_cities["predicted_profit"] = predictions
 
 show(new_cities.head(10))
-```
+``` -->
 
 Note: New data must be a DataFrame with the same column names as the training data
 
@@ -219,7 +159,7 @@ where $\beta_j$ quantifies the association between the $j^{th}$ predictor and th
   + Observed predictors: $x_{1i}, x_{2i}, \ldots x_{pi}$ for $i=1,\ldots, n$
 - Predicted response: 
 $$\hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1x_{1i} + \ldots + \hat{\beta}_px_{pi} \text{ for } i=1, \ldots, n$$
-- Residuals: $e_i = \hat{y}_i - y_i$ for $i=1, \ldots, n$
+- Residuals: $e_i = y_i - \hat{y}_i$ for $i=1, \ldots, n$
 - Mean Squared Error (MSE): $MSE =\dfrac{e^2_1+e^2_2+\ldots+e^2_n}{n}$
 
 ## [Multiple Linear Regression: Estimating Parameters]{.r-fit-text}
@@ -237,25 +177,10 @@ $$\hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1x_{1i} + \ldots + \hat{\beta}_px_{pi}
 - `num_bedrooms` is a count
 - `price` is in $1,000's
 
-```{python}
-house_prices = pd.read_csv("../data/house_prices.csv")
-show(house_prices.head(6))  # print first 6 observations
-```
-
-
-## Multiple Linear Regression
-
-Some Exploratory Data Analysis (EDA)
-
-```{python}
-# Correlation plot using seaborn
-sns.pairplot(house_prices)
-plt.show()
-```
 
 ## Multiple Linear Regression in Python {.smaller}
 
-```{python}
+<!-- ```{python}
 # Prepare the data
 X_house = house_prices[["size", "num_bedrooms"]]
 y_house = house_prices["price"]
@@ -270,7 +195,9 @@ coef_df = pd.DataFrame({
     "estimate": [house_price_mlr.intercept_] + list(house_price_mlr.coef_)
 })
 show(coef_df)
-```
+``` -->
+
+Practice!
 
 ## [Multiple Linear Regression: Interpreting Parameters]{.r-fit-text} {.smaller}
 
@@ -287,7 +214,7 @@ show(coef_df)
 
 :::{.incremental}
 - Write down our model in mathematical notation
-- $\text{price} = 89.5978 + 0.1392\times\text{size} - 8.7379\times\text{num\_bedrooms}$
+- $\text{price} = 89.5978 + 0.1392\times\text{size} - 8.7379\times\text{num_bedrooms}$
 - $Y = 89.5978 + 0.1392X_1 - 8.7379X_2$
 :::
 
@@ -299,32 +226,25 @@ show(coef_df)
 
 . . .
 
-```{python}
-# Make prediction
-new_house = pd.DataFrame({"size": [2000], "num_bedrooms": [3]})
-prediction = house_price_mlr.predict(new_house)
-print(f"Predicted price: {prediction[0]:.4f}")
-```
+- Let's use Python to make this same prediction
 - Why don't these match exactly? [**rounding**]{.fragment .fade-in}
 
+# Recap
 
-## Linear Regression: Comparing Models {.smaller}
+## Recap {.smaller}
 
-:::{.fragment}
-:::{.incremental}
-- Many methods for comparing regression models from your regression course
-- Today: Data splitting
-- First: New Data
-:::
-:::
-:::{.fragment}
-- **ames housing data**
-  + Many variables
-  + Focus on:
-    * `Sale_Price`: in dollars
-    * `Gr_Liv_Area`: size in square feet
-    * `Bedroom_AbvGr`: number of bedrooms above grade
-:::
+- **Bias-Variance Trade-off**: As flexibility increases, variance increases and bias decreases.
+- **`scikit-learn` Workflow**:
+    1. Import model class.
+    2. Instantiate with hyperparameters.
+    3. Fit to training data (`.fit(X, y)`).
+    4. Predict or inspect coefficients (`.predict()`, `.coef_`, `.intercept_`).
+- **Multiple Linear Regression**: Extends simple linear regression to multiple predictors.
+- **Interpreting Coefficients**: $\hat{\beta}_j$ is the expected change in $Y$ for a one-unit increase in $X_j$, **holding all other predictors constant**.
+- **Simpson's Paradox**: Relationships can change or reverse when accounting for confounders.
+
+
+
 
 
 

@@ -1,0 +1,71 @@
+---
+title: 'Math 4025: Data Splitting'
+---
+
+
+```{python}
+#| echo: false
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+from sklearn.datasets import fetch_openml
+import matplotlib.pyplot as plt
+from plotnine import *
+from itables import show
+```
+
+## Comparing Models: Data Splitting {.smaller}
+
+- Split `ames` data set into two parts
+  + Training set: randomly selected proportion $p$ (typically 50-90%) of data used for fitting model
+  + Test set: randomly selected proportion $1-p$ of data used for estimating prediction error
+- If comparing A LOT of models, split into *three* parts to prevent **information leakage**
+  + Training set: randomly selected proportion $p$ (typically 50-90%) of data used for fitting model
+  + Validation set: randomly selected proportion $q$ (typically 20-30%) of data used to choosing tuning parameters
+  + Test set: randomly selected proportion $1-p-q$ of data used for estimating prediction error
+- Idea: use data your model hasn't seen to get more accurate estimate of error and prevent overfitting
+
+## Comparing Models: Data Splitting with `scikit-learn` {.smaller}
+
+- Use `train_test_split` from `sklearn.model_selection`: [documentation](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html)
+- In scikit-learn, use `stratify` parameter for classification tasks
+- For regression, random splitting is typically sufficient
+
+## Linear Regression: Comparing Models {.smaller}
+
+- Let's create five models with `Sale_Price` as the response:
+  + **fit1**: a linear regression model with `Bedroom_Abv_Gr`  as the only predictor
+  + **fit2**: a linear regression model with `Gr_Liv_Area` as the only predictor
+  + **fit3** (similar to model in previous slides): a multiple regression model with `Gr_Liv_Area` and `Bedroom_Abv_Gr` as predictors
+  + **fit4**: a multiple regression model with `Gr_Liv_Area` and `Bedroom_Abv_Gr`, and an interaction term
+- Practice!
+
+## Computing MSE {.smaller}
+
+- We can use `mean_squared_error` from `sklearn.metrics`
+- Practice!
+
+## [Question]{style="color:blue"}
+
+Without looking at the numbers
+
+1. Do we know which of the following is the smallest: `fit1_train_mse`, `fit2_train_mse`, `fit3_train_mse`, ``fit4_train_mse`? [Yes, `fit4_train_mse`]{.fragment .fade-in}
+2. Do we know which of the following is the smallest: `fit1_test_mse`, `fit2_test_mse`, `fit3_test_mse`, `fit4_test_mse`? [No]{.fragment .fade-in}
+
+## Choosing a Model {.smaller}
+
+- Choose the model with the smallest *test* MSE
+
+# Recap
+
+## Recap {.smaller}
+
+- **Data Splitting**: Dividing data into training and test sets to estimate out-of-sample error.
+- **Overfitting**: Occurs when a model performs well on training data but poorly on test data.
+- **Validation Set**: Use a third split when comparing many models to avoid information leakage.
+- **`scikit-learn`**: Use `train_test_split` from `sklearn.model_selection` for easy data partitioning.
+- **Model Selection**: Focus on minimizing the **test** error (e.g., test MSE).
+
