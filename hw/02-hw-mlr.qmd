@@ -4,7 +4,7 @@ title: "Homework 2: Intro to Regression"
 
 # Introduction
 
-In this homework, you will practice multiple linear regression by working with the data set `Carseats` from the package `ISLR2`. In addition, you will practice collaborating with a team over GitHub.
+In this homework, you will practice multiple linear regression by working with the data set `Carseats` from the package `ISLP`. In addition, you will practice collaborating with a team over GitHub.
 
 ## Learning goals
 
@@ -48,13 +48,13 @@ Once this is complete, the other two members can do the same thing, being carefu
 ## Exercise 0.2
 
 ::: {.callout-tip title="Question"}
-Have the first member of your group add a collected cell with the following information, then render (save), commit, and push the changes back to your GitHub repository.
+Have the first member of your group add a Markdown cell with the following information, save, commit, and push the changes back to your GitHub repository.
 :::
 
--   Team Name: [Make one up and enter here]
--   Member 1: [Insert Name]
--   Member 2: [Insert Name]
--   Member 3: [Insert Name/Delete line if you only have two members]
+-   Team Name: [Make one up]
+-   Member 1:
+-   Member 2:
+-   Member 3:
 
 # The Data
 
@@ -63,16 +63,16 @@ This data set contains simulated data of child car seat sales at 400 different s
 ## Exercise 1
 
 ::: {.callout-tip title="Question"}
-All members of your group should install the `ISLP` package if they haven't (it is installed in the course environment).
+All members of your group should install the `ISLP` package if they haven't.
 
-Have the second member of your group pull the changes made by member 1. Before completing this question.
+Have the second member of your group pull the changes made by member 1.
 
 Load the `Carseats` dataset from the `ISLP` package:
 ```python
 from ISLP import load_data
 Carseats = load_data('Carseats')
 ```
-Based on your knowledge of the world, which features do you think will be most predictive of `Sales`. Hint: You can inspect the column names and types using `Carseats.info()` or `Carseats.head()`.
+Based on your knowledge of the world, which features do you think will be most predictive of `Sales`. Hint: You can inspect the column names and types using `Carseats.info()` or `Carseats.head()`. Provide your description in a Markdown cell. When your assignment is complete, this document should look like a well formatted report.
 
 Once you have completed this, have the second member save, commit, and push the changes to GitHub.
 :::
@@ -82,25 +82,18 @@ Once you have completed this, have the second member save, commit, and push the 
 ## Exercise 2
 
 ::: {.callout-tip title="Question"}
-Have the second member of your group pull the changes made by member 1 and member 2. Before completing this question.
+Have the third member of your group pull the changes made by member 1 and member 2.
 
-Use `scikit-learn` to create a training and test set from the `Carseats` data using a 70-30 split. Note that this is a random process so you will get different partitions every time you split your data. As a result, it is considered good practice to set your seed so that the results a reproducible. For this homework please use `random_state=427`.
+Use `scikit-learn` to create a training and test set from the `Carseats` data using a 70-30 split. Note that this is a random process so you will get different partitions every time you split your data. As a result, it is considered good practice to set your seed so that the results a reproducible. For this homework please use `random_state=4025`.
 
-```python
-from sklearn.model_selection import train_test_split
-# Define X (predictors) and y (response)
-# X = ...
-# y = ...
-# X_train, X_test, y_train, y_test = train_test_split(..., test_size=0.3, random_state=427)
-```
-For the training set, what quantitative variable is most highly correlated with `Sales`, our target variable?
+**For the training set**, what quantitative variable is most highly correlated with `Sales`, our target variable?
 
 Once you have completed this, have the third member save, commit, and push the changes to GitHub.
 :::
 
 ## Committing Changes
 
-::: callout-tip-warning
+::: {.callout-warning}
 You should continue in this manner, rotating who completes each question in order from member 1 to member 2 to member 3 and back to member 1 for the remainder of the assignment. In order to receive credit, you must have a commit after each exercise by the correct member of your team.
 :::
 
@@ -111,13 +104,7 @@ In predictive modeling, we often begin with a simple baseline model, to which we
 ## Exercise 3
 
 ::: {.callout-tip title="Question"}
-Fit a linear regression model predicting `Sales` using the variable you identified in Exercise 2. Write down the resulting model in the form: $$Price = \beta_0 + \beta_1\times Variable$$ Don't forget to use your training set rather than the full data to train your model.
-
-```python
-from sklearn.linear_model import LinearRegression
-# model = LinearRegression()
-# model.fit(...)
-```
+Fit a linear regression model predicting `Sales` using the variable you identified in Exercise 2. Write down the resulting model in the form: $$Price = \hat{\beta}_0 + \hat{\beta}_1\times Variable$$ The $\hat{\beta}$s should be replaced with the actual estimates you get from your data. Don't forget to use your training set rather than the full data to train your model.
 :::
 
 # Gradient Descent
@@ -125,15 +112,13 @@ from sklearn.linear_model import LinearRegression
 ## Exercise 4 (Hard)
 
 ::: {.callout-tip title="Question"}
-Re-estimate the parameters (i.e. the intercept and slope) for the model above using gradient descent. Your estimates should be similar to those in Exercise 3 but likely won't be EXACTLY the same. Your solution should include the following:
+At the board, write some code that will re-estimate the parameters (i.e. the intercept and slope) for the model above using gradient descent. Once you get approval from Dr. F, implement that code in your notebook. Your estimates should be similar to those in Exercise 3 but likely won't be EXACTLY the same. Note that this will take a little bit of time to execute. Your solution should include the following:
 
 1.  Initialize the values of your $\beta$'s.
-2.  Initialize the step size.
-3.  Initialize your tolerance (i.e. the stopping criteria).
-4.  Enter a loop. For each iteration in the loop:
+2.  Initialize the learning rate.
+3.  Enter a loop. For each iteration in the loop:
     a.  Compute the partial derivatives for $\beta_0$ and $\beta_1$ (gradients).
     b.  Update the values of $\beta_0$ and $\beta_1$.
-    c.  Check to see if the change in your estimates is smaller than your tolerance. If it is, exit the loop, otherwise continue.
 :::
 
 # Evaluating Our Model
@@ -143,20 +128,13 @@ Let's now see how our model performs.
 ## Exercise 5
 
 ::: {.callout-tip title="Question"}
-Compute the RMSE (Root Mean Squared Error) for your baseline model on both the training and test set and report them.
-
-```python
-from sklearn.metrics import mean_squared_error
-import numpy as np
-# rmse = np.sqrt(mean_squared_error(y_true, y_pred))
-```
+Compute the RMSE (Root Mean Squared Error) for your baseline model on both the training and test set and report them. RMSE is equivalent to MSE and SSE but has units that are the same as your response variable so can be easier to interpret. Make sure you **ONLY** train your model using the training data.
 :::
 
-The second primary metric that we can use to assess the accuracy of regression models is called the **coefficient of determination**, denoted $R^2$. $R^2$ is the proportion of variance (information) in our target variable that is explained by our model.
-
-https://scikit-learn.org/stable/modules/generated/sklearn.metrics.r2_score.html
 
 ## Exercise 6
+
+The second primary metric that we can use to assess the accuracy of regression models is called the **coefficient of determination**, denoted $R^2$. $R^2$ is the proportion of variance (information) in our target variable that is explained by our model.
 
 ::: {.callout-tip title="Question"}
 What proportion of the variation in `Sales` is explained by our baseline model for the training and validation sets? Use `r2_score` from `sklearn.metrics` or the `.score()` method of your model.

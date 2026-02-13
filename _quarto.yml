@@ -39,11 +39,8 @@ website:
       - course-info/syllabus.qmd
       - href: index.qmd
         text: Schedule
-      - section: Computing
-        contents:
-        - href: course-info/computing-access.qmd
-        - href: course-info/computing-python-resources.qmd
-          text: Python resources
+      - href: course-info/computing-python-resources.qmd
+        text: Python resources
       - section: Job Applications & Interviews
         contents:
         # - jobs/job-app-1-resources.qmd

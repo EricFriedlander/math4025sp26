@@ -68,4 +68,3 @@ Without looking at the numbers
 - **Validation Set**: Use a third split when comparing many models to avoid information leakage.
 - **`scikit-learn`**: Use `train_test_split` from `sklearn.model_selection` for easy data partitioning.
 - **Model Selection**: Focus on minimizing the **test** error (e.g., test MSE).
-

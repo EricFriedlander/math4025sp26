@@ -8,6 +8,7 @@ title: "Resources"
 
 ## Python Resources
 
+-   [Miniforge Documentation](https://github.com/conda-forge/miniforge)
 -   [Python Documentation](https://docs.python.org/3/)
 -   [Quarto Documentation](https://quarto.org/)
 -   [Pandas Documentation](https://pandas.pydata.org/docs/)
