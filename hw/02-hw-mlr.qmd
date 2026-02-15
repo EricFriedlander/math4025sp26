@@ -149,21 +149,10 @@ Let's start to expand our model a bit by adding the predictor `US`.
 ::: {.callout-tip title="Question"}
 Build a two-input linear model for `Sales` by adding `US` in addition to the variable you selected above.
 
-Note: `scikit-learn` requires all inputs to be numerical. You will need to convert the `US` column into a dummy variable (0s and 1s) before fitting the model. You can use `pd.get_dummies(..., drop_first=True)` for this.
-
-```python
-# Create new DataFrame with selected variables
-# Convert categorical variables to dummies
-# X_train_new = ...
-# model.fit(X_train_new, y_train)
-```
+Note: `scikit-learn` requires all inputs to be numerical. You will need to convert the `US` column into a dummy variable (0s and 1s) before fitting the model. You can use `pd.get_dummies(..., drop_first=True)` for this. When you use `drop_first=True`, one level is left out and becomes the *reference level*. In this case, if `US` takes values 'No' and 'Yes', `drop_first=True` typically drops 'No', making it the reference. The coefficient for `US_Yes` then represents the change in Sales associated with being in the US compared to not being in the US, holding other variables constant.
 
 Is the coefficient for your original variable the same or different than it was in our baseline model?
 :::
-
-Notice that when you use `drop_first=True`, one level is left out and becomes the *reference level*. In this case, if `US` takes values 'No' and 'Yes', `drop_first=True` typically drops 'No', making it the reference. The coefficient for `US_Yes` then represents the change in Sales associated with being in the US compared to not being in the US, holding other variables constant.
-
-Let's now assess the accuracy of our new model.
 
 ## Exercise 8
 
@@ -178,10 +167,10 @@ Now let's see what happens if we add in ALL of the predictors to our model. This
 ## Exercise 9
 
 ::: {.callout-tip title="Question"}
-Fit a model using all of the predictors in your training data. Call the model `lmfull`.
-*Note*: You will need to handle ALL categorical variables in the dataset (e.g., `ShelveLoc`, `Urban`, `US`) by converting them to dummy variables before splitting and fitting.
+Fit a model using all of the predictors in your training data.
+*Note*: You will need to handle ALL categorical variables in the dataset (e.g., `ShelveLoc`, `Urban`, `US`) by converting them to dummy variables. I recommend doing this **BEFORE** before splitting as it will require less code.
 
-Assess the model's accuracy on the training data and the test data, comparing it to the previous models we've fit, and comment on your results.
+Assess the model's performance on the training data and the test data, comparing it to the previous models we've fit, and comment on your results.
 :::
 
 You should notice that while the accuracy metrics on the training data drastically improve, there is little to no difference in the metrics for the test set. This is because of a phenomenon known as **overfitting**. Overfitting occurs when your model starts matching the training TOO well. A good visualization of an overfit model is Figure 2 in [the Wikipedia article for overfitting](https://en.wikipedia.org/wiki/Overfitting). As you include more variables/information in your model, your performance will ALWAYS increase on your training data. This is one of the reasons we always use holdout sets. Eventually your model will begin to over-align to the noise in your training data and the accuracy on holdout sets will be level off and in most cases begin to degrade.
