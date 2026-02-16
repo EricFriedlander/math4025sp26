@@ -38,7 +38,7 @@ The following directions will guide you through the process of setting up your h
 ::: {.callout-tip title="Question"}
 In your group, decide on a team name. Then have **one member of your group**:
 
-1.  [Click this link](https://classroom.github.com/a/3cnqO-bh) to accept the assignment and enter your team name.
+1.  [Click this link](https://classroom.github.com/a/K4gb0Et1) to accept the assignment and enter your team name.
 2.  Clone the repository to your computer (Positron -> Source Control -> Clone).
 3.  Create a NEW Jupyter Notebook called `hw02-mlr.ipynb` in the repository folder.
 
