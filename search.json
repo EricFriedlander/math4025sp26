@@ -114,7 +114,7 @@
     "href": "index.html",
     "title": "Math 4025: Statistical Machine Learning",
     "section": "",
-    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n\n\n\n\nWEEK\nDUE\nTYPE\nTOPIC\nREADING\nSLIDES\nVIDEO\nASSIGNMENT\n\n\n\n\n1\n\n\nLecture\nWelcome\n\n\n00-welcome\n\n\n\n\n\n\n1\nThu, Feb 5\nLecture\nThe Big Picture\nChapter 1: ISLP  syllabus\n01-big-picture\n\n\n\n\n\n\n1\nTue, Feb 10\nLecture\nWhat Is Statistical Learning\nChapter 2: ISLP\n02-statistical-learning\n\n\n\n\n\n\n2\nTue, Feb 17\nHomework\nHW: 1 EDA\n\n\n\n\n\n\n01-hw-eda\n\n\n3\nTue, Feb 17\nLecture\nSLR & Gradient Descent\nClick here for readings\n03-slr-gradient-descent\n03-video\n\n\n\n\n3\nTue, Feb 17\nLecture\nLinear Regression\nClick here for readings\n04-MultipleRegression\n04-video\n\n\n\n\n3\nTue, Feb 17\nLecture\nData Splitting\n\n\n05-data-splitting\n05-video",
+    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n\n\n\n\nWEEK\nDUE\nTYPE\nTOPIC\nREADING\nSLIDES\nVIDEO\nASSIGNMENT\n\n\n\n\n1\n\n\nLecture\nWelcome\n\n\n00-welcome\n\n\n\n\n\n\n1\nThu, Feb 5\nLecture\nThe Big Picture\nChapter 1: ISLP  syllabus\n01-big-picture\n\n\n\n\n\n\n1\nTue, Feb 10\nLecture\nWhat Is Statistical Learning\nChapter 2: ISLP\n02-statistical-learning\n\n\n\n\n\n\n2\nTue, Feb 17\nHomework\nHW 1: EDA\n\n\n\n\n\n\n01-hw-eda\n\n\n3\nTue, Feb 17\nLecture\nSLR & Gradient Descent\nClick here for readings\n03-slr-gradient-descent\n03-video\n\n\n\n\n3\nTue, Feb 17\nLecture\nLinear Regression\nClick here for readings\n04-MultipleRegression\n04-video\n\n\n\n\n3\nTue, Feb 17\nLecture\nData Splitting\n\n\n05-data-splitting\n05-video\n\n\n\n\n4\nTue, Feb 24\nHomework\nHW 2: Linear Regression\n\n\n\n\n\n\n02-hw-mlr",
     "crumbs": [
       "Schedule"
     ]
@@ -229,7 +229,7 @@
     "href": "hw/02-hw-mlr.html#exercise-7",
     "title": "Homework 2: Intro to Regression",
     "section": "Exercise 7",
-    "text": "Exercise 7\n\n\n\n\n\n\nQuestion\n\n\n\nBuild a two-input linear model for Sales by adding US in addition to the variable you selected above.\nNote: scikit-learn requires all inputs to be numerical. You will need to convert the US column into a dummy variable (0s and 1s) before fitting the model. You can use pd.get_dummies(..., drop_first=True) for this.\n# Create new DataFrame with selected variables\n# Convert categorical variables to dummies\n# X_train_new = ...\n# model.fit(X_train_new, y_train)\nIs the coefficient for your original variable the same or different than it was in our baseline model?\n\n\nNotice that when you use drop_first=True, one level is left out and becomes the reference level. In this case, if US takes values ‘No’ and ‘Yes’, drop_first=True typically drops ‘No’, making it the reference. The coefficient for US_Yes then represents the change in Sales associated with being in the US compared to not being in the US, holding other variables constant.\nLet’s now assess the accuracy of our new model."
+    "text": "Exercise 7\n\n\n\n\n\n\nQuestion\n\n\n\nBuild a two-input linear model for Sales by adding US in addition to the variable you selected above.\nNote: scikit-learn requires all inputs to be numerical. You will need to convert the US column into a dummy variable (0s and 1s) before fitting the model. You can use pd.get_dummies(..., drop_first=True) for this. When you use drop_first=True, one level is left out and becomes the reference level. In this case, if US takes values ‘No’ and ‘Yes’, drop_first=True typically drops ‘No’, making it the reference. The coefficient for US_Yes then represents the change in Sales associated with being in the US compared to not being in the US, holding other variables constant.\nIs the coefficient for your original variable the same or different than it was in our baseline model?"
   },
   {
     "objectID": "hw/02-hw-mlr.html#exercise-8",
@@ -243,7 +243,7 @@
     "href": "hw/02-hw-mlr.html#exercise-9",
     "title": "Homework 2: Intro to Regression",
     "section": "Exercise 9",
-    "text": "Exercise 9\n\n\n\n\n\n\nQuestion\n\n\n\nFit a model using all of the predictors in your training data. Call the model lmfull. Note: You will need to handle ALL categorical variables in the dataset (e.g., ShelveLoc, Urban, US) by converting them to dummy variables before splitting and fitting.\nAssess the model’s accuracy on the training data and the test data, comparing it to the previous models we’ve fit, and comment on your results.\n\n\nYou should notice that while the accuracy metrics on the training data drastically improve, there is little to no difference in the metrics for the test set. This is because of a phenomenon known as overfitting. Overfitting occurs when your model starts matching the training TOO well. A good visualization of an overfit model is Figure 2 in the Wikipedia article for overfitting. As you include more variables/information in your model, your performance will ALWAYS increase on your training data. This is one of the reasons we always use holdout sets. Eventually your model will begin to over-align to the noise in your training data and the accuracy on holdout sets will be level off and in most cases begin to degrade.\nWhen modeling there are two related trade-offs that you need to consider. The first is the trade-off between prediction accuracy and interpretability. In general, one can typically create models with better prediction accuracy by sacrificing interpretability (e.g. by including more variables in your model, transforming these variables, etc.). Another trade-off is something called the bias-variance trade-off. As we increase the complexity of a model, we allow it to account for more and more intricate patterns in our data. In theory, this allows the model to mimic more complex relationships between our predictors and our target variables, reducing bias. On the other hand, more complex models typically have more parameters which need to be estimated which require more data to estimate accurately. When you increase the complexity of a model you usually increase the variance of the estimates of model parameters and the predictions the model makes. In other words, the model will be much more sensitive to the noise in the data that you have. Bias and variance will both decrease the accuracy of your model so you should try to minimize both. However, past a certain point, it will be a trade-off between the two."
+    "text": "Exercise 9\n\n\n\n\n\n\nQuestion\n\n\n\nFit a model using all of the predictors in your training data. Note: You will need to handle ALL categorical variables in the dataset (e.g., ShelveLoc, Urban, US) by converting them to dummy variables. I recommend doing this BEFORE before splitting as it will require less code.\nAssess the model’s performance on the training data and the test data, comparing it to the previous models we’ve fit, and comment on your results.\n\n\nYou should notice that while the accuracy metrics on the training data drastically improve, there is little to no difference in the metrics for the test set. This is because of a phenomenon known as overfitting. Overfitting occurs when your model starts matching the training TOO well. A good visualization of an overfit model is Figure 2 in the Wikipedia article for overfitting. As you include more variables/information in your model, your performance will ALWAYS increase on your training data. This is one of the reasons we always use holdout sets. Eventually your model will begin to over-align to the noise in your training data and the accuracy on holdout sets will be level off and in most cases begin to degrade.\nWhen modeling there are two related trade-offs that you need to consider. The first is the trade-off between prediction accuracy and interpretability. In general, one can typically create models with better prediction accuracy by sacrificing interpretability (e.g. by including more variables in your model, transforming these variables, etc.). Another trade-off is something called the bias-variance trade-off. As we increase the complexity of a model, we allow it to account for more and more intricate patterns in our data. In theory, this allows the model to mimic more complex relationships between our predictors and our target variables, reducing bias. On the other hand, more complex models typically have more parameters which need to be estimated which require more data to estimate accurately. When you increase the complexity of a model you usually increase the variance of the estimates of model parameters and the predictions the model makes. In other words, the model will be much more sensitive to the noise in the data that you have. Bias and variance will both decrease the accuracy of your model so you should try to minimize both. However, past a certain point, it will be a trade-off between the two."
   },
   {
     "objectID": "hw/02-hw-mlr.html#exercise-10",
@@ -253,550 +253,165 @@
     "text": "Exercise 10\n\n\n\n\n\n\nQuestion\n\n\n\nFind and fit a model on the training data which outperforms all the models we fit so far when evaluated on the test set. Briefly summarize your results. The “best” model will receive a high-five from Dr. Friedlander. Feel free to use any techniques we’ve learned in this class, up to this point. I encourage you to try out different data transformations like polynomials (see sklearn.preprocessing.PolynomialFeatures)."
   },
   {
-    "objectID": "slides/05-data-splitting.html#comparing-models-data-splitting",
-    "href": "slides/05-data-splitting.html#comparing-models-data-splitting",
-    "title": "Math 4025: Data Splitting",
-    "section": "Comparing Models: Data Splitting",
-    "text": "Comparing Models: Data Splitting\n\nSplit ames data set into two parts\n\nTraining set: randomly selected proportion \\(p\\) (typically 50-90%) of data used for fitting model\nTest set: randomly selected proportion \\(1-p\\) of data used for estimating prediction error\n\nIf comparing A LOT of models, split into three parts to prevent information leakage\n\nTraining set: randomly selected proportion \\(p\\) (typically 50-90%) of data used for fitting model\nValidation set: randomly selected proportion \\(q\\) (typically 20-30%) of data used to choosing tuning parameters\nTest set: randomly selected proportion \\(1-p-q\\) of data used for estimating prediction error\n\nIdea: use data your model hasn’t seen to get more accurate estimate of error and prevent overfitting"
+    "objectID": "slides/00-welcome.html#meet-prof.-friedlander",
+    "href": "slides/00-welcome.html#meet-prof.-friedlander",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Meet Prof. Friedlander!",
+    "text": "Meet Prof. Friedlander!\n\n\nEducation and career journey\n\nGrew up outside New York City\nBS in Math & Statistics from Rice University (Houston, TX)\nBusiness Analyst at Capital One (Plano, TX)\nMS and PhD in Statistics & Operations Research from UNC-Chapel Hill\nPostdoc in Population Genetics at University of Chicago\nAssistant Professor of Math at St. Norbert College (Green Bay, WI)\n\nWork focuses on statistics education, queuing theory, and population genetics\nBig sports fan: NY Knicks, Giants, Rangers, Yankees, UNC Tarheels\nDad of three cute dogs: Allie, Miriam, Tony"
   },
   {
-    "objectID": "slides/05-data-splitting.html#comparing-models-data-splitting-with-scikit-learn",
-    "href": "slides/05-data-splitting.html#comparing-models-data-splitting-with-scikit-learn",
-    "title": "Math 4025: Data Splitting",
-    "section": "Comparing Models: Data Splitting with scikit-learn",
-    "text": "Comparing Models: Data Splitting with scikit-learn\n\nUse train_test_split from sklearn.model_selection: documentation\nIn scikit-learn, use stratify parameter for classification tasks\nFor regression, random splitting is typically sufficient"
+    "objectID": "slides/00-welcome.html#meet-prof.-friedlander-1",
+    "href": "slides/00-welcome.html#meet-prof.-friedlander-1",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Meet Prof. Friedlander!",
+    "text": "Meet Prof. Friedlander!"
   },
   {
-    "objectID": "slides/05-data-splitting.html#linear-regression-comparing-models",
-    "href": "slides/05-data-splitting.html#linear-regression-comparing-models",
-    "title": "Math 4025: Data Splitting",
-    "section": "Linear Regression: Comparing Models",
-    "text": "Linear Regression: Comparing Models\n\nLet’s create five models with Sale_Price as the response:\n\nfit1: a linear regression model with Bedroom_Abv_Gr as the only predictor\nfit2: a linear regression model with Gr_Liv_Area as the only predictor\nfit3 (similar to model in previous slides): a multiple regression model with Gr_Liv_Area and Bedroom_Abv_Gr as predictors\nfit4: a multiple regression model with Gr_Liv_Area and Bedroom_Abv_Gr, and an interaction term\n\nPractice!"
+    "objectID": "slides/00-welcome.html#tell-me-about-yourself-github",
+    "href": "slides/00-welcome.html#tell-me-about-yourself-github",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Tell me about yourself + GitHub",
+    "text": "Tell me about yourself + GitHub\nCreate a GitHub account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name.\nSend me a Teams Chat with answers to the following questions:\n\nWhat is the GitHub username you just created?\nWhat would you like me to call you?\nWhy are you taking this class?\nWhat are your career goals?\nIs there anything else you would like me to know about you? E.g. athlete, preferred pronouns, accommodations, etc…\nPlease recommend at least one and up to infinity songs for the class playlist."
   },
   {
-    "objectID": "slides/05-data-splitting.html#computing-mse",
-    "href": "slides/05-data-splitting.html#computing-mse",
-    "title": "Math 4025: Data Splitting",
-    "section": "Computing MSE",
-    "text": "Computing MSE\n\nWe can use mean_squared_error from sklearn.metrics\nPractice!"
+    "objectID": "slides/00-welcome.html#course-faq",
+    "href": "slides/00-welcome.html#course-faq",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Course FAQ",
+    "text": "Course FAQ\nQ - What background is assumed for the course?\nA - Familiarity with concepts from statistical inference, linear regression, and logistic regression. Some experience with Python or R, especially when it come to manipulating and visualizing data."
   },
   {
-    "objectID": "slides/05-data-splitting.html#question",
-    "href": "slides/05-data-splitting.html#question",
-    "title": "Math 4025: Data Splitting",
-    "section": "Question",
-    "text": "Question\nWithout looking at the numbers\n\nDo we know which of the following is the smallest: fit1_train_mse, fit2_train_mse, fit3_train_mse, `fit4_train_mse? Yes, fit4_train_mse\nDo we know which of the following is the smallest: fit1_test_mse, fit2_test_mse, fit3_test_mse, fit4_test_mse? No"
+    "objectID": "slides/00-welcome.html#course-faq-1",
+    "href": "slides/00-welcome.html#course-faq-1",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Course FAQ",
+    "text": "Course FAQ\nQ - Will we be doing computing?\nA - Yes. We will mostly be using Jupyter notebooks for analysis, but may use Quarto for presentations and project. We will use GitHub for version control and collaboration"
   },
   {
-    "objectID": "slides/05-data-splitting.html#choosing-a-model",
-    "href": "slides/05-data-splitting.html#choosing-a-model",
-    "title": "Math 4025: Data Splitting",
-    "section": "Choosing a Model",
-    "text": "Choosing a Model\n\nChoose the model with the smallest test MSE"
+    "objectID": "slides/00-welcome.html#course-faq-2",
+    "href": "slides/00-welcome.html#course-faq-2",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Course FAQ",
+    "text": "Course FAQ\nQ - Will we learn the mathematical theory?\nA - Yes and No. The course is primarily focused on application; however, we will discuss some of the mathematics occasionally."
   },
   {
-    "objectID": "slides/05-data-splitting.html#recap-1",
-    "href": "slides/05-data-splitting.html#recap-1",
-    "title": "Math 4025: Data Splitting",
-    "section": "Recap",
-    "text": "Recap\n\nData Splitting: Dividing data into training and test sets to estimate out-of-sample error.\nOverfitting: Occurs when a model performs well on training data but poorly on test data.\nValidation Set: Use a third split when comparing many models to avoid information leakage.\nscikit-learn: Use train_test_split from sklearn.model_selection for easy data partitioning.\nModel Selection: Focus on minimizing the test error (e.g., test MSE)."
+    "objectID": "slides/00-welcome.html#course-faq-3",
+    "href": "slides/00-welcome.html#course-faq-3",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Course FAQ",
+    "text": "Course FAQ\nQ - What distinguishes this from a 3000-level course?\nA - I expect a high level of independence from you. You should not be relying on me to teach you every small detail from this course. For example, if I tell you about a Python function, I expect that you will be able to figure out how to use it yourself."
   },
   {
-    "objectID": "slides/04-MultipleRegression.html#question",
-    "href": "slides/04-MultipleRegression.html#question",
-    "title": "Math 4025: Multiple Linear Regression",
-    "section": "Question!!!",
-    "text": "Question!!!\nAs a model’s flexibility increases:\n\nQuestionsAnswers\n\n\n\nits variance (increases/decreases)\nits bias (increases/decreases)\nits training MSE (increases/decreases)\nits test MSE (describe)\n\n\n\n\nits variance (increases)\nits bias (decreases)\nits training MSE (decreases)\nits test MSE (decreases at first, then increases and the model starts to overfit, U-shaped)"
+    "objectID": "slides/00-welcome.html#course-faq-4",
+    "href": "slides/00-welcome.html#course-faq-4",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Course FAQ",
+    "text": "Course FAQ\nQ - Is there anything else I should know?\nA - Machine learning is a RAPIDLY evolving field. If you want to be successful in this field going forward, you will need to be able to learn things for yourself and SELF-ASSESS whether you know them. There are portions of this course that I have intentionally designed to not give you enough information to solve on your own."
   },
   {
-    "objectID": "slides/04-MultipleRegression.html#outlet-data",
-    "href": "slides/04-MultipleRegression.html#outlet-data",
-    "title": "Math 4025: Multiple Linear Regression",
-    "section": "Outlet Data",
-    "text": "Outlet Data\nSuppose the CEO of a restaurant franchise is considering opening new outlets in different cities. They would like to expand their business to cities that give them higher profits with the assumption that highly populated cities will probably yield higher profits.\nThey have data on the population (in 100,000) and profit (in $1,000) at 97 cities where they currently have outlets."
+    "objectID": "slides/00-welcome.html#course-learning-objectives",
+    "href": "slides/00-welcome.html#course-learning-objectives",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Course learning objectives",
+    "text": "Course learning objectives\nBy the end of the semester, you will be able to…\n\ntackle predictive modeling problems arising from real data.\nuse Python to fit and evaluate machine learning models.\nassess whether a proposed model is appropriate and describe its limitations.\nuse Jupyter notebooks and Quarto to write reproducible reports and GitHub for version control and collaboration.\neffectively communicate results through writing and oral presentations."
   },
   {
-    "objectID": "slides/04-MultipleRegression.html#scikit-learn",
-    "href": "slides/04-MultipleRegression.html#scikit-learn",
-    "title": "Math 4025: Multiple Linear Regression",
-    "section": "scikit-learn",
-    "text": "scikit-learn\n\nScikit-learn is a simple and efficient tools for predictive data analysis built on NumPy, SciPy, and matplotlib.\n\n\nscikit-learn (often imported as sklearn) provides a unified framework for building machine learning models in Python"
+    "objectID": "slides/00-welcome.html#course-toolkit",
+    "href": "slides/00-welcome.html#course-toolkit",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Course toolkit",
+    "text": "Course toolkit\n\nCourse website\n\nCentral hub for the course!\nTour of the website\n\nCanvas\n\nGradebook\n\nGitHub\n\nDistribute assignments\nPlatform for version control and collaboration\n\nMicrosoft Teams\n\nCommunication"
   },
   {
-    "objectID": "slides/04-MultipleRegression.html#back-to-linear-regression",
-    "href": "slides/04-MultipleRegression.html#back-to-linear-regression",
-    "title": "Math 4025: Multiple Linear Regression",
-    "section": "Back to linear regression",
-    "text": "Back to linear regression\n\n\n\n\n\n\n\n\n\nGoal: Select \\(\\hat{\\beta}_0\\) (intercept) and \\(\\hat{\\beta}_1\\) (slope) that minimize"
+    "objectID": "slides/00-welcome.html#computing-toolkit",
+    "href": "slides/00-welcome.html#computing-toolkit",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Computing toolkit",
+    "text": "Computing toolkit\n\n\n\n\n\n\n\n\n\n\n\nAll analyses using Python\nMostly use Jupyter notebooks (Quarto for projects)\nRecommend using Positron or VS Code\n\n\n\n\n\n\n\n\n\n\n\n\nAccess assignments\nFacilitates version control and collaboration\nAll work in MATH 4025 course classroom"
   },
   {
-    "objectID": "slides/04-MultipleRegression.html#modeling-with-scikit-learn",
-    "href": "slides/04-MultipleRegression.html#modeling-with-scikit-learn",
-    "title": "Math 4025: Multiple Linear Regression",
-    "section": "Modeling with scikit-learn",
-    "text": "Modeling with scikit-learn\n\nImport the model class (e.g. LinearRegression, LogisticRegression)\nInstantiate the model with desired hyperparameters\nFit the model to data using .fit(X, y)\nDo stuff with the model (e.g. display coefficients, make predictions)"
+    "objectID": "slides/00-welcome.html#prepare-participate-practice-perform",
+    "href": "slides/00-welcome.html#prepare-participate-practice-perform",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Prepare, Participate, Practice, Perform",
+    "text": "Prepare, Participate, Practice, Perform\n\n\n\nPrepare: Introduce new content and prepare for lectures by completing the readings and watching videos. Tuesday Quizzes.\nParticipate: Attend and actively participate in lectures, office hours, team meetings\nPractice: Practice applying statistical concepts and computing with team-based homework graded pass/fail. Thursday Presentations.\nPerform: Put together what you’ve learned to analyze real-world data\n\nOne Job Application/Portfolio (individual)\nOne Job Interview (individual)\nOne Midterm Exam\nOne Hack-a-thon/Presentation (individual-ish)\nOne Project & Presentation (team)"
   },
   {
-    "objectID": "slides/04-MultipleRegression.html#linear-regression-with-scikit-learn",
-    "href": "slides/04-MultipleRegression.html#linear-regression-with-scikit-learn",
-    "title": "Math 4025: Multiple Linear Regression",
-    "section": "Linear Regression with scikit-learn",
-    "text": "Linear Regression with scikit-learn\nPractice!"
+    "objectID": "slides/00-welcome.html#grading",
+    "href": "slides/00-welcome.html#grading",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Grading",
+    "text": "Grading\n\n\n\nCategory\nPercentage\n\n\n\n\nHomework\n10%\n\n\nQuizzes\n10%\n\n\nJob Application\n20%\n\n\nJob Interview\n20%\n\n\nMidterm Exam\n15%\n\n\nHack-a-thon & Presentation\n10%\n\n\nFinal Project\n15%\n\n\n\nSee the syllabus for details on how the final letter grade will be calculated."
   },
   {
-    "objectID": "slides/04-MultipleRegression.html#linear-regression-with-scikit-learn-1",
-    "href": "slides/04-MultipleRegression.html#linear-regression-with-scikit-learn-1",
-    "title": "Math 4025: Multiple Linear Regression",
-    "section": "Linear Regression with scikit-learn",
-    "text": "Linear Regression with scikit-learn\nOur model\n\\[\n\\begin{aligned}\n\\text{Profit}  &= -3.90 + 1.19\\times\\text{Population}\\\\\n\\hat{Y}_i &= -3.90 + 1.19X_i\n\\end{aligned}\n\\]"
+    "objectID": "slides/00-welcome.html#support",
+    "href": "slides/00-welcome.html#support",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Support",
+    "text": "Support\n\nAttend office hours\n\nProf. Friedlander office hours\n\nUse email for questions regarding personal matters and/or grades"
   },
   {
-    "objectID": "slides/04-MultipleRegression.html#linear-regression-in-python-prediction",
-    "href": "slides/04-MultipleRegression.html#linear-regression-in-python-prediction",
-    "title": "Math 4025: Multiple Linear Regression",
-    "section": "Linear Regression in Python: Prediction",
-    "text": "Linear Regression in Python: Prediction\nPractice!\n\nNote: New data must be a DataFrame with the same column names as the training data"
+    "objectID": "slides/00-welcome.html#late-homework",
+    "href": "slides/00-welcome.html#late-homework",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Late Homework",
+    "text": "Late Homework\n\nQuizzes/Presentations: Not accepted late without excused absence\nHomework: Pass/Fail\n\nHonest about not finishing? 50%\nDon’t know what you’re doing during presentation? 0%\nDue Thursday before class"
   },
   {
-    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-1",
-    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-1",
-    "title": "Math 4025: Multiple Linear Regression",
-    "section": "Multiple Linear Regression",
-    "text": "Multiple Linear Regression\n\nResponse: \\(Y\\)\nPredictor Variables: \\(X_1, X_2, \\ldots, X_p\\)\nAssume true relationship:\n\n\\[\n\\begin{aligned}\nY&=f(\\mathbf{X}) + \\epsilon\\\\\n&=\\beta_0 + \\beta_1 X_1 + \\beta_2 X_2 + \\ldots + \\beta_p X_p + \\epsilon\n\\end{aligned}\n\\] where \\(\\beta_j\\) quantifies the association between the \\(j^{th}\\) predictor and the response."
+    "objectID": "slides/00-welcome.html#school-sponsored-events",
+    "href": "slides/00-welcome.html#school-sponsored-events",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "School-Sponsored Events",
+    "text": "School-Sponsored Events\n\nExcused absences for event? Email me at least a week in advance\nSick or injured? Email me as soon as it is safe to do so.\n\nDon’t get me sick…\n\nFailure to adhere to this policy gets you a 35% point reduction"
   },
   {
-    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-estimating-parameters",
-    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-estimating-parameters",
-    "title": "Math 4025: Multiple Linear Regression",
-    "section": "Multiple Linear Regression: Estimating Parameters",
-    "text": "Multiple Linear Regression: Estimating Parameters\n\nSuppose \\(\\hat{\\beta}_0, \\hat{\\beta}_1, \\ldots, \\hat{\\beta}_p\\) are estimates of \\(\\beta_0, \\beta_1, \\ldots, \\beta_p\\)\nTraining Data:\n\nObserved response: \\(y_i\\) for \\(i=1,\\ldots,n\\)\nObserved predictors: \\(x_{1i}, x_{2i}, \\ldots x_{pi}\\) for \\(i=1,\\ldots, n\\)\n\nPredicted response: \\[\\hat{y}_i = \\hat{\\beta}_0 + \\hat{\\beta}_1x_{1i} + \\ldots + \\hat{\\beta}_px_{pi} \\text{ for } i=1, \\ldots, n\\]\nResiduals: \\(e_i = y_i - \\hat{y}_i\\) for \\(i=1, \\ldots, n\\)\nMean Squared Error (MSE): \\(MSE =\\dfrac{e^2_1+e^2_2+\\ldots+e^2_n}{n}\\)"
+    "objectID": "slides/00-welcome.html#academic-integrity",
+    "href": "slides/00-welcome.html#academic-integrity",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Academic integrity",
+    "text": "Academic integrity\n\nThe College of Idaho maintains that academic honesty and integrity are essential values in the educational process. Operating under an Honor Code philosophy, the College expects conduct rooted in honesty, integrity, and understanding, allowing members of a diverse student body to live together and interact and learn from one another in ways that protect both personal freedom and community standards. Violations of academic honesty are addressed primarily by the instructor and may be referred to the Student Judicial Board.\n\nBy participating in this course, you are agreeing that all your work and conduct will be in accordance with the College of Idaho Honor Code."
   },
   {
-    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-estimating-parameters-1",
-    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-estimating-parameters-1",
-    "title": "Math 4025: Multiple Linear Regression",
-    "section": "Multiple Linear Regression: Estimating Parameters",
-    "text": "Multiple Linear Regression: Estimating Parameters\n\nGoal: Use training data to find \\(\\hat{\\beta}_0, \\hat{\\beta}_1, \\ldots, \\hat{\\beta}_p\\) that minimizes MSE\n\n\\(\\hat{\\beta}_i\\)’s called least-squares estimators\nSince minimizing MSE \\(\\implies\\) MSE is called cost/loss function\n\nCan use calculus or gradient descent to find \\(\\hat{\\beta}_i\\)’s"
+    "objectID": "slides/00-welcome.html#collaboration-sharing-code",
+    "href": "slides/00-welcome.html#collaboration-sharing-code",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Collaboration & sharing code",
+    "text": "Collaboration & sharing code\n\nI have policies!"
   },
   {
-    "objectID": "slides/04-MultipleRegression.html#house-prices-dataset",
-    "href": "slides/04-MultipleRegression.html#house-prices-dataset",
-    "title": "Math 4025: Multiple Linear Regression",
-    "section": "House Prices dataset",
-    "text": "House Prices dataset\n\nsize is in square feet\nnum_bedrooms is a count\nprice is in $1,000’s"
+    "objectID": "slides/00-welcome.html#use-of-artificial-intelligence-ai",
+    "href": "slides/00-welcome.html#use-of-artificial-intelligence-ai",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Use of artificial intelligence (AI)",
+    "text": "Use of artificial intelligence (AI)"
   },
   {
-    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-in-python",
-    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-in-python",
-    "title": "Math 4025: Multiple Linear Regression",
-    "section": "Multiple Linear Regression in Python",
-    "text": "Multiple Linear Regression in Python\n\nPractice!"
+    "objectID": "slides/00-welcome.html#use-of-artificial-intelligence-ai-1",
+    "href": "slides/00-welcome.html#use-of-artificial-intelligence-ai-1",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Use of artificial intelligence (AI)",
+    "text": "Use of artificial intelligence (AI)\n\nAllowed and Encouraged!\n\nUse AI tools to supplement your learning.\n\nYour Responsibility:\n\nYou are responsible for everything you submit.\nMUST be able to explain every line of code.\nMUST be able to explain all results.\n\n\n\n\n\n\n\n\nImportant\n\n\nIf you cannot explain your code or results when asked, it will be treated as if you did not do the work yourself."
   },
   {
-    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-interpreting-parameters",
-    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-interpreting-parameters",
-    "title": "Math 4025: Multiple Linear Regression",
-    "section": "Multiple Linear Regression: Interpreting Parameters",
-    "text": "Multiple Linear Regression: Interpreting Parameters\n\n\\(\\hat{\\beta}_0=89.5978\\): The intercept \\(\\implies\\) a house with 0 square feet and 0 bedrooms would cost approximately $89,598.80. Is this meaningful in context? Not really\n\\(\\hat{\\beta}_1=0.1392\\): With num_bedrooms remaining fixed, an additional 1 square foot of size leads to an increase in price by approximately $139.20.\n\\(\\hat{\\beta}_2=-8.7379\\): With size remaining fixed, an additional bedroom leads to an decrease in price of approximately $8,737.90.\n\n\n\nHmm…. that’s a little weird…\nSimpson’s Paradox: when relationship between two variables disappears or reverses when controlling for a third, confounding variable"
+    "objectID": "slides/00-welcome.html#in-class-agreements",
+    "href": "slides/00-welcome.html#in-class-agreements",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "In class agreements",
+    "text": "In class agreements\nIf we discuss/agree to something in class or office hours which requires action from me (e.g. “you may turn in your homework late due to a sporting event”), you MUST send me a follow-up message. If you don’t, I will almost certainly forget, and our agreement will be considered null and void."
   },
   {
-    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-interpreting-parameters-1",
-    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-interpreting-parameters-1",
-    "title": "Math 4025: Multiple Linear Regression",
-    "section": "Multiple Linear Regression: Interpreting Parameters",
-    "text": "Multiple Linear Regression: Interpreting Parameters\n\n\nWrite down our model in mathematical notation\n\\(\\text{price} = 89.5978 + 0.1392\\times\\text{size} - 8.7379\\times\\text{num_bedrooms}\\)\n\\(Y = 89.5978 + 0.1392X_1 - 8.7379X_2\\)"
+    "objectID": "slides/00-welcome.html#five-tips-for-success",
+    "href": "slides/00-welcome.html#five-tips-for-success",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Five tips for success",
+    "text": "Five tips for success\n\nComplete all the preparation work (readings and videos) before class.\nAsk questions, come to office hours.\nDo the homework; get started on homework early when possible.\nDon’t procrastinate and don’t let a week pass by with lingering questions.\nStay up-to-date on announcements on Canvas and sent via email."
   },
   {
-    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-prediction",
-    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-prediction",
-    "title": "Math 4025: Multiple Linear Regression",
-    "section": "Multiple Linear Regression: Prediction",
-    "text": "Multiple Linear Regression: Prediction\n\nPrediction of price when size is 2000 square feet for a house with 3 bedrooms\n\\(\\text{sales} = 89.5978 + 0.1392\\times2000 - 8.7379\\times3 = 341.7841\\)\n\n\n\nLet’s use Python to make this same prediction\nWhy don’t these match exactly? rounding"
-  },
-  {
-    "objectID": "slides/04-MultipleRegression.html#recap-1",
-    "href": "slides/04-MultipleRegression.html#recap-1",
-    "title": "Math 4025: Multiple Linear Regression",
-    "section": "Recap",
-    "text": "Recap\n\nBias-Variance Trade-off: As flexibility increases, variance increases and bias decreases.\nscikit-learn Workflow:\n\nImport model class.\nInstantiate with hyperparameters.\nFit to training data (.fit(X, y)).\nPredict or inspect coefficients (.predict(), .coef_, .intercept_).\n\nMultiple Linear Regression: Extends simple linear regression to multiple predictors.\nInterpreting Coefficients: \\(\\hat{\\beta}_j\\) is the expected change in \\(Y\\) for a one-unit increase in \\(X_j\\), holding all other predictors constant.\nSimpson’s Paradox: Relationships can change or reverse when accounting for confounders."
-  },
-  {
-    "objectID": "slides/01-big-picture.html#what-is-machine-learning",
-    "href": "slides/01-big-picture.html#what-is-machine-learning",
-    "title": "The Big Picture",
-    "section": "What is Machine Learning?",
-    "text": "What is Machine Learning?\n\nMachine Learning is the study of tools/techniques for extracting information and making predictions from complex datasets\nThe name machine learning was coined in 1959 by Arthur Samuel\n\n“Field of study that gives computers the ability to learn without being explicitly programmed”"
-  },
-  {
-    "objectID": "slides/01-big-picture.html#what-is-machine-learning-1",
-    "href": "slides/01-big-picture.html#what-is-machine-learning-1",
-    "title": "The Big Picture",
-    "section": "What is Machine Learning?",
-    "text": "What is Machine Learning?\nTom M. Mitchell (1998):\n\nA computer program is said to learn from experience E with respect to some class of tasks T and performance measure P if its performance at tasks in T, as measured by P, improves with experience E."
-  },
-  {
-    "objectID": "slides/01-big-picture.html#what-is-machine-learning-2",
-    "href": "slides/01-big-picture.html#what-is-machine-learning-2",
-    "title": "The Big Picture",
-    "section": "What is Machine Learning?",
-    "text": "What is Machine Learning?\n\nMNIST handwritten digits (from ISLR, James et al.)"
-  },
-  {
-    "objectID": "slides/01-big-picture.html#question",
-    "href": "slides/01-big-picture.html#question",
-    "title": "The Big Picture",
-    "section": "Question!!!",
-    "text": "Question!!!\nSuppose your email program watches which emails you do or do not mark as spam, and based on that learns how to better filter spam. According to Tom Mitchell’s definition, which of the following is the task T, experience E, and performance measure P in this setting?\n\nP The number (or fraction) of emails correctly classified as spam/ham (not spam)\nT Classifying emails as spam or ham\nE Watching you label emails as spam or ham\n\n\n(Take 1 minute to think)"
-  },
-  {
-    "objectID": "slides/01-big-picture.html#statistical-learning-vs-machine-learning-vs-data-science",
-    "href": "slides/01-big-picture.html#statistical-learning-vs-machine-learning-vs-data-science",
-    "title": "The Big Picture",
-    "section": "Statistical Learning vs Machine Learning vs Data Science",
-    "text": "Statistical Learning vs Machine Learning vs Data Science\n\nMachine learning arose as a sub-field of Artificial Intelligence which is a sub-fields of Computer Science\nStatistical learning arose as a sub-field of Statistics\nThere is much overlap, a great deal of “cross-fertilization”\n“Data Science” - Reflects the fact that both statistical and machine learning are about data\n“Machine Learning” or “Data Science” are “fancier” terms"
-  },
-  {
-    "objectID": "slides/01-big-picture.html#statistics-vs-machine-learning",
-    "href": "slides/01-big-picture.html#statistics-vs-machine-learning",
-    "title": "The Big Picture",
-    "section": "Statistics vs Machine Learning",
-    "text": "Statistics vs Machine Learning\n\nStatistics: more concerned with answering why and how things work, making inferences\nMachine/Statistical learning: more concerned with making predictions"
-  },
-  {
-    "objectID": "slides/01-big-picture.html#terminologynotation",
-    "href": "slides/01-big-picture.html#terminologynotation",
-    "title": "The Big Picture",
-    "section": "Terminology/Notation",
-    "text": "Terminology/Notation\nAmes Housing dataset - Contains data on 881 houses in Ames, IA. We are interested in predicting sale price.\nThe first ten observations are shown below.\n\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)"
-  },
-  {
-    "objectID": "slides/01-big-picture.html#terminologynotation-1",
-    "href": "slides/01-big-picture.html#terminologynotation-1",
-    "title": "The Big Picture",
-    "section": "Terminology/Notation",
-    "text": "Terminology/Notation\nDefault dataset - Contains credit card default data on 10,000 individuals. We are interested in predicting whether somebody will default or not.\nTen observations are shown below.\n\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)"
-  },
-  {
-    "objectID": "slides/01-big-picture.html#terminologynotation-2",
-    "href": "slides/01-big-picture.html#terminologynotation-2",
-    "title": "The Big Picture",
-    "section": "Terminology/Notation",
-    "text": "Terminology/Notation\n\nResponse/Target/Outcome - variable we are interested in predicting, denoted as \\(Y\\)\nFeatures/Inputs/Predictors - variables used to predict the response, denoted as \\(X\\)\nFeature Matrix - all features taken together, denoted as \\(\\mathbf{X}\\)\nNumber of data points/observations denoted as \\(n\\)\nNumber of features/inputs/predictors denotes as \\(p\\)\nMissing entries in Python are denoted as NaN (in pandas/numpy)"
-  },
-  {
-    "objectID": "slides/01-big-picture.html#question-1",
-    "href": "slides/01-big-picture.html#question-1",
-    "title": "The Big Picture",
-    "section": "Question!!!",
-    "text": "Question!!!\nFor the Ames Housing and Default datasets:\n\nQuestionsAnswers\n\n\n\nWhat are the corresponding values of \\(n\\) and \\(p\\)?\nWhat will be the dimension of the corresponding response vector \\(Y\\)?\nWhat is the value of the 3rd feature for the 2nd observation?\n\n\n\n\nWhat are the corresponding values of \\(n\\) and \\(p\\)?\n\nAmes: \\(n = 881\\) and \\(p = 9\\)\nDefault: \\(n = 10000\\) and \\(p = 4\\)\n\nWhat will be the dimension of the corresponding response vector \\(Y\\)?\n\nAmes: \\(881\\times 1\\)\nDefault: \\(10000\\times 1\\)\n\nWhat is the value of the 3rd feature for the 2nd observation?\n\nAmes: Attchd\nDefault: 397.5425"
-  },
-  {
-    "objectID": "slides/01-big-picture.html#question-2",
-    "href": "slides/01-big-picture.html#question-2",
-    "title": "The Big Picture",
-    "section": "Question!!!",
-    "text": "Question!!!\nSuppose you have information about 867 cancer patients on their age, tumor size, clump thickness of the tumor, uniformity of cell size, and whether the tumor is malignant or benign. Based on these data, you are interested in building a model to predict the type of tumor (malignant or benign) for future cancer patients.\n\nWhat are the values of \\(n\\) and \\(p\\) in this dataset? \\(n = 867, p = 5\\)\nWhat are the inputs/features?"
-  },
-  {
-    "objectID": "slides/01-big-picture.html#supervised-vs-unsupervised-learning",
-    "href": "slides/01-big-picture.html#supervised-vs-unsupervised-learning",
-    "title": "The Big Picture",
-    "section": "Supervised vs Unsupervised Learning",
-    "text": "Supervised vs Unsupervised Learning\n\nMachine Learning Tasks (from Bunker and Fayez, 2017)"
-  },
-  {
-    "objectID": "slides/01-big-picture.html#supervised-learning",
-    "href": "slides/01-big-picture.html#supervised-learning",
-    "title": "The Big Picture",
-    "section": "Supervised Learning",
-    "text": "Supervised Learning\n\nWe have access to labeled data\nObjective: learn overall pattern of relationship between the inputs (\\(\\mathbf{X}\\)) and response (\\(Y\\)) in order to\n\nInvestigate the relationship between inputs and response\nPredict for potential unseen test cases\nAssess the quality of predictions"
-  },
-  {
-    "objectID": "slides/01-big-picture.html#types-of-supervised-learning",
-    "href": "slides/01-big-picture.html#types-of-supervised-learning",
-    "title": "The Big Picture",
-    "section": "Types of Supervised Learning",
-    "text": "Types of Supervised Learning\nSupervised Learning problems can be categorized into:\n\n\nRegression problems (response is quantitative, continuous)\nClassification problems (response is qualitative, categorical)\nWhat if I have discrete quantitative data (e.g. counts)?\n\nCan use either but one is probably better…\nHow many discrete values are there?\n\nEnough we can think of the response as continuous?\n\nWhat is our goal?\n\nHow important is being exactly correct?"
-  },
-  {
-    "objectID": "slides/01-big-picture.html#unsupervised-learning",
-    "href": "slides/01-big-picture.html#unsupervised-learning",
-    "title": "The Big Picture",
-    "section": "Unsupervised Learning",
-    "text": "Unsupervised Learning\n\nNo response/outcome variable, just \\(\\mathbf{X}\\)\nUnderstand structure within data\n\nfind similar groups of observations based on features (clustering)\nfind a smaller subset of features with the most variation (dimensionality reduction)\n\nNo gold-standard\nEasier to collect unlabeled data\nUseful pre-processing step for supervised learning"
-  },
-  {
-    "objectID": "slides/01-big-picture.html#unsupervised-learning-1",
-    "href": "slides/01-big-picture.html#unsupervised-learning-1",
-    "title": "The Big Picture",
-    "section": "Unsupervised Learning",
-    "text": "Unsupervised Learning\nUS Arrests dataset - Data on arrests for 50 US states.\nThe first ten observations are shown below.\n\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)"
-  },
-  {
-    "objectID": "slides/01-big-picture.html#question-3",
-    "href": "slides/01-big-picture.html#question-3",
-    "title": "The Big Picture",
-    "section": "Question!!!",
-    "text": "Question!!!\n\nFor each of the following, identify whether the problem belongs to the supervised or unsupervised learning paradigm\n\nExamine the statistics of two football teams, and predict which team will win tomorrow’s match (given historical data of teams’ wins/losses to learn from) supervised\nGiven genetic (DNA) data from a person, predict the probability of the person developing diabetes over the next 10 years supervised\nTake a collection of 1000 essays written on the US economy, and find a way to automatically group these essays into a small number of groups of essays that are somehow “similar” or “related” unsupervised\nExamine data on the income and years of education of adults in a neighborhood and build a model to predict the income from years of education supervised"
-  },
-  {
-    "objectID": "slides/01-big-picture.html#recap",
-    "href": "slides/01-big-picture.html#recap",
-    "title": "The Big Picture",
-    "section": "Recap",
-    "text": "Recap\n\nWhat is a Machine Learning algorithm?\n\nT: has task\nP: performance is measured\nE: improves with experience\n\nTerminology:\n\nFeatures\n\n\\(p\\)\n\nTarget\nObservations\n\n\\(n\\)\n\n\nSupervised vs. unsupervised learning\n\nSupervised: data is labeled\nUnsupervised: data is unlabeled"
-  },
-  {
-    "objectID": "slides/05-knn.html#computational-setup",
-    "href": "slides/05-knn.html#computational-setup",
-    "title": "Math 4025: Data Splitting + KNN",
-    "section": "Computational Setup",
-    "text": "Computational Setup\n\nimport pandas as pd\nimport numpy as np\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.neighbors import KNeighborsRegressor\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import PolynomialFeatures, StandardScaler\nfrom sklearn.datasets import fetch_openml\nimport matplotlib.pyplot as plt\nfrom plotnine import *\nfrom itables import show"
-  },
-  {
-    "objectID": "slides/05-knn.html#comparing-models-data-splitting",
-    "href": "slides/05-knn.html#comparing-models-data-splitting",
-    "title": "Math 4025: Data Splitting + KNN",
-    "section": "Comparing Models: Data Splitting",
-    "text": "Comparing Models: Data Splitting\n\nSplit ames data set into two parts\n\nTraining set: randomly selected proportion \\(p\\) (typically 50-90%) of data used for fitting model\nTest set: randomly selected proportion \\(1-p\\) of data used for estimating prediction error\n\nIf comparing A LOT of models, split into three parts to prevent information leakage\n\nTraining set: randomly selected proportion \\(p\\) (typically 50-90%) of data used for fitting model\nValidation set: randomly selected proportion \\(q\\) (typically 20-30%) of data used to choosing tuning parameters\nTest set: randomly selected proportion \\(1-p-q\\) of data used for estimating prediction error\n\nIdea: use data your model hasn’t seen to get more accurate estimate of error and prevent overfitting"
-  },
-  {
-    "objectID": "slides/05-knn.html#comparing-models-data-splitting-with-scikit-learn",
-    "href": "slides/05-knn.html#comparing-models-data-splitting-with-scikit-learn",
-    "title": "Math 4025: Data Splitting + KNN",
-    "section": "Comparing Models: Data Splitting with scikit-learn",
-    "text": "Comparing Models: Data Splitting with scikit-learn\n\n# Load ames dataset from sklearn\names_data = fetch_openml(name=\"house_prices\", as_frame=True)\names = ames_data.frame\n\nnp.random.seed(4025)  # Why?\n\n# Split data 70/30\names_train, ames_test = train_test_split(\n    ames, \n    test_size=0.30, \n    random_state=4025\n)\n\nprint(f\"Training set size: {len(ames_train)}\")\nprint(f\"Test set size: {len(ames_test)}\")\n\nTraining set size: 1022\nTest set size: 438\n\n\n\nIn scikit-learn, use stratify parameter for classification tasks\nFor regression, random splitting is typically sufficient"
-  },
-  {
-    "objectID": "slides/05-knn.html#linear-regression-comparing-models",
-    "href": "slides/05-knn.html#linear-regression-comparing-models",
-    "title": "Math 4025: Data Splitting + KNN",
-    "section": "Linear Regression: Comparing Models",
-    "text": "Linear Regression: Comparing Models\n\nLet’s create three models with SalePrice as the response:\n\nfit1: a linear regression model with BedroomAbvGr as the only predictor\nfit2: a linear regression model with GrLivArea as the only predictor\nfit3 (similar to model in previous slides): a multiple regression model with GrLivArea and BedroomAbvGr as predictors\nfit4: super flexible model which fits a 10th degree polynomial to GrLivArea and a 2nd degree polynomial to BedroomAbvGr\n\n\n\n# Prepare target variable\ny_train = ames_train[\"SalePrice\"]\ny_test = ames_test[\"SalePrice\"]\n\n# Fit 1: Only BedroomAbvGr\nfit1 = LinearRegression().fit(ames_train[[\"BedroomAbvGr\"]], y_train)\n\n# Fit 2: Only GrLivArea\nfit2 = LinearRegression().fit(ames_train[[\"GrLivArea\"]], y_train)\n\n# Fit 3: Both predictors\nfit3 = LinearRegression().fit(ames_train[[\"GrLivArea\", \"BedroomAbvGr\"]], y_train)\n\n# Fit 4: Polynomial features (10th degree for GrLivArea, 2nd for BedroomAbvGr)\npoly_liv = PolynomialFeatures(degree=10, include_bias=False)\npoly_bed = PolynomialFeatures(degree=2, include_bias=False)\n\nX_train_poly = np.hstack([\n    poly_liv.fit_transform(ames_train[[\"GrLivArea\"]]),\n    poly_bed.fit_transform(ames_train[[\"BedroomAbvGr\"]])\n])\nfit4 = LinearRegression().fit(X_train_poly, y_train)"
-  },
-  {
-    "objectID": "slides/05-knn.html#computing-mse",
-    "href": "slides/05-knn.html#computing-mse",
-    "title": "Math 4025: Data Splitting + KNN",
-    "section": "Computing MSE",
-    "text": "Computing MSE\n\n# Function to compute MSE\ndef compute_mse(y_true, y_pred):\n    return np.mean((y_true - y_pred) ** 2)\n\n# Fit 1\nfit1_train_mse = compute_mse(y_train, fit1.predict(ames_train[[\"BedroomAbvGr\"]]))\nfit1_test_mse = compute_mse(y_test, fit1.predict(ames_test[[\"BedroomAbvGr\"]]))\n\n# Fit 2\nfit2_train_mse = compute_mse(y_train, fit2.predict(ames_train[[\"GrLivArea\"]]))\nfit2_test_mse = compute_mse(y_test, fit2.predict(ames_test[[\"GrLivArea\"]]))\n\n# Fit 3\nfit3_train_mse = compute_mse(y_train, fit3.predict(ames_train[[\"GrLivArea\", \"BedroomAbvGr\"]]))\nfit3_test_mse = compute_mse(y_test, fit3.predict(ames_test[[\"GrLivArea\", \"BedroomAbvGr\"]]))\n\n# Fit 4\nX_test_poly = np.hstack([\n    poly_liv.transform(ames_test[[\"GrLivArea\"]]),\n    poly_bed.transform(ames_test[[\"BedroomAbvGr\"]])\n])\nfit4_train_mse = compute_mse(y_train, fit4.predict(X_train_poly))\nfit4_test_mse = compute_mse(y_test, fit4.predict(X_test_poly))"
-  },
-  {
-    "objectID": "slides/05-knn.html#question",
-    "href": "slides/05-knn.html#question",
-    "title": "Math 4025: Data Splitting + KNN",
-    "section": "Question",
-    "text": "Question\nWithout looking at the numbers\n\nDo we know which of the following is the smallest: fit1_train_mse, fit2_train_mse, fit3_train_mse, fit4_train_mse? Yes, fit4_train_mse\nDo we know which of the following is the smallest: fit1_test_mse, fit2_test_mse, fit3_test_mse, fit4_test_mse? No"
-  },
-  {
-    "objectID": "slides/05-knn.html#choosing-a-model",
-    "href": "slides/05-knn.html#choosing-a-model",
-    "title": "Math 4025: Data Splitting + KNN",
-    "section": "Choosing a Model",
-    "text": "Choosing a Model\n\n\n\n# Training Errors\ntrain_mses = [fit1_train_mse, fit2_train_mse, fit3_train_mse, fit4_train_mse]\nprint(\"Training MSEs:\", [f\"{mse:.0f}\" for mse in train_mses])\nprint(f\"Best training: fit{np.argmin(train_mses) + 1}\")\n\n# Test Errors\ntest_mses = [fit1_test_mse, fit2_test_mse, fit3_test_mse, fit4_test_mse]\nprint(\"\\nTest MSEs:\", [f\"{mse:.0f}\" for mse in test_mses])\nprint(f\"Best test: fit{np.argmin(test_mses) + 1}\")\n\nTraining MSEs: ['6175267159', '3097659031', '2737919477', '4028341437']\nBest training: fit3\n\nTest MSEs: ['6050113810', '3261997840', '2954466882', '9570903715495']\nBest test: fit3\n\n\n\n\nfit4 has the lowest training MSE (to be expected)\nfit3 has the lowest test MSE\n\nWe would choose fit3\n\nAnything else interesting we see?"
-  },
-  {
-    "objectID": "slides/05-knn.html#regression-conditional-averaging",
-    "href": "slides/05-knn.html#regression-conditional-averaging",
-    "title": "Math 4025: Data Splitting + KNN",
-    "section": "Regression: Conditional Averaging",
-    "text": "Regression: Conditional Averaging\nRestaurant Outlets Profit dataset\n\n\n\n\n\n\n\n\n\nWhat is a good value of \\(\\hat{f}(x)\\) (expected profit), say at \\(x=6\\)?\nA possible choice is the average of the observed responses at \\(x=6\\). But we may not observe responses for certain \\(x\\) values."
-  },
-  {
-    "objectID": "slides/05-knn.html#k-nearest-neighbors-knn-regression",
-    "href": "slides/05-knn.html#k-nearest-neighbors-knn-regression",
-    "title": "Math 4025: Data Splitting + KNN",
-    "section": "K-Nearest Neighbors (KNN) Regression",
-    "text": "K-Nearest Neighbors (KNN) Regression\n\nNon-parametric approach\nFormally: Given a value for \\(K\\) and a test data point \\(x_0\\), \\[\\hat{f}(x_0)=\\dfrac{1}{K} \\sum_{x_i \\in \\mathcal{N}_0} y_i=\\text{Average} \\ \\left(y_i \\ \\text{for all} \\ i:\\ x_i \\in \\mathcal{N}_0\\right) \\] where \\(\\mathcal{N}_0\\) is the set of the \\(K\\) training observations closest to \\(x_0\\).\nInformally, average together the \\(K\\) “closest” observations in your training set\n“Closeness”: usually use the Euclidean metric to measure distance\nEuclidean distance between \\(\\mathbf{X}_i=(x_{i1}, x_{i2}, \\ldots, x_{ip})\\) and \\(\\mathbf{x}_j=(x_{j1}, x_{j2}, \\ldots, x_{jp})\\): \\[||\\mathbf{x}_i-\\mathbf{x}_j||_2 = \\sqrt{(x_{i1}-x_{j1})^2 + (x_{i2}-x_{j2})^2 + \\ldots + (x_{ip}-x_{jp    })^2}\\]"
-  },
-  {
-    "objectID": "slides/05-knn.html#knn-regression-single-predictor-fit",
-    "href": "slides/05-knn.html#knn-regression-single-predictor-fit",
-    "title": "Math 4025: Data Splitting + KNN",
-    "section": "KNN Regression (single predictor): Fit",
-    "text": "KNN Regression (single predictor): Fit\n\n\n\\(K=1\\)\n\n# 1-NN regression\nknnfit1 = KNeighborsRegressor(n_neighbors=1)\nknnfit1.fit(outlets[[\"population\"]], outlets[\"profit\"])\n\n# 1-NN prediction at population = 6\npred_1nn = knnfit1.predict([[6]])\nprint(f\"1-NN prediction at x=6: {pred_1nn[0]:.4f}\")\n\n1-NN prediction at x=6: 0.9270\n\n\n\n\n\n\n\n\n\n\n\n\n\\(K=5\\)\n\n# 5-NN regression\nknnfit5 = KNeighborsRegressor(n_neighbors=5)\nknnfit5.fit(outlets[[\"population\"]], outlets[\"profit\"])\n\n# 5-NN prediction at population = 6\npred_5nn = knnfit5.predict([[6]])\nprint(f\"5-NN prediction at x=6: {pred_5nn[0]:.4f}\")\n\n5-NN prediction at x=6: 5.7699"
-  },
-  {
-    "objectID": "slides/05-knn.html#regression-methods-comparison",
-    "href": "slides/05-knn.html#regression-methods-comparison",
-    "title": "Math 4025: Data Splitting + KNN",
-    "section": "Regression Methods: Comparison",
-    "text": "Regression Methods: Comparison"
-  },
-  {
-    "objectID": "slides/05-knn.html#question-1",
-    "href": "slides/05-knn.html#question-1",
-    "title": "Math 4025: Data Splitting + KNN",
-    "section": "Question!!!",
-    "text": "Question!!!\nAs \\(K\\) in KNN regression increases:\n\nthe flexibility of the fit (decreases /increases)\nthe bias of the fit (decreases/increases )\nthe variance of the fit (decreases/increases)"
-  },
-  {
-    "objectID": "slides/05-knn.html#k-nearest-neighbors-regression-multiple-predictors",
-    "href": "slides/05-knn.html#k-nearest-neighbors-regression-multiple-predictors",
-    "title": "Math 4025: Data Splitting + KNN",
-    "section": "K-Nearest Neighbors Regression (multiple predictors)",
-    "text": "K-Nearest Neighbors Regression (multiple predictors)\n\nLet’s look at the ames data\n\n\nshow(ames[[\"SalePrice\", \"GrLivArea\", \"BedroomAbvGr\"]].head())\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)\n    \n\n\n\n\n\n\n\nShould 1 square foot count the same as 1 bedroom?\nNeed to center and scale (freq. just say scale)\n\nsubtract mean from each predictor\ndivide by standard deviation of each predictor\ncompares apples-to-apples"
-  },
-  {
-    "objectID": "slides/05-knn.html#scaling-in-python",
-    "href": "slides/05-knn.html#scaling-in-python",
-    "title": "Math 4025: Data Splitting + KNN",
-    "section": "Scaling in Python",
-    "text": "Scaling in Python\n\n# Scale predictors using StandardScaler\nscaler = StandardScaler()\n\n# Fit and transform\names_scaled = pd.DataFrame({\n    \"size_scaled\": scaler.fit_transform(ames[[\"GrLivArea\"]])[:, 0],\n    \"num_bedrooms_scaled\": scaler.fit_transform(ames[[\"BedroomAbvGr\"]])[:, 0],\n    \"price\": ames[\"SalePrice\"].values\n})\n\nshow(ames_scaled.head())\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)"
-  },
-  {
-    "objectID": "slides/05-knn.html#question-2",
-    "href": "slides/05-knn.html#question-2",
-    "title": "Math 4025: Data Splitting + KNN",
-    "section": "Question…",
-    "text": "Question…\n\n\nWhat about the training and test sets?\nNeed to scale BOTH sets based on the mean and standard deviation of the training set…\nDiscussion: Why?\nDiscussion: Why don’t I need to center and scale Sale_Price?"
-  },
-  {
-    "objectID": "slides/05-knn.html#scaling-revisited",
-    "href": "slides/05-knn.html#scaling-revisited",
-    "title": "Math 4025: Data Splitting + KNN",
-    "section": "Scaling Revisited",
-    "text": "Scaling Revisited\n\n# Create scalers fitted ONLY on training data\nscaler_size = StandardScaler()\nscaler_bedrooms = StandardScaler()\n\n# Fit scalers on training data and transform\names_train_scaled = pd.DataFrame({\n    \"size_scaled\": scaler_size.fit_transform(ames_train[[\"GrLivArea\"]])[:, 0],\n    \"num_bedrooms_scaled\": scaler_bedrooms.fit_transform(ames_train[[\"BedroomAbvGr\"]])[:, 0],\n    \"price\": ames_train[\"SalePrice\"].values\n})\n\n# Transform test data using training parameters (no fit!)\names_test_scaled = pd.DataFrame({\n    \"size_scaled\": scaler_size.transform(ames_test[[\"GrLivArea\"]])[:, 0],\n    \"num_bedrooms_scaled\": scaler_bedrooms.transform(ames_test[[\"BedroomAbvGr\"]])[:, 0],\n    \"price\": ames_test[\"SalePrice\"].values\n})\n\n\nNext time: using Pipeline in scikit-learn to simplify this process"
-  },
-  {
-    "objectID": "slides/05-knn.html#k-nearest-neighbors-regression-multiple-predictors-1",
-    "href": "slides/05-knn.html#k-nearest-neighbors-regression-multiple-predictors-1",
-    "title": "Math 4025: Data Splitting + KNN",
-    "section": "K-Nearest Neighbors Regression (multiple predictors)",
-    "text": "K-Nearest Neighbors Regression (multiple predictors)\n\n# 10-NN regression\nknnfit10 = KNeighborsRegressor(n_neighbors=10)\nknnfit10.fit(\n    ames_train_scaled[[\"size_scaled\", \"num_bedrooms_scaled\"]], \n    ames_train_scaled[\"price\"]\n)\n\nKNeighborsRegressor(n_neighbors=10)In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.KNeighborsRegressor?Documentation for KNeighborsRegressoriFitted\n        \n            \n                Parameters\n                \n\n\n\n\n\n\n\n\n\nn_neighbors n_neighbors: int, default=5\n\nNumber of neighbors to use by default for :meth:`kneighbors` queries.\n10\n\n\n\nweights weights: {'uniform', 'distance'}, callable or None, default='uniform'\n\nWeight function used in prediction. Possible values:\n\n- 'uniform' : uniform weights. All points in each neighborhood\nare weighted equally.\n- 'distance' : weight points by the inverse of their distance.\nin this case, closer neighbors of a query point will have a\ngreater influence than neighbors which are further away.\n- [callable] : a user-defined function which accepts an\narray of distances, and returns an array of the same shape\ncontaining the weights.\n\nUniform weights are used by default.\n\nSee the following example for a demonstration of the impact of\ndifferent weighting schemes on predictions:\n:ref:`sphx_glr_auto_examples_neighbors_plot_regression.py`.\n'uniform'\n\n\n\nalgorithm algorithm: {'auto', 'ball_tree', 'kd_tree', 'brute'}, default='auto'\n\nAlgorithm used to compute the nearest neighbors:\n\n- 'ball_tree' will use :class:`BallTree`\n- 'kd_tree' will use :class:`KDTree`\n- 'brute' will use a brute-force search.\n- 'auto' will attempt to decide the most appropriate algorithm\nbased on the values passed to :meth:`fit` method.\n\nNote: fitting on sparse input will override the setting of\nthis parameter, using brute force.\n'auto'\n\n\n\nleaf_size leaf_size: int, default=30\n\nLeaf size passed to BallTree or KDTree. This can affect the\nspeed of the construction and query, as well as the memory\nrequired to store the tree. The optimal value depends on the\nnature of the problem.\n30\n\n\n\np p: float, default=2\n\nPower parameter for the Minkowski metric. When p = 1, this is\nequivalent to using manhattan_distance (l1), and euclidean_distance\n(l2) for p = 2. For arbitrary p, minkowski_distance (l_p) is used.\n2\n\n\n\nmetric metric: str, DistanceMetric object or callable, default='minkowski'\n\nMetric to use for distance computation. Default is \"minkowski\", which\nresults in the standard Euclidean distance when p = 2. See the\ndocumentation of `scipy.spatial.distance\n&lt; docs.scipy.org doc scipy reference spatial.distance.html&gt;`_ and\nthe metrics listed in\n:class:`~sklearn.metrics.pairwise.distance_metrics` for valid metric\nvalues.\n\nIf metric is \"precomputed\", X is assumed to be a distance matrix and\nmust be square during fit. X may be a :term:`sparse graph`, in which\ncase only \"nonzero\" elements may be considered neighbors.\n\nIf metric is a callable function, it takes two arrays representing 1D\nvectors as inputs and must return one value indicating the distance\nbetween those vectors. This works for Scipy's metrics, but is less\nefficient than passing the metric name as a string.\n\nIf metric is a DistanceMetric object, it will be passed directly to\nthe underlying computation routines.\n'minkowski'\n\n\n\nmetric_params metric_params: dict, default=None\n\nAdditional keyword arguments for the metric function.\nNone\n\n\n\nn_jobs n_jobs: int, default=None\n\nThe number of parallel jobs to run for neighbors search.\n``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.\n``-1`` means using all processors. See :term:`Glossary `\nfor more details.\nDoesn't affect :meth:`fit` method.\nNone\n\n\n\n\n            \n        \n    \n\n\n\nTest Point: GrLivArea = 2000 square feet, and BedroomAbvGr = 3, then\n\n\n# Scale the test point using training parameters\ntest_point = pd.DataFrame({\n    \"GrLivArea\": [2000],\n    \"BedroomAbvGr\": [3]\n})\n\ntest_point_scaled = np.array([\n    scaler_size.transform(test_point[[\"GrLivArea\"]])[0, 0],\n    scaler_bedrooms.transform(test_point[[\"BedroomAbvGr\"]])[0, 0]\n]).reshape(1, -1)\n\n# Obtain 10-NN prediction\nprediction = knnfit10.predict(test_point_scaled)\nprint(f\"Predicted Sale Price: ${prediction[0]:,.2f}\")\n\nPredicted Sale Price: $257,619.00"
-  },
-  {
-    "objectID": "slides/02-StatisticalLearning.html#data-generating-process",
-    "href": "slides/02-StatisticalLearning.html#data-generating-process",
-    "title": "Intro to Machine Learning",
-    "section": "Data Generating Process",
-    "text": "Data Generating Process\nSuppose we have\n\nFeatures: \\(\\mathbf{X}\\)\nTarget: \\(Y\\)\nGoal: Predict \\(Y\\) using \\(\\mathbf{X}\\)\n\n\n\nData generating process: underlying, unseen and unknowable process that generates \\(Y\\) given \\(\\mathbf{X}\\)"
-  },
-  {
-    "objectID": "slides/02-StatisticalLearning.html#population",
-    "href": "slides/02-StatisticalLearning.html#population",
-    "title": "Intro to Machine Learning",
-    "section": "Population",
-    "text": "Population\nMore mathematically, the “true”/population model can be represented by\n\\[Y=f(\\mathbf{X}) + \\epsilon\\]\nwhere \\(\\epsilon\\) is a random error term (includes measurement error, other discrepancies) independent of \\(\\mathbf{X}\\) and has mean zero.\n\nGOAL: Estimate \\(f\\)"
-  },
-  {
-    "objectID": "slides/02-StatisticalLearning.html#why-estimate-fmathbfx",
-    "href": "slides/02-StatisticalLearning.html#why-estimate-fmathbfx",
-    "title": "Intro to Machine Learning",
-    "section": "Why Estimate \\(f(\\mathbf{X})\\)?",
-    "text": "Why Estimate \\(f(\\mathbf{X})\\)?\nWe wish to know about \\(f(\\mathbf{X})\\) for two reasons:\n\nPrediction: make an educated guess for what \\(y\\) should be given a new \\(x_0\\): \\[\\hat{y}_0=\\hat{f}(x_0) \\\n\\text{or} \\\n\\hat{y}_0=\\hat{C}(x_0)\\]\nInference: Understand the relationship between \\(\\mathbf{X}\\) and \\(Y\\).\n\n\n\nAn ML algorithm that is developed mainly for predictive purposes is often termed as a Black Box algorithm."
-  },
-  {
-    "objectID": "slides/02-StatisticalLearning.html#prediction",
-    "href": "slides/02-StatisticalLearning.html#prediction",
-    "title": "Intro to Machine Learning",
-    "section": "Prediction",
-    "text": "Prediction\nThere are two types of prediction problems:\n\nRegression (response \\(Y\\) is quantitative): Build a model \\(\\hat{Y} = \\hat{f}(\\mathbf{X})\\)\nClassification (response \\(Y\\) is qualitative/categorical): Build a classifier \\(\\hat{Y}=\\hat{C}(\\mathbf{X})\\)\n\n\n\nNote: a “hat”, \\(\\hat{\\phantom{f}}\\), over an object represents an estimate of that object\n\nE.g. \\(\\hat{Y}\\) is an estimate of \\(Y\\) and \\(\\hat{f}\\) is an estimate of \\(f\\)"
-  },
-  {
-    "objectID": "slides/02-StatisticalLearning.html#prediction-and-inference",
-    "href": "slides/02-StatisticalLearning.html#prediction-and-inference",
-    "title": "Intro to Machine Learning",
-    "section": "Prediction and Inference",
-    "text": "Prediction and Inference\nIncome dataset\n\nWhy ML? (from ISLR2)"
-  },
-  {
-    "objectID": "slides/02-StatisticalLearning.html#prediction-and-inference-1",
-    "href": "slides/02-StatisticalLearning.html#prediction-and-inference-1",
-    "title": "Intro to Machine Learning",
-    "section": "Prediction and Inference",
-    "text": "Prediction and Inference\nIncome dataset\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhy ML? (from ISLR2)"
-  },
-  {
-    "objectID": "slides/02-StatisticalLearning.html#question",
-    "href": "slides/02-StatisticalLearning.html#question",
-    "title": "Intro to Machine Learning",
-    "section": "Question!!!",
-    "text": "Question!!!\nConsider the previous two slides:\n\nWhat happens to Income as Years of Education increases? What is the difference between the information that the three plots (combine the first two) give you in answering this questions?\nWhat happens to Income as Seniority increases? What is the difference between the information that the three plots (combine the first two) give you in answering this questions?"
-  },
-  {
-    "objectID": "slides/02-StatisticalLearning.html#discussion",
-    "href": "slides/02-StatisticalLearning.html#discussion",
-    "title": "Intro to Machine Learning",
-    "section": "Discussion",
-    "text": "Discussion\nWhat’s the difference between these two statements:\n\nAs Years of Education increases, Income increases, keeping Seniority fixed.\nAs Years of Education increases, Income increases, without accounting for Seniority."
-  },
-  {
-    "objectID": "slides/02-StatisticalLearning.html#how-do-we-estimate-fmathbfx",
-    "href": "slides/02-StatisticalLearning.html#how-do-we-estimate-fmathbfx",
-    "title": "Intro to Machine Learning",
-    "section": "How Do We Estimate \\(f(\\mathbf{X})\\)?",
-    "text": "How Do We Estimate \\(f(\\mathbf{X})\\)?\nBroadly speaking, we have two approaches.\n\nParametric methods\nNon-parametric methods"
-  },
-  {
-    "objectID": "slides/02-StatisticalLearning.html#parametric-methods",
-    "href": "slides/02-StatisticalLearning.html#parametric-methods",
-    "title": "Intro to Machine Learning",
-    "section": "Parametric Methods",
-    "text": "Parametric Methods\n\nAssume a functional form for \\(f(\\mathbf{X})\\)\n\nLinear Regression: \\(f(\\mathbf{X})=\\beta_0 + \\beta_1 \\mathbf{x}_1 + \\beta_2 \\mathbf{x}_2 + \\ldots + \\beta_p \\mathbf{x}_p\\)\nEstimate the parameters \\(\\beta_0, \\beta_1, \\ldots, \\beta_p\\) using labeled data\n\nChoosing \\(\\beta\\)’s that minimize some error metrics is called fitting or training the model\nThe data we use to fit the model is called our training data"
-  },
-  {
-    "objectID": "slides/02-StatisticalLearning.html#parametric-methods-1",
-    "href": "slides/02-StatisticalLearning.html#parametric-methods-1",
-    "title": "Intro to Machine Learning",
-    "section": "Parametric Methods",
-    "text": "Parametric Methods\n\nParametric model fit (from ISLR2)\n\nWhat are some potential parametric models that could result in this picture?\nNote: Right line is the true relationship"
-  },
-  {
-    "objectID": "slides/02-StatisticalLearning.html#parametric-methods-2",
-    "href": "slides/02-StatisticalLearning.html#parametric-methods-2",
-    "title": "Intro to Machine Learning",
-    "section": "Parametric Methods",
-    "text": "Parametric Methods\nIncome dataset\n\n\n\n\n\n\n\n\n\nTrue relationship\n\n\n\n\n\n\n\nParametric model\n\n\n\n\n\n\nFrom ISLR2\n\n\n\n\n\nWhat are some functions that could have resulted in the model on the right?\n\\(\\text{Income} \\approx \\beta_0 + \\beta_1\\times\\text{Years of Education} + \\beta_2\\times\\text{Seniority}\\)"
-  },
-  {
-    "objectID": "slides/02-StatisticalLearning.html#non-parametric-methods",
-    "href": "slides/02-StatisticalLearning.html#non-parametric-methods",
-    "title": "Intro to Machine Learning",
-    "section": "Non-parametric Methods",
-    "text": "Non-parametric Methods\n\nNon-parametric approach: no explicit assumptions about the functional form of \\(f(\\mathbf{X})\\)\nMuch more observations (compared to a parametric approach) required to fit non-parametric model\n\nIdea: parametric model restricts space of possible answers\n\n\nIncome dataset\n\n\n\n\n\n\n\n\n\nTrue relationship\n\n\n\n\n\n\n\nNon-parametric model fit\n\n\n\n\n\n\nFrom ISLR2"
-  },
-  {
-    "objectID": "slides/02-StatisticalLearning.html#supervised-learning-flexibility-of-models",
-    "href": "slides/02-StatisticalLearning.html#supervised-learning-flexibility-of-models",
-    "title": "Intro to Machine Learning",
-    "section": "Supervised Learning: Flexibility of Models",
-    "text": "Supervised Learning: Flexibility of Models\n\nFlexibility: smoothness of functions\nMore theoretically: how many parameters are there to estimate?\n\n\n\n\n\n\n\n\n\nFigure 1\n\n\n\n\n\nMore flexible \\(\\implies\\) More complex \\(\\implies\\) Less Smooth \\(\\implies\\) Less Restrictive \\(\\implies\\) Less Interpretable"
-  },
-  {
-    "objectID": "slides/02-StatisticalLearning.html#supervised-learning-some-trade-offs",
-    "href": "slides/02-StatisticalLearning.html#supervised-learning-some-trade-offs",
-    "title": "Intro to Machine Learning",
-    "section": "Supervised Learning: Some Trade-offs",
-    "text": "Supervised Learning: Some Trade-offs\n\nPrediction Accuracy versus Interpretability\nGood Fit versus Over-fit or Under-fit\n\n\nTrade-off between flexibility and interpretability (from ISLR2)"
-  },
-  {
-    "objectID": "slides/02-StatisticalLearning.html#supervised-learning-selecting-a-model",
-    "href": "slides/02-StatisticalLearning.html#supervised-learning-selecting-a-model",
-    "title": "Intro to Machine Learning",
-    "section": "Supervised Learning: Selecting a Model",
-    "text": "Supervised Learning: Selecting a Model\n\nWhy so many different ML techniques?\nThere is no free lunch in statistics: All methods have different pros and cons\n\nMust select correct model for each use-case\n\nRelevant questions in model selection:\n\nHow many observations \\(n\\) and variables \\(p\\)?\nWhat is the relative importance is prediction, interpretability, and inference?\nDo we expect relationship to be non-linear?\nRegression or classification?"
-  },
-  {
-    "objectID": "slides/02-StatisticalLearning.html#supervised-learning-assessing-model-performance",
-    "href": "slides/02-StatisticalLearning.html#supervised-learning-assessing-model-performance",
-    "title": "Intro to Machine Learning",
-    "section": "Supervised Learning: Assessing Model Performance",
-    "text": "Supervised Learning: Assessing Model Performance\n\nWhen we estimate \\(f(\\mathbf{X})\\) using \\(\\hat{f}(\\mathbf{X})\\), then,\n\n\\[\n\\underbrace{E\\left[Y-\\hat{Y}\\right]^2}_{Error}=E\\left[f(\\mathbf{X})+\\epsilon - \\hat{f}(\\mathbf{X})\\right]^2=\\underbrace{E\\left[f(\\mathbf{X})-\\hat{f}(\\mathbf{X})\\right]^2}_{Reducible} + \\underbrace{Var(\\epsilon)}_{Irreducible}\n\\]\n\n\\(E[Y-\\hat{Y}]^2\\): Expected (average) squared difference between predicted and actual (observed) response, Mean Squared Error (MSE)\nGoal: find an estimate of \\(f(\\mathbf{X})\\) to minimize the reducible error"
-  },
-  {
-    "objectID": "slides/02-StatisticalLearning.html#supervised-learning-assessing-model-performance-1",
-    "href": "slides/02-StatisticalLearning.html#supervised-learning-assessing-model-performance-1",
-    "title": "Intro to Machine Learning",
-    "section": "Supervised Learning: Assessing Model Performance",
-    "text": "Supervised Learning: Assessing Model Performance\n\n\nLabeled training data \\((x_1,y_1), (x_2, y_2), \\ldots, (x_n,y_n)\\)\n\ni.e. \\(n\\) training observations\n\nFit/train a model from training data\n\n\\(\\hat{y}=\\hat{f}(x)\\), regression\n\\(\\hat{y}=\\hat{C}(x)\\), classification\n\n\nObtain estimates \\(\\hat{f}(x_1), \\hat{f}(x_2), \\ldots, \\hat{f}(x_n)\\) (or, \\(\\hat{C}(x_1), \\hat{C}(x_2), \\ldots, \\hat{C}(x_n)\\)) of training data\nCompute error:\n\nRegression \\[\\text{Training MSE}=\\text{Average}_{Training} \\left(y-\\hat{f}(x)\\right)^2 = \\frac{1}{n} \\displaystyle \\sum_{i=1}^{n} \\left(y_i-\\hat{f}(x_i)\\right)^2\\]\nClassification \\[\n\\begin{aligned}\n\\text{Training Error Rate}\n& = \\text{Average}_{Training} \\ \\left[I \\left(y\\ne\\hat{C}(x)\\right) \\right]\n\\\\\n&= \\frac{1}{n} \\displaystyle \\sum_{i=1}^{n} \\ I\\left(y_i \\ne \\hat{C}(x_i)\\right)\n\\end{aligned}\n\\]"
-  },
-  {
-    "objectID": "slides/02-StatisticalLearning.html#recap",
-    "href": "slides/02-StatisticalLearning.html#recap",
-    "title": "Intro to Machine Learning",
-    "section": "Recap",
-    "text": "Recap\n\nRegression vs. Classification\nParametric vs. non-parametric models\nTraining v. test data\nAssessing regression models: Mean-Squared Error\nTrade-offs: Flexibility vs. interpretability"
+    "objectID": "slides/00-welcome.html#emails-for-help",
+    "href": "slides/00-welcome.html#emails-for-help",
+    "title": "Welcome to MATH 4025: Statistical Machine Learning",
+    "section": "Emails for help",
+    "text": "Emails for help\nIf you email me about an error please include a screenshot of the error and the code causing the error."
   },
   {
     "objectID": "slides/03-SLR-Gradient_Desc.html#concept-check",
@@ -981,165 +596,690 @@
     "text": "Recap\n\nBias-Variance Trade-off: Total error is composed of variance, (squared) bias, and irreducible error.\nLinear Regression: Assumes a linear relationship between features and target.\nLoss Function: Usually Mean Squared Error (MSE) for regression.\nGradient Descent: An optimization algorithm that iteratively updates parameters to minimize the loss function.\nLearning Rate: Controls the size of the steps taken during gradient descent."
   },
   {
-    "objectID": "slides/00-welcome.html#meet-prof.-friedlander",
-    "href": "slides/00-welcome.html#meet-prof.-friedlander",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Meet Prof. Friedlander!",
-    "text": "Meet Prof. Friedlander!\n\n\nEducation and career journey\n\nGrew up outside New York City\nBS in Math & Statistics from Rice University (Houston, TX)\nBusiness Analyst at Capital One (Plano, TX)\nMS and PhD in Statistics & Operations Research from UNC-Chapel Hill\nPostdoc in Population Genetics at University of Chicago\nAssistant Professor of Math at St. Norbert College (Green Bay, WI)\n\nWork focuses on statistics education, queuing theory, and population genetics\nBig sports fan: NY Knicks, Giants, Rangers, Yankees, UNC Tarheels\nDad of three cute dogs: Allie, Miriam, Tony"
+    "objectID": "slides/02-StatisticalLearning.html#data-generating-process",
+    "href": "slides/02-StatisticalLearning.html#data-generating-process",
+    "title": "Intro to Machine Learning",
+    "section": "Data Generating Process",
+    "text": "Data Generating Process\nSuppose we have\n\nFeatures: \\(\\mathbf{X}\\)\nTarget: \\(Y\\)\nGoal: Predict \\(Y\\) using \\(\\mathbf{X}\\)\n\n\n\nData generating process: underlying, unseen and unknowable process that generates \\(Y\\) given \\(\\mathbf{X}\\)"
   },
   {
-    "objectID": "slides/00-welcome.html#meet-prof.-friedlander-1",
-    "href": "slides/00-welcome.html#meet-prof.-friedlander-1",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Meet Prof. Friedlander!",
-    "text": "Meet Prof. Friedlander!"
+    "objectID": "slides/02-StatisticalLearning.html#population",
+    "href": "slides/02-StatisticalLearning.html#population",
+    "title": "Intro to Machine Learning",
+    "section": "Population",
+    "text": "Population\nMore mathematically, the “true”/population model can be represented by\n\\[Y=f(\\mathbf{X}) + \\epsilon\\]\nwhere \\(\\epsilon\\) is a random error term (includes measurement error, other discrepancies) independent of \\(\\mathbf{X}\\) and has mean zero.\n\nGOAL: Estimate \\(f\\)"
   },
   {
-    "objectID": "slides/00-welcome.html#tell-me-about-yourself-github",
-    "href": "slides/00-welcome.html#tell-me-about-yourself-github",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Tell me about yourself + GitHub",
-    "text": "Tell me about yourself + GitHub\nCreate a GitHub account. You may want to use this to show-off work to future employers so I recommend using something professional (like your name) as your user name.\nSend me a Teams Chat with answers to the following questions:\n\nWhat is the GitHub username you just created?\nWhat would you like me to call you?\nWhy are you taking this class?\nWhat are your career goals?\nIs there anything else you would like me to know about you? E.g. athlete, preferred pronouns, accommodations, etc…\nPlease recommend at least one and up to infinity songs for the class playlist."
+    "objectID": "slides/02-StatisticalLearning.html#why-estimate-fmathbfx",
+    "href": "slides/02-StatisticalLearning.html#why-estimate-fmathbfx",
+    "title": "Intro to Machine Learning",
+    "section": "Why Estimate \\(f(\\mathbf{X})\\)?",
+    "text": "Why Estimate \\(f(\\mathbf{X})\\)?\nWe wish to know about \\(f(\\mathbf{X})\\) for two reasons:\n\nPrediction: make an educated guess for what \\(y\\) should be given a new \\(x_0\\): \\[\\hat{y}_0=\\hat{f}(x_0) \\\n\\text{or} \\\n\\hat{y}_0=\\hat{C}(x_0)\\]\nInference: Understand the relationship between \\(\\mathbf{X}\\) and \\(Y\\).\n\n\n\nAn ML algorithm that is developed mainly for predictive purposes is often termed as a Black Box algorithm."
   },
   {
-    "objectID": "slides/00-welcome.html#course-faq",
-    "href": "slides/00-welcome.html#course-faq",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Course FAQ",
-    "text": "Course FAQ\nQ - What background is assumed for the course?\nA - Familiarity with concepts from statistical inference, linear regression, and logistic regression. Some experience with Python or R, especially when it come to manipulating and visualizing data."
+    "objectID": "slides/02-StatisticalLearning.html#prediction",
+    "href": "slides/02-StatisticalLearning.html#prediction",
+    "title": "Intro to Machine Learning",
+    "section": "Prediction",
+    "text": "Prediction\nThere are two types of prediction problems:\n\nRegression (response \\(Y\\) is quantitative): Build a model \\(\\hat{Y} = \\hat{f}(\\mathbf{X})\\)\nClassification (response \\(Y\\) is qualitative/categorical): Build a classifier \\(\\hat{Y}=\\hat{C}(\\mathbf{X})\\)\n\n\n\nNote: a “hat”, \\(\\hat{\\phantom{f}}\\), over an object represents an estimate of that object\n\nE.g. \\(\\hat{Y}\\) is an estimate of \\(Y\\) and \\(\\hat{f}\\) is an estimate of \\(f\\)"
   },
   {
-    "objectID": "slides/00-welcome.html#course-faq-1",
-    "href": "slides/00-welcome.html#course-faq-1",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Course FAQ",
-    "text": "Course FAQ\nQ - Will we be doing computing?\nA - Yes. We will mostly be using Jupyter notebooks for analysis, but may use Quarto for presentations and project. We will use GitHub for version control and collaboration"
+    "objectID": "slides/02-StatisticalLearning.html#prediction-and-inference",
+    "href": "slides/02-StatisticalLearning.html#prediction-and-inference",
+    "title": "Intro to Machine Learning",
+    "section": "Prediction and Inference",
+    "text": "Prediction and Inference\nIncome dataset\n\nWhy ML? (from ISLR2)"
   },
   {
-    "objectID": "slides/00-welcome.html#course-faq-2",
-    "href": "slides/00-welcome.html#course-faq-2",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Course FAQ",
-    "text": "Course FAQ\nQ - Will we learn the mathematical theory?\nA - Yes and No. The course is primarily focused on application; however, we will discuss some of the mathematics occasionally."
+    "objectID": "slides/02-StatisticalLearning.html#prediction-and-inference-1",
+    "href": "slides/02-StatisticalLearning.html#prediction-and-inference-1",
+    "title": "Intro to Machine Learning",
+    "section": "Prediction and Inference",
+    "text": "Prediction and Inference\nIncome dataset\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhy ML? (from ISLR2)"
   },
   {
-    "objectID": "slides/00-welcome.html#course-faq-3",
-    "href": "slides/00-welcome.html#course-faq-3",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Course FAQ",
-    "text": "Course FAQ\nQ - What distinguishes this from a 3000-level course?\nA - I expect a high level of independence from you. You should not be relying on me to teach you every small detail from this course. For example, if I tell you about a Python function, I expect that you will be able to figure out how to use it yourself."
+    "objectID": "slides/02-StatisticalLearning.html#question",
+    "href": "slides/02-StatisticalLearning.html#question",
+    "title": "Intro to Machine Learning",
+    "section": "Question!!!",
+    "text": "Question!!!\nConsider the previous two slides:\n\nWhat happens to Income as Years of Education increases? What is the difference between the information that the three plots (combine the first two) give you in answering this questions?\nWhat happens to Income as Seniority increases? What is the difference between the information that the three plots (combine the first two) give you in answering this questions?"
   },
   {
-    "objectID": "slides/00-welcome.html#course-faq-4",
-    "href": "slides/00-welcome.html#course-faq-4",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Course FAQ",
-    "text": "Course FAQ\nQ - Is there anything else I should know?\nA - Machine learning is a RAPIDLY evolving field. If you want to be successful in this field going forward, you will need to be able to learn things for yourself and SELF-ASSESS whether you know them. There are portions of this course that I have intentionally designed to not give you enough information to solve on your own."
+    "objectID": "slides/02-StatisticalLearning.html#discussion",
+    "href": "slides/02-StatisticalLearning.html#discussion",
+    "title": "Intro to Machine Learning",
+    "section": "Discussion",
+    "text": "Discussion\nWhat’s the difference between these two statements:\n\nAs Years of Education increases, Income increases, keeping Seniority fixed.\nAs Years of Education increases, Income increases, without accounting for Seniority."
   },
   {
-    "objectID": "slides/00-welcome.html#course-learning-objectives",
-    "href": "slides/00-welcome.html#course-learning-objectives",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Course learning objectives",
-    "text": "Course learning objectives\nBy the end of the semester, you will be able to…\n\ntackle predictive modeling problems arising from real data.\nuse Python to fit and evaluate machine learning models.\nassess whether a proposed model is appropriate and describe its limitations.\nuse Jupyter notebooks and Quarto to write reproducible reports and GitHub for version control and collaboration.\neffectively communicate results through writing and oral presentations."
+    "objectID": "slides/02-StatisticalLearning.html#how-do-we-estimate-fmathbfx",
+    "href": "slides/02-StatisticalLearning.html#how-do-we-estimate-fmathbfx",
+    "title": "Intro to Machine Learning",
+    "section": "How Do We Estimate \\(f(\\mathbf{X})\\)?",
+    "text": "How Do We Estimate \\(f(\\mathbf{X})\\)?\nBroadly speaking, we have two approaches.\n\nParametric methods\nNon-parametric methods"
   },
   {
-    "objectID": "slides/00-welcome.html#course-toolkit",
-    "href": "slides/00-welcome.html#course-toolkit",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Course toolkit",
-    "text": "Course toolkit\n\nCourse website\n\nCentral hub for the course!\nTour of the website\n\nCanvas\n\nGradebook\n\nGitHub\n\nDistribute assignments\nPlatform for version control and collaboration\n\nMicrosoft Teams\n\nCommunication"
+    "objectID": "slides/02-StatisticalLearning.html#parametric-methods",
+    "href": "slides/02-StatisticalLearning.html#parametric-methods",
+    "title": "Intro to Machine Learning",
+    "section": "Parametric Methods",
+    "text": "Parametric Methods\n\nAssume a functional form for \\(f(\\mathbf{X})\\)\n\nLinear Regression: \\(f(\\mathbf{X})=\\beta_0 + \\beta_1 \\mathbf{x}_1 + \\beta_2 \\mathbf{x}_2 + \\ldots + \\beta_p \\mathbf{x}_p\\)\nEstimate the parameters \\(\\beta_0, \\beta_1, \\ldots, \\beta_p\\) using labeled data\n\nChoosing \\(\\beta\\)’s that minimize some error metrics is called fitting or training the model\nThe data we use to fit the model is called our training data"
   },
   {
-    "objectID": "slides/00-welcome.html#computing-toolkit",
-    "href": "slides/00-welcome.html#computing-toolkit",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Computing toolkit",
-    "text": "Computing toolkit\n\n\n\n\n\n\n\n\n\n\n\nAll analyses using Python\nMostly use Jupyter notebooks (Quarto for projects)\nRecommend using Positron or VS Code\n\n\n\n\n\n\n\n\n\n\n\n\nAccess assignments\nFacilitates version control and collaboration\nAll work in MATH 4025 course classroom"
+    "objectID": "slides/02-StatisticalLearning.html#parametric-methods-1",
+    "href": "slides/02-StatisticalLearning.html#parametric-methods-1",
+    "title": "Intro to Machine Learning",
+    "section": "Parametric Methods",
+    "text": "Parametric Methods\n\nParametric model fit (from ISLR2)\n\nWhat are some potential parametric models that could result in this picture?\nNote: Right line is the true relationship"
   },
   {
-    "objectID": "slides/00-welcome.html#prepare-participate-practice-perform",
-    "href": "slides/00-welcome.html#prepare-participate-practice-perform",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Prepare, Participate, Practice, Perform",
-    "text": "Prepare, Participate, Practice, Perform\n\n\n\nPrepare: Introduce new content and prepare for lectures by completing the readings and watching videos. Tuesday Quizzes.\nParticipate: Attend and actively participate in lectures, office hours, team meetings\nPractice: Practice applying statistical concepts and computing with team-based homework graded pass/fail. Thursday Presentations.\nPerform: Put together what you’ve learned to analyze real-world data\n\nOne Job Application/Portfolio (individual)\nOne Job Interview (individual)\nOne Midterm Exam\nOne Hack-a-thon/Presentation (individual-ish)\nOne Project & Presentation (team)"
+    "objectID": "slides/02-StatisticalLearning.html#parametric-methods-2",
+    "href": "slides/02-StatisticalLearning.html#parametric-methods-2",
+    "title": "Intro to Machine Learning",
+    "section": "Parametric Methods",
+    "text": "Parametric Methods\nIncome dataset\n\n\n\n\n\n\n\n\n\nTrue relationship\n\n\n\n\n\n\n\nParametric model\n\n\n\n\n\n\nFrom ISLR2\n\n\n\n\n\nWhat are some functions that could have resulted in the model on the right?\n\\(\\text{Income} \\approx \\beta_0 + \\beta_1\\times\\text{Years of Education} + \\beta_2\\times\\text{Seniority}\\)"
   },
   {
-    "objectID": "slides/00-welcome.html#grading",
-    "href": "slides/00-welcome.html#grading",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Grading",
-    "text": "Grading\n\n\n\nCategory\nPercentage\n\n\n\n\nHomework\n10%\n\n\nQuizzes\n10%\n\n\nJob Application\n20%\n\n\nJob Interview\n20%\n\n\nMidterm Exam\n15%\n\n\nHack-a-thon & Presentation\n10%\n\n\nFinal Project\n15%\n\n\n\nSee the syllabus for details on how the final letter grade will be calculated."
+    "objectID": "slides/02-StatisticalLearning.html#non-parametric-methods",
+    "href": "slides/02-StatisticalLearning.html#non-parametric-methods",
+    "title": "Intro to Machine Learning",
+    "section": "Non-parametric Methods",
+    "text": "Non-parametric Methods\n\nNon-parametric approach: no explicit assumptions about the functional form of \\(f(\\mathbf{X})\\)\nMuch more observations (compared to a parametric approach) required to fit non-parametric model\n\nIdea: parametric model restricts space of possible answers\n\n\nIncome dataset\n\n\n\n\n\n\n\n\n\nTrue relationship\n\n\n\n\n\n\n\nNon-parametric model fit\n\n\n\n\n\n\nFrom ISLR2"
   },
   {
-    "objectID": "slides/00-welcome.html#support",
-    "href": "slides/00-welcome.html#support",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Support",
-    "text": "Support\n\nAttend office hours\n\nProf. Friedlander office hours\n\nUse email for questions regarding personal matters and/or grades"
+    "objectID": "slides/02-StatisticalLearning.html#supervised-learning-flexibility-of-models",
+    "href": "slides/02-StatisticalLearning.html#supervised-learning-flexibility-of-models",
+    "title": "Intro to Machine Learning",
+    "section": "Supervised Learning: Flexibility of Models",
+    "text": "Supervised Learning: Flexibility of Models\n\nFlexibility: smoothness of functions\nMore theoretically: how many parameters are there to estimate?\n\n\n\n\n\n\n\n\n\nFigure 1\n\n\n\n\n\nMore flexible \\(\\implies\\) More complex \\(\\implies\\) Less Smooth \\(\\implies\\) Less Restrictive \\(\\implies\\) Less Interpretable"
   },
   {
-    "objectID": "slides/00-welcome.html#late-homework",
-    "href": "slides/00-welcome.html#late-homework",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Late Homework",
-    "text": "Late Homework\n\nQuizzes/Presentations: Not accepted late without excused absence\nHomework: Pass/Fail\n\nHonest about not finishing? 50%\nDon’t know what you’re doing during presentation? 0%\nDue Thursday before class"
+    "objectID": "slides/02-StatisticalLearning.html#supervised-learning-some-trade-offs",
+    "href": "slides/02-StatisticalLearning.html#supervised-learning-some-trade-offs",
+    "title": "Intro to Machine Learning",
+    "section": "Supervised Learning: Some Trade-offs",
+    "text": "Supervised Learning: Some Trade-offs\n\nPrediction Accuracy versus Interpretability\nGood Fit versus Over-fit or Under-fit\n\n\nTrade-off between flexibility and interpretability (from ISLR2)"
   },
   {
-    "objectID": "slides/00-welcome.html#school-sponsored-events",
-    "href": "slides/00-welcome.html#school-sponsored-events",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "School-Sponsored Events",
-    "text": "School-Sponsored Events\n\nExcused absences for event? Email me at least a week in advance\nSick or injured? Email me as soon as it is safe to do so.\n\nDon’t get me sick…\n\nFailure to adhere to this policy gets you a 35% point reduction"
+    "objectID": "slides/02-StatisticalLearning.html#supervised-learning-selecting-a-model",
+    "href": "slides/02-StatisticalLearning.html#supervised-learning-selecting-a-model",
+    "title": "Intro to Machine Learning",
+    "section": "Supervised Learning: Selecting a Model",
+    "text": "Supervised Learning: Selecting a Model\n\nWhy so many different ML techniques?\nThere is no free lunch in statistics: All methods have different pros and cons\n\nMust select correct model for each use-case\n\nRelevant questions in model selection:\n\nHow many observations \\(n\\) and variables \\(p\\)?\nWhat is the relative importance is prediction, interpretability, and inference?\nDo we expect relationship to be non-linear?\nRegression or classification?"
   },
   {
-    "objectID": "slides/00-welcome.html#academic-integrity",
-    "href": "slides/00-welcome.html#academic-integrity",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Academic integrity",
-    "text": "Academic integrity\n\nThe College of Idaho maintains that academic honesty and integrity are essential values in the educational process. Operating under an Honor Code philosophy, the College expects conduct rooted in honesty, integrity, and understanding, allowing members of a diverse student body to live together and interact and learn from one another in ways that protect both personal freedom and community standards. Violations of academic honesty are addressed primarily by the instructor and may be referred to the Student Judicial Board.\n\nBy participating in this course, you are agreeing that all your work and conduct will be in accordance with the College of Idaho Honor Code."
+    "objectID": "slides/02-StatisticalLearning.html#supervised-learning-assessing-model-performance",
+    "href": "slides/02-StatisticalLearning.html#supervised-learning-assessing-model-performance",
+    "title": "Intro to Machine Learning",
+    "section": "Supervised Learning: Assessing Model Performance",
+    "text": "Supervised Learning: Assessing Model Performance\n\nWhen we estimate \\(f(\\mathbf{X})\\) using \\(\\hat{f}(\\mathbf{X})\\), then,\n\n\\[\n\\underbrace{E\\left[Y-\\hat{Y}\\right]^2}_{Error}=E\\left[f(\\mathbf{X})+\\epsilon - \\hat{f}(\\mathbf{X})\\right]^2=\\underbrace{E\\left[f(\\mathbf{X})-\\hat{f}(\\mathbf{X})\\right]^2}_{Reducible} + \\underbrace{Var(\\epsilon)}_{Irreducible}\n\\]\n\n\\(E[Y-\\hat{Y}]^2\\): Expected (average) squared difference between predicted and actual (observed) response, Mean Squared Error (MSE)\nGoal: find an estimate of \\(f(\\mathbf{X})\\) to minimize the reducible error"
   },
   {
-    "objectID": "slides/00-welcome.html#collaboration-sharing-code",
-    "href": "slides/00-welcome.html#collaboration-sharing-code",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Collaboration & sharing code",
-    "text": "Collaboration & sharing code\n\nI have policies!"
+    "objectID": "slides/02-StatisticalLearning.html#supervised-learning-assessing-model-performance-1",
+    "href": "slides/02-StatisticalLearning.html#supervised-learning-assessing-model-performance-1",
+    "title": "Intro to Machine Learning",
+    "section": "Supervised Learning: Assessing Model Performance",
+    "text": "Supervised Learning: Assessing Model Performance\n\n\nLabeled training data \\((x_1,y_1), (x_2, y_2), \\ldots, (x_n,y_n)\\)\n\ni.e. \\(n\\) training observations\n\nFit/train a model from training data\n\n\\(\\hat{y}=\\hat{f}(x)\\), regression\n\\(\\hat{y}=\\hat{C}(x)\\), classification\n\n\nObtain estimates \\(\\hat{f}(x_1), \\hat{f}(x_2), \\ldots, \\hat{f}(x_n)\\) (or, \\(\\hat{C}(x_1), \\hat{C}(x_2), \\ldots, \\hat{C}(x_n)\\)) of training data\nCompute error:\n\nRegression \\[\\text{Training MSE}=\\text{Average}_{Training} \\left(y-\\hat{f}(x)\\right)^2 = \\frac{1}{n} \\displaystyle \\sum_{i=1}^{n} \\left(y_i-\\hat{f}(x_i)\\right)^2\\]\nClassification \\[\n\\begin{aligned}\n\\text{Training Error Rate}\n& = \\text{Average}_{Training} \\ \\left[I \\left(y\\ne\\hat{C}(x)\\right) \\right]\n\\\\\n&= \\frac{1}{n} \\displaystyle \\sum_{i=1}^{n} \\ I\\left(y_i \\ne \\hat{C}(x_i)\\right)\n\\end{aligned}\n\\]"
   },
   {
-    "objectID": "slides/00-welcome.html#use-of-artificial-intelligence-ai",
-    "href": "slides/00-welcome.html#use-of-artificial-intelligence-ai",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Use of artificial intelligence (AI)",
-    "text": "Use of artificial intelligence (AI)"
+    "objectID": "slides/02-StatisticalLearning.html#recap",
+    "href": "slides/02-StatisticalLearning.html#recap",
+    "title": "Intro to Machine Learning",
+    "section": "Recap",
+    "text": "Recap\n\nRegression vs. Classification\nParametric vs. non-parametric models\nTraining v. test data\nAssessing regression models: Mean-Squared Error\nTrade-offs: Flexibility vs. interpretability"
   },
   {
-    "objectID": "slides/00-welcome.html#use-of-artificial-intelligence-ai-1",
-    "href": "slides/00-welcome.html#use-of-artificial-intelligence-ai-1",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Use of artificial intelligence (AI)",
-    "text": "Use of artificial intelligence (AI)\n\nAllowed and Encouraged!\n\nUse AI tools to supplement your learning.\n\nYour Responsibility:\n\nYou are responsible for everything you submit.\nMUST be able to explain every line of code.\nMUST be able to explain all results.\n\n\n\n\n\n\n\n\nImportant\n\n\nIf you cannot explain your code or results when asked, it will be treated as if you did not do the work yourself."
+    "objectID": "slides/07-preprocessing-pipelines.html#k-nearest-neighbors-scaling",
+    "href": "slides/07-preprocessing-pipelines.html#k-nearest-neighbors-scaling",
+    "title": "Math 4025: Preprocessing + Pipelines",
+    "section": "K-Nearest Neighbors & Scaling",
+    "text": "K-Nearest Neighbors & Scaling\n\nKNN is a non-parametric method for regression and classification\nIt predicts based on the average (or majority vote) of the \\(K\\) closest training points\nScaling (centering and standardizing) is essential to prevent predictors with large ranges from dominating the distance calculation\nWe must avoid information leakage by scaling new data using training statistics"
   },
   {
-    "objectID": "slides/00-welcome.html#in-class-agreements",
-    "href": "slides/00-welcome.html#in-class-agreements",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "In class agreements",
-    "text": "In class agreements\nIf we discuss/agree to something in class or office hours which requires action from me (e.g. “you may turn in your homework late due to a sporting event”), you MUST send me a follow-up message. If you don’t, I will almost certainly forget, and our agreement will be considered null and void."
+    "objectID": "slides/07-preprocessing-pipelines.html#back-to-information-leakage",
+    "href": "slides/07-preprocessing-pipelines.html#back-to-information-leakage",
+    "title": "Math 4025: Preprocessing + Pipelines",
+    "section": "Back to information leakage",
+    "text": "Back to information leakage\n\nALWAYS preprocess new observations using only information from training data\n\nCenter using mean of training data\nScale using sd of training data\nImpute missing values using ONLY training data (more on this later)\n\nWhy?\n\nprevent information leakage\ncompare apples-to-oranges\nnot enough observations in new data to properly process"
   },
   {
-    "objectID": "slides/00-welcome.html#five-tips-for-success",
-    "href": "slides/00-welcome.html#five-tips-for-success",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Five tips for success",
-    "text": "Five tips for success\n\nComplete all the preparation work (readings and videos) before class.\nAsk questions, come to office hours.\nDo the homework; get started on homework early when possible.\nDon’t procrastinate and don’t let a week pass by with lingering questions.\nStay up-to-date on announcements on Canvas and sent via email."
+    "objectID": "slides/07-preprocessing-pipelines.html#scaling-in-python",
+    "href": "slides/07-preprocessing-pipelines.html#scaling-in-python",
+    "title": "Math 4025: Preprocessing + Pipelines",
+    "section": "Scaling in Python",
+    "text": "Scaling in Python\n\nPreprocessing: reformatting and transforming data so it can be used for modeling\n\nCentering and scaling (StandardScaler)\nConverting categorical data into dummy variables (OneHotEncoder)\nDealing with missing values (SimpleImputer)\n\nFeature Engineering: reformatting and transforming data to improve the performance of your model\n\nCombining variables and dimension reduction techniques\nTransforming variables (e.g. squaring or logging)\n\nPipeline: combine feature engineering, preprocessing, and model fitting into a single object"
   },
   {
-    "objectID": "slides/00-welcome.html#emails-for-help",
-    "href": "slides/00-welcome.html#emails-for-help",
-    "title": "Welcome to MATH 4025: Statistical Machine Learning",
-    "section": "Emails for help",
-    "text": "Emails for help\nIf you email me about an error please include a screenshot of the error and the code causing the error."
+    "objectID": "slides/07-preprocessing-pipelines.html#pipeline-in-scikit-learn",
+    "href": "slides/07-preprocessing-pipelines.html#pipeline-in-scikit-learn",
+    "title": "Math 4025: Preprocessing + Pipelines",
+    "section": "Pipeline in scikit-learn",
+    "text": "Pipeline in scikit-learn\n\nList of steps: (name, transform/estimator)\nfit: sequentially applies transforms and fits the final estimator\npredict: sequentially applies transforms and predicts with the final estimator"
+  },
+  {
+    "objectID": "slides/07-preprocessing-pipelines.html#creating-a-knn-pipeline",
+    "href": "slides/07-preprocessing-pipelines.html#creating-a-knn-pipeline",
+    "title": "Math 4025: Preprocessing + Pipelines",
+    "section": "Creating a KNN Pipeline",
+    "text": "Creating a KNN Pipeline\n\n# Define the pipeline\nknn_pipeline = Pipeline([\n    ('scaler', StandardScaler()),\n    ('knn', KNeighborsRegressor(n_neighbors=10))\n])"
+  },
+  {
+    "objectID": "slides/07-preprocessing-pipelines.html#fitting-the-pipeline",
+    "href": "slides/07-preprocessing-pipelines.html#fitting-the-pipeline",
+    "title": "Math 4025: Preprocessing + Pipelines",
+    "section": "Fitting the Pipeline",
+    "text": "Fitting the Pipeline\n\n# Fit on training data\n# Pipeline automatically scales X_train using mean/std from X_train\ny_train = ames_train['Sale_Price']\ny_test = ames_test['Sale_Price']\nknn_pipeline.fit(ames_train[[\"Gr_Liv_Area\", \"Bedroom_AbvGr\"]], y_train)\n\nPipeline(steps=[('scaler', StandardScaler()),\n                ('knn', KNeighborsRegressor(n_neighbors=10))])In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.Pipeline?Documentation for PipelineiFitted\n        \n            \n                Parameters\n                \n\n\n\n\n\n\n\n\n\nsteps steps: list of tuples\n\nList of (name of step, estimator) tuples that are to be chained in\nsequential order. To be compatible with the scikit-learn API, all steps\nmust define `fit`. All non-last steps must also define `transform`. See\n:ref:`Combining Estimators ` for more details.\n[('scaler', ...), ('knn', ...)]\n\n\n\ntransform_input transform_input: list of str, default=None\n\nThe names of the :term:`metadata` parameters that should be transformed by the\npipeline before passing it to the step consuming it.\n\nThis enables transforming some input arguments to ``fit`` (other than ``X``)\nto be transformed by the steps of the pipeline up to the step which requires\nthem. Requirement is defined via :ref:`metadata routing `.\nFor instance, this can be used to pass a validation set through the pipeline.\n\nYou can only set this if metadata routing is enabled, which you\ncan enable using ``sklearn.set_config(enable_metadata_routing=True)``.\n\n.. versionadded:: 1.6\nNone\n\n\n\nmemory memory: str or object with the joblib.Memory interface, default=None\n\nUsed to cache the fitted transformers of the pipeline. The last step\nwill never be cached, even if it is a transformer. By default, no\ncaching is performed. If a string is given, it is the path to the\ncaching directory. Enabling caching triggers a clone of the transformers\nbefore fitting. Therefore, the transformer instance given to the\npipeline cannot be inspected directly. Use the attribute ``named_steps``\nor ``steps`` to inspect estimators within the pipeline. Caching the\ntransformers is advantageous when fitting is time consuming. See\n:ref:`sphx_glr_auto_examples_neighbors_plot_caching_nearest_neighbors.py`\nfor an example on how to enable caching.\nNone\n\n\n\nverbose verbose: bool, default=False\n\nIf True, the time elapsed while fitting each step will be printed as it\nis completed.\nFalse\n\n\n\n\n            \n        \n    StandardScaler?Documentation for StandardScaler\n        \n            \n                Parameters\n                \n\n\n\n\n\n\n\n\n\ncopy copy: bool, default=True\n\nIf False, try to avoid a copy and do inplace scaling instead.\nThis is not guaranteed to always work inplace; e.g. if the data is\nnot a NumPy array or scipy.sparse CSR matrix, a copy may still be\nreturned.\nTrue\n\n\n\nwith_mean with_mean: bool, default=True\n\nIf True, center the data before scaling.\nThis does not work (and will raise an exception) when attempted on\nsparse matrices, because centering them entails building a dense\nmatrix which in common use cases is likely to be too large to fit in\nmemory.\nTrue\n\n\n\nwith_std with_std: bool, default=True\n\nIf True, scale the data to unit variance (or equivalently,\nunit standard deviation).\nTrue\n\n\n\n\n            \n        \n    KNeighborsRegressor?Documentation for KNeighborsRegressor\n        \n            \n                Parameters\n                \n\n\n\n\n\n\n\n\n\nn_neighbors n_neighbors: int, default=5\n\nNumber of neighbors to use by default for :meth:`kneighbors` queries.\n10\n\n\n\nweights weights: {'uniform', 'distance'}, callable or None, default='uniform'\n\nWeight function used in prediction. Possible values:\n\n- 'uniform' : uniform weights. All points in each neighborhood\nare weighted equally.\n- 'distance' : weight points by the inverse of their distance.\nin this case, closer neighbors of a query point will have a\ngreater influence than neighbors which are further away.\n- [callable] : a user-defined function which accepts an\narray of distances, and returns an array of the same shape\ncontaining the weights.\n\nUniform weights are used by default.\n\nSee the following example for a demonstration of the impact of\ndifferent weighting schemes on predictions:\n:ref:`sphx_glr_auto_examples_neighbors_plot_regression.py`.\n'uniform'\n\n\n\nalgorithm algorithm: {'auto', 'ball_tree', 'kd_tree', 'brute'}, default='auto'\n\nAlgorithm used to compute the nearest neighbors:\n\n- 'ball_tree' will use :class:`BallTree`\n- 'kd_tree' will use :class:`KDTree`\n- 'brute' will use a brute-force search.\n- 'auto' will attempt to decide the most appropriate algorithm\nbased on the values passed to :meth:`fit` method.\n\nNote: fitting on sparse input will override the setting of\nthis parameter, using brute force.\n'auto'\n\n\n\nleaf_size leaf_size: int, default=30\n\nLeaf size passed to BallTree or KDTree. This can affect the\nspeed of the construction and query, as well as the memory\nrequired to store the tree. The optimal value depends on the\nnature of the problem.\n30\n\n\n\np p: float, default=2\n\nPower parameter for the Minkowski metric. When p = 1, this is\nequivalent to using manhattan_distance (l1), and euclidean_distance\n(l2) for p = 2. For arbitrary p, minkowski_distance (l_p) is used.\n2\n\n\n\nmetric metric: str, DistanceMetric object or callable, default='minkowski'\n\nMetric to use for distance computation. Default is \"minkowski\", which\nresults in the standard Euclidean distance when p = 2. See the\ndocumentation of `scipy.spatial.distance\n&lt; docs.scipy.org doc scipy reference spatial.distance.html&gt;`_ and\nthe metrics listed in\n:class:`~sklearn.metrics.pairwise.distance_metrics` for valid metric\nvalues.\n\nIf metric is \"precomputed\", X is assumed to be a distance matrix and\nmust be square during fit. X may be a :term:`sparse graph`, in which\ncase only \"nonzero\" elements may be considered neighbors.\n\nIf metric is a callable function, it takes two arrays representing 1D\nvectors as inputs and must return one value indicating the distance\nbetween those vectors. This works for Scipy's metrics, but is less\nefficient than passing the metric name as a string.\n\nIf metric is a DistanceMetric object, it will be passed directly to\nthe underlying computation routines.\n'minkowski'\n\n\n\nmetric_params metric_params: dict, default=None\n\nAdditional keyword arguments for the metric function.\nNone\n\n\n\nn_jobs n_jobs: int, default=None\n\nThe number of parallel jobs to run for neighbors search.\n``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.\n``-1`` means using all processors. See :term:`Glossary `\nfor more details.\nDoesn't affect :meth:`fit` method.\nNone"
+  },
+  {
+    "objectID": "slides/07-preprocessing-pipelines.html#making-predictions-single-observation",
+    "href": "slides/07-preprocessing-pipelines.html#making-predictions-single-observation",
+    "title": "Math 4025: Preprocessing + Pipelines",
+    "section": "Making Predictions: Single Observation",
+    "text": "Making Predictions: Single Observation\nTest Point: Gr_Liv_Area = 2000 square feet, and Bedroom_AbvGr = 3\n\nnew_house = pd.DataFrame({\"Gr_Liv_Area\": [2000], \"Bedroom_AbvGr\": [3]})\nshow(new_house)\n\n# Pipeline automatically scales new_data using Mean/Std from TRAINING data\nprediction = knn_pipeline.predict(new_house)\nprint(f\"Predicted Sale Price: ${prediction[0]:,.2f}\")\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)\n    \n\n\n\n\nPredicted Sale Price: $265,369.00"
+  },
+  {
+    "objectID": "slides/07-preprocessing-pipelines.html#making-predictions-test-set",
+    "href": "slides/07-preprocessing-pipelines.html#making-predictions-test-set",
+    "title": "Math 4025: Preprocessing + Pipelines",
+    "section": "Making Predictions: Test Set",
+    "text": "Making Predictions: Test Set\n\n# Predict on test set\n# Pipeline handles scaling automatically!\ntest_preds = knn_pipeline.predict(ames_test[[\"Gr_Liv_Area\", \"Bedroom_AbvGr\"]])\nshow(pd.DataFrame({\"Truth\": y_test, \"Prediction\": test_preds}).head())\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)"
+  },
+  {
+    "objectID": "slides/07-preprocessing-pipelines.html#linear-regression-vs-k-nearest-neighbors",
+    "href": "slides/07-preprocessing-pipelines.html#linear-regression-vs-k-nearest-neighbors",
+    "title": "Math 4025: Preprocessing + Pipelines",
+    "section": "Linear Regression vs K-Nearest Neighbors",
+    "text": "Linear Regression vs K-Nearest Neighbors\n\nLinear regression is a parametric approach (with restrictive assumptions), KNN is non-parametric.\nLinear regression works for regression problems (\\(Y\\) numerical), KNN can be used for both regression and classification - i.e. \\(Y\\) qualitative\nLinear regression is interpretable, KNN is not.\nLinear regression can accommodate qualitative predictors and can be extended to include interaction terms as well while KNN does not allow for qualitative predictors (requires encoding).\nPerformance: KNN can be pretty good for small \\(p\\), that is, \\(p \\le 4\\) and large \\(n\\). Performance of KNN deteriorates as \\(p\\) increases - curse of dimensionality"
+  },
+  {
+    "objectID": "slides/07-preprocessing-pipelines.html#linear-regression",
+    "href": "slides/07-preprocessing-pipelines.html#linear-regression",
+    "title": "Math 4025: Preprocessing + Pipelines",
+    "section": "Linear regression",
+    "text": "Linear regression\n\n# Best model from last time\nlm_model = LinearRegression()\nlm_model.fit(ames_train[[\"Gr_Liv_Area\", \"Bedroom_AbvGr\"]], y_train)\n\nLinearRegression()In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.LinearRegression?Documentation for LinearRegressioniFitted\n        \n            \n                Parameters\n                \n\n\n\n\n\n\n\n\n\nfit_intercept fit_intercept: bool, default=True\n\nWhether to calculate the intercept for this model. If set\nto False, no intercept will be used in calculations\n(i.e. data is expected to be centered).\nTrue\n\n\n\ncopy_X copy_X: bool, default=True\n\nIf True, X will be copied; else, it may be overwritten.\nTrue\n\n\n\ntol tol: float, default=1e-6\n\nThe precision of the solution (`coef_`) is determined by `tol` which\nspecifies a different convergence criterion for the `lsqr` solver.\n`tol` is set as `atol` and `btol` of :func:`scipy.sparse.linalg.lsqr` when\nfitting on sparse training data. This parameter has no effect when fitting\non dense data.\n\n.. versionadded:: 1.7\n1e-06\n\n\n\nn_jobs n_jobs: int, default=None\n\nThe number of jobs to use for the computation. This will only provide\nspeedup in case of sufficiently large problems, that is if firstly\n`n_targets &gt; 1` and secondly `X` is sparse or if `positive` is set\nto `True`. ``None`` means 1 unless in a\n:obj:`joblib.parallel_backend` context. ``-1`` means using all\nprocessors. See :term:`Glossary ` for more details.\nNone\n\n\n\npositive positive: bool, default=False\n\nWhen set to ``True``, forces the coefficients to be positive. This\noption is only supported for dense arrays.\n\nFor a comparison between a linear regression model with positive constraints\non the regression coefficients and a linear regression without such constraints,\nsee :ref:`sphx_glr_auto_examples_linear_model_plot_nnls.py`.\n\n.. versionadded:: 0.24\nFalse"
+  },
+  {
+    "objectID": "slides/07-preprocessing-pipelines.html#nn-pipeline",
+    "href": "slides/07-preprocessing-pipelines.html#nn-pipeline",
+    "title": "Math 4025: Preprocessing + Pipelines",
+    "section": "5-NN Pipeline",
+    "text": "5-NN Pipeline\n\nknn5_pipeline = Pipeline([\n    ('scaler', StandardScaler()),\n    ('knn', KNeighborsRegressor(n_neighbors=5))\n])\nknn5_pipeline.fit(ames_train[[\"Gr_Liv_Area\", \"Bedroom_AbvGr\"]], y_train)\n\nPipeline(steps=[('scaler', StandardScaler()), ('knn', KNeighborsRegressor())])In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.Pipeline?Documentation for PipelineiFitted\n        \n            \n                Parameters\n                \n\n\n\n\n\n\n\n\n\nsteps steps: list of tuples\n\nList of (name of step, estimator) tuples that are to be chained in\nsequential order. To be compatible with the scikit-learn API, all steps\nmust define `fit`. All non-last steps must also define `transform`. See\n:ref:`Combining Estimators ` for more details.\n[('scaler', ...), ('knn', ...)]\n\n\n\ntransform_input transform_input: list of str, default=None\n\nThe names of the :term:`metadata` parameters that should be transformed by the\npipeline before passing it to the step consuming it.\n\nThis enables transforming some input arguments to ``fit`` (other than ``X``)\nto be transformed by the steps of the pipeline up to the step which requires\nthem. Requirement is defined via :ref:`metadata routing `.\nFor instance, this can be used to pass a validation set through the pipeline.\n\nYou can only set this if metadata routing is enabled, which you\ncan enable using ``sklearn.set_config(enable_metadata_routing=True)``.\n\n.. versionadded:: 1.6\nNone\n\n\n\nmemory memory: str or object with the joblib.Memory interface, default=None\n\nUsed to cache the fitted transformers of the pipeline. The last step\nwill never be cached, even if it is a transformer. By default, no\ncaching is performed. If a string is given, it is the path to the\ncaching directory. Enabling caching triggers a clone of the transformers\nbefore fitting. Therefore, the transformer instance given to the\npipeline cannot be inspected directly. Use the attribute ``named_steps``\nor ``steps`` to inspect estimators within the pipeline. Caching the\ntransformers is advantageous when fitting is time consuming. See\n:ref:`sphx_glr_auto_examples_neighbors_plot_caching_nearest_neighbors.py`\nfor an example on how to enable caching.\nNone\n\n\n\nverbose verbose: bool, default=False\n\nIf True, the time elapsed while fitting each step will be printed as it\nis completed.\nFalse\n\n\n\n\n            \n        \n    StandardScaler?Documentation for StandardScaler\n        \n            \n                Parameters\n                \n\n\n\n\n\n\n\n\n\ncopy copy: bool, default=True\n\nIf False, try to avoid a copy and do inplace scaling instead.\nThis is not guaranteed to always work inplace; e.g. if the data is\nnot a NumPy array or scipy.sparse CSR matrix, a copy may still be\nreturned.\nTrue\n\n\n\nwith_mean with_mean: bool, default=True\n\nIf True, center the data before scaling.\nThis does not work (and will raise an exception) when attempted on\nsparse matrices, because centering them entails building a dense\nmatrix which in common use cases is likely to be too large to fit in\nmemory.\nTrue\n\n\n\nwith_std with_std: bool, default=True\n\nIf True, scale the data to unit variance (or equivalently,\nunit standard deviation).\nTrue\n\n\n\n\n            \n        \n    KNeighborsRegressor?Documentation for KNeighborsRegressor\n        \n            \n                Parameters\n                \n\n\n\n\n\n\n\n\n\nn_neighbors n_neighbors: int, default=5\n\nNumber of neighbors to use by default for :meth:`kneighbors` queries.\n5\n\n\n\nweights weights: {'uniform', 'distance'}, callable or None, default='uniform'\n\nWeight function used in prediction. Possible values:\n\n- 'uniform' : uniform weights. All points in each neighborhood\nare weighted equally.\n- 'distance' : weight points by the inverse of their distance.\nin this case, closer neighbors of a query point will have a\ngreater influence than neighbors which are further away.\n- [callable] : a user-defined function which accepts an\narray of distances, and returns an array of the same shape\ncontaining the weights.\n\nUniform weights are used by default.\n\nSee the following example for a demonstration of the impact of\ndifferent weighting schemes on predictions:\n:ref:`sphx_glr_auto_examples_neighbors_plot_regression.py`.\n'uniform'\n\n\n\nalgorithm algorithm: {'auto', 'ball_tree', 'kd_tree', 'brute'}, default='auto'\n\nAlgorithm used to compute the nearest neighbors:\n\n- 'ball_tree' will use :class:`BallTree`\n- 'kd_tree' will use :class:`KDTree`\n- 'brute' will use a brute-force search.\n- 'auto' will attempt to decide the most appropriate algorithm\nbased on the values passed to :meth:`fit` method.\n\nNote: fitting on sparse input will override the setting of\nthis parameter, using brute force.\n'auto'\n\n\n\nleaf_size leaf_size: int, default=30\n\nLeaf size passed to BallTree or KDTree. This can affect the\nspeed of the construction and query, as well as the memory\nrequired to store the tree. The optimal value depends on the\nnature of the problem.\n30\n\n\n\np p: float, default=2\n\nPower parameter for the Minkowski metric. When p = 1, this is\nequivalent to using manhattan_distance (l1), and euclidean_distance\n(l2) for p = 2. For arbitrary p, minkowski_distance (l_p) is used.\n2\n\n\n\nmetric metric: str, DistanceMetric object or callable, default='minkowski'\n\nMetric to use for distance computation. Default is \"minkowski\", which\nresults in the standard Euclidean distance when p = 2. See the\ndocumentation of `scipy.spatial.distance\n&lt; docs.scipy.org doc scipy reference spatial.distance.html&gt;`_ and\nthe metrics listed in\n:class:`~sklearn.metrics.pairwise.distance_metrics` for valid metric\nvalues.\n\nIf metric is \"precomputed\", X is assumed to be a distance matrix and\nmust be square during fit. X may be a :term:`sparse graph`, in which\ncase only \"nonzero\" elements may be considered neighbors.\n\nIf metric is a callable function, it takes two arrays representing 1D\nvectors as inputs and must return one value indicating the distance\nbetween those vectors. This works for Scipy's metrics, but is less\nefficient than passing the metric name as a string.\n\nIf metric is a DistanceMetric object, it will be passed directly to\nthe underlying computation routines.\n'minkowski'\n\n\n\nmetric_params metric_params: dict, default=None\n\nAdditional keyword arguments for the metric function.\nNone\n\n\n\nn_jobs n_jobs: int, default=None\n\nThe number of parallel jobs to run for neighbors search.\n``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.\n``-1`` means using all processors. See :term:`Glossary `\nfor more details.\nDoesn't affect :meth:`fit` method.\nNone"
+  },
+  {
+    "objectID": "slides/07-preprocessing-pipelines.html#making-test-predictions",
+    "href": "slides/07-preprocessing-pipelines.html#making-test-predictions",
+    "title": "Math 4025: Preprocessing + Pipelines",
+    "section": "Making test predictions",
+    "text": "Making test predictions\n\nresults = ames_test.copy()\nresults[\"lr_preds\"] = lm_model.predict(ames_test[[\"Gr_Liv_Area\", \"Bedroom_AbvGr\"]])\nresults[\"knn5_preds\"] = knn5_pipeline.predict(ames_test[[\"Gr_Liv_Area\", \"Bedroom_AbvGr\"]])\nresults[\"knn10_preds\"] = knn_pipeline.predict(ames_test[[\"Gr_Liv_Area\", \"Bedroom_AbvGr\"]]) # from earlier"
+  },
+  {
+    "objectID": "slides/07-preprocessing-pipelines.html#computing-error-metrics-rmse",
+    "href": "slides/07-preprocessing-pipelines.html#computing-error-metrics-rmse",
+    "title": "Math 4025: Preprocessing + Pipelines",
+    "section": "Computing Error Metrics: RMSE",
+    "text": "Computing Error Metrics: RMSE\n\ndef match_rmse(y_true, y_pred):\n    return np.sqrt(mean_squared_error(y_true, y_pred))\n\nprint(f\"Linear Regression RMSE: {match_rmse(y_test, results['lr_preds']):,.0f}\")\nprint(f\"KNN (k=5) RMSE:         {match_rmse(y_test, results['knn5_preds']):,.0f}\")\nprint(f\"KNN (k=10) RMSE:        {match_rmse(y_test, results['knn10_preds']):,.0f}\")\n\nLinear Regression RMSE: 54,897\nKNN (k=5) RMSE:         51,928\nKNN (k=10) RMSE:        51,945"
+  },
+  {
+    "objectID": "slides/07-preprocessing-pipelines.html#computing-error-metrics-r2",
+    "href": "slides/07-preprocessing-pipelines.html#computing-error-metrics-r2",
+    "title": "Math 4025: Preprocessing + Pipelines",
+    "section": "Computing Error Metrics: \\(R^2\\)",
+    "text": "Computing Error Metrics: \\(R^2\\)\n\nprint(f\"Linear Regression R2: {r2_score(y_test, results['lr_preds']):.3f}\")\nprint(f\"KNN (k=5) R2:         {r2_score(y_test, results['knn5_preds']):.3f}\")\nprint(f\"KNN (k=10) R2:        {r2_score(y_test, results['knn10_preds']):.3f}\")\n\nLinear Regression R2: 0.587\nKNN (k=5) R2:         0.630\nKNN (k=10) R2:        0.630"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#what-is-machine-learning",
+    "href": "slides/01-big-picture.html#what-is-machine-learning",
+    "title": "The Big Picture",
+    "section": "What is Machine Learning?",
+    "text": "What is Machine Learning?\n\nMachine Learning is the study of tools/techniques for extracting information and making predictions from complex datasets\nThe name machine learning was coined in 1959 by Arthur Samuel\n\n“Field of study that gives computers the ability to learn without being explicitly programmed”"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#what-is-machine-learning-1",
+    "href": "slides/01-big-picture.html#what-is-machine-learning-1",
+    "title": "The Big Picture",
+    "section": "What is Machine Learning?",
+    "text": "What is Machine Learning?\nTom M. Mitchell (1998):\n\nA computer program is said to learn from experience E with respect to some class of tasks T and performance measure P if its performance at tasks in T, as measured by P, improves with experience E."
+  },
+  {
+    "objectID": "slides/01-big-picture.html#what-is-machine-learning-2",
+    "href": "slides/01-big-picture.html#what-is-machine-learning-2",
+    "title": "The Big Picture",
+    "section": "What is Machine Learning?",
+    "text": "What is Machine Learning?\n\nMNIST handwritten digits (from ISLR, James et al.)"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#question",
+    "href": "slides/01-big-picture.html#question",
+    "title": "The Big Picture",
+    "section": "Question!!!",
+    "text": "Question!!!\nSuppose your email program watches which emails you do or do not mark as spam, and based on that learns how to better filter spam. According to Tom Mitchell’s definition, which of the following is the task T, experience E, and performance measure P in this setting?\n\nP The number (or fraction) of emails correctly classified as spam/ham (not spam)\nT Classifying emails as spam or ham\nE Watching you label emails as spam or ham\n\n\n(Take 1 minute to think)"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#statistical-learning-vs-machine-learning-vs-data-science",
+    "href": "slides/01-big-picture.html#statistical-learning-vs-machine-learning-vs-data-science",
+    "title": "The Big Picture",
+    "section": "Statistical Learning vs Machine Learning vs Data Science",
+    "text": "Statistical Learning vs Machine Learning vs Data Science\n\nMachine learning arose as a sub-field of Artificial Intelligence which is a sub-fields of Computer Science\nStatistical learning arose as a sub-field of Statistics\nThere is much overlap, a great deal of “cross-fertilization”\n“Data Science” - Reflects the fact that both statistical and machine learning are about data\n“Machine Learning” or “Data Science” are “fancier” terms"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#statistics-vs-machine-learning",
+    "href": "slides/01-big-picture.html#statistics-vs-machine-learning",
+    "title": "The Big Picture",
+    "section": "Statistics vs Machine Learning",
+    "text": "Statistics vs Machine Learning\n\nStatistics: more concerned with answering why and how things work, making inferences\nMachine/Statistical learning: more concerned with making predictions"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#terminologynotation",
+    "href": "slides/01-big-picture.html#terminologynotation",
+    "title": "The Big Picture",
+    "section": "Terminology/Notation",
+    "text": "Terminology/Notation\nAmes Housing dataset - Contains data on 881 houses in Ames, IA. We are interested in predicting sale price.\nThe first ten observations are shown below.\n\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#terminologynotation-1",
+    "href": "slides/01-big-picture.html#terminologynotation-1",
+    "title": "The Big Picture",
+    "section": "Terminology/Notation",
+    "text": "Terminology/Notation\nDefault dataset - Contains credit card default data on 10,000 individuals. We are interested in predicting whether somebody will default or not.\nTen observations are shown below.\n\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#terminologynotation-2",
+    "href": "slides/01-big-picture.html#terminologynotation-2",
+    "title": "The Big Picture",
+    "section": "Terminology/Notation",
+    "text": "Terminology/Notation\n\nResponse/Target/Outcome - variable we are interested in predicting, denoted as \\(Y\\)\nFeatures/Inputs/Predictors - variables used to predict the response, denoted as \\(X\\)\nFeature Matrix - all features taken together, denoted as \\(\\mathbf{X}\\)\nNumber of data points/observations denoted as \\(n\\)\nNumber of features/inputs/predictors denotes as \\(p\\)\nMissing entries in Python are denoted as NaN (in pandas/numpy)"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#question-1",
+    "href": "slides/01-big-picture.html#question-1",
+    "title": "The Big Picture",
+    "section": "Question!!!",
+    "text": "Question!!!\nFor the Ames Housing and Default datasets:\n\nQuestionsAnswers\n\n\n\nWhat are the corresponding values of \\(n\\) and \\(p\\)?\nWhat will be the dimension of the corresponding response vector \\(Y\\)?\nWhat is the value of the 3rd feature for the 2nd observation?\n\n\n\n\nWhat are the corresponding values of \\(n\\) and \\(p\\)?\n\nAmes: \\(n = 881\\) and \\(p = 9\\)\nDefault: \\(n = 10000\\) and \\(p = 4\\)\n\nWhat will be the dimension of the corresponding response vector \\(Y\\)?\n\nAmes: \\(881\\times 1\\)\nDefault: \\(10000\\times 1\\)\n\nWhat is the value of the 3rd feature for the 2nd observation?\n\nAmes: Attchd\nDefault: 397.5425"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#question-2",
+    "href": "slides/01-big-picture.html#question-2",
+    "title": "The Big Picture",
+    "section": "Question!!!",
+    "text": "Question!!!\nSuppose you have information about 867 cancer patients on their age, tumor size, clump thickness of the tumor, uniformity of cell size, and whether the tumor is malignant or benign. Based on these data, you are interested in building a model to predict the type of tumor (malignant or benign) for future cancer patients.\n\nWhat are the values of \\(n\\) and \\(p\\) in this dataset? \\(n = 867, p = 5\\)\nWhat are the inputs/features?"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#supervised-vs-unsupervised-learning",
+    "href": "slides/01-big-picture.html#supervised-vs-unsupervised-learning",
+    "title": "The Big Picture",
+    "section": "Supervised vs Unsupervised Learning",
+    "text": "Supervised vs Unsupervised Learning\n\nMachine Learning Tasks (from Bunker and Fayez, 2017)"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#supervised-learning",
+    "href": "slides/01-big-picture.html#supervised-learning",
+    "title": "The Big Picture",
+    "section": "Supervised Learning",
+    "text": "Supervised Learning\n\nWe have access to labeled data\nObjective: learn overall pattern of relationship between the inputs (\\(\\mathbf{X}\\)) and response (\\(Y\\)) in order to\n\nInvestigate the relationship between inputs and response\nPredict for potential unseen test cases\nAssess the quality of predictions"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#types-of-supervised-learning",
+    "href": "slides/01-big-picture.html#types-of-supervised-learning",
+    "title": "The Big Picture",
+    "section": "Types of Supervised Learning",
+    "text": "Types of Supervised Learning\nSupervised Learning problems can be categorized into:\n\n\nRegression problems (response is quantitative, continuous)\nClassification problems (response is qualitative, categorical)\nWhat if I have discrete quantitative data (e.g. counts)?\n\nCan use either but one is probably better…\nHow many discrete values are there?\n\nEnough we can think of the response as continuous?\n\nWhat is our goal?\n\nHow important is being exactly correct?"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#unsupervised-learning",
+    "href": "slides/01-big-picture.html#unsupervised-learning",
+    "title": "The Big Picture",
+    "section": "Unsupervised Learning",
+    "text": "Unsupervised Learning\n\nNo response/outcome variable, just \\(\\mathbf{X}\\)\nUnderstand structure within data\n\nfind similar groups of observations based on features (clustering)\nfind a smaller subset of features with the most variation (dimensionality reduction)\n\nNo gold-standard\nEasier to collect unlabeled data\nUseful pre-processing step for supervised learning"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#unsupervised-learning-1",
+    "href": "slides/01-big-picture.html#unsupervised-learning-1",
+    "title": "The Big Picture",
+    "section": "Unsupervised Learning",
+    "text": "Unsupervised Learning\nUS Arrests dataset - Data on arrests for 50 US states.\nThe first ten observations are shown below.\n\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#question-3",
+    "href": "slides/01-big-picture.html#question-3",
+    "title": "The Big Picture",
+    "section": "Question!!!",
+    "text": "Question!!!\n\nFor each of the following, identify whether the problem belongs to the supervised or unsupervised learning paradigm\n\nExamine the statistics of two football teams, and predict which team will win tomorrow’s match (given historical data of teams’ wins/losses to learn from) supervised\nGiven genetic (DNA) data from a person, predict the probability of the person developing diabetes over the next 10 years supervised\nTake a collection of 1000 essays written on the US economy, and find a way to automatically group these essays into a small number of groups of essays that are somehow “similar” or “related” unsupervised\nExamine data on the income and years of education of adults in a neighborhood and build a model to predict the income from years of education supervised"
+  },
+  {
+    "objectID": "slides/01-big-picture.html#recap",
+    "href": "slides/01-big-picture.html#recap",
+    "title": "The Big Picture",
+    "section": "Recap",
+    "text": "Recap\n\nWhat is a Machine Learning algorithm?\n\nT: has task\nP: performance is measured\nE: improves with experience\n\nTerminology:\n\nFeatures\n\n\\(p\\)\n\nTarget\nObservations\n\n\\(n\\)\n\n\nSupervised vs. unsupervised learning\n\nSupervised: data is labeled\nUnsupervised: data is unlabeled"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#question",
+    "href": "slides/04-MultipleRegression.html#question",
+    "title": "Math 4025: Multiple Linear Regression",
+    "section": "Question!!!",
+    "text": "Question!!!\nAs a model’s flexibility increases:\n\nQuestionsAnswers\n\n\n\nits variance (increases/decreases)\nits bias (increases/decreases)\nits training MSE (increases/decreases)\nits test MSE (describe)\n\n\n\n\nits variance (increases)\nits bias (decreases)\nits training MSE (decreases)\nits test MSE (decreases at first, then increases and the model starts to overfit, U-shaped)"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#outlet-data",
+    "href": "slides/04-MultipleRegression.html#outlet-data",
+    "title": "Math 4025: Multiple Linear Regression",
+    "section": "Outlet Data",
+    "text": "Outlet Data\nSuppose the CEO of a restaurant franchise is considering opening new outlets in different cities. They would like to expand their business to cities that give them higher profits with the assumption that highly populated cities will probably yield higher profits.\nThey have data on the population (in 100,000) and profit (in $1,000) at 97 cities where they currently have outlets."
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#scikit-learn",
+    "href": "slides/04-MultipleRegression.html#scikit-learn",
+    "title": "Math 4025: Multiple Linear Regression",
+    "section": "scikit-learn",
+    "text": "scikit-learn\n\nScikit-learn is a simple and efficient tools for predictive data analysis built on NumPy, SciPy, and matplotlib.\n\n\nscikit-learn (often imported as sklearn) provides a unified framework for building machine learning models in Python"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#back-to-linear-regression",
+    "href": "slides/04-MultipleRegression.html#back-to-linear-regression",
+    "title": "Math 4025: Multiple Linear Regression",
+    "section": "Back to linear regression",
+    "text": "Back to linear regression\n\n\n\n\n\n\n\n\n\nGoal: Select \\(\\hat{\\beta}_0\\) (intercept) and \\(\\hat{\\beta}_1\\) (slope) that minimize"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#modeling-with-scikit-learn",
+    "href": "slides/04-MultipleRegression.html#modeling-with-scikit-learn",
+    "title": "Math 4025: Multiple Linear Regression",
+    "section": "Modeling with scikit-learn",
+    "text": "Modeling with scikit-learn\n\nImport the model class (e.g. LinearRegression, LogisticRegression)\nInstantiate the model with desired hyperparameters\nFit the model to data using .fit(X, y)\nDo stuff with the model (e.g. display coefficients, make predictions)"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#linear-regression-with-scikit-learn",
+    "href": "slides/04-MultipleRegression.html#linear-regression-with-scikit-learn",
+    "title": "Math 4025: Multiple Linear Regression",
+    "section": "Linear Regression with scikit-learn",
+    "text": "Linear Regression with scikit-learn\nPractice!"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#linear-regression-with-scikit-learn-1",
+    "href": "slides/04-MultipleRegression.html#linear-regression-with-scikit-learn-1",
+    "title": "Math 4025: Multiple Linear Regression",
+    "section": "Linear Regression with scikit-learn",
+    "text": "Linear Regression with scikit-learn\nOur model\n\\[\n\\begin{aligned}\n\\text{Profit}  &= -3.90 + 1.19\\times\\text{Population}\\\\\n\\hat{Y}_i &= -3.90 + 1.19X_i\n\\end{aligned}\n\\]"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#linear-regression-in-python-prediction",
+    "href": "slides/04-MultipleRegression.html#linear-regression-in-python-prediction",
+    "title": "Math 4025: Multiple Linear Regression",
+    "section": "Linear Regression in Python: Prediction",
+    "text": "Linear Regression in Python: Prediction\nPractice!\n\nNote: New data must be a DataFrame with the same column names as the training data"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-1",
+    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-1",
+    "title": "Math 4025: Multiple Linear Regression",
+    "section": "Multiple Linear Regression",
+    "text": "Multiple Linear Regression\n\nResponse: \\(Y\\)\nPredictor Variables: \\(X_1, X_2, \\ldots, X_p\\)\nAssume true relationship:\n\n\\[\n\\begin{aligned}\nY&=f(\\mathbf{X}) + \\epsilon\\\\\n&=\\beta_0 + \\beta_1 X_1 + \\beta_2 X_2 + \\ldots + \\beta_p X_p + \\epsilon\n\\end{aligned}\n\\] where \\(\\beta_j\\) quantifies the association between the \\(j^{th}\\) predictor and the response."
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-estimating-parameters",
+    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-estimating-parameters",
+    "title": "Math 4025: Multiple Linear Regression",
+    "section": "Multiple Linear Regression: Estimating Parameters",
+    "text": "Multiple Linear Regression: Estimating Parameters\n\nSuppose \\(\\hat{\\beta}_0, \\hat{\\beta}_1, \\ldots, \\hat{\\beta}_p\\) are estimates of \\(\\beta_0, \\beta_1, \\ldots, \\beta_p\\)\nTraining Data:\n\nObserved response: \\(y_i\\) for \\(i=1,\\ldots,n\\)\nObserved predictors: \\(x_{1i}, x_{2i}, \\ldots x_{pi}\\) for \\(i=1,\\ldots, n\\)\n\nPredicted response: \\[\\hat{y}_i = \\hat{\\beta}_0 + \\hat{\\beta}_1x_{1i} + \\ldots + \\hat{\\beta}_px_{pi} \\text{ for } i=1, \\ldots, n\\]\nResiduals: \\(e_i = y_i - \\hat{y}_i\\) for \\(i=1, \\ldots, n\\)\nMean Squared Error (MSE): \\(MSE =\\dfrac{e^2_1+e^2_2+\\ldots+e^2_n}{n}\\)"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-estimating-parameters-1",
+    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-estimating-parameters-1",
+    "title": "Math 4025: Multiple Linear Regression",
+    "section": "Multiple Linear Regression: Estimating Parameters",
+    "text": "Multiple Linear Regression: Estimating Parameters\n\nGoal: Use training data to find \\(\\hat{\\beta}_0, \\hat{\\beta}_1, \\ldots, \\hat{\\beta}_p\\) that minimizes MSE\n\n\\(\\hat{\\beta}_i\\)’s called least-squares estimators\nSince minimizing MSE \\(\\implies\\) MSE is called cost/loss function\n\nCan use calculus or gradient descent to find \\(\\hat{\\beta}_i\\)’s"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#house-prices-dataset",
+    "href": "slides/04-MultipleRegression.html#house-prices-dataset",
+    "title": "Math 4025: Multiple Linear Regression",
+    "section": "House Prices dataset",
+    "text": "House Prices dataset\n\nsize is in square feet\nnum_bedrooms is a count\nprice is in $1,000’s"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-in-python",
+    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-in-python",
+    "title": "Math 4025: Multiple Linear Regression",
+    "section": "Multiple Linear Regression in Python",
+    "text": "Multiple Linear Regression in Python\n\nPractice!"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-interpreting-parameters",
+    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-interpreting-parameters",
+    "title": "Math 4025: Multiple Linear Regression",
+    "section": "Multiple Linear Regression: Interpreting Parameters",
+    "text": "Multiple Linear Regression: Interpreting Parameters\n\n\\(\\hat{\\beta}_0=89.5978\\): The intercept \\(\\implies\\) a house with 0 square feet and 0 bedrooms would cost approximately $89,598.80. Is this meaningful in context? Not really\n\\(\\hat{\\beta}_1=0.1392\\): With num_bedrooms remaining fixed, an additional 1 square foot of size leads to an increase in price by approximately $139.20.\n\\(\\hat{\\beta}_2=-8.7379\\): With size remaining fixed, an additional bedroom leads to an decrease in price of approximately $8,737.90.\n\n\n\nHmm…. that’s a little weird…\nSimpson’s Paradox: when relationship between two variables disappears or reverses when controlling for a third, confounding variable"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-interpreting-parameters-1",
+    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-interpreting-parameters-1",
+    "title": "Math 4025: Multiple Linear Regression",
+    "section": "Multiple Linear Regression: Interpreting Parameters",
+    "text": "Multiple Linear Regression: Interpreting Parameters\n\n\nWrite down our model in mathematical notation\n\\(\\text{price} = 89.5978 + 0.1392\\times\\text{size} - 8.7379\\times\\text{num_bedrooms}\\)\n\\(Y = 89.5978 + 0.1392X_1 - 8.7379X_2\\)"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#multiple-linear-regression-prediction",
+    "href": "slides/04-MultipleRegression.html#multiple-linear-regression-prediction",
+    "title": "Math 4025: Multiple Linear Regression",
+    "section": "Multiple Linear Regression: Prediction",
+    "text": "Multiple Linear Regression: Prediction\n\nPrediction of price when size is 2000 square feet for a house with 3 bedrooms\n\\(\\text{sales} = 89.5978 + 0.1392\\times2000 - 8.7379\\times3 = 341.7841\\)\n\n\n\nLet’s use Python to make this same prediction\nWhy don’t these match exactly? rounding"
+  },
+  {
+    "objectID": "slides/04-MultipleRegression.html#recap-1",
+    "href": "slides/04-MultipleRegression.html#recap-1",
+    "title": "Math 4025: Multiple Linear Regression",
+    "section": "Recap",
+    "text": "Recap\n\nBias-Variance Trade-off: As flexibility increases, variance increases and bias decreases.\nscikit-learn Workflow:\n\nImport model class.\nInstantiate with hyperparameters.\nFit to training data (.fit(X, y)).\nPredict or inspect coefficients (.predict(), .coef_, .intercept_).\n\nMultiple Linear Regression: Extends simple linear regression to multiple predictors.\nInterpreting Coefficients: \\(\\hat{\\beta}_j\\) is the expected change in \\(Y\\) for a one-unit increase in \\(X_j\\), holding all other predictors constant.\nSimpson’s Paradox: Relationships can change or reverse when accounting for confounders."
+  },
+  {
+    "objectID": "slides/05-data-splitting.html#comparing-models-data-splitting",
+    "href": "slides/05-data-splitting.html#comparing-models-data-splitting",
+    "title": "Math 4025: Data Splitting",
+    "section": "Comparing Models: Data Splitting",
+    "text": "Comparing Models: Data Splitting\n\nSplit ames data set into two parts\n\nTraining set: randomly selected proportion \\(p\\) (typically 50-90%) of data used for fitting model\nTest set: randomly selected proportion \\(1-p\\) of data used for estimating prediction error\n\nIf comparing A LOT of models, split into three parts to prevent information leakage\n\nTraining set: randomly selected proportion \\(p\\) (typically 50-90%) of data used for fitting model\nValidation set: randomly selected proportion \\(q\\) (typically 20-30%) of data used to choosing tuning parameters\nTest set: randomly selected proportion \\(1-p-q\\) of data used for estimating prediction error\n\nIdea: use data your model hasn’t seen to get more accurate estimate of error and prevent overfitting"
+  },
+  {
+    "objectID": "slides/05-data-splitting.html#comparing-models-data-splitting-with-scikit-learn",
+    "href": "slides/05-data-splitting.html#comparing-models-data-splitting-with-scikit-learn",
+    "title": "Math 4025: Data Splitting",
+    "section": "Comparing Models: Data Splitting with scikit-learn",
+    "text": "Comparing Models: Data Splitting with scikit-learn\n\nUse train_test_split from sklearn.model_selection: documentation\nIn scikit-learn, use stratify parameter for classification tasks\nFor regression, random splitting is typically sufficient"
+  },
+  {
+    "objectID": "slides/05-data-splitting.html#linear-regression-comparing-models",
+    "href": "slides/05-data-splitting.html#linear-regression-comparing-models",
+    "title": "Math 4025: Data Splitting",
+    "section": "Linear Regression: Comparing Models",
+    "text": "Linear Regression: Comparing Models\n\nLet’s create five models with Sale_Price as the response:\n\nfit1: a linear regression model with Bedroom_Abv_Gr as the only predictor\nfit2: a linear regression model with Gr_Liv_Area as the only predictor\nfit3 (similar to model in previous slides): a multiple regression model with Gr_Liv_Area and Bedroom_Abv_Gr as predictors\nfit4: a multiple regression model with Gr_Liv_Area and Bedroom_Abv_Gr, and an interaction term\n\nPractice!"
+  },
+  {
+    "objectID": "slides/05-data-splitting.html#computing-mse",
+    "href": "slides/05-data-splitting.html#computing-mse",
+    "title": "Math 4025: Data Splitting",
+    "section": "Computing MSE",
+    "text": "Computing MSE\n\nWe can use mean_squared_error from sklearn.metrics\nPractice!"
+  },
+  {
+    "objectID": "slides/05-data-splitting.html#question",
+    "href": "slides/05-data-splitting.html#question",
+    "title": "Math 4025: Data Splitting",
+    "section": "Question",
+    "text": "Question\nWithout looking at the numbers\n\nDo we know which of the following is the smallest: fit1_train_mse, fit2_train_mse, fit3_train_mse, `fit4_train_mse? Yes, fit4_train_mse\nDo we know which of the following is the smallest: fit1_test_mse, fit2_test_mse, fit3_test_mse, fit4_test_mse? No"
+  },
+  {
+    "objectID": "slides/05-data-splitting.html#choosing-a-model",
+    "href": "slides/05-data-splitting.html#choosing-a-model",
+    "title": "Math 4025: Data Splitting",
+    "section": "Choosing a Model",
+    "text": "Choosing a Model\n\nChoose the model with the smallest test MSE"
+  },
+  {
+    "objectID": "slides/05-data-splitting.html#recap-1",
+    "href": "slides/05-data-splitting.html#recap-1",
+    "title": "Math 4025: Data Splitting",
+    "section": "Recap",
+    "text": "Recap\n\nData Splitting: Dividing data into training and test sets to estimate out-of-sample error.\nOverfitting: Occurs when a model performs well on training data but poorly on test data.\nValidation Set: Use a third split when comparing many models to avoid information leakage.\nscikit-learn: Use train_test_split from sklearn.model_selection for easy data partitioning.\nModel Selection: Focus on minimizing the test error (e.g., test MSE)."
+  },
+  {
+    "objectID": "slides/06-knn.html#regression-conditional-averaging",
+    "href": "slides/06-knn.html#regression-conditional-averaging",
+    "title": "Math 4025: KNN",
+    "section": "Regression: Conditional Averaging",
+    "text": "Regression: Conditional Averaging\nRestaurant Outlets Profit dataset\n\n\n\n\n\n\n\n\n\nWhat is a good value of \\(\\hat{f}(x)\\) (expected profit), say at \\(x=6\\)?\nA possible choice is the average of the observed responses at \\(x=6\\). But we may not observe responses for certain \\(x\\) values."
+  },
+  {
+    "objectID": "slides/06-knn.html#k-nearest-neighbors-knn-regression",
+    "href": "slides/06-knn.html#k-nearest-neighbors-knn-regression",
+    "title": "Math 4025: KNN",
+    "section": "K-Nearest Neighbors (KNN) Regression",
+    "text": "K-Nearest Neighbors (KNN) Regression\n\nNon-parametric approach\nFormally: Given a value for \\(K\\) and a test data point \\(x_0\\), \\[\\hat{f}(x_0)=\\dfrac{1}{K} \\sum_{x_i \\in \\mathcal{N}_0} y_i=\\text{Average} \\ \\left(y_i \\ \\text{for all} \\ i:\\ x_i \\in \\mathcal{N}_0\\right) \\] where \\(\\mathcal{N}_0\\) is the set of the \\(K\\) training observations closest to \\(x_0\\).\nInformally, average together the \\(K\\) “closest” observations in your training set\n“Closeness”: usually use the Euclidean metric to measure distance\nEuclidean distance between \\(\\mathbf{X}_i=(x_{i1}, x_{i2}, \\ldots, x_{ip})\\) and \\(\\mathbf{x}_j=(x_{j1}, x_{j2}, \\ldots, x_{jp})\\): \\[||\\mathbf{x}_i-\\mathbf{x}_j||_2 = \\sqrt{(x_{i1}-x_{j1})^2 + (x_{i2}-x_{j2})^2 + \\ldots + (x_{ip}-x_{jp    })^2}\\]"
+  },
+  {
+    "objectID": "slides/06-knn.html#knn-regression-single-predictor-fit",
+    "href": "slides/06-knn.html#knn-regression-single-predictor-fit",
+    "title": "Math 4025: KNN",
+    "section": "KNN Regression (single predictor): Fit",
+    "text": "KNN Regression (single predictor): Fit\n\n\n\\(K=1\\)\n\n\n1-NN prediction at x=6: 0.9270\n\n\n\n\n\n\n\n\n\n\n\\(K=5\\)\n\n\n5-NN prediction at x=6: 5.7699"
+  },
+  {
+    "objectID": "slides/06-knn.html#regression-methods-comparison",
+    "href": "slides/06-knn.html#regression-methods-comparison",
+    "title": "Math 4025: KNN",
+    "section": "Regression Methods: Comparison",
+    "text": "Regression Methods: Comparison"
+  },
+  {
+    "objectID": "slides/06-knn.html#question",
+    "href": "slides/06-knn.html#question",
+    "title": "Math 4025: KNN",
+    "section": "Question!!!",
+    "text": "Question!!!\nAs \\(K\\) in KNN regression increases:\n\nthe flexibility of the fit (decreases /increases)\nthe bias of the fit (decreases/increases )\nthe variance of the fit (decreases/increases)"
+  },
+  {
+    "objectID": "slides/06-knn.html#k-nearest-neighbors-regression-multiple-predictors",
+    "href": "slides/06-knn.html#k-nearest-neighbors-regression-multiple-predictors",
+    "title": "Math 4025: KNN",
+    "section": "K-Nearest Neighbors Regression (multiple predictors)",
+    "text": "K-Nearest Neighbors Regression (multiple predictors)\n\nLet’s look at the ames data\n\n\names = pd.read_csv(\"../data/ameshousing.csv\")\names_train, ames_test = train_test_split(ames, random_state=42)\nshow(ames[[\"Sale_Price\", \"Gr_Liv_Area\", \"Bedroom_AbvGr\"]].head())\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)\n    \n\n\n\n\n\n\n\nShould 1 square foot count the same as 1 bedroom?\nNeed to center and scale (freq. just say scale)\n\nsubtract mean from each predictor\ndivide by standard deviation of each predictor\ncompares apples-to-apples"
+  },
+  {
+    "objectID": "slides/06-knn.html#new-observation",
+    "href": "slides/06-knn.html#new-observation",
+    "title": "Math 4025: KNN",
+    "section": "New observation",
+    "text": "New observation\n\n\n\n\n\n\n\n\n\n\nWhere do you think the 10 nearest neighbors should be?"
+  },
+  {
+    "objectID": "slides/06-knn.html#computing-distances",
+    "href": "slides/06-knn.html#computing-distances",
+    "title": "Math 4025: KNN",
+    "section": "Computing Distances",
+    "text": "Computing Distances\n\names_dist = ames_train.copy()\names_dist[\"dist\"] = np.sqrt((ames_dist[\"Gr_Liv_Area\"] - 2000)**2 + (ames_dist[\"Bedroom_AbvGr\"] - 2)**2)\names_dist = ames_dist.sort_values(\"dist\")"
+  },
+  {
+    "objectID": "slides/06-knn.html#nearest-neighbors",
+    "href": "slides/06-knn.html#nearest-neighbors",
+    "title": "Math 4025: KNN",
+    "section": "10 “Nearest Neighbors”",
+    "text": "10 “Nearest Neighbors”\n\n\n\n\n\n\n\n\n\n\nAre they where you thought they should be?"
+  },
+  {
+    "objectID": "slides/06-knn.html#looking-at-distances",
+    "href": "slides/06-knn.html#looking-at-distances",
+    "title": "Math 4025: KNN",
+    "section": "Looking at distances",
+    "text": "Looking at distances\n\nshow(ames_dist[[\"Gr_Liv_Area\", \"Bedroom_AbvGr\", \"dist\"]].head(10))\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)"
+  },
+  {
+    "objectID": "slides/06-knn.html#original-data",
+    "href": "slides/06-knn.html#original-data",
+    "title": "Math 4025: KNN",
+    "section": "Original data",
+    "text": "Original data\n\n(ggplot(ames_train, aes(x = \"Gr_Liv_Area\")) +\n  geom_histogram() +\n  theme(text = element_text(size = 20)))"
+  },
+  {
+    "objectID": "slides/06-knn.html#centering",
+    "href": "slides/06-knn.html#centering",
+    "title": "Math 4025: KNN",
+    "section": "Centering",
+    "text": "Centering\n\nWhat’s different between these two plots?\n\n\n\nOriginal data\n\n\nCode\n(ggplot(ames_train, aes(x = \"Gr_Liv_Area\")) +\n  geom_histogram() +\n  theme(text = element_text(size = 20), figure_size=(6, 4)))\n\n\n\n\n\n\n\n\n\n\nCentered data\n\n\nCode\names_train_centered = ames_train.copy()\names_train_centered[\"Gr_Liv_Area_Centered\"] = ames_train[\"Gr_Liv_Area\"] - ames_train[\"Gr_Liv_Area\"].mean()\n\n(ggplot(ames_train_centered, aes(x = \"Gr_Liv_Area_Centered\")) +\n  geom_histogram() +\n  theme(text = element_text(size = 20), figure_size=(6, 4)))"
+  },
+  {
+    "objectID": "slides/06-knn.html#scaling",
+    "href": "slides/06-knn.html#scaling",
+    "title": "Math 4025: KNN",
+    "section": "Scaling",
+    "text": "Scaling\n\nWhat’s different between these two plots?\n\n\n\nOriginal data\n\n\nCode\n(ggplot(ames_train, aes(x = \"Gr_Liv_Area\")) +\n  geom_histogram() +\n  theme(text = element_text(size = 20), figure_size=(6, 4)))\n\n\n\n\n\n\n\n\n\n\nNormalized (centered and scaled) data\n\n\nCode\names_train_scaled = ames_train.copy()\names_train_scaled[\"Gr_Liv_Area_Scaled\"] = (ames_train[\"Gr_Liv_Area\"] - ames_train[\"Gr_Liv_Area\"].mean()) / ames_train[\"Gr_Liv_Area\"].std()\n\n(ggplot(ames_train_scaled, aes(x = \"Gr_Liv_Area_Scaled\")) +\n  geom_histogram() +\n  theme(text = element_text(size = 20), figure_size=(6, 4)))"
+  },
+  {
+    "objectID": "slides/06-knn.html#original-data-1",
+    "href": "slides/06-knn.html#original-data-1",
+    "title": "Math 4025: KNN",
+    "section": "Original Data",
+    "text": "Original Data\n\n\nCode\n(ggplot(ames_train, aes(x = \"Gr_Liv_Area\", y = \"Bedroom_AbvGr\")) + \n  geom_point())"
+  },
+  {
+    "objectID": "slides/06-knn.html#centering-1",
+    "href": "slides/06-knn.html#centering-1",
+    "title": "Math 4025: KNN",
+    "section": "Centering",
+    "text": "Centering\n\nWhat’s different between these two plots?\n\n\n\nOriginal Data\n\n\nCode\n(ggplot(ames_train, aes(x = \"Gr_Liv_Area\", y = \"Bedroom_AbvGr\")) + \n  geom_point()+\n  theme(text = element_text(size = 20), figure_size=(6, 4)))\n\n\n\n\n\n\n\n\n\n\nCentered data\n\n\nCode\names_train_centered[\"Bedroom_AbvGr_Centered\"] = ames_train[\"Bedroom_AbvGr\"] - ames_train[\"Bedroom_AbvGr\"].mean()\n\n(ggplot(ames_train_centered, aes(x = \"Gr_Liv_Area_Centered\", y = \"Bedroom_AbvGr_Centered\")) +\n  geom_point() +\n  theme(text = element_text(size = 20), figure_size=(6, 4)))"
+  },
+  {
+    "objectID": "slides/06-knn.html#scaling-1",
+    "href": "slides/06-knn.html#scaling-1",
+    "title": "Math 4025: KNN",
+    "section": "Scaling",
+    "text": "Scaling\n\nWhat’s different between these two plots?\n\n\n\nOriginal data\n\n\nCode\n(ggplot(ames_train, aes(x = \"Gr_Liv_Area\", y = \"Bedroom_AbvGr\")) + \n  geom_point()+\n  theme(text = element_text(size = 20), figure_size=(6, 4)))\n\n\n\n\n\n\n\n\n\n\nNormalized data\n\n\nCode\names_train_scaled[\"Bedroom_AbvGr_Scaled\"] = (ames_train[\"Bedroom_AbvGr\"] - ames_train[\"Bedroom_AbvGr\"].mean()) / ames_train[\"Bedroom_AbvGr\"].std()\n\n(ggplot(ames_train_scaled, aes(x = \"Gr_Liv_Area_Scaled\", y = \"Bedroom_AbvGr_Scaled\")) +\n  geom_point() +\n  theme(text = element_text(size = 20), figure_size=(6, 4)))"
+  },
+  {
+    "objectID": "slides/06-knn.html#new-observation-1",
+    "href": "slides/06-knn.html#new-observation-1",
+    "title": "Math 4025: KNN",
+    "section": "New Observation",
+    "text": "New Observation\n\n\nCode\nnew_house = pd.DataFrame({\"Gr_Liv_Area\": [2000], \"Bedroom_AbvGr\": [2]})\n(ggplot(ames_train, aes(x = \"Gr_Liv_Area\", y = \"Bedroom_AbvGr\", color = \"Sale_Price\")) + \n  geom_point() +\n  geom_point(data = new_house, color = \"red\"))\n\n\n\n\n\n\n\n\n\n\nWhere should we put this point on the normalized plot?"
+  },
+  {
+    "objectID": "slides/06-knn.html#plotting-new-observation-without-normalizing",
+    "href": "slides/06-knn.html#plotting-new-observation-without-normalizing",
+    "title": "Math 4025: KNN",
+    "section": "Plotting new observation without normalizing",
+    "text": "Plotting new observation without normalizing\n\n\nCode\n# Incorrectly plotting unscaled data on scaled plot\n(ggplot(ames_train_scaled, aes(x = \"Gr_Liv_Area_Scaled\", y = \"Bedroom_AbvGr_Scaled\")) +\n  geom_point() +\n  geom_point(data = new_house, mapping = aes(x=\"Gr_Liv_Area\", y = \"Bedroom_AbvGr\"), color = \"red\"))\n\n\n\n\n\n\n\n\n\n\nDoes this look right?"
+  },
+  {
+    "objectID": "slides/06-knn.html#normalized-using-training-data",
+    "href": "slides/06-knn.html#normalized-using-training-data",
+    "title": "Math 4025: KNN",
+    "section": "Normalized using training data",
+    "text": "Normalized using training data\n\n\nOriginal Data\n\n\nCode\n(ggplot(ames_train, aes(x = \"Gr_Liv_Area\", y = \"Bedroom_AbvGr\")) + \n  geom_point() +\n  geom_point(data = new_house, color = \"red\") +\n  theme(text = element_text(size = 20), figure_size=(6, 4)))\n\n\n\n\n\n\n\n\n\n\nScaled data\n\n\nCode\n# Manually scaling using training means/stds\nnew_house_scaled = new_house.copy()\nnew_house_scaled[\"Gr_Liv_Area_Scaled\"] = (new_house[\"Gr_Liv_Area\"] - ames_train[\"Gr_Liv_Area\"].mean())/ames_train[\"Gr_Liv_Area\"].std()\nnew_house_scaled[\"Bedroom_AbvGr_Scaled\"] = (new_house[\"Bedroom_AbvGr\"] - ames_train[\"Bedroom_AbvGr\"].mean()) / ames_train[\"Bedroom_AbvGr\"].std()\n\n(ggplot(ames_train_scaled, aes(x = \"Gr_Liv_Area_Scaled\", y = \"Bedroom_AbvGr_Scaled\")) +\n  geom_point() +\n  geom_point(data = new_house_scaled, color = \"red\")+\n  theme(text = element_text(size = 20), figure_size=(6, 4)))"
+  },
+  {
+    "objectID": "slides/06-knn.html#compute-new-distances",
+    "href": "slides/06-knn.html#compute-new-distances",
+    "title": "Math 4025: KNN",
+    "section": "Compute new distances",
+    "text": "Compute new distances\nPractice!"
+  },
+  {
+    "objectID": "slides/06-knn.html#scaled-distances-look-better",
+    "href": "slides/06-knn.html#scaled-distances-look-better",
+    "title": "Math 4025: KNN",
+    "section": "Scaled distances look better",
+    "text": "Scaled distances look better\n\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)"
+  },
+  {
+    "objectID": "slides/06-knn.html#which-plot-looks-better",
+    "href": "slides/06-knn.html#which-plot-looks-better",
+    "title": "Math 4025: KNN",
+    "section": "Which plot looks better",
+    "text": "Which plot looks better\n\n\nOriginal distances\n\n\nCode\n(ggplot(ames_train, aes(x = \"Gr_Liv_Area\", y = \"Bedroom_AbvGr\", color = \"Sale_Price\")) + \n  geom_point() +\n  geom_point(data = new_house, color = \"red\", size=3) +\n  geom_point(data = orig_closest, color = \"lime\", size=3) +\n  theme(text = element_text(size = 16), figure_size=(6, 4)))\n\n\n\n\n\n\n\n\n\n\nScaled distances\n\n\nCode\n(ggplot(ames_train, aes(x = \"Gr_Liv_Area\", y = \"Bedroom_AbvGr\", color = \"Sale_Price\")) + \n  geom_point() +\n  geom_point(data = new_house, color = \"red\", size=3) +\n  geom_point(data = scaled_closest, color = \"lime\", size=3) +\n  theme(text = element_text(size = 16), figure_size=(6, 4)))"
+  },
+  {
+    "objectID": "slides/06-knn.html#k-nearest-neighbors-1",
+    "href": "slides/06-knn.html#k-nearest-neighbors-1",
+    "title": "Math 4025: KNN",
+    "section": "K-Nearest Neighbors",
+    "text": "K-Nearest Neighbors\n\nNon-parametric: No assumptions about the functional form of \\(f(X)\\)\nRegression: Average of the \\(K\\) nearest neighbors\nDistance: Usually Euclidean distance\nScaling: Crucial when predictors are on different scales!"
   },
   {
     "objectID": "hw/01-hw-eda.html",

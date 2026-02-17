@@ -331,7 +331,7 @@ Question
 <div class="callout-body-container callout-body">
 <p>In your group, decide on a team name. Then have <strong>one member of your group</strong>:</p>
 <ol type="1">
-<li><a href="https://classroom.github.com/a/3cnqO-bh">Click this link</a> to accept the assignment and enter your team name.</li>
+<li><a href="https://classroom.github.com/a/K4gb0Et1">Click this link</a> to accept the assignment and enter your team name.</li>
 <li>Clone the repository to your computer (Positron -&gt; Source Control -&gt; Clone).</li>
 <li>Create a NEW Jupyter Notebook called <code>hw02-mlr.ipynb</code> in the repository folder.</li>
 </ol>
@@ -527,16 +527,10 @@ Question
 </div>
 <div class="callout-body-container callout-body">
 <p>Build a two-input linear model for <code>Sales</code> by adding <code>US</code> in addition to the variable you selected above.</p>
-<p>Note: <code>scikit-learn</code> requires all inputs to be numerical. You will need to convert the <code>US</code> column into a dummy variable (0s and 1s) before fitting the model. You can use <code>pd.get_dummies(..., drop_first=True)</code> for this.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create new DataFrame with selected variables</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert categorical variables to dummies</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># X_train_new = ...</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># model.fit(X_train_new, y_train)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note: <code>scikit-learn</code> requires all inputs to be numerical. You will need to convert the <code>US</code> column into a dummy variable (0s and 1s) before fitting the model. You can use <code>pd.get_dummies(..., drop_first=True)</code> for this. When you use <code>drop_first=True</code>, one level is left out and becomes the <em>reference level</em>. In this case, if <code>US</code> takes values ‘No’ and ‘Yes’, <code>drop_first=True</code> typically drops ‘No’, making it the reference. The coefficient for <code>US_Yes</code> then represents the change in Sales associated with being in the US compared to not being in the US, holding other variables constant.</p>
 <p>Is the coefficient for your original variable the same or different than it was in our baseline model?</p>
 </div>
 </div>
-<p>Notice that when you use <code>drop_first=True</code>, one level is left out and becomes the <em>reference level</em>. In this case, if <code>US</code> takes values ‘No’ and ‘Yes’, <code>drop_first=True</code> typically drops ‘No’, making it the reference. The coefficient for <code>US_Yes</code> then represents the change in Sales associated with being in the US compared to not being in the US, holding other variables constant.</p>
-<p>Let’s now assess the accuracy of our new model.</p>
 </section>
 <section id="exercise-8" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-8">Exercise 8</h2>
@@ -570,8 +564,8 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Fit a model using all of the predictors in your training data. Call the model <code>lmfull</code>. <em>Note</em>: You will need to handle ALL categorical variables in the dataset (e.g., <code>ShelveLoc</code>, <code>Urban</code>, <code>US</code>) by converting them to dummy variables before splitting and fitting.</p>
-<p>Assess the model’s accuracy on the training data and the test data, comparing it to the previous models we’ve fit, and comment on your results.</p>
+<p>Fit a model using all of the predictors in your training data. <em>Note</em>: You will need to handle ALL categorical variables in the dataset (e.g., <code>ShelveLoc</code>, <code>Urban</code>, <code>US</code>) by converting them to dummy variables. I recommend doing this <strong>BEFORE</strong> before splitting as it will require less code.</p>
+<p>Assess the model’s performance on the training data and the test data, comparing it to the previous models we’ve fit, and comment on your results.</p>
 </div>
 </div>
 <p>You should notice that while the accuracy metrics on the training data drastically improve, there is little to no difference in the metrics for the test set. This is because of a phenomenon known as <strong>overfitting</strong>. Overfitting occurs when your model starts matching the training TOO well. A good visualization of an overfit model is Figure 2 in <a href="https://en.wikipedia.org/wiki/Overfitting">the Wikipedia article for overfitting</a>. As you include more variables/information in your model, your performance will ALWAYS increase on your training data. This is one of the reasons we always use holdout sets. Eventually your model will begin to over-align to the noise in your training data and the accuracy on holdout sets will be level off and in most cases begin to degrade.</p>
