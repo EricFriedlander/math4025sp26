@@ -157,10 +157,10 @@ As $K$ in KNN regression increases:
 
 - Let's look at the `ames` data
 ```{python}
-#| echo: true
+#| echo: false
 ames = pd.read_csv("../data/ameshousing.csv")
-ames_train, ames_test = train_test_split(ames, random_state=42)
-show(ames[["Sale_Price", "Gr_Liv_Area", "Bedroom_AbvGr"]].head())
+ames_train, ames_test = train_test_split(ames, random_state=4025)
+show(ames_train[["Sale_Price", "Gr_Liv_Area", "Bedroom_AbvGr"]].head())
 ```
 :::{.fragment}
 :::{.incremental}
@@ -190,11 +190,13 @@ new_house = pd.DataFrame({"Gr_Liv_Area": [2000], "Bedroom_AbvGr": [2]})
 ## Computing Distances
 
 ```{python}
-#| echo: true
+#| echo: false
 ames_dist = ames_train.copy()
 ames_dist["dist"] = np.sqrt((ames_dist["Gr_Liv_Area"] - 2000)**2 + (ames_dist["Bedroom_AbvGr"] - 2)**2)
 ames_dist = ames_dist.sort_values("dist")
 ```
+
+Practice!
 
 ## 10 "Nearest Neighbors"
 
@@ -208,16 +210,16 @@ ames_dist = ames_dist.sort_values("dist")
 
 -   Are they where you thought they *should* be?
 
-## Looking at distances {.smaller}
-
-```{python}
-show(ames_dist[["Gr_Liv_Area", "Bedroom_AbvGr", "dist"]].head(10))
-```
-
-
 # Visualizing Centering and Scaling in 1-D
 
-## Original data
+## Practice!
+
+1. Visualize our original data
+2. Visualize our orginal and centered data, side-by-side
+3. Visualize our original and scaled data, side-by-side
+
+
+<!-- ## Original data
 
 ```{python}
 (ggplot(ames_train, aes(x = "Gr_Liv_Area")) +
@@ -253,8 +255,8 @@ ames_train_centered["Gr_Liv_Area_Centered"] = ames_train["Gr_Liv_Area"] - ames_t
   theme(text = element_text(size = 20), figure_size=(6, 4)))
 ```
 :::
-::::
-
+:::: -->
+<!-- 
 ## Scaling
 
 - What's different between these two plots?
@@ -282,10 +284,14 @@ ames_train_scaled["Gr_Liv_Area_Scaled"] = (ames_train["Gr_Liv_Area"] - ames_trai
   theme(text = element_text(size = 20), figure_size=(6, 4)))
 ```
 :::
-::::
+:::: -->
 
 # Visualizing Centering and Scaling: 2D
 
+## Practice!
+
+Let's do that same thing with two variables.
+<!-- 
 ## Original Data
 
 ```{python}
@@ -348,7 +354,7 @@ ames_train_scaled["Bedroom_AbvGr_Scaled"] = (ames_train["Bedroom_AbvGr"] - ames_
   theme(text = element_text(size = 20), figure_size=(6, 4)))
 ```
 :::
-::::
+:::: -->
 
 # Dealing with new data
 
