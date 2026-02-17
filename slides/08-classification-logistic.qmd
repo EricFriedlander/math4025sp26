@@ -1,0 +1,227 @@
+---
+title: 'MATH 4025: Classification + Logistic Regression'
+---
+
+```{python}
+#| echo: false
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import accuracy_score, confusion_matrix
+from plotnine import *
+from itables import show
+from ISLP import load_data
+import warnings
+Default = load_data('Default')
+warnings.filterwarnings('ignore')
+
+Default_train, Default_test = train_test_split(
+    Default, 
+    train_size=0.6,
+    stratify=Default['default'],
+    random_state=4025
+)
+```
+
+## Classification Problems {.smaller}
+
+- Response $Y$ is qualitative (categorical).
+- Objective: build a classifier $\hat{Y}=\hat{C}(\mathbf{X})$
+  + assigns class label to a future unlabeled (unseen) observations
+  + understand the relationship between the predictors and response
+- Two ways to make predictions
+  + Class probabilities
+  + Class labels
+
+## Default Dataset {.smaller}
+
+A simulated data set containing information on ten thousand customers. The aim here is to predict which customers will default on their credit card debt.
+
+We will consider `default` as the response variable.
+
+Let do the following:
+
+1. Load the data
+2. Split the data
+3. Summarize the response variable
+4. Use `.info()` to look at the data types.
+
+
+## Data Types in Python {.smaller}
+
+-   `object` / `string`: often used for categorical data in pandas.
+-   `category`: Efficient storage for categorical data (similar to R's factor).
+-   `pandas` categorical type allows defining order of categories, useful for plotting.
+-   When modeling in `scikit-learn`, we often need to convert qualitative variables to dummy variables (One-Hot Encoding) unless the specific library handles them.
+
+## K-Nearest Neighbors Classifier
+
+-   Given a value for $K$ and a test data point $x_0$:
+    $$P(Y=j | X=x_0)=\dfrac{1}{K} \sum_{x_i \in \mathcal{N}_0} I(y_i = j)$$
+    where $\mathcal{N}_0$ is the set of the $K$ "closest" neighbors.
+-   For classification: neighbors "vote" for class (unlike in regression
+    where predictions are obtained by averaging)
+    $$P(Y=j | X=x_0)=\text{Proportion of neighbors in class }j$$
+
+
+## Practice
+
+Let's build a K-Nearest Neighbors Classifier.
+
+## K-Nearest Neighbors Classifier: Predictions
+
+-   `predict` with a categorical response: 
+-   Two different ways of making predictions in `scikit-learn`:
+    - `predict()`: returns class labels
+    - `predict_proba()`: returns probabilities
+
+## Practice!
+
+Let's practice predicting class labels and probabilities.
+
+Bonus: Let's investigate the `weights` argument in `KNeighborsClassifier`.
+
+# Logistic Regression
+
+## Why Not Linear Regression? {.smaller}
+
+```{python}
+# Create 0/1 variable for Linear Regression
+Default_lr = Default_train.copy()
+Default_lr['default_0_1'] = np.where(Default_lr['default'] == 'Yes', 1, 0)
+
+lrfit = LinearRegression()
+lrfit.fit(Default_lr[['balance']], Default_lr['default_0_1'])
+
+# Predict on training data
+preds = lrfit.predict(Default_lr[['balance']])
+show(pd.DataFrame({'balance': Default_lr['balance'], 'pred': preds}).head())
+```
+
+## Why Not Linear Regression? {.smaller}
+
+```{python}
+#| echo: FALSE
+#| fig.align: "center"
+
+(ggplot(Default_lr, aes(x='balance', y='default_0_1'))
+ + geom_point()
+ + geom_smooth(method='lm', se=False, color='blue')
+ + scale_y_continuous(breaks=[0, 0.5, 1])
+ + theme_minimal()
+)
+```
+
+- Linear regression: does not model probabilities well
+  + might produce probabilities less than zero or bigger than one
+  + treats increase from 0.41 to 0.5 as same as 0.01 to 0.1 (bad)
+
+## Why Not Linear Regression?
+
+Suppose we have a response,
+$$Y=\begin{cases}
+1 & \text{if stroke} \\
+2 & \text{if drug overdose} \\
+3  & \text{if epileptic seizure}
+\end{cases}$$
+
+- Linear regression suggests an ordering, and in fact implies that the differences between classes have meaning
+  + e.g. drug overdose $-$ stroke $= 1$? 🤔
+
+## Logistic Regression {.smaller}
+
+Consider a one-dimensional binary classification problem:
+
+- Transform the linear model $\beta_0 + \beta_1 \ X$ so that the output is a probability
+- Use **logistic** function: $$g(t)=\dfrac{e^t}{1+e^t} \ \ \ \text{for} \ t \in \mathcal{R}$$
+- Then: $$p(X)=P(Y=1|X)=g\left(\beta_0 + \beta_1 \ X\right)=\dfrac{e^{\beta_0 + \beta_1 \ X}}{1+e^{\beta_0 + \beta_1 \ X}}$$
+
+## Other important quantities
+- **Odds**: $\dfrac{p(x)}{1-p(x)}$
+- **Log-Odds (logit)**: $\log\left(\dfrac{p(x)}{1-p(x)}\right) = \beta_0 + \beta_1 \ X$
+  + Linear function of predictors
+
+## Logistic Regression
+
+```{python}
+#| echo: FALSE
+# Fit logistic regression for plotting
+logreg_plot = LogisticRegression(penalty=None)
+logreg_plot.fit(Default_lr[['balance']], Default_lr['default'])
+
+# Predictions for plotting curve
+x_grid = pd.DataFrame({'balance': np.linspace(Default_lr['balance'].min(), Default_lr['balance'].max(), 500)})
+# predict_proba returns [Prob(No), Prob(Yes)]
+y_grid = logreg_plot.predict_proba(x_grid)[:, 1] 
+plot_df = pd.DataFrame({'balance': x_grid['balance'], 'prob': y_grid})
+
+(ggplot(Default_lr, aes(x='balance', y='default_0_1'))
+ + geom_point()
+ + geom_line(data=plot_df, mapping=aes(x='balance', y='prob'), color='blue')
+ + scale_y_continuous(breaks=[0, 0.5, 1])
+ + theme_minimal()
+)
+```
+
+## Fitting the model
+
+Let's fit a logistic regression model predicting `default` using `balance` and investigate teh coefficients.
+
+## Interpreting Coefficients
+
+- As $X$ increases by 1, the log-odds increase by $\hat{\beta}_1$
+  + I.e. probability of default increases but NOT linearly
+  + Change in the probability of default due to a one-unit change in balance depends on the current balance value
+
+## Interpreting Coefficients
+
+```{python}
+#| echo: FALSE
+x0 = 1000
+x1 = 1500
+x2 = 2000
+
+# Function to predict prob
+def get_prob(bal):
+    return logreg_plot.predict_proba(pd.DataFrame({'balance': [bal]}))[0, 1]
+
+y0 = get_prob(x0)
+y1 = get_prob(x1)
+y2 = get_prob(x2)
+
+(ggplot(Default_lr, aes(x='balance', y='default_0_1'))
+ + geom_point(alpha=0.2)
+ + geom_line(data=plot_df, mapping=aes(x='balance', y='prob'))
+ + geom_vline(xintercept=x0, color="red", linetype="dotted")
+ + geom_vline(xintercept=x1, color="red", linetype="dotted")
+ + geom_vline(xintercept=x2, color="red", linetype="dotted")
+ + geom_hline(yintercept=y0, color="blue", alpha=0.5)
+ + geom_hline(yintercept=y1, color="blue", alpha=0.5)
+ + geom_hline(yintercept=y2, color="blue", alpha=0.5)
+ + geom_segment(aes(x=1250, y=y0, xend=1250, yend=y1), arrow=arrow(length=0.1, type="closed", ends="both"), color="blue")
+ + geom_segment(aes(x=1750, y=y1, xend=1750, yend=y2), arrow=arrow(length=0.1, type="closed", ends="both"), color="blue")
+ + scale_y_continuous(breaks=[0, 0.5, 1])
+ + labs(y="Probability of Default")
+ + theme_minimal()
+)
+```
+
+## Making predictions: Theory {.smaller}
+
+For `balance`=\$700,
+
+::: {.incremental}
+- $\hat{p}(X)=\dfrac{e^{\hat{\beta}_0+\hat{\beta}_1 X}}{1+e^{\hat{\beta}_0+\hat{\beta}_1 X}}=\dfrac{e^{\text{intercept} + (\text{coef} \times 700)}}{1+e^{\text{intercept} + (\text{coef} \times 700)}}$
+-  Using our values: Intercept $\approx -10.65$, Coef $\approx 0.0055$
+- $$p(700) \approx \dfrac{e^{-10.65 + 3.85}}{1+e^{-10.65 + 3.85}} \approx 0.0011$$
+- $$\textbf{Odds}(X) = \dfrac{\hat{p}(X)}{1-\hat{p}(X)} \approx 0.0011$$
+- $$\textbf{Log-Odds}(X) = \approx -6.80$$
+:::
+
+## Practice
+
+Let's generate our predicted classes and probabilities in Python.

@@ -27,9 +27,9 @@ ames_train, ames_test = train_test_split(ames, random_state=42)
 ## K-Nearest Neighbors & Scaling
 
 - KNN is a **non-parametric** method for regression and classification
-- It predicts based on the **average** (or majority vote) of the $K$ closest training points
+- It predicts based on the **average** of the $K$ closest training points
 - **Scaling** (centering and standardizing) is essential to prevent predictors with large ranges from dominating the distance calculation
-- We must avoid **information leakage** by scaling new data using training statistics
+- We must avoid **information leakage** by scaling new data using statistics from our training data
 
 # A Better Way
 
@@ -60,6 +60,17 @@ ames_train, ames_test = train_test_split(ames, random_state=42)
 1.  List of steps: `(name, transform/estimator)`
 2.  `fit`: sequentially applies transforms and fits the final estimator
 3.  `predict`: sequentially applies transforms and predicts with the final estimator
+
+## Practice!
+
+Let's do the following:
+
+1. Create a pipeline for KNN with 10 neighbors.
+2. Fit the pipeline to our data.
+3. Make a prediction on a new observation.
+4. Make predictions on our test data.
+
+
 
 ## Creating a KNN Pipeline
 
@@ -108,54 +119,24 @@ show(pd.DataFrame({"Truth": y_test, "Prediction": test_preds}).head())
 - Linear regression is a parametric approach (with restrictive assumptions), KNN is non-parametric.
 - Linear regression works for regression problems ($Y$ numerical), KNN can be used for both regression and classification - i.e. $Y$ qualitative
 - Linear regression is interpretable, KNN is not.
-- Linear regression can accommodate qualitative predictors and can be extended to include interaction terms as well while KNN does not allow for qualitative predictors (requires encoding).
 - Performance: KNN can be pretty good for small $p$, that is, $p \le 4$ and large $n$. Performance of KNN deteriorates as $p$ increases - *curse of dimensionality*
 
 # Choosing a model
 
-## Linear regression
+## Practice!
 
-```{python}
-# Best model from last time
-lm_model = LinearRegression()
-lm_model.fit(ames_train[["Gr_Liv_Area", "Bedroom_AbvGr"]], y_train)
-```
+Let's build piplines for the following three models and choose the best:
 
-## 5-NN Pipeline
+- KNN with 5 neighbors
+- KNN with 10 neighbors
+- Linear Regression
 
-```{python}
-knn5_pipeline = Pipeline([
-    ('scaler', StandardScaler()),
-    ('knn', KNeighborsRegressor(n_neighbors=5))
-])
-knn5_pipeline.fit(ames_train[["Gr_Liv_Area", "Bedroom_AbvGr"]], y_train)
-```
+# Summary
 
-## Making test predictions
+## Key Takeaways
 
-```{python}
-results = ames_test.copy()
-results["lr_preds"] = lm_model.predict(ames_test[["Gr_Liv_Area", "Bedroom_AbvGr"]])
-results["knn5_preds"] = knn5_pipeline.predict(ames_test[["Gr_Liv_Area", "Bedroom_AbvGr"]])
-results["knn10_preds"] = knn_pipeline.predict(ames_test[["Gr_Liv_Area", "Bedroom_AbvGr"]]) # from earlier
-```
-
-## Computing Error Metrics: RMSE
-
-```{python}
-def match_rmse(y_true, y_pred):
-    return np.sqrt(mean_squared_error(y_true, y_pred))
-
-print(f"Linear Regression RMSE: {match_rmse(y_test, results['lr_preds']):,.0f}")
-print(f"KNN (k=5) RMSE:         {match_rmse(y_test, results['knn5_preds']):,.0f}")
-print(f"KNN (k=10) RMSE:        {match_rmse(y_test, results['knn10_preds']):,.0f}")
-```
-
-## Computing Error Metrics: $R^2$
-
-```{python}
-print(f"Linear Regression R2: {r2_score(y_test, results['lr_preds']):.3f}")
-print(f"KNN (k=5) R2:         {r2_score(y_test, results['knn5_preds']):.3f}")
-print(f"KNN (k=10) R2:        {r2_score(y_test, results['knn10_preds']):.3f}")
-```
+- **Information Leakage**: Always use training data statistics for preprocessing test data.
+- **Scikit-learn Pipelines**: Use `Pipeline` to bundle preprocessing and modeling steps.
+- **Scaling**: Essential for distance-based methods like KNN.
+- **Workflow**: `fit` the pipeline on training data, `predict` on test/new data.
 
