@@ -1,0 +1,161 @@
+---
+title: 'Math 4025: Preprocessing + Pipelines'
+---
+
+```{python}
+#| echo: false
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.datasets import fetch_openml
+import matplotlib.pyplot as plt
+from plotnine import *
+from itables import show
+
+# Load and split data for executable slides
+ames = pd.read_csv("../data/ameshousing.csv")
+ames_train, ames_test = train_test_split(ames, random_state=42)
+```
+
+# Recap
+
+## K-Nearest Neighbors & Scaling
+
+- KNN is a **non-parametric** method for regression and classification
+- It predicts based on the **average** (or majority vote) of the $K$ closest training points
+- **Scaling** (centering and standardizing) is essential to prevent predictors with large ranges from dominating the distance calculation
+- We must avoid **information leakage** by scaling new data using training statistics
+
+# A Better Way
+
+## Back to information leakage
+
+-   **ALWAYS** preprocess new observations using only information from training data
+    + Center using mean of training data
+    + Scale using sd of training data
+    + Impute missing values using ONLY training data (more on this later)
+-   Why?
+    +   prevent **information leakage**
+    +   compare apples-to-oranges
+    +   not enough observations in new data to properly process
+
+## Scaling in Python { .smaller }
+
+-   Preprocessing: reformatting and transforming data so it can be used for modeling
+    +   Centering and scaling (`StandardScaler`)
+    +   Converting categorical data into dummy variables (`OneHotEncoder`)
+    +   Dealing with missing values (`SimpleImputer`)
+-   Feature Engineering: reformatting and transforming data to improve the performance of your model
+    +   Combining variables and dimension reduction techniques
+    +   Transforming variables (e.g. squaring or logging)
+-   `Pipeline`: combine feature engineering, preprocessing, and model fitting into a single object
+
+## `Pipeline` in `scikit-learn`
+
+1.  List of steps: `(name, transform/estimator)`
+2.  `fit`: sequentially applies transforms and fits the final estimator
+3.  `predict`: sequentially applies transforms and predicts with the final estimator
+
+## Creating a KNN Pipeline
+
+```{python}
+# Define the pipeline
+knn_pipeline = Pipeline([
+    ('scaler', StandardScaler()),
+    ('knn', KNeighborsRegressor(n_neighbors=10))
+])
+```
+
+## Fitting the Pipeline
+
+```{python}
+# Fit on training data
+# Pipeline automatically scales X_train using mean/std from X_train
+y_train = ames_train['Sale_Price']
+y_test = ames_test['Sale_Price']
+knn_pipeline.fit(ames_train[["Gr_Liv_Area", "Bedroom_AbvGr"]], y_train)
+```
+
+## Making Predictions: Single Observation
+
+Test Point: `Gr_Liv_Area` = 2000 square feet, and `Bedroom_AbvGr` = 3
+
+```{python}
+new_house = pd.DataFrame({"Gr_Liv_Area": [2000], "Bedroom_AbvGr": [3]})
+show(new_house)
+
+# Pipeline automatically scales new_data using Mean/Std from TRAINING data
+prediction = knn_pipeline.predict(new_house)
+print(f"Predicted Sale Price: ${prediction[0]:,.2f}")
+```
+
+## Making Predictions: Test Set
+
+```{python}
+# Predict on test set
+# Pipeline handles scaling automatically!
+test_preds = knn_pipeline.predict(ames_test[["Gr_Liv_Area", "Bedroom_AbvGr"]])
+show(pd.DataFrame({"Truth": y_test, "Prediction": test_preds}).head())
+```
+
+## [Linear Regression vs K-Nearest Neighbors]{.r-fit-text} {.smaller}
+
+- Linear regression is a parametric approach (with restrictive assumptions), KNN is non-parametric.
+- Linear regression works for regression problems ($Y$ numerical), KNN can be used for both regression and classification - i.e. $Y$ qualitative
+- Linear regression is interpretable, KNN is not.
+- Linear regression can accommodate qualitative predictors and can be extended to include interaction terms as well while KNN does not allow for qualitative predictors (requires encoding).
+- Performance: KNN can be pretty good for small $p$, that is, $p \le 4$ and large $n$. Performance of KNN deteriorates as $p$ increases - *curse of dimensionality*
+
+# Choosing a model
+
+## Linear regression
+
+```{python}
+# Best model from last time
+lm_model = LinearRegression()
+lm_model.fit(ames_train[["Gr_Liv_Area", "Bedroom_AbvGr"]], y_train)
+```
+
+## 5-NN Pipeline
+
+```{python}
+knn5_pipeline = Pipeline([
+    ('scaler', StandardScaler()),
+    ('knn', KNeighborsRegressor(n_neighbors=5))
+])
+knn5_pipeline.fit(ames_train[["Gr_Liv_Area", "Bedroom_AbvGr"]], y_train)
+```
+
+## Making test predictions
+
+```{python}
+results = ames_test.copy()
+results["lr_preds"] = lm_model.predict(ames_test[["Gr_Liv_Area", "Bedroom_AbvGr"]])
+results["knn5_preds"] = knn5_pipeline.predict(ames_test[["Gr_Liv_Area", "Bedroom_AbvGr"]])
+results["knn10_preds"] = knn_pipeline.predict(ames_test[["Gr_Liv_Area", "Bedroom_AbvGr"]]) # from earlier
+```
+
+## Computing Error Metrics: RMSE
+
+```{python}
+def match_rmse(y_true, y_pred):
+    return np.sqrt(mean_squared_error(y_true, y_pred))
+
+print(f"Linear Regression RMSE: {match_rmse(y_test, results['lr_preds']):,.0f}")
+print(f"KNN (k=5) RMSE:         {match_rmse(y_test, results['knn5_preds']):,.0f}")
+print(f"KNN (k=10) RMSE:        {match_rmse(y_test, results['knn10_preds']):,.0f}")
+```
+
+## Computing Error Metrics: $R^2$
+
+```{python}
+print(f"Linear Regression R2: {r2_score(y_test, results['lr_preds']):.3f}")
+print(f"KNN (k=5) R2:         {r2_score(y_test, results['knn5_preds']):.3f}")
+print(f"KNN (k=10) R2:        {r2_score(y_test, results['knn10_preds']):.3f}")
+```
+

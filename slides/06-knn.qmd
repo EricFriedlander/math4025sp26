@@ -1,0 +1,480 @@
+---
+title: 'Math 4025: KNN'
+---
+
+```{python}
+#| echo: false
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.datasets import fetch_openml
+import matplotlib.pyplot as plt
+from plotnine import *
+from itables import show
+```
+
+# K-Nearest Neighbors
+
+## Regression: Conditional Averaging {.smaller}
+
+**Restaurant Outlets Profit dataset**
+
+```{python}
+#| echo: false
+outlets = pd.read_csv("../data/outlets.csv")  # load dataset
+
+(
+    ggplot(outlets, aes(x="population", y="profit"))
+    + geom_point()  # create scatterplot
+    + geom_smooth(method="lm", se=False)  # add the SLR line
+)
+```
+
+
+What is a good value of $\hat{f}(x)$ (expected profit), say at $x=6$?
+
+A possible choice is the **average of the observed responses** at $x=6$. But we may not observe responses for certain $x$ values.
+
+
+## K-Nearest Neighbors (KNN) Regression  {.smaller}
+
+- Non-parametric approach
+- Formally: Given a value for $K$ and a test data point $x_0$,
+$$\hat{f}(x_0)=\dfrac{1}{K} \sum_{x_i \in \mathcal{N}_0} y_i=\text{Average} \ \left(y_i \ \text{for all} \ i:\ x_i \in \mathcal{N}_0\right) $$
+where $\mathcal{N}_0$ is the set of the $K$ training observations closest to $x_0$.
+- Informally, average together the $K$ "closest" observations in your training set
+- "Closeness": usually use the **Euclidean metric** to measure distance
+- Euclidean distance between $\mathbf{X}_i=(x_{i1}, x_{i2}, \ldots, x_{ip})$ and $\mathbf{x}_j=(x_{j1}, x_{j2}, \ldots, x_{jp})$:
+$$||\mathbf{x}_i-\mathbf{x}_j||_2 = \sqrt{(x_{i1}-x_{j1})^2 + (x_{i2}-x_{j2})^2 + \ldots + (x_{ip}-x_{jp    })^2}$$
+
+## [KNN Regression (single predictor): Fit]{.r-fit-text} {.smaller}
+
+::::{.columns}
+:::{.column}
+**$K=1$**
+```{python}
+#| echo: false
+# 1-NN regression
+knnfit1 = KNeighborsRegressor(n_neighbors=1)
+knnfit1.fit(outlets[["population"]], outlets["profit"])
+
+# 1-NN prediction at population = 6
+pred_1nn = knnfit1.predict([[6]])
+print(f"1-NN prediction at x=6: {pred_1nn[0]:.4f}")
+
+# Visualization for K=1
+outlets_viz = outlets.copy()
+outlets_viz["dist"] = np.abs(outlets_viz["population"] - 6)
+outlets_viz["is_knn"] = outlets_viz["dist"] <= outlets_viz["dist"].min()
+
+(
+    ggplot(outlets_viz, aes(x="population", y="profit", color="is_knn"))
+    + geom_point(size=3)
+    + geom_vline(xintercept=6)
+    + theme(text=element_text(size=20), figure_size=(6, 4))
+)
+```
+
+
+:::
+:::{.column}
+**$K=5$**
+```{python}
+#| echo: false
+# 5-NN regression
+knnfit5 = KNeighborsRegressor(n_neighbors=5)
+knnfit5.fit(outlets[["population"]], outlets["profit"])
+
+# 5-NN prediction at population = 6
+pred_5nn = knnfit5.predict([[6]])
+print(f"5-NN prediction at x=6: {pred_5nn[0]:.4f}")
+
+# Visualization for K=5
+outlets_viz = outlets.copy()
+outlets_viz["dist"] = np.abs(outlets_viz["population"] - 6)
+threshold = outlets_viz["dist"].nsmallest(5).max()
+outlets_viz["is_knn"] = outlets_viz["dist"] <= threshold
+
+(
+    ggplot(outlets_viz, aes(x="population", y="profit", color="is_knn"))
+    + geom_point(size=3)
+    + geom_vline(xintercept=6)
+    + theme(text=element_text(size=20), figure_size=(6, 4))
+)
+```
+:::
+::::
+
+## Regression Methods: Comparison
+
+```{python}
+#| echo: false
+
+# Fit SLR model
+slrfit = LinearRegression()
+slrfit.fit(outlets[["population"]], outlets["profit"])
+
+# Create sequence of population values for predictions
+pop_seq = np.linspace(outlets["population"].min(), outlets["population"].max(), 1000)
+pop_df = pd.DataFrame({"population": pop_seq})
+
+# Obtain predictions for all points
+preds_linear = slrfit.predict(pop_df[["population"]])
+preds_knn1 = knnfit1.predict(pop_df[["population"]])
+preds_knn5 = knnfit5.predict(pop_df[["population"]])
+
+# Create predictions dataframe
+predictions = pd.DataFrame({
+    "population": np.tile(pop_seq, 3),
+    "profit": np.concatenate([preds_linear, preds_knn1, preds_knn5]),
+    "Method": ["linear"] * len(pop_seq) + ["knn_1"] * len(pop_seq) + ["knn_5"] * len(pop_seq)
+})
+
+# Plot the three models
+(
+    ggplot(outlets, aes(x="population", y="profit"))
+    + geom_point()
+    + geom_line(predictions, aes(x="population", y="profit", color="Method", linetype="Method"), size=1)
+)
+```
+
+
+## <span style="color:blue">Question!!!</span>
+
+As $K$ in KNN regression increases:
+
+- the flexibility of the fit ([decreases]{.fragment .highlight-red} /increases)
+- the bias of the fit (decreases/[increases]{.fragment .highlight-red} )
+- the variance of the fit ([decreases]{.fragment .highlight-red}/increases)
+
+
+## [K-Nearest Neighbors Regression (multiple predictors)]{.r-fit-text} {.smaller}
+
+- Let's look at the `ames` data
+```{python}
+#| echo: true
+ames = pd.read_csv("../data/ameshousing.csv")
+ames_train, ames_test = train_test_split(ames, random_state=42)
+show(ames[["Sale_Price", "Gr_Liv_Area", "Bedroom_AbvGr"]].head())
+```
+:::{.fragment}
+:::{.incremental}
+- Should 1 square foot count the same as 1 bedroom?
+- Need to **center and scale** (freq. just say scale)
+  + subtract mean from each predictor
+  + divide by standard deviation of each predictor
+  + compares apples-to-apples
+:::
+:::
+
+# Why center and scale
+
+## New observation
+
+```{python}
+#| echo: false
+new_house = pd.DataFrame({"Gr_Liv_Area": [2000], "Bedroom_AbvGr": [2]})
+
+(ggplot(ames_train, aes(x = "Gr_Liv_Area", y = "Bedroom_AbvGr", color = "Sale_Price")) + 
+  geom_point() +
+  geom_point(data = new_house, color = "red"))
+```
+
+-   Where do you think the 10 nearest neighbors *should* be?
+
+## Computing Distances
+
+```{python}
+#| echo: true
+ames_dist = ames_train.copy()
+ames_dist["dist"] = np.sqrt((ames_dist["Gr_Liv_Area"] - 2000)**2 + (ames_dist["Bedroom_AbvGr"] - 2)**2)
+ames_dist = ames_dist.sort_values("dist")
+```
+
+## 10 "Nearest Neighbors"
+
+```{python}
+#| echo: false
+(ggplot(ames_train, aes(x = "Gr_Liv_Area", y = "Bedroom_AbvGr", color = "Sale_Price")) + 
+  geom_point() +
+  geom_point(data = new_house, color = "red") +
+  geom_point(data = ames_dist.iloc[:10], color = "lime", size=3))
+```
+
+-   Are they where you thought they *should* be?
+
+## Looking at distances {.smaller}
+
+```{python}
+show(ames_dist[["Gr_Liv_Area", "Bedroom_AbvGr", "dist"]].head(10))
+```
+
+
+# Visualizing Centering and Scaling in 1-D
+
+## Original data
+
+```{python}
+(ggplot(ames_train, aes(x = "Gr_Liv_Area")) +
+  geom_histogram() +
+  theme(text = element_text(size = 20)))
+```
+
+## Centering
+
+- What's different between these two plots?
+
+::::{.columns}
+
+:::{.column}
+Original data
+```{python}
+#| code-fold: true
+(ggplot(ames_train, aes(x = "Gr_Liv_Area")) +
+  geom_histogram() +
+  theme(text = element_text(size = 20), figure_size=(6, 4)))
+```
+:::
+
+::: {.column}
+Centered data
+```{python}
+#| code-fold: true
+ames_train_centered = ames_train.copy()
+ames_train_centered["Gr_Liv_Area_Centered"] = ames_train["Gr_Liv_Area"] - ames_train["Gr_Liv_Area"].mean()
+
+(ggplot(ames_train_centered, aes(x = "Gr_Liv_Area_Centered")) +
+  geom_histogram() +
+  theme(text = element_text(size = 20), figure_size=(6, 4)))
+```
+:::
+::::
+
+## Scaling
+
+- What's different between these two plots?
+
+::::{.columns}
+:::{.column}
+Original data
+```{python}
+#| code-fold: true
+(ggplot(ames_train, aes(x = "Gr_Liv_Area")) +
+  geom_histogram() +
+  theme(text = element_text(size = 20), figure_size=(6, 4)))
+```
+:::
+
+::: {.column}
+Normalized (centered and scaled) data
+```{python}
+#| code-fold: true
+ames_train_scaled = ames_train.copy()
+ames_train_scaled["Gr_Liv_Area_Scaled"] = (ames_train["Gr_Liv_Area"] - ames_train["Gr_Liv_Area"].mean()) / ames_train["Gr_Liv_Area"].std()
+
+(ggplot(ames_train_scaled, aes(x = "Gr_Liv_Area_Scaled")) +
+  geom_histogram() +
+  theme(text = element_text(size = 20), figure_size=(6, 4)))
+```
+:::
+::::
+
+# Visualizing Centering and Scaling: 2D
+
+## Original Data
+
+```{python}
+#| code-fold: true
+(ggplot(ames_train, aes(x = "Gr_Liv_Area", y = "Bedroom_AbvGr")) + 
+  geom_point())
+```
+
+## Centering
+
+- What's different between these two plots?
+
+::::{.columns}
+:::{.column}
+Original Data
+```{python}
+#| code-fold: true
+(ggplot(ames_train, aes(x = "Gr_Liv_Area", y = "Bedroom_AbvGr")) + 
+  geom_point()+
+  theme(text = element_text(size = 20), figure_size=(6, 4)))
+```
+:::
+
+::: {.column}
+Centered data
+```{python}
+#| code-fold: true
+ames_train_centered["Bedroom_AbvGr_Centered"] = ames_train["Bedroom_AbvGr"] - ames_train["Bedroom_AbvGr"].mean()
+
+(ggplot(ames_train_centered, aes(x = "Gr_Liv_Area_Centered", y = "Bedroom_AbvGr_Centered")) +
+  geom_point() +
+  theme(text = element_text(size = 20), figure_size=(6, 4)))
+```
+:::
+::::
+
+## Scaling
+
+- What's different between these two plots?
+
+::::{.columns}
+:::{.column}
+Original data
+```{python}
+#| code-fold: true
+(ggplot(ames_train, aes(x = "Gr_Liv_Area", y = "Bedroom_AbvGr")) + 
+  geom_point()+
+  theme(text = element_text(size = 20), figure_size=(6, 4)))
+```
+:::
+
+::: {.column}
+Normalized data
+```{python}
+#| code-fold: true
+ames_train_scaled["Bedroom_AbvGr_Scaled"] = (ames_train["Bedroom_AbvGr"] - ames_train["Bedroom_AbvGr"].mean()) / ames_train["Bedroom_AbvGr"].std()
+
+(ggplot(ames_train_scaled, aes(x = "Gr_Liv_Area_Scaled", y = "Bedroom_AbvGr_Scaled")) +
+  geom_point() +
+  theme(text = element_text(size = 20), figure_size=(6, 4)))
+```
+:::
+::::
+
+# Dealing with new data
+
+## New Observation
+
+```{python}
+#| code-fold: true
+new_house = pd.DataFrame({"Gr_Liv_Area": [2000], "Bedroom_AbvGr": [2]})
+(ggplot(ames_train, aes(x = "Gr_Liv_Area", y = "Bedroom_AbvGr", color = "Sale_Price")) + 
+  geom_point() +
+  geom_point(data = new_house, color = "red"))
+```
+
+-   Where should we put this point on the normalized plot?
+
+## Plotting new observation without normalizing
+
+```{python}
+#| code-fold: true
+# Incorrectly plotting unscaled data on scaled plot
+(ggplot(ames_train_scaled, aes(x = "Gr_Liv_Area_Scaled", y = "Bedroom_AbvGr_Scaled")) +
+  geom_point() +
+  geom_point(data = new_house, mapping = aes(x="Gr_Liv_Area", y = "Bedroom_AbvGr"), color = "red"))
+```
+
+-   Does this look right?
+
+## Normalized using training data
+
+::::{.columns}
+:::{.column}
+Original Data
+```{python}
+#| code-fold: true
+(ggplot(ames_train, aes(x = "Gr_Liv_Area", y = "Bedroom_AbvGr")) + 
+  geom_point() +
+  geom_point(data = new_house, color = "red") +
+  theme(text = element_text(size = 20), figure_size=(6, 4)))
+```
+:::
+
+:::{.column}
+Scaled data
+```{python}
+#| code-fold: true
+# Manually scaling using training means/stds
+new_house_scaled = new_house.copy()
+new_house_scaled["Gr_Liv_Area_Scaled"] = (new_house["Gr_Liv_Area"] - ames_train["Gr_Liv_Area"].mean())/ames_train["Gr_Liv_Area"].std()
+new_house_scaled["Bedroom_AbvGr_Scaled"] = (new_house["Bedroom_AbvGr"] - ames_train["Bedroom_AbvGr"].mean()) / ames_train["Bedroom_AbvGr"].std()
+
+(ggplot(ames_train_scaled, aes(x = "Gr_Liv_Area_Scaled", y = "Bedroom_AbvGr_Scaled")) +
+  geom_point() +
+  geom_point(data = new_house_scaled, color = "red")+
+  theme(text = element_text(size = 20), figure_size=(6, 4)))
+```
+:::
+::::
+
+## Compute new distances
+
+Practice!
+
+```{python}
+#| echo: false
+# show(new_house[['Gr_Liv_Area', 'Bedroom_AbvGr']])
+ames_dist = ames_train_scaled.copy()
+# Original distance (using raw features)
+ames_dist["orig_dist"] = np.sqrt(
+    (ames_dist["Gr_Liv_Area"] - new_house["Gr_Liv_Area"].values[0])**2 +
+    (ames_dist["Bedroom_AbvGr"] - new_house["Bedroom_AbvGr"].values[0])**2
+)
+
+# Scaled distance (using scaled features)
+val_area_scaled = new_house_scaled["Gr_Liv_Area_Scaled"].values[0]
+val_bed_scaled = new_house_scaled["Bedroom_AbvGr_Scaled"].values[0]
+
+ames_dist["scaled_dist"] = np.sqrt(
+    (ames_dist["Gr_Liv_Area_Scaled"] - val_area_scaled)**2 +
+    (ames_dist["Bedroom_AbvGr_Scaled"] - val_bed_scaled)**2
+)
+
+orig_closest = ames_dist.sort_values("orig_dist").head(10)
+scaled_closest = ames_dist.sort_values("scaled_dist").head(10)
+```
+
+## Scaled distances look better {.smaller}
+
+```{python}
+#| echo: false
+show(scaled_closest[["Gr_Liv_Area", "Bedroom_AbvGr", "Gr_Liv_Area_Scaled", "Bedroom_AbvGr_Scaled", "orig_dist", "scaled_dist"]])
+```
+
+## Which plot looks better {.smaller}
+
+:::: columns
+::: column
+Original distances
+```{python}
+#| code-fold: true
+(ggplot(ames_train, aes(x = "Gr_Liv_Area", y = "Bedroom_AbvGr", color = "Sale_Price")) + 
+  geom_point() +
+  geom_point(data = new_house, color = "red", size=3) +
+  geom_point(data = orig_closest, color = "lime", size=3) +
+  theme(text = element_text(size = 16), figure_size=(6, 4)))
+```
+:::
+
+::: column
+Scaled distances
+```{python}
+#| code-fold: true
+(ggplot(ames_train, aes(x = "Gr_Liv_Area", y = "Bedroom_AbvGr", color = "Sale_Price")) + 
+  geom_point() +
+  geom_point(data = new_house, color = "red", size=3) +
+  geom_point(data = scaled_closest, color = "lime", size=3) +
+  theme(text = element_text(size = 16), figure_size=(6, 4)))
+```
+:::
+::::
+
+# Recap
+
+## K-Nearest Neighbors
+
+- **Non-parametric**: No assumptions about the functional form of $f(X)$
+- **Regression**: Average of the $K$ nearest neighbors
+- **Distance**: Usually Euclidean distance
+- **Scaling**: Crucial when predictors are on different scales!
+
