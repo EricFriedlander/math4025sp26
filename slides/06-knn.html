@@ -213,11 +213,11 @@ Dr.&nbsp;Eric Friedlander
 <h1>K-Nearest Neighbors</h1>
 
 </section>
-<section id="regression-conditional-averaging" class="slide level2 smaller">
+<section id="regression-conditional-averaging" class="slide level2 smaller scrollable">
 <h2>Regression: Conditional Averaging</h2>
 <p><strong>Restaurant Outlets Profit dataset</strong></p>
-<div id="5021b80d" class="cell" data-execution_count="2">
-<div class="cell-output cell-output-display" data-execution_count="139">
+<div id="32306ac8" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 <figure>
 <p><img data-src="06-knn_files/figure-revealjs/cell-3-output-1.png" width="960" height="480"></p>
@@ -243,11 +243,11 @@ Dr.&nbsp;Eric Friedlander
 <div class="columns">
 <div class="column">
 <p><strong><span class="math inline">\(K=1\)</span></strong></p>
-<div id="fc4d8b6b" class="cell" data-execution_count="3">
+<div id="7c490019" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>1-NN prediction at x=6: 0.9270</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="140">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 <figure>
 <p><img data-src="06-knn_files/figure-revealjs/cell-4-output-2.png" width="576" height="384"></p>
@@ -257,11 +257,11 @@ Dr.&nbsp;Eric Friedlander
 </div>
 </div><div class="column">
 <p><strong><span class="math inline">\(K=5\)</span></strong></p>
-<div id="9a409e7e" class="cell" data-execution_count="4">
+<div id="83c47630" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-stdout">
 <pre><code>5-NN prediction at x=6: 5.7699</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="141">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 <figure>
 <p><img data-src="06-knn_files/figure-revealjs/cell-5-output-2.png" width="576" height="384"></p>
@@ -273,8 +273,8 @@ Dr.&nbsp;Eric Friedlander
 </section>
 <section id="regression-methods-comparison" class="slide level2">
 <h2>Regression Methods: Comparison</h2>
-<div id="df0b9961" class="cell" data-execution_count="5">
-<div class="cell-output cell-output-display" data-execution_count="142">
+<div id="a6d35b35" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 <figure>
 <p><img data-src="06-knn_files/figure-revealjs/cell-6-output-1.png" width="960" height="480"></p>
@@ -297,10 +297,10 @@ Dr.&nbsp;Eric Friedlander
 <ul>
 <li>Let’s look at the <code>ames</code> data</li>
 </ul>
-<div id="4886fbce" class="cell" data-execution_count="6">
+<div id="a36cd397" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_2396eb1a_b375_412e_8cf5_238e2a1c9786"><tbody><tr>
+<table id="itables_9e64d99b_250e_445d_9d0e_1890223eb1a5"><tbody><tr>
     <td style="vertical-align:middle; text-align:left">
     <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
     <g style="fill:#d9d7fc">
@@ -366,11 +366,11 @@ Dr.&nbsp;Eric Friedlander
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_2396eb1a_b375_412e_8cf5_238e2a1c9786:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_9e64d99b_250e_445d_9d0e_1890223eb1a5:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "classes": ["display", "nowrap"], "order": [], "text_in_header_can_be_selected": true, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>Sale_Price</th>\n      <th>Gr_Liv_Area</th>\n      <th>Bedroom_AbvGr</th>\n    </tr>\n  </thead></table>", "data_json": "[[1009, 188500, 1337, 2], [49, 205000, 1370, 2], [1016, 215000, 2093, 3], [1843, 176000, 1458, 2], [2221, 219500, 1740, 3]]"};
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "classes": ["display", "nowrap"], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "text_in_header_can_be_selected": true, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>Sale_Price</th>\n      <th>Gr_Liv_Area</th>\n      <th>Bedroom_AbvGr</th>\n    </tr>\n  </thead></table>", "data_json": "[[1009, 188500, 1337, 2], [49, 205000, 1370, 2], [1016, 215000, 2093, 3], [1843, 176000, 1458, 2], [2221, 219500, 1740, 3]]"};
         new ITable(table, dt_args);
     });
 </script>
@@ -397,8 +397,8 @@ Dr.&nbsp;Eric Friedlander
 </section>
 <section id="new-observation" class="slide level2">
 <h2>New observation</h2>
-<div id="dbcf51f3" class="cell" data-execution_count="7">
-<div class="cell-output cell-output-display" data-execution_count="144">
+<div id="48052764" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <div>
 <figure>
 <p><img data-src="06-knn_files/figure-revealjs/cell-8-output-1.png" width="960" height="480"></p>
@@ -416,8 +416,8 @@ Dr.&nbsp;Eric Friedlander
 </section>
 <section id="nearest-neighbors" class="slide level2">
 <h2>10 “Nearest Neighbors”</h2>
-<div id="9a44bb78" class="cell" data-execution_count="9">
-<div class="cell-output cell-output-display" data-execution_count="146">
+<div id="f9e99097" class="cell" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 <figure>
 <p><img data-src="06-knn_files/figure-revealjs/cell-10-output-1.png" width="960" height="480"></p>
@@ -443,14 +443,14 @@ Dr.&nbsp;Eric Friedlander
 </ol>
 <!-- ## Original data
 
-::: {#1e3df6a0 .cell execution_count=10}
+::: {#78c5a3f2 .cell execution_count=10}
 ``` {.python .cell-code}
 (ggplot(ames_train, aes(x = "Gr_Liv_Area")) +
   geom_histogram() +
   theme(text = element_text(size = 20)))
 ```
 
-::: {.cell-output .cell-output-display execution_count=147}
+::: {.cell-output .cell-output-display execution_count=10}
 ![](06-knn_files/figure-revealjs/cell-11-output-1.png){width=960 height=480}
 :::
 :::
@@ -465,14 +465,14 @@ Dr.&nbsp;Eric Friedlander
 :::{.column}
 Original data
 
-::: {#9c47d001 .cell execution_count=11}
+::: {#b47964ef .cell execution_count=11}
 ``` {.python .cell-code code-fold="true"}
 (ggplot(ames_train, aes(x = "Gr_Liv_Area")) +
   geom_histogram() +
   theme(text = element_text(size = 20), figure_size=(6, 4)))
 ```
 
-::: {.cell-output .cell-output-display execution_count=148}
+::: {.cell-output .cell-output-display execution_count=11}
 ![](06-knn_files/figure-revealjs/cell-12-output-1.png){width=576 height=384}
 :::
 :::
@@ -483,7 +483,7 @@ Original data
 ::: {.column}
 Centered data
 
-::: {#37725a19 .cell execution_count=12}
+::: {#b1233bd3 .cell execution_count=12}
 ``` {.python .cell-code code-fold="true"}
 ames_train_centered = ames_train.copy()
 ames_train_centered["Gr_Liv_Area_Centered"] = ames_train["Gr_Liv_Area"] - ames_train["Gr_Liv_Area"].mean()
@@ -493,7 +493,7 @@ ames_train_centered["Gr_Liv_Area_Centered"] = ames_train["Gr_Liv_Area"] - ames_t
   theme(text = element_text(size = 20), figure_size=(6, 4)))
 ```
 
-::: {.cell-output .cell-output-display execution_count=149}
+::: {.cell-output .cell-output-display execution_count=12}
 ![](06-knn_files/figure-revealjs/cell-13-output-1.png){width=576 height=384}
 :::
 :::
@@ -510,14 +510,14 @@ ames_train_centered["Gr_Liv_Area_Centered"] = ames_train["Gr_Liv_Area"] - ames_t
 :::{.column}
 Original data
 
-::: {#a7db5159 .cell execution_count=13}
+::: {#2bc72c55 .cell execution_count=13}
 ``` {.python .cell-code code-fold="true"}
 (ggplot(ames_train, aes(x = "Gr_Liv_Area")) +
   geom_histogram() +
   theme(text = element_text(size = 20), figure_size=(6, 4)))
 ```
 
-::: {.cell-output .cell-output-display execution_count=150}
+::: {.cell-output .cell-output-display execution_count=13}
 ![](06-knn_files/figure-revealjs/cell-14-output-1.png){width=576 height=384}
 :::
 :::
@@ -528,7 +528,7 @@ Original data
 ::: {.column}
 Normalized (centered and scaled) data
 
-::: {#c680b6d8 .cell execution_count=14}
+::: {#a80c96c0 .cell execution_count=14}
 ``` {.python .cell-code code-fold="true"}
 ames_train_scaled = ames_train.copy()
 ames_train_scaled["Gr_Liv_Area_Scaled"] = (ames_train["Gr_Liv_Area"] - ames_train["Gr_Liv_Area"].mean()) / ames_train["Gr_Liv_Area"].std()
@@ -538,7 +538,7 @@ ames_train_scaled["Gr_Liv_Area_Scaled"] = (ames_train["Gr_Liv_Area"] - ames_trai
   theme(text = element_text(size = 20), figure_size=(6, 4)))
 ```
 
-::: {.cell-output .cell-output-display execution_count=151}
+::: {.cell-output .cell-output-display execution_count=14}
 ![](06-knn_files/figure-revealjs/cell-15-output-1.png){width=576 height=384}
 :::
 :::
@@ -557,13 +557,13 @@ ames_train_scaled["Gr_Liv_Area_Scaled"] = (ames_train["Gr_Liv_Area"] - ames_trai
 <p>Let’s do that same thing with two variables. <!-- 
 ## Original Data
 
-::: {#683ca74f .cell execution_count=15}
+::: {#0480e3e3 .cell execution_count=15}
 ``` {.python .cell-code code-fold="true"}
 (ggplot(ames_train, aes(x = "Gr_Liv_Area", y = "Bedroom_AbvGr")) + 
   geom_point())
 ```
 
-::: {.cell-output .cell-output-display execution_count=152}
+::: {.cell-output .cell-output-display execution_count=15}
 ![](06-knn_files/figure-revealjs/cell-16-output-1.png){width=960 height=480}
 :::
 :::
@@ -577,14 +577,14 @@ ames_train_scaled["Gr_Liv_Area_Scaled"] = (ames_train["Gr_Liv_Area"] - ames_trai
 :::{.column}
 Original Data
 
-::: {#da13e36d .cell execution_count=16}
+::: {#51b6442b .cell execution_count=16}
 ``` {.python .cell-code code-fold="true"}
 (ggplot(ames_train, aes(x = "Gr_Liv_Area", y = "Bedroom_AbvGr")) + 
   geom_point()+
   theme(text = element_text(size = 20), figure_size=(6, 4)))
 ```
 
-::: {.cell-output .cell-output-display execution_count=153}
+::: {.cell-output .cell-output-display execution_count=16}
 ![](06-knn_files/figure-revealjs/cell-17-output-1.png){width=576 height=384}
 :::
 :::
@@ -595,7 +595,7 @@ Original Data
 ::: {.column}
 Centered data
 
-::: {#3e4e29aa .cell execution_count=17}
+::: {#f0392894 .cell execution_count=17}
 ``` {.python .cell-code code-fold="true"}
 ames_train_centered["Bedroom_AbvGr_Centered"] = ames_train["Bedroom_AbvGr"] - ames_train["Bedroom_AbvGr"].mean()
 
@@ -604,7 +604,7 @@ ames_train_centered["Bedroom_AbvGr_Centered"] = ames_train["Bedroom_AbvGr"] - am
   theme(text = element_text(size = 20), figure_size=(6, 4)))
 ```
 
-::: {.cell-output .cell-output-display execution_count=154}
+::: {.cell-output .cell-output-display execution_count=17}
 ![](06-knn_files/figure-revealjs/cell-18-output-1.png){width=576 height=384}
 :::
 :::
@@ -621,14 +621,14 @@ ames_train_centered["Bedroom_AbvGr_Centered"] = ames_train["Bedroom_AbvGr"] - am
 :::{.column}
 Original data
 
-::: {#67bd171d .cell execution_count=18}
+::: {#b5cfec7e .cell execution_count=18}
 ``` {.python .cell-code code-fold="true"}
 (ggplot(ames_train, aes(x = "Gr_Liv_Area", y = "Bedroom_AbvGr")) + 
   geom_point()+
   theme(text = element_text(size = 20), figure_size=(6, 4)))
 ```
 
-::: {.cell-output .cell-output-display execution_count=155}
+::: {.cell-output .cell-output-display execution_count=18}
 ![](06-knn_files/figure-revealjs/cell-19-output-1.png){width=576 height=384}
 :::
 :::
@@ -639,7 +639,7 @@ Original data
 ::: {.column}
 Normalized data
 
-::: {#4c411060 .cell execution_count=19}
+::: {#e735b8fb .cell execution_count=19}
 ``` {.python .cell-code code-fold="true"}
 ames_train_scaled["Bedroom_AbvGr_Scaled"] = (ames_train["Bedroom_AbvGr"] - ames_train["Bedroom_AbvGr"].mean()) / ames_train["Bedroom_AbvGr"].std()
 
@@ -648,7 +648,7 @@ ames_train_scaled["Bedroom_AbvGr_Scaled"] = (ames_train["Bedroom_AbvGr"] - ames_
   theme(text = element_text(size = 20), figure_size=(6, 4)))
 ```
 
-::: {.cell-output .cell-output-display execution_count=156}
+::: {.cell-output .cell-output-display execution_count=19}
 ![](06-knn_files/figure-revealjs/cell-20-output-1.png){width=576 height=384}
 :::
 :::
@@ -664,7 +664,7 @@ ames_train_scaled["Bedroom_AbvGr_Scaled"] = (ames_train["Bedroom_AbvGr"] - ames_
 </section>
 <section id="new-observation-1" class="slide level2">
 <h2>New Observation</h2>
-<div id="f66ab9c0" class="cell" data-execution_count="20">
+<div id="1d2dacfc" class="cell" data-execution_count="20">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>new_house <span class="op">=</span> pd.DataFrame({<span class="st">"Gr_Liv_Area"</span>: [<span class="dv">2000</span>], <span class="st">"Bedroom_AbvGr"</span>: [<span class="dv">2</span>]})</span>
@@ -672,7 +672,7 @@ ames_train_scaled["Bedroom_AbvGr_Scaled"] = (ames_train["Bedroom_AbvGr"] - ames_
 <span id="cb3-3"><a></a>  geom_point() <span class="op">+</span></span>
 <span id="cb3-4"><a></a>  geom_point(data <span class="op">=</span> new_house, color <span class="op">=</span> <span class="st">"red"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="157">
+<div class="cell-output cell-output-display" data-execution_count="20">
 <div>
 <figure>
 <p><img data-src="06-knn_files/figure-revealjs/cell-21-output-1.png" width="960" height="480"></p>
@@ -686,7 +686,7 @@ ames_train_scaled["Bedroom_AbvGr_Scaled"] = (ames_train["Bedroom_AbvGr"] - ames_
 </section>
 <section id="plotting-new-observation-without-normalizing" class="slide level2">
 <h2>Plotting new observation without normalizing</h2>
-<div id="597690a1" class="cell" data-execution_count="21">
+<div id="a31f6dec" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="co"># Incorrectly plotting unscaled data on scaled plot</span></span>
@@ -694,7 +694,7 @@ ames_train_scaled["Bedroom_AbvGr_Scaled"] = (ames_train["Bedroom_AbvGr"] - ames_
 <span id="cb4-3"><a></a>  geom_point() <span class="op">+</span></span>
 <span id="cb4-4"><a></a>  geom_point(data <span class="op">=</span> new_house, mapping <span class="op">=</span> aes(x<span class="op">=</span><span class="st">"Gr_Liv_Area"</span>, y <span class="op">=</span> <span class="st">"Bedroom_AbvGr"</span>), color <span class="op">=</span> <span class="st">"red"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="158">
+<div class="cell-output cell-output-display" data-execution_count="21">
 <div>
 <figure>
 <p><img data-src="06-knn_files/figure-revealjs/cell-22-output-1.png" width="960" height="480"></p>
@@ -711,7 +711,7 @@ ames_train_scaled["Bedroom_AbvGr_Scaled"] = (ames_train["Bedroom_AbvGr"] - ames_
 <div class="columns">
 <div class="column">
 <p>Original Data</p>
-<div id="aba09a4f" class="cell" data-execution_count="22">
+<div id="cb1f0006" class="cell" data-execution_count="22">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a>(ggplot(ames_train, aes(x <span class="op">=</span> <span class="st">"Gr_Liv_Area"</span>, y <span class="op">=</span> <span class="st">"Bedroom_AbvGr"</span>)) <span class="op">+</span> </span>
@@ -719,7 +719,7 @@ ames_train_scaled["Bedroom_AbvGr_Scaled"] = (ames_train["Bedroom_AbvGr"] - ames_
 <span id="cb5-3"><a></a>  geom_point(data <span class="op">=</span> new_house, color <span class="op">=</span> <span class="st">"red"</span>) <span class="op">+</span></span>
 <span id="cb5-4"><a></a>  theme(text <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">20</span>), figure_size<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="159">
+<div class="cell-output cell-output-display" data-execution_count="22">
 <div>
 <figure>
 <p><img data-src="06-knn_files/figure-revealjs/cell-23-output-1.png" width="576" height="384"></p>
@@ -729,7 +729,7 @@ ames_train_scaled["Bedroom_AbvGr_Scaled"] = (ames_train["Bedroom_AbvGr"] - ames_
 </div>
 </div><div class="column">
 <p>Scaled data</p>
-<div id="7d485d5c" class="cell" data-execution_count="23">
+<div id="214aba42" class="cell" data-execution_count="23">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="co"># Manually scaling using training means/stds</span></span>
@@ -742,7 +742,7 @@ ames_train_scaled["Bedroom_AbvGr_Scaled"] = (ames_train["Bedroom_AbvGr"] - ames_
 <span id="cb6-8"><a></a>  geom_point(data <span class="op">=</span> new_house_scaled, color <span class="op">=</span> <span class="st">"red"</span>)<span class="op">+</span></span>
 <span id="cb6-9"><a></a>  theme(text <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">20</span>), figure_size<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="160">
+<div class="cell-output cell-output-display" data-execution_count="23">
 <div>
 <figure>
 <p><img data-src="06-knn_files/figure-revealjs/cell-24-output-1.png" width="576" height="384"></p>
@@ -758,10 +758,10 @@ ames_train_scaled["Bedroom_AbvGr_Scaled"] = (ames_train["Bedroom_AbvGr"] - ames_
 </section>
 <section id="scaled-distances-look-better" class="slide level2 smaller">
 <h2>Scaled distances look better</h2>
-<div id="7678a458" class="cell" data-execution_count="25">
+<div id="b9a9b700" class="cell" data-execution_count="25">
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_d18a7ce8_0a95_40d3_9f76_b26430209e7c"><tbody><tr>
+<table id="itables_09c0426a_6e35_4770_9bc2_af71f25135ff"><tbody><tr>
     <td style="vertical-align:middle; text-align:left">
     <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
     <g style="fill:#d9d7fc">
@@ -827,11 +827,11 @@ ames_train_scaled["Bedroom_AbvGr_Scaled"] = (ames_train["Bedroom_AbvGr"] - ames_
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_d18a7ce8_0a95_40d3_9f76_b26430209e7c:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_09c0426a_6e35_4770_9bc2_af71f25135ff:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "classes": ["display", "nowrap"], "order": [], "text_in_header_can_be_selected": true, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>Gr_Liv_Area</th>\n      <th>Bedroom_AbvGr</th>\n      <th>Gr_Liv_Area_Scaled</th>\n      <th>Bedroom_AbvGr_Scaled</th>\n      <th>orig_dist</th>\n      <th>scaled_dist</th>\n    </tr>\n  </thead></table>", "data_json": "[[1102, 2006, 2, 0.983816, -1.0409, 6.0, 0.011723], [1109, 1987, 2, 0.946694, -1.0409, 13.0, 0.0254], [563, 2014, 2, 0.999447, -1.0409, 14.0, 0.027353], [968, 1978, 2, 0.929109, -1.0409, 22.0, 0.042984], [1699, 1976, 2, 0.925202, -1.0409, 24.0, 0.046892], [2901, 2028, 2, 1.0268, -1.0409, 28.0, 0.054707], [2278, 2034, 2, 1.038523, -1.0409, 34.0, 0.06643], [1693, 2046, 2, 1.061969, -1.0409, 46.0, 0.089876], [1057, 1950, 2, 0.874402, -1.0409, 50.0, 0.097691], [2382, 2076, 2, 1.120584, -1.0409, 76.0, 0.14849]]"};
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "classes": ["display", "nowrap"], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "text_in_header_can_be_selected": true, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>Gr_Liv_Area</th>\n      <th>Bedroom_AbvGr</th>\n      <th>Gr_Liv_Area_Scaled</th>\n      <th>Bedroom_AbvGr_Scaled</th>\n      <th>orig_dist</th>\n      <th>scaled_dist</th>\n    </tr>\n  </thead></table>", "data_json": "[[1102, 2006, 2, 0.983816, -1.0409, 6.0, 0.011723], [1109, 1987, 2, 0.946694, -1.0409, 13.0, 0.0254], [563, 2014, 2, 0.999447, -1.0409, 14.0, 0.027353], [968, 1978, 2, 0.929109, -1.0409, 22.0, 0.042984], [1699, 1976, 2, 0.925202, -1.0409, 24.0, 0.046892], [2901, 2028, 2, 1.0268, -1.0409, 28.0, 0.054707], [2278, 2034, 2, 1.038523, -1.0409, 34.0, 0.06643], [1693, 2046, 2, 1.061969, -1.0409, 46.0, 0.089876], [1057, 1950, 2, 0.874402, -1.0409, 50.0, 0.097691], [2382, 2076, 2, 1.120584, -1.0409, 76.0, 0.14849]]"};
         new ITable(table, dt_args);
     });
 </script>
@@ -843,7 +843,7 @@ ames_train_scaled["Bedroom_AbvGr_Scaled"] = (ames_train["Bedroom_AbvGr"] - ames_
 <div class="columns">
 <div class="column">
 <p>Original distances</p>
-<div id="2ee5743c" class="cell" data-execution_count="26">
+<div id="959352ba" class="cell" data-execution_count="26">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a>(ggplot(ames_train, aes(x <span class="op">=</span> <span class="st">"Gr_Liv_Area"</span>, y <span class="op">=</span> <span class="st">"Bedroom_AbvGr"</span>, color <span class="op">=</span> <span class="st">"Sale_Price"</span>)) <span class="op">+</span> </span>
@@ -852,7 +852,7 @@ ames_train_scaled["Bedroom_AbvGr_Scaled"] = (ames_train["Bedroom_AbvGr"] - ames_
 <span id="cb7-4"><a></a>  geom_point(data <span class="op">=</span> orig_closest, color <span class="op">=</span> <span class="st">"lime"</span>, size<span class="op">=</span><span class="dv">3</span>) <span class="op">+</span></span>
 <span id="cb7-5"><a></a>  theme(text <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">16</span>), figure_size<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="163">
+<div class="cell-output cell-output-display" data-execution_count="26">
 <div>
 <figure>
 <p><img data-src="06-knn_files/figure-revealjs/cell-27-output-1.png" width="576" height="384"></p>
@@ -862,7 +862,7 @@ ames_train_scaled["Bedroom_AbvGr_Scaled"] = (ames_train["Bedroom_AbvGr"] - ames_
 </div>
 </div><div class="column">
 <p>Scaled distances</p>
-<div id="3033c3d9" class="cell" data-execution_count="27">
+<div id="c2e12418" class="cell" data-execution_count="27">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>(ggplot(ames_train, aes(x <span class="op">=</span> <span class="st">"Gr_Liv_Area"</span>, y <span class="op">=</span> <span class="st">"Bedroom_AbvGr"</span>, color <span class="op">=</span> <span class="st">"Sale_Price"</span>)) <span class="op">+</span> </span>
@@ -871,7 +871,7 @@ ames_train_scaled["Bedroom_AbvGr_Scaled"] = (ames_train["Bedroom_AbvGr"] - ames_
 <span id="cb8-4"><a></a>  geom_point(data <span class="op">=</span> scaled_closest, color <span class="op">=</span> <span class="st">"lime"</span>, size<span class="op">=</span><span class="dv">3</span>) <span class="op">+</span></span>
 <span id="cb8-5"><a></a>  theme(text <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">16</span>), figure_size<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="164">
+<div class="cell-output cell-output-display" data-execution_count="27">
 <div>
 <figure>
 <p><img data-src="06-knn_files/figure-revealjs/cell-28-output-1.png" width="576" height="384"></p>
