@@ -213,14 +213,14 @@ Dr.&nbsp;Eric Friedlander
 <h1>Recap</h1>
 
 </section>
-<section id="k-nearest-neighbors-scaling" class="slide level2">
-<h2>K-Nearest Neighbors &amp; Scaling</h2>
-<ul>
-<li>KNN is a <strong>non-parametric</strong> method for regression and classification</li>
-<li>It predicts based on the <strong>average</strong> of the <span class="math inline">\(K\)</span> closest training points</li>
-<li><strong>Scaling</strong> (centering and standardizing) is essential to prevent predictors with large ranges from dominating the distance calculation</li>
-<li>We must avoid <strong>information leakage</strong> by scaling new data using statistics from our training data</li>
-</ul>
+<section id="concept-check" class="slide level2">
+<h2>Concept Check</h2>
+<ol type="1">
+<li>Is KNN a parametric or a non-parametric method?</li>
+<li>Informally describe how KNN works.</li>
+<li>Why do we center and scale or features for KNN?</li>
+<li>As we increase <span class="math inline">\(K\)</span>, how should the variance of our model change?</li>
+</ol>
 </section></section>
 <section>
 <section id="a-better-way" class="title-slide slide level1 center">
@@ -239,7 +239,7 @@ Dr.&nbsp;Eric Friedlander
 <li>Why?
 <ul>
 <li>prevent <strong>information leakage</strong></li>
-<li>compare apples-to-oranges</li>
+<li>compare apples-to-apples</li>
 <li>not enough observations in new data to properly process</li>
 </ul></li>
 </ul>
@@ -281,7 +281,7 @@ Dr.&nbsp;Eric Friedlander
 </section>
 <section id="creating-a-knn-pipeline" class="slide level2">
 <h2>Creating a KNN Pipeline</h2>
-<div id="89f7230a" class="cell" data-execution_count="2">
+<div id="46ca1467" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="co"># Define the pipeline</span></span>
 <span id="cb1-2"><a></a>knn_pipeline <span class="op">=</span> Pipeline([</span>
 <span id="cb1-3"><a></a>    (<span class="st">'scaler'</span>, StandardScaler()),</span>
@@ -291,12 +291,10 @@ Dr.&nbsp;Eric Friedlander
 </section>
 <section id="fitting-the-pipeline" class="slide level2">
 <h2>Fitting the Pipeline</h2>
-<div id="45f157ca" class="cell" data-execution_count="3">
+<div id="86a8d6c6" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="co"># Fit on training data</span></span>
 <span id="cb2-2"><a></a><span class="co"># Pipeline automatically scales X_train using mean/std from X_train</span></span>
-<span id="cb2-3"><a></a>y_train <span class="op">=</span> ames_train[<span class="st">'Sale_Price'</span>]</span>
-<span id="cb2-4"><a></a>y_test <span class="op">=</span> ames_test[<span class="st">'Sale_Price'</span>]</span>
-<span id="cb2-5"><a></a>knn_pipeline.fit(ames_train[[<span class="st">"Gr_Liv_Area"</span>, <span class="st">"Bedroom_AbvGr"</span>]], y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a></a>knn_pipeline.fit(ames_train[[<span class="st">"Gr_Liv_Area"</span>, <span class="st">"Bedroom_AbvGr"</span>]], ames_train[<span class="st">'Sale_Price'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <style>#sk-container-id-1 {
   /* Definition of color scheme common for light and dark mode */
@@ -1210,105 +1208,27 @@ forceTheme('sk-container-id-1');</script>
 <section id="making-predictions-single-observation" class="slide level2">
 <h2>Making Predictions: Single Observation</h2>
 <p>Test Point: <code>Gr_Liv_Area</code> = 2000 square feet, and <code>Bedroom_AbvGr</code> = 3</p>
-<div id="7db8dc55" class="cell" data-execution_count="4">
+<div id="4daac78f" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>new_house <span class="op">=</span> pd.DataFrame({<span class="st">"Gr_Liv_Area"</span>: [<span class="dv">2000</span>], <span class="st">"Bedroom_AbvGr"</span>: [<span class="dv">3</span>]})</span>
-<span id="cb3-2"><a></a>show(new_house)</span>
-<span id="cb3-3"><a></a></span>
-<span id="cb3-4"><a></a><span class="co"># Pipeline automatically scales new_data using Mean/Std from TRAINING data</span></span>
-<span id="cb3-5"><a></a>prediction <span class="op">=</span> knn_pipeline.predict(new_house)</span>
-<span id="cb3-6"><a></a><span class="bu">print</span>(<span class="ss">f"Predicted Sale Price: $</span><span class="sc">{</span>prediction[<span class="dv">0</span>]<span class="sc">:,.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<!--| quarto-html-table-processing: none -->
-<table id="itables_cf74a2bf_a579_4935_873d_10350e0b1efd"><tbody><tr>
-    <td style="vertical-align:middle; text-align:left">
-    <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
-    <g style="fill:#d9d7fc">
-        <path d="M100,400H500V357H100Z"></path>
-        <path d="M100,300H400V257H100Z"></path>
-        <path d="M0,200H400V157H0Z"></path>
-        <path d="M100,100H500V57H100Z"></path>
-        <path d="M100,350H500V307H100Z"></path>
-        <path d="M100,250H400V207H100Z"></path>
-        <path d="M0,150H400V107H0Z"></path>
-        <path d="M100,50H500V7H100Z"></path>
-    </g>
-    <g style="fill:#1a1366;stroke:#1a1366;">
-   <rect x="100" y="7" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="0" y="107" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="207" width="300" height="43">
-    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="307" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
-  </rect>
-        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
-            <g transform="translate(45 50) rotate(-45)">
-                <circle r="33" cx="0" cy="0"></circle>
-                <rect x="-8" y="32" width="16" height="30"></rect>
-            </g>
-
-            <g transform="translate(450 152)">
-                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
-                <rect x="-15" y="-40" width="60" height="60"></rect>
-            </g>
-
-            <g transform="translate(50 352)">
-                <polygon points="-35,-5 0,-40 35,-5"></polygon>
-                <polygon points="-35,10 0,45 35,10"></polygon>
-            </g>
-
-            <g transform="translate(75 250)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-
-            <g transform="translate(425 250) rotate(180)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-        </g>
-    </g>
-</svg>
-</a>
-    Loading ITables v2.6.2 from the internet...
-    (need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
-    </tr></tbody></table>
-<link href="https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.css" rel="stylesheet">
-<script type="module">
-    import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
-
-    document.querySelectorAll("#itables_cf74a2bf_a579_4935_873d_10350e0b1efd:not(.dataTable)").forEach(table => {
-        if (!(table instanceof HTMLTableElement))
-            return;
-
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "text_in_header_can_be_selected": true, "classes": ["display", "nowrap"], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "order": [], "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>Gr_Liv_Area</th>\n      <th>Bedroom_AbvGr</th>\n    </tr>\n  </thead></table>", "data_json": "[[2000, 3]]"};
-        new ITable(table, dt_args);
-    });
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Predicted Sale Price: $265,369.00</code></pre>
+<span id="cb3-2"><a></a></span>
+<span id="cb3-3"><a></a><span class="co"># Pipeline automatically scales new_data using Mean/Std from TRAINING data</span></span>
+<span id="cb3-4"><a></a>prediction <span class="op">=</span> knn_pipeline.predict(new_house)</span>
+<span id="cb3-5"><a></a>prediction</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>array([265369.])</code></pre>
 </div>
 </div>
 </section>
 <section id="making-predictions-test-set" class="slide level2">
 <h2>Making Predictions: Test Set</h2>
-<div id="3c2d00a9" class="cell" data-execution_count="5">
+<div id="fdfcc08f" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="co"># Predict on test set</span></span>
 <span id="cb5-2"><a></a><span class="co"># Pipeline handles scaling automatically!</span></span>
 <span id="cb5-3"><a></a>test_preds <span class="op">=</span> knn_pipeline.predict(ames_test[[<span class="st">"Gr_Liv_Area"</span>, <span class="st">"Bedroom_AbvGr"</span>]])</span>
-<span id="cb5-4"><a></a>show(pd.DataFrame({<span class="st">"Truth"</span>: y_test, <span class="st">"Prediction"</span>: test_preds}).head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-4"><a></a>show(pd.DataFrame({<span class="st">"Truth"</span>: ames_test[<span class="st">"Sale_Price"</span>], <span class="st">"Prediction"</span>: test_preds}).head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_8b7f063f_1f07_4234_9cbe_3c45ee4afaa3"><tbody><tr>
+<table id="itables_82b1168b_a15b_446f_8f5a_f0f677a673e8"><tbody><tr>
     <td style="vertical-align:middle; text-align:left">
     <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
     <g style="fill:#d9d7fc">
@@ -1374,11 +1294,11 @@ forceTheme('sk-container-id-1');</script>
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_8b7f063f_1f07_4234_9cbe_3c45ee4afaa3:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_82b1168b_a15b_446f_8f5a_f0f677a673e8:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "text_in_header_can_be_selected": true, "classes": ["display", "nowrap"], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "order": [], "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>Truth</th>\n      <th>Prediction</th>\n    </tr>\n  </thead></table>", "data_json": "[[1357, 161000, 179435.0], [2367, 116000, 144970.0], [2822, 196500, 214222.1], [2126, 123600, 146264.1], [1544, 126000, 130835.0]]"};
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "text_in_header_can_be_selected": true, "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "classes": ["display", "nowrap"], "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>Truth</th>\n      <th>Prediction</th>\n    </tr>\n  </thead></table>", "data_json": "[[1357, 161000, 179435.0], [2367, 116000, 144970.0], [2822, 196500, 214222.1], [2126, 123600, 146264.1], [1544, 126000, 130835.0]]"};
         new ITable(table, dt_args);
     });
 </script>
@@ -1389,7 +1309,7 @@ forceTheme('sk-container-id-1');</script>
 <h2><span class="r-fit-text">Linear Regression vs K-Nearest Neighbors</span></h2>
 <ul>
 <li>Linear regression is a parametric approach (with restrictive assumptions), KNN is non-parametric.</li>
-<li>Linear regression works for regression problems (<span class="math inline">\(Y\)</span> numerical), KNN can be used for both regression and classification - i.e.&nbsp;<span class="math inline">\(Y\)</span> qualitative</li>
+<li>Linear regression works for regression problems (<span class="math inline">\(Y\)</span> numerical), KNN can be used for both regression and classification</li>
 <li>Linear regression is interpretable, KNN is not.</li>
 <li>Performance: KNN can be pretty good for small <span class="math inline">\(p\)</span>, that is, <span class="math inline">\(p \le 4\)</span> and large <span class="math inline">\(n\)</span>. Performance of KNN deteriorates as <span class="math inline">\(p\)</span> increases - <em>curse of dimensionality</em></li>
 </ul>
