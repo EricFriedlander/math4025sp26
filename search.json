@@ -750,8 +750,43 @@
     "text": "Linear Regression vs K-Nearest Neighbors\n\nLinear regression is a parametric approach (with restrictive assumptions), KNN is non-parametric.\nLinear regression works for regression problems (\\(Y\\) numerical), KNN can be used for both regression and classification\nLinear regression is interpretable, KNN is not.\nPerformance: KNN can be pretty good for small \\(p\\), that is, \\(p \\le 4\\) and large \\(n\\). Performance of KNN deteriorates as \\(p\\) increases - curse of dimensionality"
   },
   {
+    "objectID": "slides/07-preprocessing-pipelines.html#columntransformer",
+    "href": "slides/07-preprocessing-pipelines.html#columntransformer",
+    "title": "Math 4025: Preprocessing + Pipelines",
+    "section": "ColumnTransformer",
+    "text": "ColumnTransformer\n\nOften we want to apply different transformations to different features\n\nScale numerical features\nOne-hot encode categorical features\nPass through some features without transformation\n\nColumnTransformer allows us to do this in a single step"
+  },
+  {
+    "objectID": "slides/07-preprocessing-pipelines.html#columntransformer-in-scikit-learn",
+    "href": "slides/07-preprocessing-pipelines.html#columntransformer-in-scikit-learn",
+    "title": "Math 4025: Preprocessing + Pipelines",
+    "section": "ColumnTransformer in scikit-learn",
+    "text": "ColumnTransformer in scikit-learn\n\nList of transformers: (name, transformer, columns)\nremainder='passthrough' to keep columns that aren’t specified\nremainder='drop' (default) to drop columns that aren’t specified"
+  },
+  {
+    "objectID": "slides/07-preprocessing-pipelines.html#one-hot-encoding-dropfirst",
+    "href": "slides/07-preprocessing-pipelines.html#one-hot-encoding-dropfirst",
+    "title": "Math 4025: Preprocessing + Pipelines",
+    "section": "One-Hot Encoding: drop='first'",
+    "text": "One-Hot Encoding: drop='first'\n\nThe Dummy Variable Trap: Multicollinearity occurs when features are highly correlated. If you know a house doesn’t have Central_Air_N, you know it must have Central_Air_Y.\nWhen to drop?\n\nLinear Regression: Drop one column (drop='first') to avoid the dummy variable trap (singular matrices).\nKNN / Trees: Usually not necessary to drop. Dropping can sometimes make distances or splits harder to interpret.\n\nIn scikit-learn: OneHotEncoder(drop='first') or drop='if_binary'."
+  },
+  {
+    "objectID": "slides/07-preprocessing-pipelines.html#encoding-example",
+    "href": "slides/07-preprocessing-pipelines.html#encoding-example",
+    "title": "Math 4025: Preprocessing + Pipelines",
+    "section": "Encoding Example",
+    "text": "Encoding Example\n\nX_example = pd.DataFrame({\"Central_Air\": [\"Y\", \"N\", \"Y\"]})\n\n# Default: Two columns\nenc_default = OneHotEncoder(sparse_output=False)\nprint(\"Default:\\n\", enc_default.fit_transform(X_example))\n\n# Drop first: One column\nenc_drop = OneHotEncoder(drop='first', sparse_output=False)\nprint(\"\\nDrop First:\\n\", enc_drop.fit_transform(X_example))\n\nDefault:\n [[0. 1.]\n [1. 0.]\n [0. 1.]]\n\nDrop First:\n [[1.]\n [0.]\n [1.]]"
+  },
+  {
     "objectID": "slides/07-preprocessing-pipelines.html#practice-1",
     "href": "slides/07-preprocessing-pipelines.html#practice-1",
+    "title": "Math 4025: Preprocessing + Pipelines",
+    "section": "Practice!",
+    "text": "Practice!\nLet’s add Central_Air to out model."
+  },
+  {
+    "objectID": "slides/07-preprocessing-pipelines.html#practice-2",
+    "href": "slides/07-preprocessing-pipelines.html#practice-2",
     "title": "Math 4025: Preprocessing + Pipelines",
     "section": "Practice!",
     "text": "Practice!\nLet’s build piplines for the following three models and choose the best:\n\nKNN with 5 neighbors\nKNN with 10 neighbors\nLinear Regression"
