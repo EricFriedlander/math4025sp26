@@ -7,4 +7,5 @@ x,3,2/17/2026,Lecture,SLR & Gradient Descent,[Click here for readings](prepare/p
 x,3,2/17/2026,Lecture,Linear Regression,[Click here for readings](prepare/prepare-04.html),[04-MultipleRegression](slides/04-MultipleRegression.html),[04-video](https://youtu.be/BN3vkdUFQg8),
 x,3,2/17/2026,Lecture,Data Splitting,,[05-data-splitting](slides/05-data-splitting.html),[05-video](https://youtu.be/WZvANauLG38),
 x,4,2/24/2026,Homework,HW 2: Linear Regression,,,,[02-hw-mlr](hw/02-hw-mlr.html)
-,4,2/24/2026,Lecture,K-Nearest Neighbors,[Click here for readings](prepare/prepare-05.html),[06-knn](slides/06-knn.html),,
+x,4,2/24/2026,Lecture,K-Nearest Neighbors,[Click here for readings](prepare/prepare-06.html),[06-knn](slides/06-knn.html),[06-video](https://www.youtube.com/watch?v=0KOhU1V8CxQ),
+x,4,2/24/2026,Lecture,Pipelines & Preprocessing,[Click here for readings](prepare/prepare-07.html),[07-preprocessing-pipelines](slides/07-preprocessing-pipelines.html),,

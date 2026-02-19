@@ -24,12 +24,12 @@ ames_train, ames_test = train_test_split(ames, random_state=42)
 
 # Recap
 
-## K-Nearest Neighbors & Scaling
+## Concept Check
 
-- KNN is a **non-parametric** method for regression and classification
-- It predicts based on the **average** of the $K$ closest training points
-- **Scaling** (centering and standardizing) is essential to prevent predictors with large ranges from dominating the distance calculation
-- We must avoid **information leakage** by scaling new data using statistics from our training data
+1. Is KNN a parametric or a non-parametric method?
+2. Informally describe how KNN works.
+3. Why do we center and scale or features for KNN?
+4. As we increase $K$, how should the variance of our model change?
 
 # A Better Way
 
@@ -41,7 +41,7 @@ ames_train, ames_test = train_test_split(ames, random_state=42)
     + Impute missing values using ONLY training data (more on this later)
 -   Why?
     +   prevent **information leakage**
-    +   compare apples-to-oranges
+    +   compare apples-to-apples
     +   not enough observations in new data to properly process
 
 ## Scaling in Python { .smaller }
@@ -87,9 +87,7 @@ knn_pipeline = Pipeline([
 ```{python}
 # Fit on training data
 # Pipeline automatically scales X_train using mean/std from X_train
-y_train = ames_train['Sale_Price']
-y_test = ames_test['Sale_Price']
-knn_pipeline.fit(ames_train[["Gr_Liv_Area", "Bedroom_AbvGr"]], y_train)
+knn_pipeline.fit(ames_train[["Gr_Liv_Area", "Bedroom_AbvGr"]], ames_train['Sale_Price'])
 ```
 
 ## Making Predictions: Single Observation
@@ -98,11 +96,10 @@ Test Point: `Gr_Liv_Area` = 2000 square feet, and `Bedroom_AbvGr` = 3
 
 ```{python}
 new_house = pd.DataFrame({"Gr_Liv_Area": [2000], "Bedroom_AbvGr": [3]})
-show(new_house)
 
 # Pipeline automatically scales new_data using Mean/Std from TRAINING data
 prediction = knn_pipeline.predict(new_house)
-print(f"Predicted Sale Price: ${prediction[0]:,.2f}")
+prediction
 ```
 
 ## Making Predictions: Test Set
@@ -111,13 +108,13 @@ print(f"Predicted Sale Price: ${prediction[0]:,.2f}")
 # Predict on test set
 # Pipeline handles scaling automatically!
 test_preds = knn_pipeline.predict(ames_test[["Gr_Liv_Area", "Bedroom_AbvGr"]])
-show(pd.DataFrame({"Truth": y_test, "Prediction": test_preds}).head())
+show(pd.DataFrame({"Truth": ames_test["Sale_Price"], "Prediction": test_preds}).head())
 ```
 
 ## [Linear Regression vs K-Nearest Neighbors]{.r-fit-text} {.smaller}
 
 - Linear regression is a parametric approach (with restrictive assumptions), KNN is non-parametric.
-- Linear regression works for regression problems ($Y$ numerical), KNN can be used for both regression and classification - i.e. $Y$ qualitative
+- Linear regression works for regression problems ($Y$ numerical), KNN can be used for both regression and classification
 - Linear regression is interpretable, KNN is not.
 - Performance: KNN can be pretty good for small $p$, that is, $p \le 4$ and large $n$. Performance of KNN deteriorates as $p$ increases - *curse of dimensionality*
 

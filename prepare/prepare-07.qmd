@@ -1,0 +1,7 @@
+---
+title: Prepare for Preprocessing + Pipelines
+---
+
+- Read `scikit-learn` example on the [Importance of Features Scaling](https://scikit-learn.org/stable/auto_examples/preprocessing/plot_scaling_importance.html#sphx-glr-auto-examples-preprocessing-plot-scaling-importance-py)
+- Read [Section 7.1: Piplines and Composite Estimators](https://scikit-learn.org/stable/modules/compose.html) from the `scikit-learn` user's guide
+- Read [Sections 7.3.1, 7.3.2, 7.3.4, and 7.3.7](https://scikit-learn.org/stable/modules/preprocessing.html) from the `scikit-learn` user's guide

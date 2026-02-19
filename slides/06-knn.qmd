@@ -20,7 +20,7 @@ from itables import show
 
 # K-Nearest Neighbors
 
-## Regression: Conditional Averaging {.smaller}
+## Regression: Conditional Averaging {.smaller .scrollable}
 
 **Restaurant Outlets Profit dataset**
 
