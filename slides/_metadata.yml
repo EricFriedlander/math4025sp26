@@ -5,6 +5,7 @@ format:
   revealjs:
     theme: slides.scss
     multiplex: false
+    scrollable: true
     transition: fade
     slide-number: true
     incremental: false 

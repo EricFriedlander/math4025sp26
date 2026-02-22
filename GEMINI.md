@@ -22,10 +22,11 @@ The root directory constitutes the active Quarto project.
     *   `computing-access.qmd` & `computing-python-resources.qmd`: Computing setup and resources.
     *   `schedule.csv`: Source of truth for the course schedule.
 *   `slides/`: Lecture slides (migrated from archive and converted to Python).
-    *   `00-welcome.qmd`, `01-big-picture.qmd`, `02-StatisticalLearning.qmd`, `03-SLR-Gradient_Desc.qmd`, `04-MultipleRegression.qmd`, `05-knn.qmd`.
-    *   `_metadata.yml`: Shared configuration for all slides.
+    *   `00-welcome.qmd`, `01-big-picture.qmd`, `02-StatisticalLearning.qmd`, `03-SLR-Gradient_Desc.qmd`, `04-MultipleRegression.qmd`, `05-data-splitting.qmd`, `06-knn.qmd`, `07-preprocessing-pipelines.qmd`, `08-classification-logistic.qmd`, `09-classification-metrics.qmd`.
+    *   `_metadata.yml`: Shared configuration for all slides (includes `scrollable: true`).
     *   `images/`: Slide-specific images.
-*   `hw/`: Homework assignments (e.g., `01-hw-eda.qmd`).
+*   `hw/`: Homework assignments.
+    *   `01-hw-eda.qmd`, `02-hw-mlr.qmd`, `03-hw-knn.qmd`.
 *   `data/`: Course datasets (e.g., `house_prices.csv`, `outlets.csv`, `tips.csv`, `AmesHousing.rds`).
 *   `jobs/`: Job application assignments (empty).
 *   `prepare/`: Preparation materials (empty).

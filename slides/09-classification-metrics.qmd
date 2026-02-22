@@ -1,0 +1,136 @@
+---
+title: 'MATH 4025: Evaluating Classification Models'
+---
+
+```{python}
+#| echo: false
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, recall_score, precision_score, f1_score, matthews_corrcoef, confusion_matrix, ConfusionMatrixDisplay
+from plotnine import *
+from itables import show
+from ISLP import load_data
+import matplotlib.pyplot as plt
+import warnings
+
+warnings.filterwarnings('ignore')
+
+Default = load_data('Default')
+
+def classification_metrics(y_true, y_pred, pos_label='Yes'):
+    acc = accuracy_score(y_true, y_pred)
+    rec = recall_score(y_true, y_pred, pos_label=pos_label)
+    prec = precision_score(y_true, y_pred, pos_label=pos_label)
+    f1 = f1_score(y_true, y_pred, pos_label=pos_label)
+    mcc = matthews_corrcoef(y_true, y_pred)
+    
+    tn, fp, fn, tp = confusion_matrix(y_true, y_pred, labels=['No', 'Yes']).ravel()
+    spec = tn / (tn + fp)
+    npv = tn / (tn + fn) if (tn + fn) > 0 else 0
+    
+    return pd.DataFrame({
+        'metric': ['accuracy', 'recall', 'precision', 'specificity', 'npv', 'mcc', 'f_meas'],
+        'estimate': [acc, rec, prec, spec, npv, mcc, f1]
+    })
+
+Default_train, Default_test = train_test_split(
+    Default, 
+    train_size=0.6,
+    stratify=Default['default'],
+    random_state=4025
+)
+
+knnfit = KNeighborsClassifier(n_neighbors=10)
+knnfit.fit(Default_train[['balance']], Default_train['default'])
+
+knn_class_preds = knnfit.predict(Default_test[['balance']])
+knn_prob_preds = knnfit.predict_proba(Default[['balance']])
+
+logregfit = LogisticRegression(penalty=None)
+logregfit.fit(Default_train[['balance']], Default_train['default'])
+```
+
+
+## Concept Check
+
+Try to do the following on your own:
+
+1. Load the `Default` dataset from the last lecture.
+2. Split the dataset into a training and test set using a 60-40 split.
+3. Fit a KNN classifier using $K=10$ with `default` as your target variable and `balance` as your only predictor.
+4. Generate class probability predictions on your test data.
+5. Repeat steps 3 and 4 using logistic regression.
+
+## Concept Check
+
+- When the target variable in a classification problem has only two possible outcomes, we call it a [insert] classification problem.
+- In these problems we designate one category as [Insert] and the other as [Insert].
+
+# Assessing Performance of Classifiers
+
+## Binary Classifiers
+
+-   Start with binary classification scenarios
+-   With binary classification, designate one category as "Success/Positive" and the other as "Failure/Negative"
+    +   If relevant to your problem: "Positive" should be the thing you're trying to predict/care more about
+    +   Note: "Positive" $\neq$ "Good"
+    +   For `default`: "Yes" is Positive
+-   Some metrics weight "Positives" more and viceversa
+
+## Confusion Matrix
+
+|                                  | Actual Positive | Actual Negative |
+|:--------------------------------:|:---------------------:|:-------------------------:|
+|   **Predicted Positive**   |     True Positive (TP)     |      False Positive  (FP)     |
+| **Predicted Negative** |    False Negative (FN)    |       True Negative  (TN)     |
+
+
+## KNN: Confusion Matrix
+
+- We can compute the confusion matrix using the `confusion_matrix` function from `sklearn.metrics` and `ConfusionMatrixDisplay`
+- Let's do that for our two models.
+
+## Classification Metrics {.smaller}
+
+Many classification matrix are based on the confusion matrix:
+
+-   Accuracy: proportion of your classes that are correct $$(TP + TN)/Total$$
+-   Recall/Sensitivity: proportion of true positives correct (true positive rate) $$TP/(TP+FN)$$
+-   Precision/Positive Predictive Value (PPV): proportion of predicted positive that are correct $$TP/(TP+FP)$$
+-   Specificity: proportion of true negatives correct (true negative rate) $$TN/(TN+FP)$$
+-   Negative Predictive Value (NPV): proportion of predicted negatives that are correct $$TN/(TN+FN)$$
+
+## Practice!
+
+Let's use our confusion matrices to compute the following for our KNN model:
+
+-   Accuracy
+-   Recall/Sensitivity
+-   Precision/Positive Predictive Value (PPV)
+-   Specificity
+-   Negative Predictive Value (NPV)
+
+## Two More Metrics {.smaller}
+
+-   Matthews correlation coefficient (MCC): similar to $R^2$ but for classification
+$$\frac{TP\times TN - FP \times FN}{\sqrt{(TP + FP)(TP+FN)(TN+FP)(TN+FN)}}$$
+    +   Good for imbalanced data
+    +   Considers both positives and negatives
+-   F-Measure: harmonic mean of recall and precision
+$$\frac{2}{recall^{-1} + precision^{-1}} = \frac{2TP}{2TP+FP+FN}$$
+    +   Focuses more on positives
+    +   bad of imbalanced data
+
+## Recap: Classification Metrics
+
+-   **Accuracy**: Overall correctness.
+-   **Recall (Sensitivity)**: Ability to find all positives.
+-   **Specificity**: Ability to find all negatives.
+-   **Precision (PPV)**: Reliability of positive predictions.
+-   **NPV**: Reliability of negative predictions.
+-   **MCC**: Balanced measure even for imbalanced classes.
+-   **F-Measure**: Balance between Precision and Recall.
+

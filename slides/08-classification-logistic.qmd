@@ -27,6 +27,12 @@ Default_train, Default_test = train_test_split(
 )
 ```
 
+## Concept Check
+
+- Regression is what we call it if we're trying to predict a quantitative target variables. What do we call it when we are trying to predict a categorical target variable?
+- Is this a type of supervised or unsupervised learning?
+- When we fit a model we use our (training/test) set but when we evaluate our model we make predictions on our (training/test) set and use those predictions to compute our performance metrics.
+
 ## Classification Problems {.smaller}
 
 - Response $Y$ is qualitative (categorical).
@@ -36,6 +42,13 @@ Default_train, Default_test = train_test_split(
 - Two ways to make predictions
   + Class probabilities
   + Class labels
+
+## Today: Binary Classification
+
+- **Binary Classification:** response variable has only two categorical (e.g. win/lose, yes/no, etc.)
+- Typically: choose one categorical to call **success/positive** or (1) and one category to call **failure/negative** (0).
+- Positive doesn't have to be a good thing (positive is frequently *death*) and negtative doesn't have to be bad.
+- Choice of positive vs. positive doesn't matter for your resulting model, but you will need to know which category is which to interpret your results
 
 ## Default Dataset {.smaller}
 
@@ -70,7 +83,7 @@ Let do the following:
 
 ## Practice
 
-Let's build a K-Nearest Neighbors Classifier.
+Let's build a K-Nearest Neighbors Classifier to predict `default` from `balance`.
 
 ## K-Nearest Neighbors Classifier: Predictions
 
@@ -138,12 +151,13 @@ Consider a one-dimensional binary classification problem:
 
 - Transform the linear model $\beta_0 + \beta_1 \ X$ so that the output is a probability
 - Use **logistic** function: $$g(t)=\dfrac{e^t}{1+e^t} \ \ \ \text{for} \ t \in \mathcal{R}$$
-- Then: $$p(X)=P(Y=1|X)=g\left(\beta_0 + \beta_1 \ X\right)=\dfrac{e^{\beta_0 + \beta_1 \ X}}{1+e^{\beta_0 + \beta_1 \ X}}$$
+- Then: $$p(X)=P(Y=1|X) = P(\text{Success}| X)=g\left(\beta_0 + \beta_1 \ X\right)=\dfrac{e^{\beta_0 + \beta_1 \ X}}{1+e^{\beta_0 + \beta_1 \ X}}$$
 
 ## Other important quantities
 - **Odds**: $\dfrac{p(x)}{1-p(x)}$
 - **Log-Odds (logit)**: $\log\left(\dfrac{p(x)}{1-p(x)}\right) = \beta_0 + \beta_1 \ X$
   + Linear function of predictors
+- Suppose the probability of success is 50%, what should $p(x)$, your odds, and your log-odds be? 
 
 ## Logistic Regression
 
@@ -169,7 +183,7 @@ plot_df = pd.DataFrame({'balance': x_grid['balance'], 'prob': y_grid})
 
 ## Fitting the model
 
-Let's fit a logistic regression model predicting `default` using `balance` and investigate teh coefficients.
+Let's fit a logistic regression model predicting `default` using `balance` and investigate the coefficients.
 
 ## Interpreting Coefficients
 
@@ -216,12 +230,24 @@ For `balance`=\$700,
 
 ::: {.incremental}
 - $\hat{p}(X)=\dfrac{e^{\hat{\beta}_0+\hat{\beta}_1 X}}{1+e^{\hat{\beta}_0+\hat{\beta}_1 X}}=\dfrac{e^{\text{intercept} + (\text{coef} \times 700)}}{1+e^{\text{intercept} + (\text{coef} \times 700)}}$
--  Using our values: Intercept $\approx -10.65$, Coef $\approx 0.0055$
-- $$p(700) \approx \dfrac{e^{-10.65 + 3.85}}{1+e^{-10.65 + 3.85}} \approx 0.0011$$
-- $$\textbf{Odds}(X) = \dfrac{\hat{p}(X)}{1-\hat{p}(X)} \approx 0.0011$$
-- $$\textbf{Log-Odds}(X) = \approx -6.80$$
+-  Using our values: Intercept $\approx -10.20$, Coef $\approx 0.0052$
+- $$p(700) \approx \dfrac{e^{-10.20 + 3.64}}{1+e^{-10.20 + 3.64}} \approx 0.0014$$
+- $$\textbf{Odds}(X) = \dfrac{\hat{p}(X)}{1-\hat{p}(X)} \approx 0.0014$$
+- $$\textbf{Log-Odds}(X) = \approx -6.57$$
 :::
 
 ## Practice
 
-Let's generate our predicted classes and probabilities in Python.
+Let's generate our predicted classes and probability for our test set in Python.
+
+# Recap
+
+## Key Takeaways
+
+- **Classification**: Predicting a categorical response variable (qualitative).
+- **KNN Classifier**: Assigns class labels or probabilities based on the proportion of neighbors in each class (majority vote).
+- **Logistic Regression**:
+  - Used for binary classification to ensure predicted probabilities are between 0 and 1.
+  - Models the **log-odds (logit)** as a linear function of the predictors.
+- **Interpretation**: Coefficients $\beta$ represent the change in log-odds for a one-unit increase in the predictor, which corresponds to a non-linear change in probability.
+
