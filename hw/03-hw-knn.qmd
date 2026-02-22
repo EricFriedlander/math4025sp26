@@ -34,6 +34,39 @@ The following directions will guide you through the process of setting up your h
 
 The basic idea is that predictions are made based on the $K$ observation in the training data which are "closest" to the observation that we're making a prediction for. While many different **metrics** (i.e. measures of distance) can be used, we will work exclusively with the **Euclidean metric**: $$\text{dist}(x, y) = \sqrt{\sum_{i=1}^p(x_i-y_i)^2}$$ for vectors $x = (x_1,\ldots, x_p)$ and $y = (y_1,\ldots,y_p)$.
 
+
+# KNN for Regression
+
+For regression, we can predict the response variable for our point to be the average (or sometimes median) of the response variable for the $K$-nearest neighbors.
+
+## Data & Dummy Variables
+
+For this portion of the homework, we'll use the `Carseats` data from the `ISLP` package (accessible using `load_data('Carseats')`). Frequently, when working with categorical data, you will be required to transform that data into **dummy variables**. Namely, you'll create a unique variable for each column which gets a 1 if the corresponding observation is from that category and a 0 otherwise. In data science, this format is sometimes referred to as **one-hot encoding**.
+
+## Exercise 10
+
+::: {.callout-tip title="Question"}
+Look at the `Carseats` data from the `ISLP` package. Then, split the data into a training and test set using a 70-30 split and a seed of 4025 (as usual).
+:::
+
+## Exercise 11
+
+::: {.callout-tip title="Question"}
+Look at your data. What transformation are necessary? Why?
+:::
+
+## Exercise 12
+
+::: {.callout-tip title="Question"}
+DO NOT WRITE ANY CODE UNTIL THE NEXT EXERCISE. Your goal is to create a KNN model that best predicts `Sales`. In your group, decide on a strategy for finding the best set of features and number of neighbors to include in your model. You may find it useful to plot the $R^2$ and RMSE against the number of neighbors you include in your model. 
+:::
+
+## Exercise 13
+
+::: {.callout-tip title="Question"}
+After getting approval from Dr. F implement the strategy you agreed on above making use for `Pipeline`s. You may find that the RMSE and $R^2$ disagree on what the best model is. You will have to make a judgement call on which model is "best". One thing that can be helpful is looking at plots of your target variables (`Sales` in this case) against the model residuals. Fit your model on the training data and use the test set to choose the variables and the number of neighbors to include.  
+:::
+
 ## KNN for Classification
 
 We'll start by using KNN for classification.
@@ -45,7 +78,7 @@ We will be working with the famous `iris` data set which consists of four measur
 ## Exercise 1
 
 ::: {.callout-tip title="Question"}
-Import the `sklearn.datasets` package (or `seaborn` or `ISLP`), take a look at the columns of `iris`, and split your data into training and test sets using a 70-30 split. IMPORTANT: Make sure that each species is represented proportionally in the training set by using the `stratify` argument in the `train_test_split` function! Once again, set your `random_state` to 427.
+Import the `sklearn.datasets` package (or `seaborn` or `ISLP`), take a look at the columns of `iris`, and split your data into training and test sets using a 70-30 split. IMPORTANT: Make sure that each species is represented proportionally in the training set by using the `stratify` argument in the `train_test_split` function! Once again, set your `random_state` to 4025.
 :::
 
 ## Exercise 2
@@ -69,30 +102,30 @@ Just to verify that we are correct, find the sepal width, petal width, and speci
 ## Exercise 5
 
 ::: {.callout-tip title="Question"}
-Use `StandardScaler` to center and scale your data sets using the mean and standard deviation from your training set.
+Looking at your data, what transformations will you need to perform before fitting your data. Why?
 :::
 
 ## Exercise 6
 
 ::: {.callout-tip title="Question"}
-Create a `Pipeline` to fit a `KNeighborsClassifier` model that uses `weights="uniform"` with 1 neighbor that includes the scaler above and fit the model to your training set.
+Create a `Pipeline` to fit a KNN modelwith 1 neighbor that includes the transormation(s) above and fit the model to your training set.
 :::
 
 We would like to understand how the method of $K$-nearest neighbors will classify points in the plane. That is, we would like to view the *decision boundaries* of this model. To do this, we will use our model to classify a large grid of points in the plane, and color them by their classification. The code below creates a DataFrame called `grid` consisting of 62,500 points in the plane.
 
 ```{python}
-# import numpy as np
-# import pandas as pd
-# xx, yy = np.meshgrid(np.linspace(2.0, 4.5, 250), 
-#                      np.linspace(0.0, 2.5, 250))
-# grid = pd.DataFrame({'sepal_width': xx.ravel(), 
-#                      'petal_width': yy.ravel()})
+#| eval: false
+
+xx, yy = np.meshgrid(np.linspace(2.0, 4.5, 250), 
+                     np.linspace(0.0, 2.5, 250))
+grid = pd.DataFrame({'sepal_width': xx.ravel(), 
+                     'petal_width': yy.ravel()})
 ```
 
 ## Exercise 7
 
 ::: {.callout-tip title="Question"}
-Uncomment the code above, and change the variable names so that it will work with your model. Classify the points in `grid` using your training data and $k = 1$. Then, plot the points in `grid` colored by their classification. Make sure your code is written so that the grid points are being centered and scaled before predictions are being made for them.
+Use the code above, and change the variable names so that it will work with your model. Classify the points in `grid` using your training data and $k = 1$. Then, plot the points in `grid` colored by their classification. Make sure your code is written so that the grid points are being centered and scaled before predictions are being made for them.
 :::
 
 ## Exercise 8
@@ -104,33 +137,7 @@ Notice that the decision boundary between `versicolor` and `virginica` looks a l
 ## Exercise 9
 
 ::: {.callout-tip title="Question"}
-Determine which value of $k$, the number of neighbors selected, gives the highest accuracy on the test set. Test all $k$s between 1 and 40. Note that there may be ties because our data set is a little bit too small. To break ties just choose the smallest $k$ among the ones which are tied. Hint: A for loop may be helpful. What is the accuracy of the model you ended up choosing?
+Determine which value of $k$, the number of neighbors selected, gives the highest accuracy on the test set. Test all $k$s between 1 and 40. Note that there may be ties because our data set is a little bit too small. To break ties just choose the smallest $k$ among the ones which are tied. Hint: A for-loop may be helpful. What is the accuracy of the model you ended up choosing?
 :::
 
-Awesome!! Your model probably did pretty well, because KNN performs really well on the `iris` data set. However, this isn't a very challenging data set for most classification methods. More challenging data sets have data on different scales and *class imbalance* where there are very few observations belonging to a particular class.
-
-# KNN for Regression
-
-For regression, we can predict the response variable for our point to be the average (or sometimes median) of the response variable for the $K$-nearest neighbors.
-
-## Data & Dummy Variables
-
-For this portion of the homework, we'll use the `Carseats` data from the `ISLP` package (accessible using `load_data('Carseats')`). Frequently, when working with categorical data, you will be required to transform that data into **dummy variables**. Namely, you'll create a unique variable for each column which gets a 1 if the corresponding observation is from that category and a 0 otherwise. In data science, this format is sometimes referred to as **one-hot encoding**.
-
-## Exercise 10
-
-::: {.callout-tip title="Question"}
-Look at the `Carseats` data from the `ISLP` package. Then, split the data into a training and test set using a 70-30 split and a seed of 427 (as usual).
-:::
-
-## Exercise 11
-
-::: {.callout-tip title="Question"}
-Convert all categorical variables into dummy variables using `pd.get_dummies()` (or `OneHotEncoder`), then center and scale all of the predictors based on the training data using `StandardScaler`.
-:::
-
-## Exercise 12
-
-::: {.callout-tip title="Question"}
-Fit a `KNeighborsRegressor` model to predict `Sales` from the data we have. Fit your model on the training data and use the test set to choose the appropriate variables and the number of neighbors to include. You may find it useful to plot the $R^2$ and RMSE against the number of neighbors you include in your model. You may find that the RMSE and $R^2$ disagree on what the best model is. You will have to make a judgement call on which model is "best". One thing that can be helpful is looking at plots of your target variables (`Sales` in this case) against the model residuals.
-:::
+Awesome!! Your model probably did pretty well because KNN performs really well on the `iris` data set. However, this isn't a very challenging data set for most classification methods. More challenging data sets have data on different scales and *class imbalance* where there are very few observations belonging to a particular class.
