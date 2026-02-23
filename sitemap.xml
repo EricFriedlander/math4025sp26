@@ -17,8 +17,16 @@
     <lastmod>2026-02-19T14:45:09.487Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-03.html</loc>
-    <lastmod>2026-02-10T15:52:56.534Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-10.html</loc>
+    <lastmod>2026-02-23T17:11:55.966Z</lastmod>
+  </url>
+  <url>
+    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-08.html</loc>
+    <lastmod>2026-02-23T16:56:04.513Z</lastmod>
+  </url>
+  <url>
+    <loc>https://EricFriedlander.github.io/math4025sp26/hw/01-hw-eda.html</loc>
+    <lastmod>2026-02-10T21:22:17.498Z</lastmod>
   </url>
   <url>
     <loc>https://EricFriedlander.github.io/math4025sp26/hw/02-hw-mlr.html</loc>
@@ -26,11 +34,15 @@
   </url>
   <url>
     <loc>https://EricFriedlander.github.io/math4025sp26/slides/08-classification-logistic.html</loc>
-    <lastmod>2026-02-17T21:41:20.558Z</lastmod>
+    <lastmod>2026-02-23T14:50:59.099Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/05-data-splitting.html</loc>
-    <lastmod>2026-02-12T20:52:49.992Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/00-welcome.html</loc>
+    <lastmod>2026-02-03T17:49:39.874Z</lastmod>
+  </url>
+  <url>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/03-SLR-Gradient_Desc.html</loc>
+    <lastmod>2026-02-10T14:14:33.091Z</lastmod>
   </url>
   <url>
     <loc>https://EricFriedlander.github.io/math4025sp26/slides/04-MultipleRegression.html</loc>
@@ -42,27 +54,39 @@
   </url>
   <url>
     <loc>https://EricFriedlander.github.io/math4025sp26/slides/07-preprocessing-pipelines.html</loc>
-    <lastmod>2026-02-19T15:31:03.544Z</lastmod>
+    <lastmod>2026-02-23T14:50:56.728Z</lastmod>
   </url>
   <url>
     <loc>https://EricFriedlander.github.io/math4025sp26/slides/02-StatisticalLearning.html</loc>
     <lastmod>2026-02-05T19:45:30.881Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/03-SLR-Gradient_Desc.html</loc>
-    <lastmod>2026-02-10T14:14:33.091Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/09-classification-metrics.html</loc>
+    <lastmod>2026-02-23T16:48:32.645Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/00-welcome.html</loc>
-    <lastmod>2026-02-03T17:49:39.874Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/05-data-splitting.html</loc>
+    <lastmod>2026-02-12T20:52:49.992Z</lastmod>
+  </url>
+  <url>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/10-roc-auc.html</loc>
+    <lastmod>2026-02-23T19:44:33.011Z</lastmod>
   </url>
   <url>
     <loc>https://EricFriedlander.github.io/math4025sp26/slides/06-knn.html</loc>
     <lastmod>2026-02-18T22:59:35.896Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/hw/01-hw-eda.html</loc>
-    <lastmod>2026-02-10T21:22:17.498Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/hw/03-hw-knn.html</loc>
+    <lastmod>2026-02-23T15:11:04.947Z</lastmod>
+  </url>
+  <url>
+    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-09.html</loc>
+    <lastmod>2026-02-23T17:06:52.002Z</lastmod>
+  </url>
+  <url>
+    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-03.html</loc>
+    <lastmod>2026-02-10T15:52:56.534Z</lastmod>
   </url>
   <url>
     <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-04.html</loc>
@@ -74,7 +98,7 @@
   </url>
   <url>
     <loc>https://EricFriedlander.github.io/math4025sp26/GEMINI.html</loc>
-    <lastmod>2026-02-10T00:04:43.729Z</lastmod>
+    <lastmod>2026-02-23T14:50:59.090Z</lastmod>
   </url>
   <url>
     <loc>https://EricFriedlander.github.io/math4025sp26/course-info/overview.html</loc>

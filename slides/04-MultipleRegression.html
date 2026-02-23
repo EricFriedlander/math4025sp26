@@ -47,6 +47,7 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
+      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -140,7 +141,7 @@ Dr.&nbsp;Eric Friedlander
 </div>
 
 </section>
-<section id="question" class="slide level2">
+<section id="question" class="slide level2 scrollable">
 <h2><span style="color:blue">Question!!!</span></h2>
 <p>As a model’s flexibility increases:</p>
 <div class="panel-tabset">
@@ -210,7 +211,7 @@ show(outlets.head())  # first six observations of the dataset
 </div>
 <p><strong>Goal:</strong> Select <span class="math inline">\(\hat{\beta}_0\)</span> (intercept) and <span class="math inline">\(\hat{\beta}_1\)</span> (slope) that minimize</p>
 </section>
-<section id="modeling-with-scikit-learn" class="slide level2">
+<section id="modeling-with-scikit-learn" class="slide level2 scrollable">
 <h2>Modeling with <code>scikit-learn</code></h2>
 <ol type="1">
 <li><p>Import the model class (e.g.&nbsp;<code>LinearRegression</code>, <code>LogisticRegression</code>)</p></li>
@@ -363,7 +364,7 @@ show(coef_df)
 <h1>Recap</h1>
 
 </section>
-<section id="recap-1" class="slide level2 smaller">
+<section id="recap-1" class="slide level2 smaller scrollable">
 <h2>Recap</h2>
 <ul>
 <li><strong>Bias-Variance Trade-off</strong>: As flexibility increases, variance increases and bias decreases.</li>

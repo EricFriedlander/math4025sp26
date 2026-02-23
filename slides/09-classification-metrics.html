@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-html/tabby.min.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.6.39">
 
   <meta name="author" content="Dr.&nbsp;Eric Friedlander">
-  <title>Math 4025 - Spring 2026 – Math 4025: Data Splitting</title>
+  <title>Math 4025 - Spring 2026 – MATH 4025: Evaluating Classification Models</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -124,13 +124,16 @@
       margin-right: 0; 
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+  
+  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Math 4025: Data Splitting</h1>
+  <h1 class="title">MATH 4025: Evaluating Classification Models</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -141,78 +144,125 @@ Dr.&nbsp;Eric Friedlander
 </div>
 
 </section>
-<section id="comparing-models-data-splitting" class="slide level2 smaller">
-<h2>Comparing Models: Data Splitting</h2>
-<ul>
-<li>Split <code>ames</code> data set into two parts
-<ul>
-<li>Training set: randomly selected proportion <span class="math inline">\(p\)</span> (typically 50-90%) of data used for fitting model</li>
-<li>Test set: randomly selected proportion <span class="math inline">\(1-p\)</span> of data used for estimating prediction error</li>
-</ul></li>
-<li>If comparing A LOT of models, split into <em>three</em> parts to prevent <strong>information leakage</strong>
-<ul>
-<li>Training set: randomly selected proportion <span class="math inline">\(p\)</span> (typically 50-90%) of data used for fitting model</li>
-<li>Validation set: randomly selected proportion <span class="math inline">\(q\)</span> (typically 20-30%) of data used to choosing tuning parameters</li>
-<li>Test set: randomly selected proportion <span class="math inline">\(1-p-q\)</span> of data used for estimating prediction error</li>
-</ul></li>
-<li>Idea: use data your model hasn’t seen to get more accurate estimate of error and prevent overfitting</li>
-</ul>
-</section>
-<section id="comparing-models-data-splitting-with-scikit-learn" class="slide level2 smaller">
-<h2>Comparing Models: Data Splitting with <code>scikit-learn</code></h2>
-<ul>
-<li>Use <code>train_test_split</code> from <code>sklearn.model_selection</code>: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html">documentation</a></li>
-<li>In scikit-learn, use <code>stratify</code> parameter for classification tasks</li>
-<li>For regression, random splitting is typically sufficient</li>
-</ul>
-</section>
-<section id="linear-regression-comparing-models" class="slide level2 smaller">
-<h2>Linear Regression: Comparing Models</h2>
-<ul>
-<li>Let’s create five models with <code>Sale_Price</code> as the response:
-<ul>
-<li><strong>fit1</strong>: a linear regression model with <code>Bedroom_Abv_Gr</code> as the only predictor</li>
-<li><strong>fit2</strong>: a linear regression model with <code>Gr_Liv_Area</code> as the only predictor</li>
-<li><strong>fit3</strong> (similar to model in previous slides): a multiple regression model with <code>Gr_Liv_Area</code> and <code>Bedroom_Abv_Gr</code> as predictors</li>
-<li><strong>fit4</strong>: a multiple regression model with <code>Gr_Liv_Area</code> and <code>Bedroom_Abv_Gr</code>, and an interaction term</li>
-</ul></li>
-<li>Practice!</li>
-</ul>
-</section>
-<section id="computing-mse" class="slide level2 smaller">
-<h2>Computing MSE</h2>
-<ul>
-<li>We can use <code>mean_squared_error</code> from <code>sklearn.metrics</code></li>
-<li>Practice!</li>
-</ul>
-</section>
-<section id="question" class="slide level2 scrollable">
-<h2><span style="color:blue">Question</span></h2>
-<p>Without looking at the numbers</p>
+<section id="concept-check" class="slide level2 scrollable">
+<h2>Concept Check</h2>
+<p>Try to do the following on your own:</p>
 <ol type="1">
-<li>Do we know which of the following is the smallest: <code>fit1_train_mse</code>, <code>fit2_train_mse</code>, <code>fit3_train_mse</code>, `<code>fit4_train_mse</code>? <span class="fragment fade-in">Yes, <code>fit4_train_mse</code></span></li>
-<li>Do we know which of the following is the smallest: <code>fit1_test_mse</code>, <code>fit2_test_mse</code>, <code>fit3_test_mse</code>, <code>fit4_test_mse</code>? <span class="fragment fade-in">No</span></li>
+<li>Load the <code>Default</code> dataset from the last lecture.</li>
+<li>Split the dataset into a training and test set using a 60-40 split.</li>
+<li>Fit a KNN classifier using <span class="math inline">\(K=10\)</span> with <code>default</code> as your target variable and <code>balance</code> as your only predictor.</li>
+<li>Generate class probability predictions on your test data.</li>
+<li>Repeat steps 3 and 4 using logistic regression.</li>
 </ol>
 </section>
-<section id="choosing-a-model" class="slide level2 smaller">
-<h2>Choosing a Model</h2>
+<section id="concept-check-1" class="slide level2">
+<h2>Concept Check</h2>
 <ul>
-<li>Choose the model with the smallest <em>test</em> MSE</li>
+<li>When the target variable in a classification problem has only two possible outcomes, we call it a [insert] classification problem.</li>
+<li>In these problems we designate one category as [Insert] and the other as [Insert].</li>
 </ul>
 </section>
 <section>
-<section id="recap" class="title-slide slide level1 center">
-<h1>Recap</h1>
+<section id="assessing-performance-of-classifiers" class="title-slide slide level1 center">
+<h1>Assessing Performance of Classifiers</h1>
 
 </section>
-<section id="recap-1" class="slide level2 smaller">
-<h2>Recap</h2>
+<section id="binary-classifiers" class="slide level2">
+<h2>Binary Classifiers</h2>
 <ul>
-<li><strong>Data Splitting</strong>: Dividing data into training and test sets to estimate out-of-sample error.</li>
-<li><strong>Overfitting</strong>: Occurs when a model performs well on training data but poorly on test data.</li>
-<li><strong>Validation Set</strong>: Use a third split when comparing many models to avoid information leakage.</li>
-<li><strong><code>scikit-learn</code></strong>: Use <code>train_test_split</code> from <code>sklearn.model_selection</code> for easy data partitioning.</li>
-<li><strong>Model Selection</strong>: Focus on minimizing the <strong>test</strong> error (e.g., test MSE).</li>
+<li>Start with binary classification scenarios</li>
+<li>With binary classification, designate one category as “Success/Positive” and the other as “Failure/Negative”
+<ul>
+<li>If relevant to your problem: “Positive” should be the thing you’re trying to predict/care more about</li>
+<li>Note: “Positive” <span class="math inline">\(\neq\)</span> “Good”</li>
+<li>For <code>default</code>: “Yes” is Positive</li>
+</ul></li>
+<li>Some metrics weight “Positives” more and viceversa</li>
+</ul>
+</section>
+<section id="confusion-matrix" class="slide level2">
+<h2>Confusion Matrix</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 27%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">Actual Positive</th>
+<th style="text-align: center;">Actual Negative</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>Predicted Positive</strong></td>
+<td style="text-align: center;">True Positive (TP)</td>
+<td style="text-align: center;">False Positive (FP)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Predicted Negative</strong></td>
+<td style="text-align: center;">False Negative (FN)</td>
+<td style="text-align: center;">True Negative (TN)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="knn-confusion-matrix" class="slide level2">
+<h2>KNN: Confusion Matrix</h2>
+<ul>
+<li>We can compute the confusion matrix using the <code>confusion_matrix</code> function from <code>sklearn.metrics</code> and <code>ConfusionMatrixDisplay</code></li>
+<li>Let’s do that for our two models.</li>
+</ul>
+</section>
+<section id="classification-metrics" class="slide level2 smaller">
+<h2>Classification Metrics</h2>
+<p>Many classification matrix are based on the confusion matrix:</p>
+<ul>
+<li>Accuracy: proportion of your classes that are correct <span class="math display">\[(TP + TN)/Total\]</span></li>
+<li>Recall/Sensitivity: proportion of true positives correct (true positive rate) <span class="math display">\[TP/(TP+FN)\]</span></li>
+<li>Precision/Positive Predictive Value (PPV): proportion of predicted positive that are correct <span class="math display">\[TP/(TP+FP)\]</span></li>
+<li>Specificity: proportion of true negatives correct (true negative rate) <span class="math display">\[TN/(TN+FP)\]</span></li>
+<li>Negative Predictive Value (NPV): proportion of predicted negatives that are correct <span class="math display">\[TN/(TN+FN)\]</span></li>
+</ul>
+</section>
+<section id="practice" class="slide level2">
+<h2>Practice!</h2>
+<p>Let’s use our confusion matrices to compute the following for our KNN model:</p>
+<ul>
+<li>Accuracy</li>
+<li>Recall/Sensitivity</li>
+<li>Precision/Positive Predictive Value (PPV)</li>
+<li>Specificity</li>
+<li>Negative Predictive Value (NPV)</li>
+</ul>
+</section>
+<section id="two-more-metrics" class="slide level2 smaller">
+<h2>Two More Metrics</h2>
+<ul>
+<li>Matthews correlation coefficient (MCC): similar to <span class="math inline">\(R^2\)</span> but for classification <span class="math display">\[\frac{TP\times TN - FP \times FN}{\sqrt{(TP + FP)(TP+FN)(TN+FP)(TN+FN)}}\]</span>
+<ul>
+<li>Good for imbalanced data</li>
+<li>Considers both positives and negatives</li>
+</ul></li>
+<li>F-Measure: harmonic mean of recall and precision <span class="math display">\[\frac{2}{recall^{-1} + precision^{-1}} = \frac{2TP}{2TP+FP+FN}\]</span>
+<ul>
+<li>Focuses more on positives</li>
+<li>bad of imbalanced data</li>
+</ul></li>
+</ul>
+</section>
+<section id="recap-classification-metrics" class="slide level2">
+<h2>Recap: Classification Metrics</h2>
+<ul>
+<li><strong>Accuracy</strong>: Overall correctness.</li>
+<li><strong>Recall (Sensitivity)</strong>: Ability to find all positives.</li>
+<li><strong>Specificity</strong>: Ability to find all negatives.</li>
+<li><strong>Precision (PPV)</strong>: Reliability of positive predictions.</li>
+<li><strong>NPV</strong>: Reliability of negative predictions.</li>
+<li><strong>MCC</strong>: Balanced measure even for imbalanced classes.</li>
+<li><strong>F-Measure</strong>: Balance between Precision and Recall.</li>
 </ul>
 
 

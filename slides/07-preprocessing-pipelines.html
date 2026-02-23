@@ -112,6 +112,7 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
+      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -213,7 +214,7 @@ Dr.&nbsp;Eric Friedlander
 <h1>Recap</h1>
 
 </section>
-<section id="concept-check" class="slide level2">
+<section id="concept-check" class="slide level2 scrollable">
 <h2>Concept Check</h2>
 <ol type="1">
 <li>Is KNN a parametric or a non-parametric method?</li>
@@ -261,7 +262,7 @@ Dr.&nbsp;Eric Friedlander
 <li><code>Pipeline</code>: combine feature engineering, preprocessing, and model fitting into a single object</li>
 </ul>
 </section>
-<section id="pipeline-in-scikit-learn" class="slide level2">
+<section id="pipeline-in-scikit-learn" class="slide level2 scrollable">
 <h2><code>Pipeline</code> in <code>scikit-learn</code></h2>
 <ol type="1">
 <li>List of steps: <code>(name, transform/estimator)</code></li>
@@ -269,7 +270,7 @@ Dr.&nbsp;Eric Friedlander
 <li><code>predict</code>: sequentially applies transforms and predicts with the final estimator</li>
 </ol>
 </section>
-<section id="practice" class="slide level2">
+<section id="practice" class="slide level2 scrollable">
 <h2>Practice!</h2>
 <p>Let’s do the following:</p>
 <ol type="1">
@@ -281,7 +282,7 @@ Dr.&nbsp;Eric Friedlander
 </section>
 <section id="creating-a-knn-pipeline" class="slide level2">
 <h2>Creating a KNN Pipeline</h2>
-<div id="87ec95f1" class="cell" data-execution_count="2">
+<div id="46ca1467" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="co"># Define the pipeline</span></span>
 <span id="cb1-2"><a></a>knn_pipeline <span class="op">=</span> Pipeline([</span>
 <span id="cb1-3"><a></a>    (<span class="st">'scaler'</span>, StandardScaler()),</span>
@@ -291,7 +292,7 @@ Dr.&nbsp;Eric Friedlander
 </section>
 <section id="fitting-the-pipeline" class="slide level2">
 <h2>Fitting the Pipeline</h2>
-<div id="439a0388" class="cell" data-execution_count="3">
+<div id="86a8d6c6" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="co"># Fit on training data</span></span>
 <span id="cb2-2"><a></a><span class="co"># Pipeline automatically scales X_train using mean/std from X_train</span></span>
 <span id="cb2-3"><a></a>knn_pipeline.fit(ames_train[[<span class="st">"Gr_Liv_Area"</span>, <span class="st">"Bedroom_AbvGr"</span>]], ames_train[<span class="st">'Sale_Price'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1208,7 +1209,7 @@ forceTheme('sk-container-id-1');</script>
 <section id="making-predictions-single-observation" class="slide level2">
 <h2>Making Predictions: Single Observation</h2>
 <p>Test Point: <code>Gr_Liv_Area</code> = 2000 square feet, and <code>Bedroom_AbvGr</code> = 3</p>
-<div id="d3cc9a16" class="cell" data-execution_count="4">
+<div id="4daac78f" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>new_house <span class="op">=</span> pd.DataFrame({<span class="st">"Gr_Liv_Area"</span>: [<span class="dv">2000</span>], <span class="st">"Bedroom_AbvGr"</span>: [<span class="dv">3</span>]})</span>
 <span id="cb3-2"><a></a></span>
 <span id="cb3-3"><a></a><span class="co"># Pipeline automatically scales new_data using Mean/Std from TRAINING data</span></span>
@@ -1221,14 +1222,14 @@ forceTheme('sk-container-id-1');</script>
 </section>
 <section id="making-predictions-test-set" class="slide level2">
 <h2>Making Predictions: Test Set</h2>
-<div id="271b8d7f" class="cell" data-execution_count="5">
+<div id="fdfcc08f" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="co"># Predict on test set</span></span>
 <span id="cb5-2"><a></a><span class="co"># Pipeline handles scaling automatically!</span></span>
 <span id="cb5-3"><a></a>test_preds <span class="op">=</span> knn_pipeline.predict(ames_test[[<span class="st">"Gr_Liv_Area"</span>, <span class="st">"Bedroom_AbvGr"</span>]])</span>
 <span id="cb5-4"><a></a>show(pd.DataFrame({<span class="st">"Truth"</span>: ames_test[<span class="st">"Sale_Price"</span>], <span class="st">"Prediction"</span>: test_preds}).head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_725f9bc6_606f_4327_b8cc_802f2bc89af8"><tbody><tr>
+<table id="itables_82b1168b_a15b_446f_8f5a_f0f677a673e8"><tbody><tr>
     <td style="vertical-align:middle; text-align:left">
     <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
     <g style="fill:#d9d7fc">
@@ -1294,11 +1295,11 @@ forceTheme('sk-container-id-1');</script>
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_725f9bc6_606f_4327_b8cc_802f2bc89af8:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_82b1168b_a15b_446f_8f5a_f0f677a673e8:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "classes": ["display", "nowrap"], "text_in_header_can_be_selected": true, "order": [], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>Truth</th>\n      <th>Prediction</th>\n    </tr>\n  </thead></table>", "data_json": "[[1357, 161000, 179435.0], [2367, 116000, 144970.0], [2822, 196500, 214222.1], [2126, 123600, 146264.1], [1544, 126000, 130835.0]]"};
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "text_in_header_can_be_selected": true, "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "classes": ["display", "nowrap"], "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>Truth</th>\n      <th>Prediction</th>\n    </tr>\n  </thead></table>", "data_json": "[[1357, 161000, 179435.0], [2367, 116000, 144970.0], [2822, 196500, 214222.1], [2126, 123600, 146264.1], [1544, 126000, 130835.0]]"};
         new ITable(table, dt_args);
     });
 </script>
@@ -1315,77 +1316,11 @@ forceTheme('sk-container-id-1');</script>
 </ul>
 </section></section>
 <section>
-<section id="applying-different-transformations" class="title-slide slide level1 center">
-<h1>Applying different transformations</h1>
-
-</section>
-<section id="columntransformer" class="slide level2">
-<h2><code>ColumnTransformer</code></h2>
-<ul>
-<li>Often we want to apply different transformations to different features
-<ul>
-<li>Scale numerical features</li>
-<li>One-hot encode categorical features</li>
-<li>Pass through some features without transformation</li>
-</ul></li>
-<li><code>ColumnTransformer</code> allows us to do this in a single step</li>
-</ul>
-</section>
-<section id="columntransformer-in-scikit-learn" class="slide level2">
-<h2><code>ColumnTransformer</code> in <code>scikit-learn</code></h2>
-<ol type="1">
-<li>List of transformers: <code>(name, transformer, columns)</code></li>
-<li><code>remainder='passthrough'</code> to keep columns that aren’t specified</li>
-<li><code>remainder='drop'</code> (default) to drop columns that aren’t specified</li>
-</ol>
-</section>
-<section id="one-hot-encoding-dropfirst" class="slide level2">
-<h2>One-Hot Encoding: <code>drop='first'</code></h2>
-<ul>
-<li><strong>The Dummy Variable Trap</strong>: Multicollinearity occurs when features are highly correlated. If you know a house doesn’t have <code>Central_Air_N</code>, you <em>know</em> it must have <code>Central_Air_Y</code>.</li>
-<li><strong>When to drop?</strong>
-<ul>
-<li><strong>Linear Regression</strong>: Drop one column (<code>drop='first'</code>) to avoid the dummy variable trap (singular matrices).</li>
-<li><strong>KNN / Trees</strong>: Usually <strong>not</strong> necessary to drop. Dropping can sometimes make distances or splits harder to interpret.</li>
-</ul></li>
-<li>In <code>scikit-learn</code>: <code>OneHotEncoder(drop='first')</code> or <code>drop='if_binary'</code>.</li>
-</ul>
-</section>
-<section id="encoding-example" class="slide level2">
-<h2>Encoding Example</h2>
-<div id="3e980926" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>X_example <span class="op">=</span> pd.DataFrame({<span class="st">"Central_Air"</span>: [<span class="st">"Y"</span>, <span class="st">"N"</span>, <span class="st">"Y"</span>]})</span>
-<span id="cb6-2"><a></a></span>
-<span id="cb6-3"><a></a><span class="co"># Default: Two columns</span></span>
-<span id="cb6-4"><a></a>enc_default <span class="op">=</span> OneHotEncoder(sparse_output<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb6-5"><a></a><span class="bu">print</span>(<span class="st">"Default:</span><span class="ch">\n</span><span class="st">"</span>, enc_default.fit_transform(X_example))</span>
-<span id="cb6-6"><a></a></span>
-<span id="cb6-7"><a></a><span class="co"># Drop first: One column</span></span>
-<span id="cb6-8"><a></a>enc_drop <span class="op">=</span> OneHotEncoder(drop<span class="op">=</span><span class="st">'first'</span>, sparse_output<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb6-9"><a></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Drop First:</span><span class="ch">\n</span><span class="st">"</span>, enc_drop.fit_transform(X_example))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Default:
- [[0. 1.]
- [1. 0.]
- [0. 1.]]
-
-Drop First:
- [[1.]
- [0.]
- [1.]]</code></pre>
-</div>
-</div>
-</section>
-<section id="practice-1" class="slide level2">
-<h2>Practice!</h2>
-<p>Let’s add <code>Central_Air</code> to out model.</p>
-</section></section>
-<section>
 <section id="choosing-a-model" class="title-slide slide level1 center">
 <h1>Choosing a model</h1>
 
 </section>
-<section id="practice-2" class="slide level2">
+<section id="practice-1" class="slide level2">
 <h2>Practice!</h2>
 <p>Let’s build piplines for the following three models and choose the best:</p>
 <ul>
