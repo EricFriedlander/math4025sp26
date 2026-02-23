@@ -1,0 +1,8 @@
+---
+title: "Preparation for Classification Metrics"
+---
+
+## Assigned readings & videos
+
+- Read Chapter 4.4
+- Read [3.4 of the scikit-learn user's guide](https://scikit-learn.org/stable/modules/model_evaluation.html)

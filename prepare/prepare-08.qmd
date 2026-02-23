@@ -1,0 +1,7 @@
+---
+title: "Preparation for Classification and Logistic Regression"
+---
+
+## Assigned readings & videos
+
+- Read Chapter 4.1-4.3 from ISLP

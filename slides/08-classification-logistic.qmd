@@ -45,10 +45,10 @@ Default_train, Default_test = train_test_split(
 
 ## Today: Binary Classification
 
-- **Binary Classification:** response variable has only two categorical (e.g. win/lose, yes/no, etc.)
-- Typically: choose one categorical to call **success/positive** or (1) and one category to call **failure/negative** (0).
-- Positive doesn't have to be a good thing (positive is frequently *death*) and negtative doesn't have to be bad.
-- Choice of positive vs. positive doesn't matter for your resulting model, but you will need to know which category is which to interpret your results
+- **Binary Classification:** response variable has only two categories (e.g. win/lose, yes/no, etc.)
+- Typically: choose one category to call **success/positive** (1) and one category to call **failure/negative** (0).
+- Positive doesn't have to be a good thing (positive is frequently *death*) and negative doesn't have to be bad.
+- Choice of positive vs. negative doesn't matter for your resulting model, but you will need to know which category is which to interpret your results
 
 ## Default Dataset {.smaller}
 
