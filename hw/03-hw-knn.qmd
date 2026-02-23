@@ -27,7 +27,7 @@ The following directions will guide you through the process of setting up your h
 ## Exercise 0
 
 ::: {.callout-tip title="Question"}
-[Click this link](https://classroom.github.com/a/LEbjScjp) to accept the assignment and clone it to your computer.
+[Click this link](https://classroom.github.com/a/RJ9siXnp) to accept the assignment and clone it to your computer.
 :::
 
 # $K$-Nearest Neighbors
@@ -43,28 +43,28 @@ For regression, we can predict the response variable for our point to be the ave
 
 For this portion of the homework, we'll use the `Carseats` data from the `ISLP` package (accessible using `load_data('Carseats')`). Frequently, when working with categorical data, you will be required to transform that data into **dummy variables**. Namely, you'll create a unique variable for each column which gets a 1 if the corresponding observation is from that category and a 0 otherwise. In data science, this format is sometimes referred to as **one-hot encoding**.
 
-## Exercise 10
+## Exercise 1
 
 ::: {.callout-tip title="Question"}
 Look at the `Carseats` data from the `ISLP` package. Then, split the data into a training and test set using a 70-30 split and a seed of 4025 (as usual).
 :::
 
-## Exercise 11
+## Exercise 2
 
 ::: {.callout-tip title="Question"}
-Look at your data. What transformation are necessary? Why?
+Look at your data. What transformation are necessary before we apply KNN? Why?
 :::
 
-## Exercise 12
+## Exercise 3
 
 ::: {.callout-tip title="Question"}
-DO NOT WRITE ANY CODE UNTIL THE NEXT EXERCISE. Your goal is to create a KNN model that best predicts `Sales`. In your group, decide on a strategy for finding the best set of features and number of neighbors to include in your model. You may find it useful to plot the $R^2$ and RMSE against the number of neighbors you include in your model. 
+DO NOT WRITE ANY CODE UNTIL THE NEXT EXERCISE. Your goal is to create a KNN model that best predicts `Sales`. In your group, decide on a strategy for finding the best set of features and number of neighbors to include in your model. How will you take care of preprocessing?What metrics will you use to determine which model is "best"? What data will you use to make your decision? What models will you fit and evaluate? How will you visualize your results? Once you've sketched out your strategy, get approval from Dr. F.
 :::
 
-## Exercise 13
+## Exercise 4
 
 ::: {.callout-tip title="Question"}
-After getting approval from Dr. F implement the strategy you agreed on above making use for `Pipeline`s. You may find that the RMSE and $R^2$ disagree on what the best model is. You will have to make a judgement call on which model is "best". One thing that can be helpful is looking at plots of your target variables (`Sales` in this case) against the model residuals. Fit your model on the training data and use the test set to choose the variables and the number of neighbors to include.  
+After getting approval from Dr. F implement the strategy you agreed on. You should be prepared to present your strategy and results to the class.
 :::
 
 ## KNN for Classification
@@ -73,42 +73,42 @@ We'll start by using KNN for classification.
 
 ## Data
 
-We will be working with the famous `iris` data set which consists of four measurements (in centimeters) for 150 plants belonging to three species of iris. This data set was first published in a classic 1936 paper by English statistician, and notable racist/eugenicist, Ronald Fisher. In that paper, multivariate linear models were applied to classify these plants. Of course, back then, model fitting was an extremely laborious process that was done without the aid of calculators or statistical software.
-
-## Exercise 1
-
-::: {.callout-tip title="Question"}
-Import the `sklearn.datasets` package (or `seaborn` or `ISLP`), take a look at the columns of `iris`, and split your data into training and test sets using a 70-30 split. IMPORTANT: Make sure that each species is represented proportionally in the training set by using the `stratify` argument in the `train_test_split` function! Once again, set your `random_state` to 4025.
-:::
-
-## Exercise 2
-
-::: {.callout-tip title="Question"}
-Create a scatter plot of your training set with `sepal width` and `petal width` on the x- and y- axes, respectively, and color the points by species (the names may vary depending on how you loaded the data).
-:::
-
-## Exercise 3
-
-::: {.callout-tip title="Question"}
-As the name suggests, the $K$-nearest neighbors (KNN) method classifies a point based on the classification of the observations in the training set that are nearest to that point. If $k > 1$, then the neighbors essentially "vote" on the classification of the point. Using only your graph, if $k = 1$, how would KNN classify a flower that had sepal width 3cm and petal width 1cm?
-:::
-
-## Exercise 4
-
-::: {.callout-tip title="Question"}
-Just to verify that we are correct, find the sepal width, petal width, and species of the observation in your training set that is closest to our flower with sepal width 3cm and petal width 1cm. This should be done by computing the Euclidean distance of (3, 1) to each observation and then sorting the resulting DataFrame to get the row with the smallest distance. Don't worry about normalizing the data.
-:::
+We will be working with the famous `iris` data set which consists of four measurements (in centimeters) for 150 plants belonging to three species of iris. This data set was first published in a classic 1936 paper by English statistician, and notable racist/eugenicist, Ronald Fisher. In that paper, multivariate linear models were applied to classify these plants. Of course, back then, model fitting was an extremely laborious process that was done without the aid of calculators or statistical software. **For now, don't worry about centering and scaling your data until Exercise 9.**
 
 ## Exercise 5
 
 ::: {.callout-tip title="Question"}
-Looking at your data, what transformations will you need to perform before fitting your data. Why?
+Import the `sklearn.datasets` package (or `seaborn` or `ISLP`), take a look at the columns of `iris`, and split your data into training and test sets using a 70-30 split. IMPORTANT: Make sure that each species is represented proportionally in the training set by using the `stratify` argument in the `train_test_split` function! Once again, set your `random_state` to 4025. Explain what `stratify` does and why it is important in this case.
 :::
 
 ## Exercise 6
 
 ::: {.callout-tip title="Question"}
-Create a `Pipeline` to fit a KNN modelwith 1 neighbor that includes the transormation(s) above and fit the model to your training set.
+Create a scatter plot of your training set with `sepal width` and `petal width` on the x- and y- axes, respectively, and color the points by species (the names may vary depending on how you loaded the data).
+:::
+
+## Exercise 7
+
+::: {.callout-tip title="Question"}
+As the name suggests, the $K$-nearest neighbors (KNN) method classifies a point based on the classification of the observations in the training set that are nearest to that point. If $k > 1$, then the neighbors essentially "vote" on the classification of the point. Using only your graph, if $k = 1$, how would KNN classify a flower that had sepal width 3cm and petal width 1cm?
+:::
+
+## Exercise 8
+
+::: {.callout-tip title="Question"}
+Just to verify that we are correct, find the sepal width, petal width, and species of the observation in your training set that is closest to our flower with sepal width 3cm and petal width 1cm. This should be done by computing the Euclidean distance of (3, 1) to each observation and then sorting the resulting DataFrame to get the row with the smallest distance.
+:::
+
+## Exercise 9
+
+::: {.callout-tip title="Question"}
+We really shouldn't use the raw data as is when buildling our model. Looking at your data, what transformations will you need to perform before fitting your data. Why?
+:::
+
+## Exercise 10
+
+::: {.callout-tip title="Question"}
+Create a `Pipeline` to fit a KNN model with 1 neighbor that includes the transormation(s) above and fit the model to your training set.
 :::
 
 We would like to understand how the method of $K$-nearest neighbors will classify points in the plane. That is, we would like to view the *decision boundaries* of this model. To do this, we will use our model to classify a large grid of points in the plane, and color them by their classification. The code below creates a DataFrame called `grid` consisting of 62,500 points in the plane.
@@ -122,19 +122,19 @@ grid = pd.DataFrame({'sepal_width': xx.ravel(),
                      'petal_width': yy.ravel()})
 ```
 
-## Exercise 7
+## Exercise 11
 
 ::: {.callout-tip title="Question"}
 Use the code above, and change the variable names so that it will work with your model. Classify the points in `grid` using your training data and $k = 1$. Then, plot the points in `grid` colored by their classification. Make sure your code is written so that the grid points are being centered and scaled before predictions are being made for them.
 :::
 
-## Exercise 8
+## Exercise 12
 
 ::: {.callout-tip title="Question"}
 Notice that the decision boundary between `versicolor` and `virginica` looks a little strange. What do you observe? Why do you think this is happening? Does using $k = 2$ make things better or worse? Why do you think that is?
 :::
 
-## Exercise 9
+## Exercise 13
 
 ::: {.callout-tip title="Question"}
 Determine which value of $k$, the number of neighbors selected, gives the highest accuracy on the test set. Test all $k$s between 1 and 40. Note that there may be ties because our data set is a little bit too small. To break ties just choose the smallest $k$ among the ones which are tied. Hint: A for-loop may be helpful. What is the accuracy of the model you ended up choosing?
