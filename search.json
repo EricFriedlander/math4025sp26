@@ -362,7 +362,7 @@
     "href": "slides/08-classification-logistic.html#today-binary-classification",
     "title": "MATH 4025: Classification + Logistic Regression",
     "section": "Today: Binary Classification",
-    "text": "Today: Binary Classification\n\nBinary Classification: response variable has only two categorical (e.g. win/lose, yes/no, etc.)\nTypically: choose one categorical to call success/positive or (1) and one category to call failure/negative (0).\nPositive doesn’t have to be a good thing (positive is frequently death) and negtative doesn’t have to be bad.\nChoice of positive vs. positive doesn’t matter for your resulting model, but you will need to know which category is which to interpret your results"
+    "text": "Today: Binary Classification\n\nBinary Classification: response variable has only two categories (e.g. win/lose, yes/no, etc.)\nTypically: choose one category to call success/positive (1) and one category to call failure/negative (0).\nPositive doesn’t have to be a good thing (positive is frequently death) and negative doesn’t have to be bad.\nChoice of positive vs. negative doesn’t matter for your resulting model, but you will need to know which category is which to interpret your results"
   },
   {
     "objectID": "slides/08-classification-logistic.html#default-dataset",

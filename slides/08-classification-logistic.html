@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-html/tabby.min.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -189,7 +189,7 @@
       margin-right: 0; 
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
   
   <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 </head>
@@ -236,10 +236,10 @@ Dr.&nbsp;Eric Friedlander
 <section id="today-binary-classification" class="slide level2">
 <h2>Today: Binary Classification</h2>
 <ul>
-<li><strong>Binary Classification:</strong> response variable has only two categorical (e.g.&nbsp;win/lose, yes/no, etc.)</li>
-<li>Typically: choose one categorical to call <strong>success/positive</strong> or (1) and one category to call <strong>failure/negative</strong> (0).</li>
-<li>Positive doesn’t have to be a good thing (positive is frequently <em>death</em>) and negtative doesn’t have to be bad.</li>
-<li>Choice of positive vs.&nbsp;positive doesn’t matter for your resulting model, but you will need to know which category is which to interpret your results</li>
+<li><strong>Binary Classification:</strong> response variable has only two categories (e.g.&nbsp;win/lose, yes/no, etc.)</li>
+<li>Typically: choose one category to call <strong>success/positive</strong> (1) and one category to call <strong>failure/negative</strong> (0).</li>
+<li>Positive doesn’t have to be a good thing (positive is frequently <em>death</em>) and negative doesn’t have to be bad.</li>
+<li>Choice of positive vs.&nbsp;negative doesn’t matter for your resulting model, but you will need to know which category is which to interpret your results</li>
 </ul>
 </section>
 <section id="default-dataset" class="slide level2 smaller scrollable">
@@ -297,7 +297,7 @@ Dr.&nbsp;Eric Friedlander
 </section>
 <section id="why-not-linear-regression" class="slide level2 smaller">
 <h2>Why Not Linear Regression?</h2>
-<div id="5acdc63c" class="cell" data-execution_count="2">
+<div id="84caeb6c" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="co"># Create 0/1 variable for Linear Regression</span></span>
 <span id="cb1-2"><a></a>Default_lr <span class="op">=</span> Default_train.copy()</span>
 <span id="cb1-3"><a></a>Default_lr[<span class="st">'default_0_1'</span>] <span class="op">=</span> np.where(Default_lr[<span class="st">'default'</span>] <span class="op">==</span> <span class="st">'Yes'</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
@@ -310,7 +310,7 @@ Dr.&nbsp;Eric Friedlander
 <span id="cb1-10"><a></a>show(pd.DataFrame({<span class="st">'balance'</span>: Default_lr[<span class="st">'balance'</span>], <span class="st">'pred'</span>: preds}).head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_d931d2e2_dcf7_4bd5_8527_8896e7e378d0"><tbody><tr>
+<table id="itables_ffb4c450_69dc_4694_b033_05c5b6a0e444"><tbody><tr>
     <td style="vertical-align:middle; text-align:left">
     <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
     <g style="fill:#d9d7fc">
@@ -376,11 +376,11 @@ Dr.&nbsp;Eric Friedlander
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_d931d2e2_dcf7_4bd5_8527_8896e7e378d0:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_ffb4c450_69dc_4694_b033_05c5b6a0e444:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "order": [], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "text_in_header_can_be_selected": true, "classes": ["display", "nowrap"], "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>balance</th>\n      <th>pred</th>\n    </tr>\n  </thead></table>", "data_json": "[[6301, 1637.235201, 0.136831], [7345, 308.006276, -0.034021], [39, 653.1184, 0.010338], [8592, 423.407947, -0.019188], [3355, 390.278198, -0.023447]]"};
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "text_in_header_can_be_selected": true, "classes": ["display", "nowrap"], "order": [], "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>balance</th>\n      <th>pred</th>\n    </tr>\n  </thead></table>", "data_json": "[[6301, 1637.235201, 0.136831], [7345, 308.006276, -0.034021], [39, 653.1184, 0.010338], [8592, 423.407947, -0.019188], [3355, 390.278198, -0.023447]]"};
         new ITable(table, dt_args);
     });
 </script>
@@ -389,11 +389,11 @@ Dr.&nbsp;Eric Friedlander
 </section>
 <section id="why-not-linear-regression-1" class="slide level2 smaller">
 <h2>Why Not Linear Regression?</h2>
-<div id="8182b52d" class="cell" data-fig.align="center" data-execution_count="3">
+<div id="20008c64" class="cell" data-fig.align="center" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 <figure>
-<p><img data-src="08-classification-logistic_files/figure-html/cell-4-output-1.png" width="672" height="480"></p>
+<p><img data-src="08-classification-logistic_files/figure-revealjs/cell-4-output-1.png" width="960" height="480"></p>
 </figure>
 </div>
 </div>
@@ -442,11 +442,11 @@ Dr.&nbsp;Eric Friedlander
 </section>
 <section id="logistic-regression-2" class="slide level2">
 <h2>Logistic Regression</h2>
-<div id="ee8fb76c" class="cell" data-execution_count="4">
+<div id="f2e429a2" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 <figure>
-<p><img data-src="08-classification-logistic_files/figure-html/cell-5-output-1.png" width="672" height="480"></p>
+<p><img data-src="08-classification-logistic_files/figure-revealjs/cell-5-output-1.png" width="960" height="480"></p>
 </figure>
 </div>
 </div>
@@ -468,11 +468,11 @@ Dr.&nbsp;Eric Friedlander
 </section>
 <section id="interpreting-coefficients-1" class="slide level2">
 <h2>Interpreting Coefficients</h2>
-<div id="f46a77bf" class="cell" data-execution_count="5">
+<div id="7d8e1a01" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 <figure>
-<p><img data-src="08-classification-logistic_files/figure-html/cell-6-output-1.png" width="672" height="480"></p>
+<p><img data-src="08-classification-logistic_files/figure-revealjs/cell-6-output-1.png" width="960" height="480"></p>
 </figure>
 </div>
 </div>
