@@ -20,53 +20,53 @@ d <- read_csv(here::here("course-info", "schedule.csv"))
 #| echo: false
 
 d |>
-  filter(Publish == "x") |>
-  select(-Publish) |>
-  mutate(due = mdy(due)) |>
-  gt() |>
-  fmt_date(due, date_style = 31) |>
-  sub_missing(columns = c(week, due, topic, reading, slides, video, assignment), missing_text = "") |>
-  cols_align(
-    align = "center", 
-    columns = c(week)
-  ) |>
-  cols_align(
-    align = "center", 
-    columns = c(due)
-  ) |>
-  cols_align(
-    align = "left", 
-    columns = c(topic, reading, slides, video, assignment)
-  ) |>
-  tab_style(
-    style = cell_borders(
-      sides = "right",
-      color = "#D3D3D3",
-      style = "solid"
-    ),
-    locations = cells_body(
-      columns = c(due, type, topic, reading, slides, video, assignment)
-    )
-  ) |>
-  fmt_markdown(
-    columns = c(type, topic, reading, slides, video, assignment)
-  ) |>
-  cols_width(
-    week ~ px(45),
-    due ~ px(300), 
-    reading ~ px(150),
-    topic ~ px(300),
-    slides ~ px(300),
-    video ~ px(300)
-  ) |>
-  cols_label_with(fn = function(x) {
-      janitor::make_clean_names(x, case = "title") |>
-        toupper() |>
-        stringr::str_replace_all("^|$", "**") |>
-        md()
+    filter(Publish == "x") |>
+    select(-Publish) |>
+    mutate(due = mdy(due)) |>
+    gt() |>
+    fmt_date(due, date_style = 31) |>
+    sub_missing(columns = c(week, due, topic, reading, slides, video, assignment), missing_text = "") |>
+    cols_align(
+        align = "center",
+        columns = c(week)
+    ) |>
+    cols_align(
+        align = "center",
+        columns = c(due)
+    ) |>
+    cols_align(
+        align = "left",
+        columns = c(topic, reading, slides, video, assignment)
+    ) |>
+    tab_style(
+        style = cell_borders(
+            sides = "right",
+            color = "#D3D3D3",
+            style = "solid"
+        ),
+        locations = cells_body(
+            columns = c(due, type, topic, reading, slides, video, assignment)
+        )
+    ) |>
+    fmt_markdown(
+        columns = c(type, topic, reading, slides, video, assignment)
+    ) |>
+    cols_width(
+        week ~ px(45),
+        due ~ px(300),
+        reading ~ px(150),
+        topic ~ px(300),
+        slides ~ px(300),
+        video ~ px(300)
+    ) |>
+    cols_label_with(fn = function(x) {
+        janitor::make_clean_names(x, case = "title") |>
+            toupper() |>
+            stringr::str_replace_all("^|$", "**") |>
+            md()
     }) |>
-  tab_options(table.font.size = 13) |>
-  opt_row_striping()
+    tab_options(table.font.size = 13) |>
+    opt_row_striping()
 ```
 
 

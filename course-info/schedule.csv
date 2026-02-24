@@ -9,4 +9,6 @@ x,3,2/17/2026,Lecture,Data Splitting,,[05-data-splitting](slides/05-data-splitti
 x,4,2/24/2026,Homework,HW 2: Linear Regression,,,,[02-hw-mlr](hw/02-hw-mlr.html)
 x,4,2/24/2026,Lecture,K-Nearest Neighbors,[Click here for readings](prepare/prepare-06.html),[06-knn](slides/06-knn.html),[06-video](https://www.youtube.com/watch?v=0KOhU1V8CxQ),
 x,4,2/24/2026,Lecture,Pipelines & Preprocessing,[Click here for readings](prepare/prepare-07.html),[07-preprocessing-pipelines](slides/07-preprocessing-pipelines.html),[07-video](https://www.youtube.com/watch?v=EWEMuHDaMU4),
-x,4,2/26/2026,Lecture,Logistic Regression & Classification,[Click here for readings](prepare/prepare-08.html),[08-classification](slides/08-classification-logistic.html),,
+x,4,2/26/2026,Lecture,Logistic Regression & Classification,[Click here for readings](prepare/prepare-08.html),[08-classification](slides/08-classification-logistic.html),[08-video](https://youtu.be/rQSPh36UcSg),
+x,5,3/3/2026,In-Class,Jim Beck,,,,
+x,5,3/5/2026,Homework,HW 3: Classification,,,,[03-hw-knn](hw/03-hw-knn.html),
