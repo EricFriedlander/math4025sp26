@@ -1300,7 +1300,7 @@
     "href": "slides/09-classification-metrics.html#concept-check",
     "title": "MATH 4025: Evaluating Classification Models",
     "section": "Concept Check",
-    "text": "Concept Check\nTry to do the following on your own:\n\nLoad the Default dataset from the last lecture.\nSplit the dataset into a training and test set using a 60-40 split.\nFit a KNN classifier using \\(K=10\\) with default as your target variable and balance as your only predictor.\nGenerate class probability predictions on your test data.\nRepeat steps 3 and 4 using logistic regression."
+    "text": "Concept Check\nTry to do the following on your own:\n\nLoad the Default dataset from the last lecture.\nSplit the dataset into a training and test set using a 60-40 split.\nFit a KNN classifier using \\(K=10\\) with default as your target variable and balance as your only predictor.\nGenerate class predictions on your test data. (Both class probabilities and class predictions)\nRepeat steps 3 and 4 using logistic regression."
   },
   {
     "objectID": "slides/09-classification-metrics.html#concept-check-1",
