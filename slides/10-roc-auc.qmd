@@ -12,7 +12,7 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, recall_score, precision_score, confusion_matrix, roc_curve, auc, RocCurveDisplay
+from sklearn.metrics import accuracy_score, recall_score, precision_score, confusion_matrix, roc_curve, roc_auc_score, RocCurveDisplay
 from plotnine import *
 from itables import show
 from ISLP import load_data
@@ -34,18 +34,16 @@ knnfit.fit(Default_train[['balance']], Default_train['default'])
 
 logregfit = LogisticRegression(penalty=None)
 logregfit.fit(Default_train[['balance']], Default_train['default'])
-
-def get_metrics_at_threshold(y_true, y_prob, threshold, pos_label='Yes'):
-    y_pred = np.where(y_prob > threshold, 'Yes', 'No')
-    acc = accuracy_score(y_true, y_pred)
-    rec = recall_score(y_true, y_pred, pos_label=pos_label, zero_division=0)
-    tn, fp, fn, tp = confusion_matrix(y_true, y_pred, labels=['No', 'Yes']).ravel()
-    spec = tn / (tn + fp) if (tn + fp) > 0 else 0
-    return pd.DataFrame({
-        'metric': ['accuracy', 'sensitivity', 'specificity'],
-        'estimate': [acc, rec, spec]
-    })
 ```
+
+## Concept Check
+
+Try to do the following on your own:
+
+1. Load the `Default` dataset from the last two lectures.
+2. Split the dataset into a training and test set using a 60-40 split.
+3. Fit a Logistic Regression classifier with `default` as your target variable and `balance` as your only predictor.
+4. Generate probability of default for all observations in your test set.
 
 ## Binary Classifiers
 
@@ -92,53 +90,12 @@ def get_metrics_at_threshold(y_true, y_prob, threshold, pos_label='Yes'):
 ## Using a threshold {.smaller}
 
 - Step 1: Predict **probabilities** for all observations
-
-```{python}
-default_test_wprobs = Default_test.copy()
-knn_probs = knnfit.predict_proba(Default_test[['balance']])
-log_probs = logregfit.predict_proba(Default_test[['balance']])
-
-default_test_wprobs['knn_prob_Yes'] = knn_probs[:, 1]
-default_test_wprobs['logistic_prob_Yes'] = log_probs[:, 1]
-
-show(default_test_wprobs.head())
-```
-
-## Using a threshold {.smaller}
-
-- Step 1: Predict **probabilities** for all observations
 - Step 2: Set a threshold to obtain **class labels** (0.5 below)
+- Step 3: Compute metrics based on confusion matrix
 
-```{python}
-threshold = 0.5
-default_test_wprobs['knn_preds'] = np.where(default_test_wprobs['knn_prob_Yes'] > threshold, 'Yes', 'No')
-default_test_wprobs['logistic_preds'] = np.where(default_test_wprobs['logistic_prob_Yes'] > threshold, 'Yes', 'No')
+## Practice
 
-show(default_test_wprobs.head())
-```
-
-## Performance
-
-```{python}
-metrics_50 = get_metrics_at_threshold(default_test_wprobs['default'], default_test_wprobs['knn_prob_Yes'], 0.5)
-show(metrics_50)
-```
-
-## Low Threshold
-
-```{python}
-metrics_10 = get_metrics_at_threshold(default_test_wprobs['default'], default_test_wprobs['knn_prob_Yes'], 0.1)
-show(metrics_10)
-```
-
-## High Threshold
-
-```{python}
-metrics_90 = get_metrics_at_threshold(default_test_wprobs['default'], default_test_wprobs['knn_prob_Yes'], 0.9)
-show(metrics_90)
-```
-
-## Question
+Let's do this with our Logistic Regression model.
 
 -   If I want to improve Recall/Sensitivity should I increase or decrease my threshold?
 -   If I want to improve my Precision/PPV should I increase or decrease my threshold?
@@ -155,349 +112,262 @@ show(metrics_90)
 
 ## ROC Curve in Python
 
-```{python}
-fpr, tpr, thresholds = roc_curve(
-    default_test_wprobs['default'], 
-    default_test_wprobs['knn_prob_Yes'], 
-    pos_label='Yes'
-)
-roc_df = pd.DataFrame({'False Positive Rate (1-Specificity)': fpr, 'True Positive Rate (Sensitivity)': tpr, 'Threshold': thresholds})
-show(roc_df.head(10))
-```
-
-## ROC Curve: Plot
-
-```{python}
-RocCurveDisplay.from_predictions(
-    default_test_wprobs['default'], 
-    default_test_wprobs['knn_prob_Yes'], 
-    pos_label='Yes',
-    name='KNN'
-)
-plt.show()
-```
+- Use `roc_curve` from `sklearn.metrics` to get the false positive rates and true positive rates
+- Use `RocCurveDisplay` from `sklearn.metrics` to plot the ROC curve
 
 ## AUC
 
 -   AUC: Area under the curve (ROC Curve that is)
 -   Measures how good your model is at separating categories
 -   Only for binary classification
-
-## AUC in Python
-
-```{python}
-from sklearn.metrics import roc_auc_score
-
-auc_score = roc_auc_score(
-    np.where(default_test_wprobs['default'] == 'Yes', 1, 0), 
-    default_test_wprobs['knn_prob_Yes']
-)
-print(f"AUC: {auc_score:.4f}")
-```
+-   Use `roc_auc_score` from `sklearn.metrics` to compute AUC
 
 ## Pathological Example 1
 
-:::: columns
-:::: {.column width="40%"}
 ```{python}
 #| echo: false
+#| fig-width: 10
+#| fig-height: 4
 np.random.seed(4025)
 probs = np.concatenate([np.random.uniform(0, 0.1, 100), np.random.uniform(0.9, 1, 100)])
 classes = np.array(['Negative'] * 100 + ['Positive'] * 100)
 example1 = pd.DataFrame({'prob': probs, 'class': classes})
-
-sns.stripplot(data=example1, x='class', y='prob', jitter=True, alpha=0.6)
-plt.ylabel("Predicted Probability of Positive")
-plt.show()
-```
-:::
-
-:::: {.column width="60%"}
-```{python}
-#| echo: false
 y_true_binary = np.where(example1['class'] == 'Positive', 1, 0)
-auc_val = roc_auc_score(y_true_binary, example1['prob'])
 
-RocCurveDisplay.from_predictions(y_true_binary, example1['prob'])
-plt.text(0.5, 0.2, f"AUC: {auc_val*100:.0f}%", fontsize=12)
-plt.show()
+auc_val = roc_auc_score(y_true_binary, example1['prob'])
+fpr, tpr, _ = roc_curve(y_true_binary, example1['prob'])
+roc_df = pd.DataFrame({'fpr': fpr, 'tpr': tpr})
+
+p1 = (ggplot(example1, aes(x='class', y='prob'))
+    + geom_jitter(alpha=0.6, width=0.2, height=0)
+    + labs(y="Predicted Probability of Positive", x="")
+)
+
+p2 = (ggplot(roc_df, aes(x='fpr', y='tpr'))
+    + geom_line(color="blue")
+    + annotate('text', x=0.5, y=0.2, label=f"AUC: {auc_val*100:.0f}%", size=12)
+    + labs(x="False Positive Rate", y="True Positive Rate")
+)
+
+(p1 | p2)
 ```
-:::
-::::
 
 ## Pathological Example 1 {.smaller}
 
-:::: columns
-:::: {.column width="40%"}
 ```{python}
 #| echo: false
+#| fig-width: 10
+#| fig-height: 4
 threshold = 0
 
-sns.stripplot(data=example1, x='class', y='prob', jitter=True, alpha=0.6)
-plt.axhline(y=threshold, color='red')
-plt.ylabel("Predicted Probability of Positive")
-plt.show()
-```
-:::
+p1_thresh = p1 + geom_hline(yintercept=threshold, color='red')
+p2_thresh = p2 + annotate('point', x=1, y=1, color='red', size=3)
 
-:::: {.column width="60%"}
-```{python}
-#| echo: false
-RocCurveDisplay.from_predictions(y_true_binary, example1['prob'])
-plt.text(0.5, 0.2, f"AUC: {auc_val*100:.0f}%", fontsize=12)
-plt.plot(1, 1, 'ro')
-plt.show()
+(p1_thresh | p2_thresh)
 ```
-:::
-::::
 
 $$\text{Sensitivity} = \frac{TP}{TP + FN} = \frac{\text{Positives Above Line}}{\text{All Positives}} = \frac{100}{100} = 1$$
 $$1-\text{Specificity} = 1-\frac{TN}{TN + FP} = \frac{FP}{TN + FP} = \frac{\text{Negatives Above Line}}{\text{All Negatives}} = \frac{100}{100} = 1$$
 
 ## Pathological Example 1 {.smaller}
 
-:::: columns
-:::: {.column width="40%"}
 ```{python}
 #| echo: false
+#| fig-width: 10
+#| fig-height: 4
 threshold = 0.05
-
-sns.stripplot(data=example1, x='class', y='prob', jitter=True, alpha=0.6)
-plt.axhline(y=threshold, color='red')
-plt.ylabel("Predicted Probability of Positive")
-plt.show()
-```
-:::
-
-:::: {.column width="60%"}
-```{python}
-#| echo: false
-RocCurveDisplay.from_predictions(y_true_binary, example1['prob'])
-plt.text(0.5, 0.2, f"AUC: {auc_val*100:.0f}%", fontsize=12)
 
 fp_rate = np.sum((example1['class'] == 'Negative') & (example1['prob'] > threshold)) / 100
 tp_rate = np.sum((example1['class'] == 'Positive') & (example1['prob'] > threshold)) / 100
-plt.plot(fp_rate, tp_rate, 'ro')
-plt.show()
+
+p1_thresh = p1 + geom_hline(yintercept=threshold, color='red')
+p2_thresh = p2 + annotate('point', x=fp_rate, y=tp_rate, color='red', size=3)
+
+(p1_thresh | p2_thresh)
 ```
-:::
-::::
 
 $$\text{Sensitivity} = \frac{100}{100} = 1$$
 $$1-\text{Specificity} = \frac{\text{Negatives Above Line}}{100} \approx 0.5$$
 
 ## Pathological Example 1 {.smaller}
 
-:::: columns
-:::: {.column width="40%"}
 ```{python}
 #| echo: false
+#| fig-width: 10
+#| fig-height: 4
 threshold = 0.5
-
-sns.stripplot(data=example1, x='class', y='prob', jitter=True, alpha=0.6)
-plt.axhline(y=threshold, color='red')
-plt.ylabel("Predicted Probability of Positive")
-plt.show()
-```
-:::
-
-:::: {.column width="60%"}
-```{python}
-#| echo: false
-RocCurveDisplay.from_predictions(y_true_binary, example1['prob'])
-plt.text(0.5, 0.2, f"AUC: {auc_val*100:.0f}%", fontsize=12)
 
 fp_rate = np.sum((example1['class'] == 'Negative') & (example1['prob'] > threshold)) / 100
 tp_rate = np.sum((example1['class'] == 'Positive') & (example1['prob'] > threshold)) / 100
-plt.plot(fp_rate, tp_rate, 'ro')
-plt.show()
+
+p1_thresh = p1 + geom_hline(yintercept=threshold, color='red')
+p2_thresh = p2 + annotate('point', x=fp_rate, y=tp_rate, color='red', size=3)
+
+(p1_thresh | p2_thresh)
 ```
-:::
-::::
 
 $$\text{Sensitivity} = \frac{100}{100} = 1$$
 $$1-\text{Specificity} = \frac{0}{100} = 0$$
 
 ## Pathological Example 2
 
-:::: columns
-:::: {.column width="40%"}
 ```{python}
 #| echo: false
+#| fig-width: 10
+#| fig-height: 4
 np.random.seed(4025)
 probs2 = np.concatenate([np.random.uniform(0, 0.5, 100), np.random.uniform(0.5, 1, 100)])
 example2 = pd.DataFrame({'prob': probs2, 'class': classes})
 
-sns.stripplot(data=example2, x='class', y='prob', jitter=True, alpha=0.6)
-plt.ylabel("Predicted Probability of Positive")
-plt.show()
-```
-:::
-
-:::: {.column width="60%"}
-```{python}
-#| echo: false
 auc_val2 = roc_auc_score(y_true_binary, example2['prob'])
+fpr2, tpr2, _ = roc_curve(y_true_binary, example2['prob'])
+roc_df2 = pd.DataFrame({'fpr': fpr2, 'tpr': tpr2})
 
-RocCurveDisplay.from_predictions(y_true_binary, example2['prob'])
-plt.text(0.5, 0.2, f"AUC: {auc_val2*100:.0f}%", fontsize=12)
-plt.show()
+p1_ex2 = (ggplot(example2, aes(x='class', y='prob'))
+    + geom_jitter(alpha=0.6, width=0.2, height=0)
+    + labs(y="Predicted Probability of Positive", x="")
+)
+
+p2_ex2 = (ggplot(roc_df2, aes(x='fpr', y='tpr'))
+    + geom_line(color="blue")
+    + annotate('text', x=0.5, y=0.2, label=f"AUC: {auc_val2*100:.0f}%", size=12)
+    + labs(x="False Positive Rate", y="True Positive Rate")
+)
+
+(p1_ex2 | p2_ex2)
 ```
-:::
-::::
 
 ## Pathological Example 3
 
-:::: columns
-:::: {.column width="40%"}
 ```{python}
 #| echo: false
+#| fig-width: 10
+#| fig-height: 4
 np.random.seed(4025)
 probs3 = np.concatenate([np.random.uniform(0, 0.7, 100), np.random.uniform(0.3, 1, 100)])
 example3 = pd.DataFrame({'prob': probs3, 'class': classes})
 
-sns.stripplot(data=example3, x='class', y='prob', jitter=True, alpha=0.6)
-plt.ylabel("Predicted Probability of Positive")
-plt.show()
-```
-:::
-
-:::: {.column width="60%"}
-```{python}
-#| echo: false
 auc_val3 = roc_auc_score(y_true_binary, example3['prob'])
+fpr3, tpr3, _ = roc_curve(y_true_binary, example3['prob'])
+roc_df3 = pd.DataFrame({'fpr': fpr3, 'tpr': tpr3})
 
-RocCurveDisplay.from_predictions(y_true_binary, example3['prob'])
-plt.text(0.5, 0.2, f"AUC: {auc_val3*100:.0f}%", fontsize=12)
-plt.show()
+p1_ex3 = (ggplot(example3, aes(x='class', y='prob'))
+    + geom_jitter(alpha=0.6, width=0.2, height=0)
+    + labs(y="Predicted Probability of Positive", x="")
+)
+
+p2_ex3 = (ggplot(roc_df3, aes(x='fpr', y='tpr'))
+    + geom_line(color="blue")
+    + annotate('text', x=0.5, y=0.2, label=f"AUC: {auc_val3*100:.0f}%", size=12)
+    + labs(x="False Positive Rate", y="True Positive Rate")
+)
+
+(p1_ex3 | p2_ex3)
 ```
-:::
-::::
 
 ## Pathological Example 4
 
-:::: columns
-:::: {.column width="40%"}
 ```{python}
 #| echo: false
+#| fig-width: 10
+#| fig-height: 4
 np.random.seed(4025)
 probs4 = np.concatenate([np.random.uniform(0, 1, 100), np.random.uniform(0, 1, 100)])
 example4 = pd.DataFrame({'prob': probs4, 'class': classes})
 
-sns.stripplot(data=example4, x='class', y='prob', jitter=True, alpha=0.6)
-plt.ylabel("Predicted Probability of Positive")
-plt.show()
-```
-:::
-
-:::: {.column width="60%"}
-```{python}
-#| echo: false
 auc_val4 = roc_auc_score(y_true_binary, example4['prob'])
+fpr4, tpr4, _ = roc_curve(y_true_binary, example4['prob'])
+roc_df4 = pd.DataFrame({'fpr': fpr4, 'tpr': tpr4})
 
-RocCurveDisplay.from_predictions(y_true_binary, example4['prob'])
-plt.text(0.5, 0.2, f"AUC: {auc_val4*100:.0f}%", fontsize=12)
-plt.show()
+p1_ex4 = (ggplot(example4, aes(x='class', y='prob'))
+    + geom_jitter(alpha=0.6, width=0.2, height=0)
+    + labs(y="Predicted Probability of Positive", x="")
+)
+
+p2_ex4 = (ggplot(roc_df4, aes(x='fpr', y='tpr'))
+    + geom_line(color="blue")
+    + annotate('text', x=0.5, y=0.2, label=f"AUC: {auc_val4*100:.0f}%", size=12)
+    + labs(x="False Positive Rate", y="True Positive Rate")
+)
+
+(p1_ex4 | p2_ex4)
 ```
-:::
-::::
 
 ## Pathological Example 5
 
-:::: columns
-:::: {.column width="40%"}
 ```{python}
 #| echo: false
+#| fig-width: 10
+#| fig-height: 4
 np.random.seed(4025)
 a, b = 1, 3
 probs5 = np.concatenate([np.random.beta(a, b, 100), np.random.beta(b, a, 100)])
 example5 = pd.DataFrame({'prob': probs5, 'class': classes})
 
-sns.stripplot(data=example5, x='class', y='prob', jitter=True, alpha=0.6)
-plt.ylabel("Predicted Probability of Positive")
-plt.show()
-```
-:::
-
-:::: {.column width="60%"}
-```{python}
-#| echo: false
 auc_val5 = roc_auc_score(y_true_binary, example5['prob'])
+fpr5, tpr5, _ = roc_curve(y_true_binary, example5['prob'])
+roc_df5 = pd.DataFrame({'fpr': fpr5, 'tpr': tpr5})
 
-RocCurveDisplay.from_predictions(y_true_binary, example5['prob'])
-plt.text(0.5, 0.2, f"AUC: {auc_val5*100:.0f}%", fontsize=12)
-plt.show()
+p1_ex5 = (ggplot(example5, aes(x='class', y='prob'))
+    + geom_jitter(alpha=0.6, width=0.2, height=0)
+    + labs(y="Predicted Probability of Positive", x="")
+)
+
+p2_ex5 = (ggplot(roc_df5, aes(x='fpr', y='tpr'))
+    + geom_line(color="blue")
+    + annotate('text', x=0.5, y=0.2, label=f"AUC: {auc_val5*100:.0f}%", size=12)
+    + labs(x="False Positive Rate", y="True Positive Rate")
+)
+
+(p1_ex5 | p2_ex5)
 ```
-:::
-::::
 
 ## Pathological Example 6
 
-:::: columns
-:::: {.column width="40%"}
 ```{python}
 #| echo: false
+#| fig-width: 10
+#| fig-height: 4
 np.random.seed(4025)
 a, b = 2, 3
 probs6 = np.concatenate([np.random.beta(a, b, 100), np.random.beta(b, a, 100)])
 example6 = pd.DataFrame({'prob': probs6, 'class': classes})
 
-sns.stripplot(data=example6, x='class', y='prob', jitter=True, alpha=0.6)
-plt.ylabel("Predicted Probability of Positive")
-plt.show()
-```
-:::
-
-:::: {.column width="60%"}
-```{python}
-#| echo: false
 auc_val6 = roc_auc_score(y_true_binary, example6['prob'])
+fpr6, tpr6, _ = roc_curve(y_true_binary, example6['prob'])
+roc_df6 = pd.DataFrame({'fpr': fpr6, 'tpr': tpr6})
 
-RocCurveDisplay.from_predictions(y_true_binary, example6['prob'])
-plt.text(0.5, 0.2, f"AUC: {auc_val6*100:.0f}%", fontsize=12)
-plt.show()
+p1_ex6 = (ggplot(example6, aes(x='class', y='prob'))
+    + geom_jitter(alpha=0.6, width=0.2, height=0)
+    + labs(y="Predicted Probability of Positive", x="")
+)
+
+p2_ex6 = (ggplot(roc_df6, aes(x='fpr', y='tpr'))
+    + geom_line(color="blue")
+    + annotate('text', x=0.5, y=0.2, label=f"AUC: {auc_val6*100:.0f}%", size=12)
+    + labs(x="False Positive Rate", y="True Positive Rate")
+)
+
+(p1_ex6 | p2_ex6)
 ```
-:::
-::::
 
 ## AUC Questions
 
--   What should be the minimum AUC?
+-   What should be the minimum AUC? In theory vs. in practice?
 -   What should be that maximum possible AUC?
 
-# Review of Classification Metrics
 
-## Review: Logistic Regression vs KNN {.smaller}
+## Practice!
 
-- Logistic regression $\implies$ parametric , KNN $\implies$ non-parametric.
-- Logistic regression $\implies$ only for classification problems ($Y$ categorical), KNN $\implies$ both regression and classification.
-- Logistic regression is (more) interpretable, KNN is not.
-- Logistic regression allows qualitative predictors. Euclidean distance with KNN does not allow for qualitative predictors.
-- Prediction: KNN can be pretty good for small $p$, that is, $p \le 4$ and large $n$. Performance of KNN deteriorates as $p$ increases - curse of dimensionality.
+Let's plot the ROC curve and AUC for our Logistic Regression model.
 
-## Classification Metrics App {.smaller}
+## Recap
 
--   Dr. F will split you into four groups
--   On one of your computers connect to a tv and [open this app](https://efriedlander.shinyapps.io/ClassificationMetrics/)
--   Do the following based on your group number:
-    +   1: Choose plane on the first screen
-    +   2: Choose circle on the first screen
-    +   3: Choose parabola on the first screen
-    +   4: Choose sine curve on the first screen
--   We will generate data from this population... do you think KNN or logistic regression will yield a better classifier? Why?
-
-## Classification Metrics App {.smaller}
-
--   On the second tab generate a small test and training set
--   On the third tab fit a KNN model with 5 neighbors and then a logistic regression model
--   Which model do you think will perform better based on the plots you see?
--   Choose the better model, click fit, and click on the fourth tab
-
-## Questions
-
-Using the app, try and answer the following questions:
-
-- Which of the metrics are most and least impacted by:
-  - Sample size
-  - Imbalanced data (i.e. proportion positive near 0 or 1)
-  - High noise
+- **Thresholding**: Converting probabilities to class labels
+  + Default threshold is 0.5
+  + Adjust threshold to balance different types of errors based on cost or class imbalance
+- **ROC (Receiver Operating Characteristics) Curve**: Visualizes performance across all possible thresholds
+  + Plots Sensitivity (TPR) on the y-axis vs. $1 - \text{Specificity}$ (FPR) on the x-axis
+- **AUC (Area Under the Curve)**: 
+  + Single number summary of ROC Curve
+  + Measures how good your model is at separating categories

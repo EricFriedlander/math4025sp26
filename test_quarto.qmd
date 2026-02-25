@@ -1,0 +1,33 @@
+---
+title: "Test Quarto Plotnine Grid"
+format: html
+---
+
+```{python}
+import pandas as pd
+import numpy as np
+from plotnine import *
+from sklearn.metrics import roc_auc_score, roc_curve
+
+np.random.seed(4025)
+probs = np.concatenate([np.random.uniform(0, 0.1, 100), np.random.uniform(0.9, 1, 100)])
+classes = np.array(['Negative'] * 100 + ['Positive'] * 100)
+example1 = pd.DataFrame({'prob': probs, 'class': classes})
+y_true_binary = np.where(example1['class'] == 'Positive', 1, 0)
+auc_val = roc_auc_score(y_true_binary, example1['prob'])
+fpr, tpr, _ = roc_curve(y_true_binary, example1['prob'])
+roc_df = pd.DataFrame({'fpr': fpr, 'tpr': tpr})
+
+p1 = (ggplot(example1, aes(x='class', y='prob'))
+    + geom_jitter(alpha=0.6, width=0.2, height=0)
+    + labs(y="Predicted Probability of Positive", x="")
+)
+
+p2 = (ggplot(roc_df, aes(x='fpr', y='tpr'))
+    + geom_line(color="blue")
+    + annotate('text', x=0.5, y=0.2, label=f"AUC: {auc_val*100:.0f}%", size=12)
+    + labs(x="False Positive Rate", y="True Positive Rate")
+)
+
+(p1 | p2)
+```
