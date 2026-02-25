@@ -62,7 +62,7 @@ Try to do the following on your own:
 1. Load the `Default` dataset from the last lecture.
 2. Split the dataset into a training and test set using a 60-40 split.
 3. Fit a KNN classifier using $K=10$ with `default` as your target variable and `balance` as your only predictor.
-4. Generate class probability predictions on your test data.
+4. Generate class predictions on your test data. (Both class probabilities and class predictions)
 5. Repeat steps 3 and 4 using logistic regression.
 
 ## Concept Check

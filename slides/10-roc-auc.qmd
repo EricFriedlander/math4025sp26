@@ -80,6 +80,14 @@ def get_metrics_at_threshold(y_true, y_prob, threshold, pos_label='Yes'):
 
 ## Why use a threshold other than 0.5?
 
+-   Costs of different types of errors are not equal
+    +   Example: False Negative (missing a disease) is worse than False Positive (extra test)
+-   Class imbalance
+    +   If one class is much rarer, the model might always predict the majority class at 0.5
+-   Specific performance requirements
+    +   Need for high sensitivity (don't miss any positives)
+    +   Need for high specificity (don't have any false alarms)
+
 
 ## Using a threshold {.smaller}
 
