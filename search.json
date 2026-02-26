@@ -114,7 +114,7 @@
     "href": "index.html",
     "title": "Math 4025: Statistical Machine Learning",
     "section": "",
-    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n\n\n\n\nWEEK\nDUE\nTYPE\nTOPIC\nREADING\nSLIDES\nVIDEO\nASSIGNMENT\n\n\n\n\n1\n\n\nLecture\nWelcome\n\n\n00-welcome\n\n\n\n\n\n\n1\nThu, Feb 5\nLecture\nThe Big Picture\nChapter 1: ISLP  syllabus\n01-big-picture\n\n\n\n\n\n\n1\nTue, Feb 10\nLecture\nWhat Is Statistical Learning\nChapter 2: ISLP\n02-statistical-learning\n\n\n\n\n\n\n2\nTue, Feb 17\nHomework\nHW 1: EDA\n\n\n\n\n\n\n01-hw-eda\n\n\n3\nTue, Feb 17\nLecture\nSLR & Gradient Descent\nClick here for readings\n03-slr-gradient-descent\n03-video\n\n\n\n\n3\nTue, Feb 17\nLecture\nLinear Regression\nClick here for readings\n04-MultipleRegression\n04-video\n\n\n\n\n3\nTue, Feb 17\nLecture\nData Splitting\n\n\n05-data-splitting\n05-video\n\n\n\n\n4\nTue, Feb 24\nHomework\nHW 2: Linear Regression\n\n\n\n\n\n\n02-hw-mlr\n\n\n4\nTue, Feb 24\nLecture\nK-Nearest Neighbors\nClick here for readings\n06-knn\n06-video\n\n\n\n\n4\nTue, Feb 24\nLecture\nPipelines & Preprocessing\nClick here for readings\n07-preprocessing-pipelines\n07-video\n\n\n\n\n4\nThu, Feb 26\nLecture\nLogistic Regression & Classification\nClick here for readings\n08-classification\n08-video\n\n\n\n\n5\nTue, Mar 3\nIn-Class\nJim Beck\n\n\n\n\n\n\n\n\n\n\n5\nThu, Mar 5\nLecture\nClassification Metrics\nClick here for readings\n09-classification-metrics\nvideo-09\n\n\n\n\n5\nThu, Mar 5\nHomework\nHW 3: Classification\n\n\n\n\n\n\n03-hw-knn",
+    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n\n\n\n\nWEEK\nDUE\nTYPE\nTOPIC\nREADING\nSLIDES\nVIDEO\nASSIGNMENT\n\n\n\n\n1\n\n\nLecture\nWelcome\n\n\n00-welcome\n\n\n\n\n\n\n1\nThu, Feb 5\nLecture\nThe Big Picture\nChapter 1: ISLP  syllabus\n01-big-picture\n\n\n\n\n\n\n1\nTue, Feb 10\nLecture\nWhat Is Statistical Learning\nChapter 2: ISLP\n02-statistical-learning\n\n\n\n\n\n\n2\nTue, Feb 17\nHomework\nHW 1: EDA\n\n\n\n\n\n\n01-hw-eda\n\n\n3\nTue, Feb 17\nLecture\nSLR & Gradient Descent\nClick here for readings\n03-slr-gradient-descent\n03-video\n\n\n\n\n3\nTue, Feb 17\nLecture\nLinear Regression\nClick here for readings\n04-MultipleRegression\n04-video\n\n\n\n\n3\nTue, Feb 17\nLecture\nData Splitting\n\n\n05-data-splitting\n05-video\n\n\n\n\n4\nTue, Feb 24\nHomework\nHW 2: Linear Regression\n\n\n\n\n\n\n02-hw-mlr\n\n\n4\nTue, Feb 24\nLecture\nK-Nearest Neighbors\nClick here for readings\n06-knn\n06-video\n\n\n\n\n4\nTue, Feb 24\nLecture\nPipelines & Preprocessing\nClick here for readings\n07-preprocessing-pipelines\n07-video\n\n\n\n\n4\nThu, Feb 26\nLecture\nLogistic Regression & Classification\nClick here for readings\n08-classification\n08-video\n\n\n\n\n5\nTue, Mar 3\nIn-Class\nJim Beck\n\n\n\n\n\n\n\n\n\n\n5\nThu, Mar 5\nLecture\nClassification Metrics\nClick here for readings\n09-classification-metrics\nvideo-09\n\n\n\n\n5\nThu, Mar 5\nLecture\nROC and AUC\nClick here for readings\n10-roc-auc\nvideo-10\n\n\n\n\n5\nThu, Mar 5\nHomework\nHW 3: Classification\n\n\n\n\n\n\n03-hw-knn",
     "crumbs": [
       "Schedule"
     ]
@@ -1079,6 +1079,13 @@
     "text": "Recap\n\nWhat is a Machine Learning algorithm?\n\nT: has task\nP: performance is measured\nE: improves with experience\n\nTerminology:\n\nFeatures\n\n\\(p\\)\n\nTarget\nObservations\n\n\\(n\\)\n\n\nSupervised vs. unsupervised learning\n\nSupervised: data is labeled\nUnsupervised: data is unlabeled"
   },
   {
+    "objectID": "test_quarto.html",
+    "href": "test_quarto.html",
+    "title": "Test Quarto Plotnine Grid",
+    "section": "",
+    "text": "import pandas as pd\nimport numpy as np\nfrom plotnine import *\nfrom sklearn.metrics import roc_auc_score, roc_curve\n\nnp.random.seed(4025)\nprobs = np.concatenate([np.random.uniform(0, 0.1, 100), np.random.uniform(0.9, 1, 100)])\nclasses = np.array(['Negative'] * 100 + ['Positive'] * 100)\nexample1 = pd.DataFrame({'prob': probs, 'class': classes})\ny_true_binary = np.where(example1['class'] == 'Positive', 1, 0)\nauc_val = roc_auc_score(y_true_binary, example1['prob'])\nfpr, tpr, _ = roc_curve(y_true_binary, example1['prob'])\nroc_df = pd.DataFrame({'fpr': fpr, 'tpr': tpr})\n\np1 = (ggplot(example1, aes(x='class', y='prob'))\n    + geom_jitter(alpha=0.6, width=0.2, height=0)\n    + labs(y=\"Predicted Probability of Positive\", x=\"\")\n)\n\np2 = (ggplot(roc_df, aes(x='fpr', y='tpr'))\n    + geom_line(color=\"blue\")\n    + annotate('text', x=0.5, y=0.2, label=f\"AUC: {auc_val*100:.0f}%\", size=12)\n    + labs(x=\"False Positive Rate\", y=\"True Positive Rate\")\n)\n\n(p1 | p2)"
+  },
+  {
     "objectID": "slides/07-preprocessing-pipelines.html#concept-check",
     "href": "slides/07-preprocessing-pipelines.html#concept-check",
     "title": "Math 4025: Preprocessing + Pipelines",
@@ -1408,6 +1415,13 @@
     "text": "Recap\n\nData Splitting: Dividing data into training and test sets to estimate out-of-sample error.\nOverfitting: Occurs when a model performs well on training data but poorly on test data.\nValidation Set: Use a third split when comparing many models to avoid information leakage.\nscikit-learn: Use train_test_split from sklearn.model_selection for easy data partitioning.\nModel Selection: Focus on minimizing the test error (e.g., test MSE)."
   },
   {
+    "objectID": "slides/10-roc-auc.html#concept-check",
+    "href": "slides/10-roc-auc.html#concept-check",
+    "title": "MATH 4025: ROC and AUC",
+    "section": "Concept Check",
+    "text": "Concept Check\nTry to do the following on your own:\n\nLoad the Default dataset from the last two lectures.\nSplit the dataset into a training and test set using a 60-40 split.\nFit a Logistic Regression classifier with default as your target variable and balance as your only predictor.\nGenerate probability of default for all observations in your test set."
+  },
+  {
     "objectID": "slides/10-roc-auc.html#binary-classifiers",
     "href": "slides/10-roc-auc.html#binary-classifiers",
     "title": "MATH 4025: ROC and AUC",
@@ -1433,49 +1447,21 @@
     "href": "slides/10-roc-auc.html#why-use-a-threshold-other-than-0.5",
     "title": "MATH 4025: ROC and AUC",
     "section": "Why use a threshold other than 0.5?",
-    "text": "Why use a threshold other than 0.5?"
+    "text": "Why use a threshold other than 0.5?\n\nCosts of different types of errors are not equal\n\nExample: False Negative (missing a disease) is worse than False Positive (extra test)\n\nClass imbalance\n\nIf one class is much rarer, the model might always predict the majority class at 0.5\n\nSpecific performance requirements\n\nNeed for high sensitivity (don’t miss any positives)\nNeed for high specificity (don’t have any false alarms)"
   },
   {
     "objectID": "slides/10-roc-auc.html#using-a-threshold",
     "href": "slides/10-roc-auc.html#using-a-threshold",
     "title": "MATH 4025: ROC and AUC",
     "section": "Using a threshold",
-    "text": "Using a threshold\n\nStep 1: Predict probabilities for all observations\n\n\ndefault_test_wprobs = Default_test.copy()\nknn_probs = knnfit.predict_proba(Default_test[['balance']])\nlog_probs = logregfit.predict_proba(Default_test[['balance']])\n\ndefault_test_wprobs['knn_prob_Yes'] = knn_probs[:, 1]\ndefault_test_wprobs['logistic_prob_Yes'] = log_probs[:, 1]\n\nshow(default_test_wprobs.head())\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)"
+    "text": "Using a threshold\n\nStep 1: Predict probabilities for all observations\nStep 2: Set a threshold to obtain class labels (0.5 below) (use FixedThresholdClassifier in sklearn.model_selection)\nStep 3: Compute metrics based on confusion matrix"
   },
   {
-    "objectID": "slides/10-roc-auc.html#using-a-threshold-1",
-    "href": "slides/10-roc-auc.html#using-a-threshold-1",
+    "objectID": "slides/10-roc-auc.html#practice",
+    "href": "slides/10-roc-auc.html#practice",
     "title": "MATH 4025: ROC and AUC",
-    "section": "Using a threshold",
-    "text": "Using a threshold\n\nStep 1: Predict probabilities for all observations\nStep 2: Set a threshold to obtain class labels (0.5 below)\n\n\nthreshold = 0.5\ndefault_test_wprobs['knn_preds'] = np.where(default_test_wprobs['knn_prob_Yes'] &gt; threshold, 'Yes', 'No')\ndefault_test_wprobs['logistic_preds'] = np.where(default_test_wprobs['logistic_prob_Yes'] &gt; threshold, 'Yes', 'No')\n\nshow(default_test_wprobs.head())\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)"
-  },
-  {
-    "objectID": "slides/10-roc-auc.html#performance",
-    "href": "slides/10-roc-auc.html#performance",
-    "title": "MATH 4025: ROC and AUC",
-    "section": "Performance",
-    "text": "Performance\n\nmetrics_50 = get_metrics_at_threshold(default_test_wprobs['default'], default_test_wprobs['knn_prob_Yes'], 0.5)\nshow(metrics_50)\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)"
-  },
-  {
-    "objectID": "slides/10-roc-auc.html#low-threshold",
-    "href": "slides/10-roc-auc.html#low-threshold",
-    "title": "MATH 4025: ROC and AUC",
-    "section": "Low Threshold",
-    "text": "Low Threshold\n\nmetrics_10 = get_metrics_at_threshold(default_test_wprobs['default'], default_test_wprobs['knn_prob_Yes'], 0.1)\nshow(metrics_10)\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)"
-  },
-  {
-    "objectID": "slides/10-roc-auc.html#high-threshold",
-    "href": "slides/10-roc-auc.html#high-threshold",
-    "title": "MATH 4025: ROC and AUC",
-    "section": "High Threshold",
-    "text": "High Threshold\n\nmetrics_90 = get_metrics_at_threshold(default_test_wprobs['default'], default_test_wprobs['knn_prob_Yes'], 0.9)\nshow(metrics_90)\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)"
-  },
-  {
-    "objectID": "slides/10-roc-auc.html#question",
-    "href": "slides/10-roc-auc.html#question",
-    "title": "MATH 4025: ROC and AUC",
-    "section": "Question",
-    "text": "Question\n\nIf I want to improve Recall/Sensitivity should I increase or decrease my threshold?\nIf I want to improve my Precision/PPV should I increase or decrease my threshold?"
+    "section": "Practice",
+    "text": "Practice\nLet’s do this with our Logistic Regression model.\n\nIf I want to improve Recall/Sensitivity should I increase or decrease my threshold?\nIf I want to improve my Precision/PPV should I increase or decrease my threshold?"
   },
   {
     "objectID": "slides/10-roc-auc.html#roc-curve-and-auc",
@@ -1489,28 +1475,14 @@
     "href": "slides/10-roc-auc.html#roc-curve-in-python",
     "title": "MATH 4025: ROC and AUC",
     "section": "ROC Curve in Python",
-    "text": "ROC Curve in Python\n\nfpr, tpr, thresholds = roc_curve(\n    default_test_wprobs['default'], \n    default_test_wprobs['knn_prob_Yes'], \n    pos_label='Yes'\n)\nroc_df = pd.DataFrame({'False Positive Rate (1-Specificity)': fpr, 'True Positive Rate (Sensitivity)': tpr, 'Threshold': thresholds})\nshow(roc_df.head(10))\n\n\n\n    \n    \n    \n        \n        \n        \n        \n        \n        \n        \n        \n    \n    \n   \n    \n      \n  \n        \n    \n    \n  \n        \n    \n    \n  \n        \n    \n      \n  \n        \n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n\n            \n                \n                \n            \n        \n    \n\n\n    Loading ITables v2.6.2 from the internet...\n    (need help?)"
-  },
-  {
-    "objectID": "slides/10-roc-auc.html#roc-curve-plot",
-    "href": "slides/10-roc-auc.html#roc-curve-plot",
-    "title": "MATH 4025: ROC and AUC",
-    "section": "ROC Curve: Plot",
-    "text": "ROC Curve: Plot\n\nRocCurveDisplay.from_predictions(\n    default_test_wprobs['default'], \n    default_test_wprobs['knn_prob_Yes'], \n    pos_label='Yes',\n    name='KNN'\n)\nplt.show()"
+    "text": "ROC Curve in Python\n\nUse roc_curve from sklearn.metrics to get the false positive rates and true positive rates\nUse RocCurveDisplay from sklearn.metrics to plot the ROC curve"
   },
   {
     "objectID": "slides/10-roc-auc.html#auc",
     "href": "slides/10-roc-auc.html#auc",
     "title": "MATH 4025: ROC and AUC",
     "section": "AUC",
-    "text": "AUC\n\nAUC: Area under the curve (ROC Curve that is)\nMeasures how good your model is at separating categories\nOnly for binary classification"
-  },
-  {
-    "objectID": "slides/10-roc-auc.html#auc-in-python",
-    "href": "slides/10-roc-auc.html#auc-in-python",
-    "title": "MATH 4025: ROC and AUC",
-    "section": "AUC in Python",
-    "text": "AUC in Python\n\nfrom sklearn.metrics import roc_auc_score\n\nauc_score = roc_auc_score(\n    np.where(default_test_wprobs['default'] == 'Yes', 1, 0), \n    default_test_wprobs['knn_prob_Yes']\n)\nprint(f\"AUC: {auc_score:.4f}\")\n\nAUC: 0.8869"
+    "text": "AUC\n\nAUC: Area under the curve (ROC Curve that is)\nMeasures how good your model is at separating categories\nOnly for binary classification\nGood for imbalanced datasets\nUse roc_auc_score from sklearn.metrics to compute AUC"
   },
   {
     "objectID": "slides/10-roc-auc.html#pathological-example-1",
@@ -1524,21 +1496,21 @@
     "href": "slides/10-roc-auc.html#pathological-example-1-1",
     "title": "MATH 4025: ROC and AUC",
     "section": "Pathological Example 1",
-    "text": "Pathological Example 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\\text{Sensitivity} = \\frac{TP}{TP + FN} = \\frac{\\text{Positives Above Line}}{\\text{All Positives}} = \\frac{100}{100} = 1\\] \\[1-\\text{Specificity} = 1-\\frac{TN}{TN + FP} = \\frac{FP}{TN + FP} = \\frac{\\text{Negatives Above Line}}{\\text{All Negatives}} = \\frac{100}{100} = 1\\]"
+    "text": "Pathological Example 1\n\n\n\n\n\n\n\n\n\n\\[\\text{Sensitivity} = \\frac{TP}{TP + FN} = \\frac{\\text{Positives Above Line}}{\\text{All Positives}} = \\frac{100}{100} = 1\\] \\[1-\\text{Specificity} = 1-\\frac{TN}{TN + FP} = \\frac{FP}{TN + FP} = \\frac{\\text{Negatives Above Line}}{\\text{All Negatives}} = \\frac{100}{100} = 1\\]"
   },
   {
     "objectID": "slides/10-roc-auc.html#pathological-example-1-2",
     "href": "slides/10-roc-auc.html#pathological-example-1-2",
     "title": "MATH 4025: ROC and AUC",
     "section": "Pathological Example 1",
-    "text": "Pathological Example 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\\text{Sensitivity} = \\frac{100}{100} = 1\\] \\[1-\\text{Specificity} = \\frac{\\text{Negatives Above Line}}{100} \\approx 0.5\\]"
+    "text": "Pathological Example 1\n\n\n\n\n\n\n\n\n\n\\[\\text{Sensitivity} = \\frac{100}{100} = 1\\] \\[1-\\text{Specificity} = \\frac{\\text{Negatives Above Line}}{100} \\approx 0.5\\]"
   },
   {
     "objectID": "slides/10-roc-auc.html#pathological-example-1-3",
     "href": "slides/10-roc-auc.html#pathological-example-1-3",
     "title": "MATH 4025: ROC and AUC",
     "section": "Pathological Example 1",
-    "text": "Pathological Example 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\\text{Sensitivity} = \\frac{100}{100} = 1\\] \\[1-\\text{Specificity} = \\frac{0}{100} = 0\\]"
+    "text": "Pathological Example 1\n\n\n\n\n\n\n\n\n\n\\[\\text{Sensitivity} = \\frac{100}{100} = 1\\] \\[1-\\text{Specificity} = \\frac{0}{100} = 0\\]"
   },
   {
     "objectID": "slides/10-roc-auc.html#pathological-example-2",
@@ -1580,35 +1552,21 @@
     "href": "slides/10-roc-auc.html#auc-questions",
     "title": "MATH 4025: ROC and AUC",
     "section": "AUC Questions",
-    "text": "AUC Questions\n\nWhat should be the minimum AUC?\nWhat should be that maximum possible AUC?"
+    "text": "AUC Questions\n\nWhat should be the minimum AUC? In theory vs. in practice?\nWhat should be that maximum possible AUC?"
   },
   {
-    "objectID": "slides/10-roc-auc.html#review-logistic-regression-vs-knn",
-    "href": "slides/10-roc-auc.html#review-logistic-regression-vs-knn",
+    "objectID": "slides/10-roc-auc.html#practice-1",
+    "href": "slides/10-roc-auc.html#practice-1",
     "title": "MATH 4025: ROC and AUC",
-    "section": "Review: Logistic Regression vs KNN",
-    "text": "Review: Logistic Regression vs KNN\n\nLogistic regression \\(\\implies\\) parametric , KNN \\(\\implies\\) non-parametric.\nLogistic regression \\(\\implies\\) only for classification problems (\\(Y\\) categorical), KNN \\(\\implies\\) both regression and classification.\nLogistic regression is (more) interpretable, KNN is not.\nLogistic regression allows qualitative predictors. Euclidean distance with KNN does not allow for qualitative predictors.\nPrediction: KNN can be pretty good for small \\(p\\), that is, \\(p \\le 4\\) and large \\(n\\). Performance of KNN deteriorates as \\(p\\) increases - curse of dimensionality."
+    "section": "Practice!",
+    "text": "Practice!\nLet’s plot the ROC curve and AUC for our Logistic Regression model."
   },
   {
-    "objectID": "slides/10-roc-auc.html#classification-metrics-app",
-    "href": "slides/10-roc-auc.html#classification-metrics-app",
+    "objectID": "slides/10-roc-auc.html#recap",
+    "href": "slides/10-roc-auc.html#recap",
     "title": "MATH 4025: ROC and AUC",
-    "section": "Classification Metrics App",
-    "text": "Classification Metrics App\n\nDr. F will split you into four groups\nOn one of your computers connect to a tv and open this app\nDo the following based on your group number:\n\n1: Choose plane on the first screen\n2: Choose circle on the first screen\n3: Choose parabola on the first screen\n4: Choose sine curve on the first screen\n\nWe will generate data from this population… do you think KNN or logistic regression will yield a better classifier? Why?"
-  },
-  {
-    "objectID": "slides/10-roc-auc.html#classification-metrics-app-1",
-    "href": "slides/10-roc-auc.html#classification-metrics-app-1",
-    "title": "MATH 4025: ROC and AUC",
-    "section": "Classification Metrics App",
-    "text": "Classification Metrics App\n\nOn the second tab generate a small test and training set\nOn the third tab fit a KNN model with 5 neighbors and then a logistic regression model\nWhich model do you think will perform better based on the plots you see?\nChoose the better model, click fit, and click on the fourth tab"
-  },
-  {
-    "objectID": "slides/10-roc-auc.html#questions",
-    "href": "slides/10-roc-auc.html#questions",
-    "title": "MATH 4025: ROC and AUC",
-    "section": "Questions",
-    "text": "Questions\nUsing the app, try and answer the following questions:\n\nWhich of the metrics are most and least impacted by:\n\nSample size\nImbalanced data (i.e. proportion positive near 0 or 1)\nHigh noise"
+    "section": "Recap",
+    "text": "Recap\n\nThresholding: Converting probabilities to class labels\n\nDefault threshold is 0.5\nAdjust threshold to balance different types of errors based on cost or class imbalance\n\nROC (Receiver Operating Characteristics) Curve: Visualizes performance across all possible thresholds\n\nPlots Sensitivity (TPR) on the y-axis vs. \\(1 - \\text{Specificity}\\) (FPR) on the x-axis\n\nAUC (Area Under the Curve):\n\nSingle number summary of ROC Curve\nMeasures how good your model is at separating categories"
   },
   {
     "objectID": "slides/06-knn.html#regression-conditional-averaging",
@@ -1937,7 +1895,7 @@
     "href": "GEMINI.html",
     "title": "Gemini Context: Math 4025 (Spring 2026)",
     "section": "",
-    "text": "This directory contains the source materials for the Statistical Machine Learning (Math 4025) course website for Spring 2026.\n\nCourse: Math 4025 (Spring 2026).\nInstructor: Dr. Eric Friedlander.\nInstitution: College of Idaho.\nPrimary Language: Python (primary), with R used for the schedule (index.qmd).\nTextbook: ISLP (Introduction to Statistical Learning with Python).\nLive Site: https://EricFriedlander.github.io/math4025sp26/\n\n\n\n\nThe root directory constitutes the active Quarto project.\n\n_archive/: Legacy R-based materials from Spring 2025 (MAT 427). Use for reference only.\n\nslides/: Legacy lecture slides.\nhw/: Legacy homework assignments.\n\ncourse-info/: Course-level documentation.\n\nsyllabus.qmd: Course syllabus (updated with 2026 grading, URL, and office hours).\noverview.qmd: Course overview (Instructor, Class Meetings, and office hours).\ncomputing-access.qmd & computing-python-resources.qmd: Computing setup and resources.\nschedule.csv: Source of truth for the course schedule.\n\nslides/: Lecture slides (migrated from archive and converted to Python).\n\n00-welcome.qmd, 01-big-picture.qmd, 02-StatisticalLearning.qmd, 03-SLR-Gradient_Desc.qmd, 04-MultipleRegression.qmd, 05-data-splitting.qmd, 06-knn.qmd, 07-preprocessing-pipelines.qmd, 08-classification-logistic.qmd, 09-classification-metrics.qmd, 10-roc-auc.qmd.\n_metadata.yml: Shared configuration for all slides (includes scrollable: true).\nimages/: Slide-specific images.\n\nhw/: Homework assignments.\n\n01-hw-eda.qmd, 02-hw-mlr.qmd, 03-hw-knn.qmd.\n\ndata/: Course datasets (e.g., house_prices.csv, outlets.csv, tips.csv, AmesHousing.rds).\njobs/: Job application assignments (empty).\nprepare/: Preparation materials.\n\nprepare-03.qmd through prepare-10.qmd.\n\nimages/: Static image assets (e.g., logo).\n_quarto.yml: Main Quarto configuration.\nenvironment.yml: Conda environment definition (Python).\nrenv.lock, .Rprofile, renv/: R environment definition (renv).\nindex.qmd: Homepage (displays the Course Schedule via R/gt).\n\n\n\n\n\n\n\nQuarto: Website builder.\nPython: Primary programming language.\nR: Used for specific components (e.g., schedule generation).\nConda/Mamba: Use the math-4025-sp26 environment for all Python code in this workspace.\nrenv: Manages R dependencies.\nVS Code: Primary editor.\n\n\n\n\nThe website is automatically rendered and published to GitHub Pages via a GitHub Action whenever changes are pushed to the main branch. * Workflow file: .github/workflows/publish.yml\n\n\n\nRun these commands from the project root.\n\nPreview Site: bash     quarto preview\nRender Site: bash     quarto render\nPublish Site: bash     quarto publish gh-pages\nRender Specific File: bash     quarto render course-info/syllabus.qmd\n\n\n\n\n\nContent: Written in .qmd (Quarto Markdown).\nCode Blocks: Use {python} blocks primarily; {r} blocks for schedule.\nTables: Use the show function from the itables library (Python) or gt (R) for display.\nPlotting: Use plotnine for visualizations (ggplot2 style), but seaborn and matplotlib are also available.\nData Manipulation: pandas is primary; polars is available.\nData Loading: Use pyreadr for .rds files and pyhere for robust relative paths.\nConfiguration: Global settings in _quarto.yml. Sidebar navigation is configured here.\nPaths: Relative paths should ideally generally work, but be mindful of the folder structure (e.g., referencing images from course-info/).\nData: Store raw data in data/.\n\n\n\n\n\nThe project utilizes the Gemini CLI for assistance. * .gemini/prompts/: Stores reusable prompts for common tasks. * sync-context.md: Analyzes project changes, updates documentation, and handles git operations."
+    "text": "This directory contains the source materials for the Statistical Machine Learning (Math 4025) course website for Spring 2026.\n\nCourse: Math 4025 (Spring 2026).\nInstructor: Dr. Eric Friedlander.\nInstitution: College of Idaho.\nPrimary Language: Python (primary), with R used for the schedule (index.qmd).\nTextbook: ISLP (Introduction to Statistical Learning with Python).\nLive Site: https://EricFriedlander.github.io/math4025sp26/\n\n\n\n\nThe root directory constitutes the active Quarto project.\n\n_archive/: Legacy R-based materials from Spring 2025 (MAT 427). Use for reference only.\n\nslides/: Legacy lecture slides.\nhw/: Legacy homework assignments.\n\ncourse-info/: Course-level documentation.\n\nsyllabus.qmd: Course syllabus (updated with 2026 grading, URL, and office hours).\noverview.qmd: Course overview (Instructor, Class Meetings, and office hours).\ncomputing-access.qmd & computing-python-resources.qmd: Computing setup and resources.\nschedule.csv: Source of truth for the course schedule (includes links to slides, readings, and lecture videos).\n\nslides/: Lecture slides (migrated from archive and converted to Python).\n\n00-welcome.qmd, 01-big-picture.qmd, 02-StatisticalLearning.qmd, 03-SLR-Gradient_Desc.qmd, 04-MultipleRegression.qmd, 05-data-splitting.qmd, 06-knn.qmd, 07-preprocessing-pipelines.qmd, 08-classification-logistic.qmd, 09-classification-metrics.qmd, 10-roc-auc.qmd.\n_metadata.yml: Shared configuration for all slides (includes scrollable: true).\nimages/: Slide-specific images.\n\nhw/: Homework assignments.\n\n01-hw-eda.qmd, 02-hw-mlr.qmd, 03-hw-knn.qmd.\n\ndata/: Course datasets (e.g., house_prices.csv, outlets.csv, tips.csv, AmesHousing.rds).\njobs/: Job application assignments (empty).\nprepare/: Preparation materials.\n\nprepare-03.qmd through prepare-10.qmd.\n\nimages/: Static image assets (e.g., logo).\n_quarto.yml: Main Quarto configuration.\nenvironment.yml: Conda environment definition (Python).\nrenv.lock, .Rprofile, renv/: R environment definition (renv).\nindex.qmd: Homepage (displays the Course Schedule via R/gt).\n\n\n\n\n\n\n\nQuarto: Website builder.\nPython: Primary programming language.\nR: Used for specific components (e.g., schedule generation).\nConda/Mamba: Use the math-4025-sp26 environment for all Python code in this workspace.\nrenv: Manages R dependencies.\nVS Code: Primary editor.\n\n\n\n\nThe website is automatically rendered and published to GitHub Pages via a GitHub Action whenever changes are pushed to the main branch. * Workflow file: .github/workflows/publish.yml\n\n\n\nRun these commands from the project root.\n\nPreview Site: bash     quarto preview\nRender Site: bash     quarto render\nPublish Site: bash     quarto publish gh-pages\nRender Specific File: bash     quarto render course-info/syllabus.qmd\n\n\n\n\n\nContent: Written in .qmd (Quarto Markdown).\nCode Blocks: Use {python} blocks primarily; {r} blocks for schedule.\nTables: Use the show function from the itables library (Python) or gt (R) for display.\nPlotting: Use plotnine for visualizations (ggplot2 style), but seaborn and matplotlib are also available.\nData Manipulation: pandas is primary; polars is available.\nData Loading: Use pyreadr for .rds files and pyhere for robust relative paths.\nConfiguration: Global settings in _quarto.yml. Sidebar navigation is configured here.\nPaths: Relative paths should ideally generally work, but be mindful of the folder structure (e.g., referencing images from course-info/).\nData: Store raw data in data/.\n\n\n\n\n\nThe project utilizes the Gemini CLI for assistance. * .gemini/prompts/: Stores reusable prompts for common tasks. * sync-context.md: Analyzes project changes, updates documentation, and handles git operations."
   },
   {
     "objectID": "GEMINI.html#project-overview",
@@ -1951,7 +1909,7 @@
     "href": "GEMINI.html#directory-structure",
     "title": "Gemini Context: Math 4025 (Spring 2026)",
     "section": "",
-    "text": "The root directory constitutes the active Quarto project.\n\n_archive/: Legacy R-based materials from Spring 2025 (MAT 427). Use for reference only.\n\nslides/: Legacy lecture slides.\nhw/: Legacy homework assignments.\n\ncourse-info/: Course-level documentation.\n\nsyllabus.qmd: Course syllabus (updated with 2026 grading, URL, and office hours).\noverview.qmd: Course overview (Instructor, Class Meetings, and office hours).\ncomputing-access.qmd & computing-python-resources.qmd: Computing setup and resources.\nschedule.csv: Source of truth for the course schedule.\n\nslides/: Lecture slides (migrated from archive and converted to Python).\n\n00-welcome.qmd, 01-big-picture.qmd, 02-StatisticalLearning.qmd, 03-SLR-Gradient_Desc.qmd, 04-MultipleRegression.qmd, 05-data-splitting.qmd, 06-knn.qmd, 07-preprocessing-pipelines.qmd, 08-classification-logistic.qmd, 09-classification-metrics.qmd, 10-roc-auc.qmd.\n_metadata.yml: Shared configuration for all slides (includes scrollable: true).\nimages/: Slide-specific images.\n\nhw/: Homework assignments.\n\n01-hw-eda.qmd, 02-hw-mlr.qmd, 03-hw-knn.qmd.\n\ndata/: Course datasets (e.g., house_prices.csv, outlets.csv, tips.csv, AmesHousing.rds).\njobs/: Job application assignments (empty).\nprepare/: Preparation materials.\n\nprepare-03.qmd through prepare-10.qmd.\n\nimages/: Static image assets (e.g., logo).\n_quarto.yml: Main Quarto configuration.\nenvironment.yml: Conda environment definition (Python).\nrenv.lock, .Rprofile, renv/: R environment definition (renv).\nindex.qmd: Homepage (displays the Course Schedule via R/gt)."
+    "text": "The root directory constitutes the active Quarto project.\n\n_archive/: Legacy R-based materials from Spring 2025 (MAT 427). Use for reference only.\n\nslides/: Legacy lecture slides.\nhw/: Legacy homework assignments.\n\ncourse-info/: Course-level documentation.\n\nsyllabus.qmd: Course syllabus (updated with 2026 grading, URL, and office hours).\noverview.qmd: Course overview (Instructor, Class Meetings, and office hours).\ncomputing-access.qmd & computing-python-resources.qmd: Computing setup and resources.\nschedule.csv: Source of truth for the course schedule (includes links to slides, readings, and lecture videos).\n\nslides/: Lecture slides (migrated from archive and converted to Python).\n\n00-welcome.qmd, 01-big-picture.qmd, 02-StatisticalLearning.qmd, 03-SLR-Gradient_Desc.qmd, 04-MultipleRegression.qmd, 05-data-splitting.qmd, 06-knn.qmd, 07-preprocessing-pipelines.qmd, 08-classification-logistic.qmd, 09-classification-metrics.qmd, 10-roc-auc.qmd.\n_metadata.yml: Shared configuration for all slides (includes scrollable: true).\nimages/: Slide-specific images.\n\nhw/: Homework assignments.\n\n01-hw-eda.qmd, 02-hw-mlr.qmd, 03-hw-knn.qmd.\n\ndata/: Course datasets (e.g., house_prices.csv, outlets.csv, tips.csv, AmesHousing.rds).\njobs/: Job application assignments (empty).\nprepare/: Preparation materials.\n\nprepare-03.qmd through prepare-10.qmd.\n\nimages/: Static image assets (e.g., logo).\n_quarto.yml: Main Quarto configuration.\nenvironment.yml: Conda environment definition (Python).\nrenv.lock, .Rprofile, renv/: R environment definition (renv).\nindex.qmd: Homepage (displays the Course Schedule via R/gt)."
   },
   {
     "objectID": "GEMINI.html#development-usage",

@@ -28,71 +28,6 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-    /* CSS for syntax highlighting */
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        color: #aaaaaa;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-    div.sourceCode
-      { color: #003b4f; background-color: #f1f3f5; }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span { color: #003b4f; } /* Normal */
-    code span.al { color: #ad0000; } /* Alert */
-    code span.an { color: #5e5e5e; } /* Annotation */
-    code span.at { color: #657422; } /* Attribute */
-    code span.bn { color: #ad0000; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #20794d; } /* Char */
-    code span.cn { color: #8f5902; } /* Constant */
-    code span.co { color: #5e5e5e; } /* Comment */
-    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
-    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
-    code span.dt { color: #ad0000; } /* DataType */
-    code span.dv { color: #ad0000; } /* DecVal */
-    code span.er { color: #ad0000; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #ad0000; } /* Float */
-    code span.fu { color: #4758ab; } /* Function */
-    code span.im { color: #00769e; } /* Import */
-    code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
-    code span.op { color: #5e5e5e; } /* Operator */
-    code span.ot { color: #003b4f; } /* Other */
-    code span.pp { color: #ad0000; } /* Preprocessor */
-    code span.sc { color: #5e5e5e; } /* SpecialChar */
-    code span.ss { color: #20794d; } /* SpecialString */
-    code span.st { color: #20794d; } /* String */
-    code span.va { color: #111111; } /* Variable */
-    code span.vs { color: #20794d; } /* VerbatimString */
-    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-72811bd306436bae30bfb620bac545c3.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -209,6 +144,16 @@ Dr.&nbsp;Eric Friedlander
 </div>
 
 </section>
+<section id="concept-check" class="slide level2 scrollable">
+<h2>Concept Check</h2>
+<p>Try to do the following on your own:</p>
+<ol type="1">
+<li>Load the <code>Default</code> dataset from the last two lectures.</li>
+<li>Split the dataset into a training and test set using a 60-40 split.</li>
+<li>Fit a Logistic Regression classifier with <code>default</code> as your target variable and <code>balance</code> as your only predictor.</li>
+<li>Generate probability of default for all observations in your test set.</li>
+</ol>
+</section>
 <section id="binary-classifiers" class="slide level2">
 <h2>Binary Classifiers</h2>
 <ul>
@@ -255,445 +200,33 @@ Dr.&nbsp;Eric Friedlander
 </section>
 <section id="why-use-a-threshold-other-than-0.5" class="slide level2">
 <h2>Why use a threshold other than 0.5?</h2>
+<ul>
+<li>Costs of different types of errors are not equal
+<ul>
+<li>Example: False Negative (missing a disease) is worse than False Positive (extra test)</li>
+</ul></li>
+<li>Class imbalance
+<ul>
+<li>If one class is much rarer, the model might always predict the majority class at 0.5</li>
+</ul></li>
+<li>Specific performance requirements
+<ul>
+<li>Need for high sensitivity (don’t miss any positives)</li>
+<li>Need for high specificity (don’t have any false alarms)</li>
+</ul></li>
+</ul>
 </section>
 <section id="using-a-threshold" class="slide level2 smaller">
 <h2>Using a threshold</h2>
 <ul>
 <li>Step 1: Predict <strong>probabilities</strong> for all observations</li>
+<li>Step 2: Set a threshold to obtain <strong>class labels</strong> (0.5 below) (use <code>FixedThresholdClassifier</code> in <code>sklearn.model_selection</code>)</li>
+<li>Step 3: Compute metrics based on confusion matrix</li>
 </ul>
-<div id="be2e216a" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a>default_test_wprobs <span class="op">=</span> Default_test.copy()</span>
-<span id="cb1-2"><a></a>knn_probs <span class="op">=</span> knnfit.predict_proba(Default_test[[<span class="st">'balance'</span>]])</span>
-<span id="cb1-3"><a></a>log_probs <span class="op">=</span> logregfit.predict_proba(Default_test[[<span class="st">'balance'</span>]])</span>
-<span id="cb1-4"><a></a></span>
-<span id="cb1-5"><a></a>default_test_wprobs[<span class="st">'knn_prob_Yes'</span>] <span class="op">=</span> knn_probs[:, <span class="dv">1</span>]</span>
-<span id="cb1-6"><a></a>default_test_wprobs[<span class="st">'logistic_prob_Yes'</span>] <span class="op">=</span> log_probs[:, <span class="dv">1</span>]</span>
-<span id="cb1-7"><a></a></span>
-<span id="cb1-8"><a></a>show(default_test_wprobs.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<!--| quarto-html-table-processing: none -->
-<table id="itables_5e2654c1_fe26_4d5e_b994_6d1df67525cd"><tbody><tr>
-    <td style="vertical-align:middle; text-align:left">
-    <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
-    <g style="fill:#d9d7fc">
-        <path d="M100,400H500V357H100Z"></path>
-        <path d="M100,300H400V257H100Z"></path>
-        <path d="M0,200H400V157H0Z"></path>
-        <path d="M100,100H500V57H100Z"></path>
-        <path d="M100,350H500V307H100Z"></path>
-        <path d="M100,250H400V207H100Z"></path>
-        <path d="M0,150H400V107H0Z"></path>
-        <path d="M100,50H500V7H100Z"></path>
-    </g>
-    <g style="fill:#1a1366;stroke:#1a1366;">
-   <rect x="100" y="7" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="0" y="107" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="207" width="300" height="43">
-    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="307" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
-  </rect>
-        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
-            <g transform="translate(45 50) rotate(-45)">
-                <circle r="33" cx="0" cy="0"></circle>
-                <rect x="-8" y="32" width="16" height="30"></rect>
-            </g>
-
-            <g transform="translate(450 152)">
-                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
-                <rect x="-15" y="-40" width="60" height="60"></rect>
-            </g>
-
-            <g transform="translate(50 352)">
-                <polygon points="-35,-5 0,-40 35,-5"></polygon>
-                <polygon points="-35,10 0,45 35,10"></polygon>
-            </g>
-
-            <g transform="translate(75 250)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-
-            <g transform="translate(425 250) rotate(180)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-        </g>
-    </g>
-</svg>
-</a>
-    Loading ITables v2.6.2 from the internet...
-    (need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
-    </tr></tbody></table>
-<link href="https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.css" rel="stylesheet">
-<script type="module">
-    import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
-
-    document.querySelectorAll("#itables_5e2654c1_fe26_4d5e_b994_6d1df67525cd:not(.dataTable)").forEach(table => {
-        if (!(table instanceof HTMLTableElement))
-            return;
-
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "classes": ["display", "nowrap"], "order": [], "text_in_header_can_be_selected": true, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>default</th>\n      <th>student</th>\n      <th>balance</th>\n      <th>income</th>\n      <th>knn_prob_Yes</th>\n      <th>logistic_prob_Yes</th>\n    </tr>\n  </thead></table>", "data_json": "[[7238, \"No\", \"Yes\", 385.397521, 13739.166135, 0.0, 0.000279], [4944, \"No\", \"No\", 469.844241, 51308.318506, 0.0, 0.000433], [4180, \"No\", \"No\", 728.818859, 33662.070967, 0.0, 0.001678], [5450, \"No\", \"No\", 0.0, 44980.293039, 0.0, 3.7e-05], [4491, \"No\", \"No\", 1134.279848, 37658.230956, 0.0, 0.013819]]"};
-        new ITable(table, dt_args);
-    });
-</script>
-</div>
-</div>
 </section>
-<section id="using-a-threshold-1" class="slide level2 smaller">
-<h2>Using a threshold</h2>
-<ul>
-<li>Step 1: Predict <strong>probabilities</strong> for all observations</li>
-<li>Step 2: Set a threshold to obtain <strong>class labels</strong> (0.5 below)</li>
-</ul>
-<div id="e6092d09" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>threshold <span class="op">=</span> <span class="fl">0.5</span></span>
-<span id="cb2-2"><a></a>default_test_wprobs[<span class="st">'knn_preds'</span>] <span class="op">=</span> np.where(default_test_wprobs[<span class="st">'knn_prob_Yes'</span>] <span class="op">&gt;</span> threshold, <span class="st">'Yes'</span>, <span class="st">'No'</span>)</span>
-<span id="cb2-3"><a></a>default_test_wprobs[<span class="st">'logistic_preds'</span>] <span class="op">=</span> np.where(default_test_wprobs[<span class="st">'logistic_prob_Yes'</span>] <span class="op">&gt;</span> threshold, <span class="st">'Yes'</span>, <span class="st">'No'</span>)</span>
-<span id="cb2-4"><a></a></span>
-<span id="cb2-5"><a></a>show(default_test_wprobs.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<!--| quarto-html-table-processing: none -->
-<table id="itables_1ec5cb1b_13a7_41a0_942d_86888d59a887"><tbody><tr>
-    <td style="vertical-align:middle; text-align:left">
-    <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
-    <g style="fill:#d9d7fc">
-        <path d="M100,400H500V357H100Z"></path>
-        <path d="M100,300H400V257H100Z"></path>
-        <path d="M0,200H400V157H0Z"></path>
-        <path d="M100,100H500V57H100Z"></path>
-        <path d="M100,350H500V307H100Z"></path>
-        <path d="M100,250H400V207H100Z"></path>
-        <path d="M0,150H400V107H0Z"></path>
-        <path d="M100,50H500V7H100Z"></path>
-    </g>
-    <g style="fill:#1a1366;stroke:#1a1366;">
-   <rect x="100" y="7" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="0" y="107" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="207" width="300" height="43">
-    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="307" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
-  </rect>
-        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
-            <g transform="translate(45 50) rotate(-45)">
-                <circle r="33" cx="0" cy="0"></circle>
-                <rect x="-8" y="32" width="16" height="30"></rect>
-            </g>
-
-            <g transform="translate(450 152)">
-                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
-                <rect x="-15" y="-40" width="60" height="60"></rect>
-            </g>
-
-            <g transform="translate(50 352)">
-                <polygon points="-35,-5 0,-40 35,-5"></polygon>
-                <polygon points="-35,10 0,45 35,10"></polygon>
-            </g>
-
-            <g transform="translate(75 250)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-
-            <g transform="translate(425 250) rotate(180)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-        </g>
-    </g>
-</svg>
-</a>
-    Loading ITables v2.6.2 from the internet...
-    (need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
-    </tr></tbody></table>
-<link href="https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.css" rel="stylesheet">
-<script type="module">
-    import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
-
-    document.querySelectorAll("#itables_1ec5cb1b_13a7_41a0_942d_86888d59a887:not(.dataTable)").forEach(table => {
-        if (!(table instanceof HTMLTableElement))
-            return;
-
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "classes": ["display", "nowrap"], "order": [], "text_in_header_can_be_selected": true, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>default</th>\n      <th>student</th>\n      <th>balance</th>\n      <th>income</th>\n      <th>knn_prob_Yes</th>\n      <th>logistic_prob_Yes</th>\n      <th>knn_preds</th>\n      <th>logistic_preds</th>\n    </tr>\n  </thead></table>", "data_json": "[[7238, \"No\", \"Yes\", 385.397521, 13739.166135, 0.0, 0.000279, \"No\", \"No\"], [4944, \"No\", \"No\", 469.844241, 51308.318506, 0.0, 0.000433, \"No\", \"No\"], [4180, \"No\", \"No\", 728.818859, 33662.070967, 0.0, 0.001678, \"No\", \"No\"], [5450, \"No\", \"No\", 0.0, 44980.293039, 0.0, 3.7e-05, \"No\", \"No\"], [4491, \"No\", \"No\", 1134.279848, 37658.230956, 0.0, 0.013819, \"No\", \"No\"]]"};
-        new ITable(table, dt_args);
-    });
-</script>
-</div>
-</div>
-</section>
-<section id="performance" class="slide level2">
-<h2>Performance</h2>
-<div id="0ff2ec17" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>metrics_50 <span class="op">=</span> get_metrics_at_threshold(default_test_wprobs[<span class="st">'default'</span>], default_test_wprobs[<span class="st">'knn_prob_Yes'</span>], <span class="fl">0.5</span>)</span>
-<span id="cb3-2"><a></a>show(metrics_50)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<!--| quarto-html-table-processing: none -->
-<table id="itables_917c2dfa_3501_468b_8d1c_a5b8281a4fb3"><tbody><tr>
-    <td style="vertical-align:middle; text-align:left">
-    <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
-    <g style="fill:#d9d7fc">
-        <path d="M100,400H500V357H100Z"></path>
-        <path d="M100,300H400V257H100Z"></path>
-        <path d="M0,200H400V157H0Z"></path>
-        <path d="M100,100H500V57H100Z"></path>
-        <path d="M100,350H500V307H100Z"></path>
-        <path d="M100,250H400V207H100Z"></path>
-        <path d="M0,150H400V107H0Z"></path>
-        <path d="M100,50H500V7H100Z"></path>
-    </g>
-    <g style="fill:#1a1366;stroke:#1a1366;">
-   <rect x="100" y="7" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="0" y="107" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="207" width="300" height="43">
-    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="307" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
-  </rect>
-        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
-            <g transform="translate(45 50) rotate(-45)">
-                <circle r="33" cx="0" cy="0"></circle>
-                <rect x="-8" y="32" width="16" height="30"></rect>
-            </g>
-
-            <g transform="translate(450 152)">
-                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
-                <rect x="-15" y="-40" width="60" height="60"></rect>
-            </g>
-
-            <g transform="translate(50 352)">
-                <polygon points="-35,-5 0,-40 35,-5"></polygon>
-                <polygon points="-35,10 0,45 35,10"></polygon>
-            </g>
-
-            <g transform="translate(75 250)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-
-            <g transform="translate(425 250) rotate(180)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-        </g>
-    </g>
-</svg>
-</a>
-    Loading ITables v2.6.2 from the internet...
-    (need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
-    </tr></tbody></table>
-<link href="https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.css" rel="stylesheet">
-<script type="module">
-    import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
-
-    document.querySelectorAll("#itables_917c2dfa_3501_468b_8d1c_a5b8281a4fb3:not(.dataTable)").forEach(table => {
-        if (!(table instanceof HTMLTableElement))
-            return;
-
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "classes": ["display", "nowrap"], "order": [], "text_in_header_can_be_selected": true, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>metric</th>\n      <th>estimate</th>\n    </tr>\n  </thead></table>", "data_json": "[[\"accuracy\", 0.973], [\"sensitivity\", 0.300752], [\"specificity\", 0.996121]]"};
-        new ITable(table, dt_args);
-    });
-</script>
-</div>
-</div>
-</section>
-<section id="low-threshold" class="slide level2">
-<h2>Low Threshold</h2>
-<div id="aebc7513" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>metrics_10 <span class="op">=</span> get_metrics_at_threshold(default_test_wprobs[<span class="st">'default'</span>], default_test_wprobs[<span class="st">'knn_prob_Yes'</span>], <span class="fl">0.1</span>)</span>
-<span id="cb4-2"><a></a>show(metrics_10)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<!--| quarto-html-table-processing: none -->
-<table id="itables_ed85883a_3ec6_4f59_96ab_6b6b1c0a20e4"><tbody><tr>
-    <td style="vertical-align:middle; text-align:left">
-    <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
-    <g style="fill:#d9d7fc">
-        <path d="M100,400H500V357H100Z"></path>
-        <path d="M100,300H400V257H100Z"></path>
-        <path d="M0,200H400V157H0Z"></path>
-        <path d="M100,100H500V57H100Z"></path>
-        <path d="M100,350H500V307H100Z"></path>
-        <path d="M100,250H400V207H100Z"></path>
-        <path d="M0,150H400V107H0Z"></path>
-        <path d="M100,50H500V7H100Z"></path>
-    </g>
-    <g style="fill:#1a1366;stroke:#1a1366;">
-   <rect x="100" y="7" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="0" y="107" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="207" width="300" height="43">
-    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="307" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
-  </rect>
-        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
-            <g transform="translate(45 50) rotate(-45)">
-                <circle r="33" cx="0" cy="0"></circle>
-                <rect x="-8" y="32" width="16" height="30"></rect>
-            </g>
-
-            <g transform="translate(450 152)">
-                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
-                <rect x="-15" y="-40" width="60" height="60"></rect>
-            </g>
-
-            <g transform="translate(50 352)">
-                <polygon points="-35,-5 0,-40 35,-5"></polygon>
-                <polygon points="-35,10 0,45 35,10"></polygon>
-            </g>
-
-            <g transform="translate(75 250)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-
-            <g transform="translate(425 250) rotate(180)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-        </g>
-    </g>
-</svg>
-</a>
-    Loading ITables v2.6.2 from the internet...
-    (need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
-    </tr></tbody></table>
-<link href="https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.css" rel="stylesheet">
-<script type="module">
-    import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
-
-    document.querySelectorAll("#itables_ed85883a_3ec6_4f59_96ab_6b6b1c0a20e4:not(.dataTable)").forEach(table => {
-        if (!(table instanceof HTMLTableElement))
-            return;
-
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "classes": ["display", "nowrap"], "order": [], "text_in_header_can_be_selected": true, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>metric</th>\n      <th>estimate</th>\n    </tr>\n  </thead></table>", "data_json": "[[\"accuracy\", 0.9375], [\"sensitivity\", 0.691729], [\"specificity\", 0.945953]]"};
-        new ITable(table, dt_args);
-    });
-</script>
-</div>
-</div>
-</section>
-<section id="high-threshold" class="slide level2">
-<h2>High Threshold</h2>
-<div id="6ad3f1de" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a>metrics_90 <span class="op">=</span> get_metrics_at_threshold(default_test_wprobs[<span class="st">'default'</span>], default_test_wprobs[<span class="st">'knn_prob_Yes'</span>], <span class="fl">0.9</span>)</span>
-<span id="cb5-2"><a></a>show(metrics_90)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<!--| quarto-html-table-processing: none -->
-<table id="itables_49eddc3e_d354_444a_810d_4fa2f76c0a99"><tbody><tr>
-    <td style="vertical-align:middle; text-align:left">
-    <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
-    <g style="fill:#d9d7fc">
-        <path d="M100,400H500V357H100Z"></path>
-        <path d="M100,300H400V257H100Z"></path>
-        <path d="M0,200H400V157H0Z"></path>
-        <path d="M100,100H500V57H100Z"></path>
-        <path d="M100,350H500V307H100Z"></path>
-        <path d="M100,250H400V207H100Z"></path>
-        <path d="M0,150H400V107H0Z"></path>
-        <path d="M100,50H500V7H100Z"></path>
-    </g>
-    <g style="fill:#1a1366;stroke:#1a1366;">
-   <rect x="100" y="7" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="0" y="107" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="207" width="300" height="43">
-    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="307" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
-  </rect>
-        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
-            <g transform="translate(45 50) rotate(-45)">
-                <circle r="33" cx="0" cy="0"></circle>
-                <rect x="-8" y="32" width="16" height="30"></rect>
-            </g>
-
-            <g transform="translate(450 152)">
-                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
-                <rect x="-15" y="-40" width="60" height="60"></rect>
-            </g>
-
-            <g transform="translate(50 352)">
-                <polygon points="-35,-5 0,-40 35,-5"></polygon>
-                <polygon points="-35,10 0,45 35,10"></polygon>
-            </g>
-
-            <g transform="translate(75 250)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-
-            <g transform="translate(425 250) rotate(180)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-        </g>
-    </g>
-</svg>
-</a>
-    Loading ITables v2.6.2 from the internet...
-    (need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
-    </tr></tbody></table>
-<link href="https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.css" rel="stylesheet">
-<script type="module">
-    import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
-
-    document.querySelectorAll("#itables_49eddc3e_d354_444a_810d_4fa2f76c0a99:not(.dataTable)").forEach(table => {
-        if (!(table instanceof HTMLTableElement))
-            return;
-
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "classes": ["display", "nowrap"], "order": [], "text_in_header_can_be_selected": true, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>metric</th>\n      <th>estimate</th>\n    </tr>\n  </thead></table>", "data_json": "[[\"accuracy\", 0.96675], [\"sensitivity\", 0.0], [\"specificity\", 1.0]]"};
-        new ITable(table, dt_args);
-    });
-</script>
-</div>
-</div>
-</section>
-<section id="question" class="slide level2">
-<h2>Question</h2>
+<section id="practice" class="slide level2">
+<h2>Practice</h2>
+<p>Let’s do this with our Logistic Regression model.</p>
 <ul>
 <li>If I want to improve Recall/Sensitivity should I increase or decrease my threshold?</li>
 <li>If I want to improve my Precision/PPV should I increase or decrease my threshold?</li>
@@ -720,412 +253,159 @@ Dr.&nbsp;Eric Friedlander
 </section>
 <section id="roc-curve-in-python" class="slide level2">
 <h2>ROC Curve in Python</h2>
-<div id="b05dd002" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>fpr, tpr, thresholds <span class="op">=</span> roc_curve(</span>
-<span id="cb6-2"><a></a>    default_test_wprobs[<span class="st">'default'</span>], </span>
-<span id="cb6-3"><a></a>    default_test_wprobs[<span class="st">'knn_prob_Yes'</span>], </span>
-<span id="cb6-4"><a></a>    pos_label<span class="op">=</span><span class="st">'Yes'</span></span>
-<span id="cb6-5"><a></a>)</span>
-<span id="cb6-6"><a></a>roc_df <span class="op">=</span> pd.DataFrame({<span class="st">'False Positive Rate (1-Specificity)'</span>: fpr, <span class="st">'True Positive Rate (Sensitivity)'</span>: tpr, <span class="st">'Threshold'</span>: thresholds})</span>
-<span id="cb6-7"><a></a>show(roc_df.head(<span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<!--| quarto-html-table-processing: none -->
-<table id="itables_fc6e7c13_463e_4031_8203_af8faa92a387"><tbody><tr>
-    <td style="vertical-align:middle; text-align:left">
-    <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
-    <g style="fill:#d9d7fc">
-        <path d="M100,400H500V357H100Z"></path>
-        <path d="M100,300H400V257H100Z"></path>
-        <path d="M0,200H400V157H0Z"></path>
-        <path d="M100,100H500V57H100Z"></path>
-        <path d="M100,350H500V307H100Z"></path>
-        <path d="M100,250H400V207H100Z"></path>
-        <path d="M0,150H400V107H0Z"></path>
-        <path d="M100,50H500V7H100Z"></path>
-    </g>
-    <g style="fill:#1a1366;stroke:#1a1366;">
-   <rect x="100" y="7" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="0" y="107" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="207" width="300" height="43">
-    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
-    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
-  </rect>
-        <rect x="100" y="307" width="400" height="43">
-    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
-      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
-  </rect>
-        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
-            <g transform="translate(45 50) rotate(-45)">
-                <circle r="33" cx="0" cy="0"></circle>
-                <rect x="-8" y="32" width="16" height="30"></rect>
-            </g>
-
-            <g transform="translate(450 152)">
-                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
-                <rect x="-15" y="-40" width="60" height="60"></rect>
-            </g>
-
-            <g transform="translate(50 352)">
-                <polygon points="-35,-5 0,-40 35,-5"></polygon>
-                <polygon points="-35,10 0,45 35,10"></polygon>
-            </g>
-
-            <g transform="translate(75 250)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-
-            <g transform="translate(425 250) rotate(180)">
-                <polyline points="-30,30 -60,0 -30,-30"></polyline>
-                <polyline points="0,30 -30,0 0,-30"></polyline>
-            </g>
-        </g>
-    </g>
-</svg>
-</a>
-    Loading ITables v2.6.2 from the internet...
-    (need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
-    </tr></tbody></table>
-<link href="https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.css" rel="stylesheet">
-<script type="module">
-    import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
-
-    document.querySelectorAll("#itables_fc6e7c13_463e_4031_8203_af8faa92a387:not(.dataTable)").forEach(table => {
-        if (!(table instanceof HTMLTableElement))
-            return;
-
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "classes": ["display", "nowrap"], "order": [], "text_in_header_can_be_selected": true, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>False Positive Rate (1-Specificity)</th>\n      <th>True Positive Rate (Sensitivity)</th>\n      <th>Threshold</th>\n    </tr>\n  </thead></table>", "data_json": "[[0.0, 0.0, \"___Infinity___\"], [0.000517, 0.030075, 0.9], [0.002069, 0.157895, 0.8], [0.002327, 0.233083, 0.7], [0.003879, 0.300752, 0.6], [0.005948, 0.338346, 0.5], [0.010861, 0.398496, 0.4], [0.022757, 0.503759, 0.3], [0.054047, 0.691729, 0.2], [0.128782, 0.842105, 0.1]]"};
-        new ITable(table, dt_args);
-    });
-</script>
-</div>
-</div>
+<ul>
+<li>Use <code>roc_curve</code> from <code>sklearn.metrics</code> to get the false positive rates and true positive rates</li>
+<li>Use <code>RocCurveDisplay</code> from <code>sklearn.metrics</code> to plot the ROC curve</li>
+</ul>
 </section>
-<section id="roc-curve-plot" class="slide level2">
-<h2>ROC Curve: Plot</h2>
-<div id="0654bb9a" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a>RocCurveDisplay.from_predictions(</span>
-<span id="cb7-2"><a></a>    default_test_wprobs[<span class="st">'default'</span>], </span>
-<span id="cb7-3"><a></a>    default_test_wprobs[<span class="st">'knn_prob_Yes'</span>], </span>
-<span id="cb7-4"><a></a>    pos_label<span class="op">=</span><span class="st">'Yes'</span>,</span>
-<span id="cb7-5"><a></a>    name<span class="op">=</span><span class="st">'KNN'</span></span>
-<span id="cb7-6"><a></a>)</span>
-<span id="cb7-7"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="10-roc-auc_files/figure-revealjs/cell-9-output-1.png" class="r-stretch"></section>
 <section id="auc" class="slide level2">
 <h2>AUC</h2>
 <ul>
 <li>AUC: Area under the curve (ROC Curve that is)</li>
 <li>Measures how good your model is at separating categories</li>
 <li>Only for binary classification</li>
+<li>Good for imbalanced datasets</li>
+<li>Use <code>roc_auc_score</code> from <code>sklearn.metrics</code> to compute AUC</li>
 </ul>
-</section>
-<section id="auc-in-python" class="slide level2">
-<h2>AUC in Python</h2>
-<div id="e003d845" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_auc_score</span>
-<span id="cb8-2"><a></a></span>
-<span id="cb8-3"><a></a>auc_score <span class="op">=</span> roc_auc_score(</span>
-<span id="cb8-4"><a></a>    np.where(default_test_wprobs[<span class="st">'default'</span>] <span class="op">==</span> <span class="st">'Yes'</span>, <span class="dv">1</span>, <span class="dv">0</span>), </span>
-<span id="cb8-5"><a></a>    default_test_wprobs[<span class="st">'knn_prob_Yes'</span>]</span>
-<span id="cb8-6"><a></a>)</span>
-<span id="cb8-7"><a></a><span class="bu">print</span>(<span class="ss">f"AUC: </span><span class="sc">{</span>auc_score<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>AUC: 0.8869</code></pre>
-</div>
-</div>
 </section>
 <section id="pathological-example-1" class="slide level2">
 <h2>Pathological Example 1</h2>
-<div class="columns">
-<div class="column" style="width:40%;">
-<div id="66298d6c" class="cell" data-execution_count="10">
-<div class="cell-output cell-output-display">
+<div id="b94a13ae" class="cell" data-fig-height="4" data-fig-width="10" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-revealjs/cell-11-output-1.png"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/cell-3-output-1.png" width="960" height="480"></p>
 </figure>
 </div>
 </div>
 </div>
-</div><div class="column" style="width:60%;">
-<div id="e6917bd3" class="cell" data-execution_count="11">
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="10-roc-auc_files/figure-revealjs/cell-12-output-1.png"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
 </section>
 <section id="pathological-example-1-1" class="slide level2 smaller">
 <h2>Pathological Example 1</h2>
-<div class="columns">
-<div class="column" style="width:40%;">
-<div id="875f2635" class="cell" data-execution_count="12">
-<div class="cell-output cell-output-display">
+<div id="23d18b31" class="cell" data-fig-height="4" data-fig-width="10" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-revealjs/cell-13-output-1.png"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/cell-4-output-1.png" width="960" height="480"></p>
 </figure>
 </div>
 </div>
 </div>
-</div><div class="column" style="width:60%;">
-<div id="4063cd66" class="cell" data-execution_count="13">
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="10-roc-auc_files/figure-revealjs/cell-14-output-1.png"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
 <p><span class="math display">\[\text{Sensitivity} = \frac{TP}{TP + FN} = \frac{\text{Positives Above Line}}{\text{All Positives}} = \frac{100}{100} = 1\]</span> <span class="math display">\[1-\text{Specificity} = 1-\frac{TN}{TN + FP} = \frac{FP}{TN + FP} = \frac{\text{Negatives Above Line}}{\text{All Negatives}} = \frac{100}{100} = 1\]</span></p>
 </section>
 <section id="pathological-example-1-2" class="slide level2 smaller">
 <h2>Pathological Example 1</h2>
-<div class="columns">
-<div class="column" style="width:40%;">
-<div id="33f47cfe" class="cell" data-execution_count="14">
-<div class="cell-output cell-output-display">
+<div id="f6e1abe5" class="cell" data-fig-height="4" data-fig-width="10" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-revealjs/cell-15-output-1.png"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/cell-5-output-1.png" width="960" height="480"></p>
 </figure>
 </div>
 </div>
 </div>
-</div><div class="column" style="width:60%;">
-<div id="bc3a8547" class="cell" data-execution_count="15">
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="10-roc-auc_files/figure-revealjs/cell-16-output-1.png"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
 <p><span class="math display">\[\text{Sensitivity} = \frac{100}{100} = 1\]</span> <span class="math display">\[1-\text{Specificity} = \frac{\text{Negatives Above Line}}{100} \approx 0.5\]</span></p>
 </section>
 <section id="pathological-example-1-3" class="slide level2 smaller">
 <h2>Pathological Example 1</h2>
-<div class="columns">
-<div class="column" style="width:40%;">
-<div id="a4c60177" class="cell" data-execution_count="16">
-<div class="cell-output cell-output-display">
+<div id="30b3fb82" class="cell" data-fig-height="4" data-fig-width="10" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-revealjs/cell-17-output-1.png"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/cell-6-output-1.png" width="960" height="480"></p>
 </figure>
 </div>
 </div>
 </div>
-</div><div class="column" style="width:60%;">
-<div id="da7c4465" class="cell" data-execution_count="17">
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="10-roc-auc_files/figure-revealjs/cell-18-output-1.png"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
 <p><span class="math display">\[\text{Sensitivity} = \frac{100}{100} = 1\]</span> <span class="math display">\[1-\text{Specificity} = \frac{0}{100} = 0\]</span></p>
 </section>
 <section id="pathological-example-2" class="slide level2">
 <h2>Pathological Example 2</h2>
-<div class="columns">
-<div class="column" style="width:40%;">
-<div id="2ebc1160" class="cell" data-execution_count="18">
-<div class="cell-output cell-output-display">
+<div id="ce6d049d" class="cell" data-fig-height="4" data-fig-width="10" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="6">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-revealjs/cell-19-output-1.png"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/cell-7-output-1.png" width="960" height="480"></p>
 </figure>
 </div>
 </div>
 </div>
-</div><div class="column" style="width:60%;">
-<div id="91c6382d" class="cell" data-execution_count="19">
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="10-roc-auc_files/figure-revealjs/cell-20-output-1.png"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
 </section>
 <section id="pathological-example-3" class="slide level2">
 <h2>Pathological Example 3</h2>
-<div class="columns">
-<div class="column" style="width:40%;">
-<div id="d6bbc873" class="cell" data-execution_count="20">
-<div class="cell-output cell-output-display">
+<div id="9b5ec8e5" class="cell" data-fig-height="4" data-fig-width="10" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-revealjs/cell-21-output-1.png"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/cell-8-output-1.png" width="960" height="480"></p>
 </figure>
 </div>
 </div>
 </div>
-</div><div class="column" style="width:60%;">
-<div id="eaf2fdca" class="cell" data-execution_count="21">
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="10-roc-auc_files/figure-revealjs/cell-22-output-1.png"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
 </section>
 <section id="pathological-example-4" class="slide level2">
 <h2>Pathological Example 4</h2>
-<div class="columns">
-<div class="column" style="width:40%;">
-<div id="4f6eed7b" class="cell" data-execution_count="22">
-<div class="cell-output cell-output-display">
+<div id="a9708731" class="cell" data-fig-height="4" data-fig-width="10" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-revealjs/cell-23-output-1.png"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/cell-9-output-1.png" width="960" height="480"></p>
 </figure>
 </div>
 </div>
 </div>
-</div><div class="column" style="width:60%;">
-<div id="c5857b47" class="cell" data-execution_count="23">
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="10-roc-auc_files/figure-revealjs/cell-24-output-1.png"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
 </section>
 <section id="pathological-example-5" class="slide level2">
 <h2>Pathological Example 5</h2>
-<div class="columns">
-<div class="column" style="width:40%;">
-<div id="96ebc5c5" class="cell" data-execution_count="24">
-<div class="cell-output cell-output-display">
+<div id="7481abcb" class="cell" data-fig-height="4" data-fig-width="10" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-revealjs/cell-25-output-1.png"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/cell-10-output-1.png" width="960" height="480"></p>
 </figure>
 </div>
 </div>
 </div>
-</div><div class="column" style="width:60%;">
-<div id="db2aec09" class="cell" data-execution_count="25">
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="10-roc-auc_files/figure-revealjs/cell-26-output-1.png"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
 </section>
 <section id="pathological-example-6" class="slide level2">
 <h2>Pathological Example 6</h2>
-<div class="columns">
-<div class="column" style="width:40%;">
-<div id="cd851e5d" class="cell" data-execution_count="26">
-<div class="cell-output cell-output-display">
+<div id="d0575ca5" class="cell" data-fig-height="4" data-fig-width="10" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 <figure>
-<p><img data-src="10-roc-auc_files/figure-revealjs/cell-27-output-1.png"></p>
+<p><img data-src="10-roc-auc_files/figure-revealjs/cell-11-output-1.png" width="960" height="480"></p>
 </figure>
 </div>
 </div>
 </div>
-</div><div class="column" style="width:60%;">
-<div id="f37a8f96" class="cell" data-execution_count="27">
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="10-roc-auc_files/figure-revealjs/cell-28-output-1.png"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
 </section>
 <section id="auc-questions" class="slide level2">
 <h2>AUC Questions</h2>
 <ul>
-<li>What should be the minimum AUC?</li>
+<li>What should be the minimum AUC? In theory vs.&nbsp;in practice?</li>
 <li>What should be that maximum possible AUC?</li>
 </ul>
-</section></section>
-<section>
-<section id="review-of-classification-metrics" class="title-slide slide level1 center">
-<h1>Review of Classification Metrics</h1>
-
 </section>
-<section id="review-logistic-regression-vs-knn" class="slide level2 smaller">
-<h2>Review: Logistic Regression vs KNN</h2>
-<ul>
-<li>Logistic regression <span class="math inline">\(\implies\)</span> parametric , KNN <span class="math inline">\(\implies\)</span> non-parametric.</li>
-<li>Logistic regression <span class="math inline">\(\implies\)</span> only for classification problems (<span class="math inline">\(Y\)</span> categorical), KNN <span class="math inline">\(\implies\)</span> both regression and classification.</li>
-<li>Logistic regression is (more) interpretable, KNN is not.</li>
-<li>Logistic regression allows qualitative predictors. Euclidean distance with KNN does not allow for qualitative predictors.</li>
-<li>Prediction: KNN can be pretty good for small <span class="math inline">\(p\)</span>, that is, <span class="math inline">\(p \le 4\)</span> and large <span class="math inline">\(n\)</span>. Performance of KNN deteriorates as <span class="math inline">\(p\)</span> increases - curse of dimensionality.</li>
-</ul>
+<section id="practice-1" class="slide level2">
+<h2>Practice!</h2>
+<p>Let’s plot the ROC curve and AUC for our Logistic Regression model.</p>
 </section>
-<section id="classification-metrics-app" class="slide level2 smaller">
-<h2>Classification Metrics App</h2>
+<section id="recap" class="slide level2">
+<h2>Recap</h2>
 <ul>
-<li>Dr.&nbsp;F will split you into four groups</li>
-<li>On one of your computers connect to a tv and <a href="https://efriedlander.shinyapps.io/ClassificationMetrics/">open this app</a></li>
-<li>Do the following based on your group number:
+<li><strong>Thresholding</strong>: Converting probabilities to class labels
 <ul>
-<li>1: Choose plane on the first screen</li>
-<li>2: Choose circle on the first screen</li>
-<li>3: Choose parabola on the first screen</li>
-<li>4: Choose sine curve on the first screen</li>
+<li>Default threshold is 0.5</li>
+<li>Adjust threshold to balance different types of errors based on cost or class imbalance</li>
 </ul></li>
-<li>We will generate data from this population… do you think KNN or logistic regression will yield a better classifier? Why?</li>
-</ul>
-</section>
-<section id="classification-metrics-app-1" class="slide level2 smaller">
-<h2>Classification Metrics App</h2>
+<li><strong>ROC (Receiver Operating Characteristics) Curve</strong>: Visualizes performance across all possible thresholds
 <ul>
-<li>On the second tab generate a small test and training set</li>
-<li>On the third tab fit a KNN model with 5 neighbors and then a logistic regression model</li>
-<li>Which model do you think will perform better based on the plots you see?</li>
-<li>Choose the better model, click fit, and click on the fourth tab</li>
-</ul>
-</section>
-<section id="questions" class="slide level2">
-<h2>Questions</h2>
-<p>Using the app, try and answer the following questions:</p>
+<li>Plots Sensitivity (TPR) on the y-axis vs.&nbsp;<span class="math inline">\(1 - \text{Specificity}\)</span> (FPR) on the x-axis</li>
+</ul></li>
+<li><strong>AUC (Area Under the Curve)</strong>:
 <ul>
-<li>Which of the metrics are most and least impacted by:
-<ul>
-<li>Sample size</li>
-<li>Imbalanced data (i.e.&nbsp;proportion positive near 0 or 1)</li>
-<li>High noise</li>
+<li>Single number summary of ROC Curve</li>
+<li>Measures how good your model is at separating categories</li>
 </ul></li>
 </ul>
 
