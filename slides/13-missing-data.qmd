@@ -1,0 +1,160 @@
+---
+title: 'MATH 4025: Missing Data'
+---
+
+## Announcements
+
+- [Coyote Connections Thu March 13th 7-9pm](https://alumni.collegeofidaho.edu/e/coyote-connections-2025)
+- Please print out and bring four copies of your resume and cover letter to class on Friday
+- Debrief from talk today
+
+## Computational Set-Up
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer, KNNImputer
+from plotnine import *
+from itables import show
+import warnings
+
+warnings.filterwarnings('ignore')
+np.random.seed(4025)
+
+ames = pd.read_csv("../data/ameshousing.csv")
+
+# Let's artificially inject some missing data for demonstration if needed
+rng = np.random.default_rng(4025)
+mask = rng.random(len(ames)) < 0.05
+ames.loc[mask, 'Year_Built'] = np.nan
+```
+
+# Missing Data
+
+## Missing Data {.smaller}
+
+-   Many times, you can't just drop missing data
+-   Even if you can, dropping missing values can generate *biased* data/models
+-   Sometimes missing data gives you more information
+-   Types of missing data:
+    +   Missing completely at random (MCAR): there is no pattern to your missing values
+    +   Missing at random (MAR): missing values are dependent on other values in the data set
+    +   Missing not at random (MNAR): missing values are dependent on the value that is missing
+-   Structured missingness (SM):  when the missingness of certain values are depends on one another, regardless of whether the missing values are MCAR, MAR, or MNAR
+
+## MCAR: Examples
+
+-   Sensor data: occasionally sensors break so you're missing data randomly
+-   Survey data: sometimes people just randomly skip questions
+-   Survey data: customers are randomly given 5 questions from a bank of 100 questions
+
+## MAR: Examples
+
+-   Men are less likely to respond to surveys about depression
+-   Medical study: patients who miss follow-up appointments are more likely to be young
+-   Survey responses: ESL respondents may be more likely to skip certain questions that are difficult to interpret (only MAR if you know they are ESL)
+-   Measure of student performance: students who score lower are more likely to skip questions
+
+## MNAR: Examples
+
+-   Survey on income: respondent may be less likely to report their income if they are poor
+-   Survey about political beliefs: respondent may be more likely to skip questions when their answer is perceived as undesirable
+-   Customer satisfaction: only customers who feel strongly respond
+-   Medical study: patients refuse to report unhealthy habits
+
+## Structurally Missing: Examples
+
+-   Health survey: all questions related to pregnancy are left blank by males
+-   Bank data set: combination of home, auto, and credit cards... not all customer have all three so have missing data in certain portions
+-   Survey: many respondents by stop the survey early so all questions after a certain point are missing
+-   Netflix: customers may only watch similar movies and TV shows
+
+## Remedies for Missing Data
+
+-   Lot of complicated ways that you can read about
+-   Can drop column if too much of the data is missing
+-   Imputing with `scikit-learn`:
+    +  `SimpleImputer(strategy='median')`: used for numeric (especially discrete) variables
+    +  `SimpleImputer(strategy='mean')`: used for numeric variables
+    +  `KNNImputer()`: used for both numeric and categorical variables (computationally expensive)
+    +  `SimpleImputer(strategy='most_frequent')`: used for nominal (having no order) categorical variable
+    
+## Exploring Missing Data
+
+In pandas, `.isna()` or `.isnull()` checks for missing values.
+
+```{python}
+missing_counts = ames.isna().sum()
+missing_cols = missing_counts[missing_counts > 0].reset_index()
+missing_cols.columns = ['Feature', 'Missing Count']
+
+show(missing_cols)
+```
+
+## Missing Data: Garage_Type
+
+-   The reason that `Garage_Type` is missing is because there is no garage!
+    +   Solution: replace `NaN`s with `No_Garage`
+    +   Do this before data splitting (or using a custom imputer step)
+    
+## Fixing Garage_Type
+
+```{python}
+ames['Garage_Type'] = ames['Garage_Type'].fillna('No_Garage')
+```
+    
+## Missing Data: Year_Built
+
+-   Typically MCAR (if artificially removed) or MNAR 
+    +   Solution 1: Impute with mean or median
+    +   Solution 2: Impute with KNN... maybe we can infer what the values are based on other values in the data set?
+    
+## Pipeline: SimpleImputer
+
+```{python}
+# Replaces missing values with the median of the column
+mean_imputer = SimpleImputer(strategy='mean')
+```
+  
+## Pipeline: KNNImputer
+
+```{python}
+# Replaces missing values using the 5 nearest neighbors
+knn_imputer = KNNImputer(n_neighbors=5)
+```
+
+## Incorporating into Workflows/Pipelines
+
+```{python}
+ames_train, ames_test = train_test_split(
+    ames, 
+    train_size=0.75,
+    random_state=4025
+)
+
+X_train = ames_train.drop(columns=['Sale_Price'])
+numeric_features = X_train.select_dtypes(include=['int64', 'float64']).columns
+
+# We can chain imputation before scaling
+num_pipeline = Pipeline([
+    ('imputer', KNNImputer(n_neighbors=5)),
+    ('scaler', StandardScaler())
+])
+
+X_train_num_processed = num_pipeline.fit_transform(X_train[numeric_features])
+```
+
+## Recap {.smaller}
+
+- **Missing Data**: Not all missing data is created equal. Be aware of MCAR, MAR, MNAR, and Structural Missingness.
+- **Consequences**: Dropping missing data without consideration can bias your model and result in the loss of useful information.
+- **Remedies**:
+    + Simple imputation (mean, median, mode) using `SimpleImputer`.
+    + Advanced imputation (e.g. using `KNNImputer`) leveraging patterns in your data.
+    + Domain logic: e.g., missing Garage means "No Garage".
+- **Implementation**: Chain imputers with scalers using `scikit-learn`'s `Pipeline` to efficiently and safely handle missing data.

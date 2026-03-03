@@ -90,7 +90,7 @@ Try to do the following on your own:
 ## Using a threshold {.smaller}
 
 - Step 1: Predict **probabilities** for all observations
-- Step 2: Set a threshold to obtain **class labels** (0.5 below)
+- Step 2: Set a threshold to obtain **class labels** (0.5 below) (use `FixedThresholdClassifier` in `sklearn.model_selection`)
 - Step 3: Compute metrics based on confusion matrix
 
 ## Practice
@@ -120,6 +120,7 @@ Let's do this with our Logistic Regression model.
 -   AUC: Area under the curve (ROC Curve that is)
 -   Measures how good your model is at separating categories
 -   Only for binary classification
+-   Good for imbalanced datasets
 -   Use `roc_auc_score` from `sklearn.metrics` to compute AUC
 
 ## Pathological Example 1

@@ -1,0 +1,304 @@
+---
+title: 'MATH 4025: Cross Validation and Resampling'
+---
+
+
+```{python}
+#| include: false
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split, KFold, RepeatedKFold, StratifiedKFold, cross_validate, cross_val_score, LeaveOneOut
+from sklearn.linear_model import LinearRegression
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.metrics import mean_squared_error, r2_score
+from plotnine import *
+from itables import show
+import warnings
+
+warnings.filterwarnings('ignore')
+np.random.seed(4025)
+```
+
+## Concept Check
+
+-   Why do we split our data before fitting a model?
+-   Suppose we have a data set with $n = 1000$ observations. We perform a 70/30 split. How many observations are in the training set and how many are in the test set?
+
+# Resampling & Cross Validation
+
+
+
+## Data Splitting: Discussion
+
+:::{.incremental}
+-   Why do we split our data before fitting a model?
+    +   To prevent overfitting
+-   What are some pitfalls we might encounter if we compare A LOT of models on the test set? (E.g. 100 different thresholds or $k = 1, 2, \ldots, 100$ neighbors)
+    +   We open ourselves up to information leakage
+-   Potential solution... three way split (training/validation/test)
+-   Better solution... cross validation and resampling
+:::
+
+## Resampling
+
+![Figure 10.1 from TMWR](../slides/images/11/resampling.svg)
+
+## Cross-Validation Terminology
+
+-   Divide training set into two sets
+    +   Analysis set (Training fold): fit the model (similar to training set)
+    +   Assessment set (Validation fold): evaluation the model (similar to test set)
+
+## K-Fold Cross-Validation (CV) {.smaller}
+
+:::{.incremental}
+-   Partition your data into $K$ randomly selected non-overlapping "folds"
+    +   Folds don't overlap and every training observation is in one fold
+    +   Each fold contained $1/K$ of the training data
+-   Looping through the folds $k = 1, \ldots, K$:
+    +   Treat fold $k$ as the assessment set
+    +   Treat all folds except for $k$ as the analysis set
+    +   Fit model to analysis set (use whole modeling workflow)
+    +   Compute error metrics on assessment set
+-   After loop, you will have $K$ copies of each error metrics
+-   Average them together to get performance estimate
+-   Can also look at distribution of performance metrics
+:::
+
+## 
+
+![[Source](https://python.plainenglish.io/cross-validation-in-machine-learning-enhancing-model-performance-with-confidence-39402f6ca60f)](images/11/cv-viz.webp)
+
+## <span style="color:blue">Your Turn!!!</span>
+
+Suppose you start with a data set with $n=1000$ observations. You are trying to predict a numerical variable and your target metric is MSE.
+
+1. You start with an initial 70/30 training/test split. How many observations are in your training and test set?
+
+2. You then perform 10-Fold CV on the training set. How large is each analysis set and each assessment set and how many analysis and assessment sets do you have?
+
+3. Do your analysis sets overlap? Do your assessment sets overlap?
+
+4. How many times will you fit your model? How many different MSE's will you have?
+
+# CV Workflow in Python
+
+## Data: Ames Housing Prices {.smaller}
+
+A data set from [De Cock (2011)](https://jse.amstat.org/v19n3/decock.pdf) has 82 fields were recorded for 2,930 properties in Ames IA.
+
+Goal: Predict `Sale_Price`.
+
+```{python}
+ames = pd.read_csv("../data/ameshousing.csv")
+ames.info()
+```
+
+## Initial Data Split
+
+```{python}
+ames_train, ames_test = train_test_split(
+    ames, 
+    train_size=0.75,
+    random_state=4025
+)
+
+X_train = ames_train.drop(columns=['Sale_Price'])
+y_train = ames_train['Sale_Price']
+X_test = ames_test.drop(columns=['Sale_Price'])
+y_test = ames_test['Sale_Price']
+```
+
+## Define Folds
+
+```{python}
+# We use KFold to define the cross-validation splits
+kf = KFold(n_splits=10, shuffle=True, random_state=4025)
+```
+
+## Other Types of Cross Validation {.smaller}
+
+-   **Repeated K-Fold**: Repeats K-Fold CV multiple times with different randomizations. Useful for getting a more robust estimate of performance.
+-   **Stratified K-Fold**: Ensures that each fold has the same proportion of observations with a given label. Crucial for classification problems with imbalanced classes.
+
+```{python}
+# Repeated 10-Fold CV, 5 times (50 folds total)
+rkf = RepeatedKFold(n_splits=10, n_repeats=5, random_state=4025)
+
+# Stratified 10-Fold CV
+# Note: Ames is a regression problem, so StratifiedKFold doesn't apply directly here.
+skf = StratifiedKFold(n_splits=10, shuffle=True, random_state=4025)
+```
+
+## Define Model(s)
+
+```{python}
+lm_model = LinearRegression()
+knn5_model = KNeighborsRegressor(n_neighbors=5)
+knn10_model = KNeighborsRegressor(n_neighbors=10)
+```
+
+## Define Preprocessing
+
+We'll set up a `ColumnTransformer` to handle preprocessing. For simplicity in this example, we will just isolate numeric and categorical predictors. We'll do a deeper dive into preprocessing in the next lecture.
+
+```{python}
+# Identify purely numeric and categorical columns
+numeric_features = X_train.select_dtypes(include=['int64', 'float64']).columns
+categorical_features = X_train.select_dtypes(include=['object', 'category']).columns
+
+# Simple preprocessing: scale numeric, one-hot encode categorical
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', StandardScaler(), numeric_features),
+        ('cat', OneHotEncoder(handle_unknown='ignore'), categorical_features)
+    ])
+```
+
+## Define Workflows/Pipelines
+
+```{python}
+lm_pipeline = Pipeline([
+    ('preprocessor', preprocessor),
+    ('model', lm_model)
+])
+
+knn5_pipeline = Pipeline([
+    ('preprocessor', preprocessor),
+    ('model', knn5_model)
+])
+
+knn10_pipeline = Pipeline([
+    ('preprocessor', preprocessor),
+    ('model', knn10_model)
+])
+```
+
+## Fit and Assess Models {.smaller}
+
+We will use `cross_validate` to get both MSE and $R^2$. Note that `scikit-learn` uses negative MSE by default so that higher is always better. We'll negate it back.
+
+```{python}
+scoring = {'r2': 'r2', 'neg_mse': 'neg_mean_squared_error'}
+
+lm_cv = cross_validate(lm_pipeline, X_train, y_train, cv=kf, scoring=scoring)
+knn5_cv = cross_validate(knn5_pipeline, X_train, y_train, cv=kf, scoring=scoring)
+knn10_cv = cross_validate(knn10_pipeline, X_train, y_train, cv=kf, scoring=scoring)
+```
+
+
+## What does this create {.smaller}
+
+```{python}
+lm_cv.keys()
+```
+
+```{python}
+lm_cv['test_r2']
+```
+
+## Collecting Metrics {.smaller}
+
+Let's look at the average RMSE and $R^2$ across the 10 folds:
+
+```{python}
+#| echo: false
+def summarize_cv(cv_results, name):
+    rmse = np.sqrt(-cv_results['test_neg_mse']).mean()
+    r2 = cv_results['test_r2'].mean()
+    return pd.DataFrame({'Model': [name], 'RMSE': [rmse], 'R-squared': [r2]})
+
+results_df = pd.concat([
+    summarize_cv(lm_cv, "Linear Regression"),
+    summarize_cv(knn5_cv, "KNN (K=5)"),
+    summarize_cv(knn10_cv, "KNN (K=10)")
+])
+
+show(results_df)
+```
+
+## Visualizing CV Metrics
+
+We can visualize the distribution of $R^2$ scores across the 10 folds:
+
+```{python}
+#| echo: false
+#| fig-height: 4
+#| fig-width: 8
+r2_df = pd.DataFrame({
+    'Linear Regression': lm_cv['test_r2'],
+    'KNN (K=5)': knn5_cv['test_r2'],
+    'KNN (K=10)': knn10_cv['test_r2']
+}).melt(var_name='Model', value_name='R-squared')
+
+p = (ggplot(r2_df, aes(x='Model', y='R-squared', fill='Model'))
+    + geom_boxplot(alpha=0.7)
+    + theme_minimal()
+    + theme(legend_position='none')
+    + labs(title="Distribution of R-squared across 10 folds", x="Model", y="R-squared")
+)
+print(p)
+```
+
+## Questions
+
+1. How many times did we train a model?
+2. Which model formulation was the best?
+
+## Final Model
+
+- After choosing best model/workflow, fit on full training set and assess on test set
+
+```{python}
+final_fit = lm_pipeline.fit(X_train, y_train)
+test_preds = final_fit.predict(X_test)
+
+final_rmse = np.sqrt(mean_squared_error(y_test, test_preds))
+final_r2 = r2_score(y_test, test_preds)
+
+print(f"Test RMSE: {final_rmse:.2f}")
+print(f"Test R^2: {final_r2:.4f}")
+```
+
+## Leave-One-Out Cross-Validation (LOOCV) {.smaller}
+
+-  $n$-Fold cross validation
+-  Iterate through training set
+    +   Treat observation $i$ has assessment set
+    +   Treat other $n-1$ observations as analysis set
+    
+Suppose you implement LOOCV on a dataset with $n=100$ observations.
+
+1. What is the size (number of observations) of each analysis set?
+
+2. What is the size of each assessment set?
+
+3. How many times must you fit a model to complete the overall LOOCV process?
+
+
+## LOOCV vs. K-Fold CV
+
+-   Typically we use 5-Fold or 10-Fold CV
+-   $K$-Fold is much less computationally expensive
+-   $K$ actually gives better estimates of your test error... Why?
+-   Bias-Variance Trade-Off
+-   LOOCV has the lowest level of bias but highest level of variance
+-   5- and 10-Fold CV have medium levels of bias but lower variance
+
+## Recap
+
+- **Data Splitting**: We split data to prevent overfitting and information leakage.
+- **Cross-Validation**: Dividing training data into analysis (training) and assessment (validation) sets to robustly evaluate model performance.
+- **K-Fold CV**: Partitions data into $K$ non-overlapping folds. A common go-to due to its balance of bias and variance computational efficiency.
+- **Variants**: `RepeatedKFold` for more robust estimates, `StratifiedKFold` for imbalanced classification.
+- **Python implementation**: 
+  - Define folds using `KFold`
+  - Encapsulate preprocessing and modeling in a `Pipeline`
+  - Evaluate using `cross_validate` or `cross_val_score`
+
+
