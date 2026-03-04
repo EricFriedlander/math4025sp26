@@ -1,10 +1,6 @@
 ---
 title: "Homework 4: Intro to Classification"
 author: "Your Name"
-editor: visual
-format:
-  html:
-    embed-resources: true
 ---
 
 ```{python setup}
@@ -38,96 +34,38 @@ By the end of the homework, you will...
 
 In last weeks homework, you learned how to share your work using GitHub and to resolve merge conflicts. This week you'll learn about how to create and merge branches.
 
-## Teams & Rules
-
-You can find your team for this assignment on Canvas in the **People** section. The group set is called **HW4**. Your group will consist of 2-3 people and has been randomly generated. But first, some rules:
-
-1.  At the start of your homework, you and your team members should be in the same physical room for Exercise 0.1.
-2.  Exercise 0.2 will teach your how to create your own branch. Each team member will create their own branch and complete the homework themselves. Note that I'll be able to see all of your commits so I'll know if you didn't do this.
-3.  Once everyone is finished, you and your team members should get together in the same room again to Complete Exercise 0.3 which will teach you how to merge your branches together and decide on the best version of each question.
-
-As always:
-
-4.  You are all responsible for understanding the work that you turn in.
-5.  If you encounter a merge error that you don't know how to fix, contact Dr. Friedlander as soon as possible. I recommend starting this assignment early so there is time for Dr. Friedlander to help you resolve any problems before the deadline.
-
 ## Clone the repo, create your own branch, & merging
 
 The following directions will guide you through the process of setting up your homework to work as a group.
 
-## Exercise 0.1
+
+[Click this link](https://classroom.github.com/a/PiA6tVgM) to accept the assignment and clone it to your computer.
+
+## Teamwork Portion
 
 ::: {.callout-tip title="Question"}
-In your group, decide on a team name. Then have **one member of your group**:
+You will be placed in groups of 3-to-4 students. Please complete the following teamwork portion of the homework in class. Complete the following exercises on the board. Make sure you get approval from Dr. Friedlander before moving on to the rest of the homework.
 
-1.  [Click this link](https://classroom.github.com/a/SXdGfP0m) to accept the assignment and enter your team name.
-2.  Repeat the directions for creating a project from HW 1 with the HW 4 repository.
+Use [this app](https://efriedlander.shinyapps.io/ClassificationMetrics/) to answer the following questions:
 
-Once this is complete, the other members can do the same thing, being careful to join the already created team on GitHub classroom.
+1.   Look at the three possible boundaries: Plane, Circle, Parabola. Do you think logistic regression or KNN will yield a better classifier and how can you decide which is better? Explain
+2.   Test your hypothesis for each boundary.
+3.   Describe a binary classification scenario where the classes are imbalanced (e.g. Proportion Positive = 90%).
+4.   How will imbalanced classes (e.g. Proportion Positive = 90%) impact the classification metrics you identified in the previous question? 
+5.   Describe a binary classification scenario where the penalty for a false positive is much higher than the penalty for a false negative (or vice versa). 
+6.   For the scenario you described above, which metrics would be come more important? Change the classification threshold in Fit Model tab to try and improve the metric(s) you identified. 
 :::
 
-## Exercise 0.2
-
-We will now learn how to create branches and run git from the [command line](https://neuraldatascience.io/2-nds/terminal.html). Each team member will create their own branch and complete a version of their homework.
-
-::: {.callout-tip title="Question"}
-1.  Open the terminal in VS Code (Terminal -> New Terminal). This is a bash terminal where you can run git commands.
-2.  Create your own branch by typing `git checkout -b branch_name` where `branch_name` is whatever you want to name your branch. Typing `git` tells the terminal that you want to run a `git` command, `checkout` is a git command that will switch you to a different branch, the `-b` option will create a new branch for you. If you want to switch between existing branches leave out `-b`.
-3.  Put your name in one of the slots below and render your document.
-4.  Stage your changes by typing `git add .` or using the Source Control tab in VS Code. `git add .` will simply stage all changes. If you don't want to stage ALL of the changes you can type `git add filename` where `filename` corresponds to the files you want to stage.
-5.  Commit your changes by typing `git commit -m "insert commit message"` where you replace `insert commit message` with your actual commit message. This will commit your changes.
-6.  To push your changes to GitHub, type `git push`. You might need to set the upstream branch if prompted with a command like `git push --set-upstream origin branch_name`.
-7.  If you ever want to pull your changes you can type `git pull`.
-8.  If all group members are working different branches you shouldn't encounter any merge conflicts.
-:::
-
--   Team Name: \[Insert Name\]
--   Member 1: \[Insert Name\]
--   Member 2: \[Insert Name\]
--   Member 3: \[Insert Name/Delete line if you only have two members\]
-
-## Exercise 0.3
-
-::: callout-warning
-Skip this exercise until everyone has finished the homework. Test 1
-:::
-
-::: {.callout-tip title="Question"}
-1.  Read the warning above!
-2.  (DO NOT SKIP) Go through all of the questions together, discussing each others solutions to get a good idea of what you want the final submission to look like.
-3.  On any computer, type `git checkout main`. This will move you into the main branch.
-4.  Type `git merge name_of_branch_you_want_to_merge` where `name_of_branch_you_want_to_merge` is the name of the branch you want to merge into `main`.
-5.  Do this for each team members branch. Each time you will likely get a merge-conflict that you need to resolve. Resolve them in the same way you did for the previous homework.
-6.  Give your document a once-over, ensuring that you have blended all your work into a coherent format.
-7.  Render, commit, and push one last time.
-
-If you do the following, I will give you a zero until you fix them:
-
-- Put multiple answers for the same problem. E.g. ("Eric's Answer...", "Adam's Answer..."). You must discuss and decide on what the best solution is as a group.
-- Create a final document without merging. I must see each team member merge into the `main` branch even if you don't plan on keeping any of their changes.
-:::
-
-# Logistic Regression
-
-For our first classification method, we will use a type of **generalized linear model** called a **logistic regression model**. If we have a **Binomial random variable**, a random variable with just two possible outcomes (0 or 1), logistic regression gives us the probability that each outcome occurs based on some predictor variables $X$. Whereas, for linear regression, we were estimating models of the form, $$Y = \beta_0 + \beta_1\times X_1 + \beta_2\times X_2$$ the form of the a logistic regression equation is
-
-$$P(Y = 1 | X)  = \dfrac{e^{\beta_0 + \beta_1\times X_1 + \beta_2\times X_2}}{1 + e^{\beta_0 + \beta_1\times X_1 + \beta_2\times X_2}}.$$ 
-
-In other words, this function gives us the probability that the outcome variable $Y$ belongs to category 1 given particular values for the predictor variables $X_1$ and $X_2$. Notice that the function above will always be between 0 and 1 for any values of $\beta$ and $X$, which is what allows us to interpret this as a probability. Of course, the probability that the outcome variable is equal to 0 is just $1 - P(Y = 1 | X)$. Rearranging the formula above, we have
-
-$$\log \left (\dfrac{P(Y = 1 | X) }{1 - P(Y = 1 | X) } \right ) = \beta_0 + \beta_1X_1 + \beta_2X_2$$
-
-and we see why logistic regression is considered a type of generalized **linear** regression. The quantity on the left is called the **log-odds** or **logit**, and so logistic regression models the log-odds as a linear function of the predictor variable. The coefficients are chosen via the **maximum likelihood criterion**, which you can read more about in Section 12.2 of APM and Section 4.3.2 ISLR if you would like. I recommend learning more about **maximum likelihood estimators** at some point when you have the chance.
 
 # Our Data
 
-In this homework, we will practice applying logistic regression by working with the data set `haberman.data`. The dataset contains cases from a study that was conducted between 1958 and 1970 at the University of Chicago's Billings Hospital on the survival of patients who had undergone surgery for breast cancer. More information about the data set is included in the file `haberman.names` (feel free to open it in a text editor to read it). We'll be trying to predict whether a patient survived after undergoing surgery for breast cancer.
+In this homework, we will practice applying logistic regression by working with the data set `haberman.data` (you can read this just like a csv). The dataset contains cases from a study that was conducted between 1958 and 1970 at the University of Chicago's Billings Hospital on the survival of patients who had undergone surgery for breast cancer. More information about the data set, including information about the variables, is included in the file `haberman.names` (feel free to open it in a text editor to read it). We'll be trying to predict whether a patient survived after undergoing surgery for breast cancer.
 
 ## Exercise 1
 
 ::: {.callout-tip title="Question"}
--   Load the data set into Python using `pd.read_csv`. The `haberman.data` file does not contain column names so you will need to provide them as a list of strings to the `names=` argument. Choose sensible names based on the information in `haberman.names`. You can load it with `pyhere` using `pd.read_csv(here("data", "haberman.data"), names=...)`.
--   Convert the Survival Status variable into a Categorical variable (or object type string), giving appropriate names (i.e. not numbers) to each category.
+-   Load the data set into Python using `pd.read_csv`. The `haberman.data` file does not contain column names so you will need to provide them as a list of strings to the `names=` argument. Choose sensible names based on the information in `haberman.names`. You can load it using something like `pd.read_csv("haberman.data", names=...)`.
+-   In `sklearn` you do not need to convert the Survival Status variable into a Categorical variable (or object type string). However, you should be aware of what the values in the response variable represent. Make a note of what the values in the response variable represent.
 -   Give a brief summary of the data set using `.describe()` and `.info()`, noting any information you feel would be important.
 -   Split the data into a training and test set. Use a 60-40 split with `train_test_split`. Once again, please set your `random_state` to 427.
 :::
@@ -139,15 +77,14 @@ In this homework, we will practice applying logistic regression by working with 
 ::: {.callout-tip title="Question"}
 Using the data from your training set build a `LogisticRegression` model from `sklearn.linear_model` to predict whether or not a patient will survive based **only on the number of axillary nodes detected**. Fit the model to your training data. Look at the `.coef_` and `.intercept_` attributes of your fitted model. Does the probability of survival increase or decrease with the number of nodes detected? 
 
-*Hint: You will need to make sure the target class is handled appropriately. If your categorical names are strings, check `model.classes_` to see the internal ordering `LogisticRegression` uses.*
 :::
 
 ## Exercise 3
 
 ::: {.callout-tip title="Question"}
-Create a DataFrame of integers from 0 to 50 for the number of nodes. Use the `.predict_proba()` method on your fitted model to evaluate probabilities on these integers. Extract the probabilities for the positive class (the outcome you're tracking as "dying/did not survive" or however you labeled it). 
+Create a line plot number of nodes, going from 0 to 50 on the x-axis, and the predicted probability of survival on the y-axis. Based on this image, estimate the input that would be needed to give an output probability of 0.75. What does this mean in the context of the model?
 
-Create a line plot with the integers from 0 to 50 on the x-axis and the predicted probabilities on the y-axis, using `matplotlib`, `seaborn`, or `plotnine`. Based on this image, estimate the input that would be needed to give an output probability of 0.75. What does this mean in the context of the model?
+Hint: Create a DataFrame containin a column with the same name as the column in your training set of the number of axillary nodes detected. Make sure that column contains the integers from 0 to 50. Use the `.predict_proba()` method on your fitted model to evaluate probabilities on this DataFrame. Extract the probabilities for the survival class. You can then plot this.
 :::
 
 # Classification Using a Logistic Regression Model
@@ -158,7 +95,7 @@ For a classification problem, we want a prediction of which class the outcome va
 
 ::: {.callout-tip title="Question"}
 -   For the rest of the homework, treat the patient dying as our "Positive" class.
--   Using a threshold value of 0.5, obtain a vector of class predictions for the test data set (e.g. evaluate `model.predict_proba(X_test)[:, 1] >= 0.5`). You need not display it.
+-   Using a threshold value of 0.5, obtain a vector of class predictions for the test data set (this should be the default in `predict`). You need not display it.
 -   Construct a confusion matrix using `sklearn.metrics.confusion_matrix`. Print the matrix.
 -   Using the numbers from your confusion matrix (i.e. without using evaluation metric functions from sklearn) manually compute the following:
     -   Accuracy
@@ -175,7 +112,7 @@ Now, we may be asking ourselves, "Is this a good accuracy?" and the answer is, a
 ## Exercise 5
 
 ::: {.callout-tip title="Question"}
-Suppose you decided to create a super simple baseline model and just predict that everyone survives. What would the accuracy on the training set be? Note that you should not need to use construct a confusion matrix to answer this question.
+Suppose you decided to create a super simple baseline model and just predict that everyone survives. What would the accuracy on the training set be? Note that you should not need to use construct a confusion matrix to answer this question or fit any models.
 :::
 
 Perhaps we shouldn't be so excited about the accuracy obtained in question 4! Accuracy is a good metric but it isn't perfect and suffers in situations where our classes are unbalanced.
@@ -183,7 +120,12 @@ Perhaps we shouldn't be so excited about the accuracy obtained in question 4! Ac
 ## Exercise 6
 
 ::: {.callout-tip title="Question"}
-A threshold of 0.5 isn't necessarily the best choice for the threshold. Write out a `for` loop (or use list comprehensions/NumPy arrays) to test every threshold between 0 and 1 (increase by steps of 0.01). Calculate the accuracy, recall, and precision at each threshold. Create a single line-plot with the the threshold on the x-axis and the accuracy, recall, and precision on the y-axis. Hint: you should NOT be fitting any models here, just re-evaluating metrics using `predict_proba`.
+A threshold of 0.5 isn't necessarily the best choice for the threshold. Write out a `for` loop to test every threshold between 0 and 1 (increase by steps of 0.01). Calculate the accuracy, recall, and precision at each threshold. Create a single line-plot with the the threshold on the x-axis and the accuracy, recall, and precision on the y-axis.
+
+Hints:
+
+- There are two ways to do this: (1) use `FixedThresholdClassifier` from `sklearn.model_selection` to evaluate the metrics at each threshold, or (2) use `predict_proba` to get the probabilities and then calculate classes manually
+- You should NOT be refitting your logistic regression model at each threshold. You should only be fitting it once and then re-evaluating the class predictions and metrics at each threshold.
 :::
 
 # ROC and AUC
@@ -200,7 +142,7 @@ The more the curve looks like its being sucked into the top left corner, the bet
 ## Exercise 7
 
 ::: {.callout-tip title="Question"}
-Produce an ROC curve and calculate the AUC statistic on the test set. You can use something like `RocCurveDisplay.from_estimator`, or calculate it manually with `roc_curve` and `roc_auc_score` from `sklearn.metrics`. Try to report your AUC. Comment on your results.
+Produce an ROC curve and calculate the AUC statistic on the test set. You can use`RocCurveDisplay`, `roc_curve`, and `roc_auc_score` from `sklearn.metrics`. Report your AUC. Comment on your results.
 :::
 
 # Final Challenge
@@ -208,7 +150,7 @@ Produce an ROC curve and calculate the AUC statistic on the test set. You can us
 ## Exercise 8
 
 ::: {.callout-tip title="Question"}
-Kaggle is a website that runs a variety of data science competitions. Read about the framingham heart study and the associated data set [here](https://www.kaggle.com/datasets/dileep070/heart-disease-prediction-using-logistic-regression). Please stop reading at the section entitled "logistic regression" as this will spoil the fun of analyzing this data set. Since you have to create an account to download data off of Kaggle I've included a csv in the `data/` directory named `framingham.csv`. 
+Kaggle is a website that runs a variety of data science competitions. Read about the framingham heart study and the associated data set [here](https://www.kaggle.com/datasets/dileep070/heart-disease-prediction-using-logistic-regression). Please stop reading at the section entitled "logistic regression" (right after the "Demographics" section) as this will spoil the fun of analyzing this data set. Since you have to create an account to download data off of Kaggle I've included a csv in the `data/` directory named `framingham.csv`. 
 
-Create the best scikit-learn model that you can. Best model gets a high five from Dr. Friedlander. Note: split your data into a train, and test sets using the random state 10520.
+Create the best model that you can. Best model gets a high five from Dr. Friedlander. Note: split your data into a train and test sets using the random state 10520 and a 60-40 split. Be prepared to justify how you determined what "best" meant and present on your work in class.
 :::
