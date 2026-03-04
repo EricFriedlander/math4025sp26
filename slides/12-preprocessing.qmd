@@ -17,6 +17,7 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder, OrdinalEncoder
 from sklearn.feature_selection import VarianceThreshold
 from sklearn.compose import ColumnTransformer
 from sklearn.metrics import mean_squared_error, r2_score
+from feature_engine.encoding import RareLabelEncoder
 from plotnine import *
 from itables import show
 import warnings
@@ -47,6 +48,15 @@ We'll cover some common pre-processing tasks:
 - Lumping predictors
 - One-hot/dummy encoding categorical predictor
 
+## Reminder: Pipelines & ColumnTransformers {.smaller}
+
+We use **Pipelines** and **ColumnTransformers** to bundle preprocessing and modeling steps, preventing *data leakage* and keeping our code organized.
+
+- **Pipeline**: Chains together a sequence of steps (like transformers) optionally ending with an estimator. Data flows sequentially through each step.
+  - *When to use*: When you want to apply a sequence of transformations to the *same* variables in order.
+- **ColumnTransformer**: Applies different transformers (or pipelines) to different columns of an array or DataFrame.
+  - *When to use*: When you have mixed data types (e.g., numeric vs. categorical) needing different preprocessing steps before being combined back together.
+
 ## Pre-Split Cleaning {.smaller}
 
 - Before you split your data: make sure data is in correct format
@@ -62,7 +72,7 @@ We'll cover some common pre-processing tasks:
 ## Example: Factor Levels in Wrong Order
 
 ```{python}
-ames['Overall_Qual'].unique()
+ames['Overall_Cond'].unique()
 ```
 
 ## Re-Factoring (Ordinal Encoding)
@@ -72,8 +82,8 @@ ames['Overall_Qual'].unique()
 qual_levels = ["Very_Poor", "Poor", "Fair", "Below_Average", "Average", 
                "Above_Average", "Good", "Very_Good", "Excellent", "Very_Excellent"]
 
-ames['Overall_Qual'] = pd.Categorical(ames['Overall_Qual'], categories=qual_levels, ordered=True)
-ames['Overall_Qual'].cat.categories
+ames['Overall_Cond'] = pd.Categorical(ames['Overall_Cond'], categories=qual_levels, ordered=True)
+ames['Overall_Cond'].cat.categories
 ```
 
 Note: In `scikit-learn`, you can use `OrdinalEncoder` in a pipeline if you want this step integrated into your workflow.
@@ -119,17 +129,14 @@ ames['Neighborhood'].value_counts().head()
 ## Lump Small Categories Together
 
 ```{python}
-# Calculate frequencies
-counts = ames['Neighborhood'].value_counts(normalize=True)
-# Find infrequent categories (less than 5%)
-infrequent = counts[counts < 0.05].index
+# Group categories that appear in less than 5% of the data into 'Other'
+rare_encoder = RareLabelEncoder(tol=0.05, n_categories=1, replace_with='Other')
 
-# Replace them with 'Other'
-ames['Neighborhood'] = ames['Neighborhood'].replace(infrequent, 'Other')
-ames['Neighborhood'].value_counts()
+# In a pipeline
+preproc_pipeline = Pipeline([
+    ('lump', rare_encoder)
+])
 ```
-
-*Note: There are third-party extensions (like `feature-engine`) that supply `RareLabelEncoder` for adding this behavior easily to scikit-learn pipelines.*
 
 ## One-hot/dummy encoding categorical predictors
 
@@ -141,12 +148,22 @@ ames['Neighborhood'].value_counts()
 # one_hot=True is the default encoding method in scikit-learn OneHotEncoder
 # unless we use drop='first' (dummy encoding)
 encoder = OneHotEncoder(drop='first', sparse_output=False, handle_unknown='ignore')
+
+# In a pipeline
+preproc_pipeline = Pipeline([
+    ('dummy', encoder)
+])
 ```
 
 ## Pipeline: Center and scale
 
 ```{python}
 scaler = StandardScaler()
+
+# In a pipeline
+preproc_pipeline = Pipeline([
+    ('scale', scaler)
+])
 ```
 
 ## Order of Preprocessing Step {.smaller}
@@ -172,7 +189,7 @@ Questions to ask:
 
 ```{python}
 ames = pd.read_csv("../data/ameshousing.csv")
-ames['Overall_Qual'] = pd.Categorical(ames['Overall_Qual'], categories=qual_levels, ordered=True)
+ames['Overall_Cond'] = pd.Categorical(ames['Overall_Cond'], categories=qual_levels, ordered=True)
 
 # Replace any missing garage types with 'No_Garage' if it makes logical sense
 ames['Garage_Type'] = ames['Garage_Type'].fillna('No_Garage')
@@ -219,7 +236,10 @@ preprocessor = ColumnTransformer(
             ('nzv', VarianceThreshold(threshold=0.01)),
             ('scaler', StandardScaler())
         ]), numeric_features),
-        ('cat', OneHotEncoder(handle_unknown='ignore'), categorical_features)
+        ('cat', Pipeline([
+            ('lump', RareLabelEncoder(tol=0.05, n_categories=1, replace_with='Other')),
+            ('dummy', OneHotEncoder(handle_unknown='ignore'))
+        ]), categorical_features)
     ])
 ```
 

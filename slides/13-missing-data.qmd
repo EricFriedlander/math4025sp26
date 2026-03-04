@@ -2,12 +2,6 @@
 title: 'MATH 4025: Missing Data'
 ---
 
-## Announcements
-
-- [Coyote Connections Thu March 13th 7-9pm](https://alumni.collegeofidaho.edu/e/coyote-connections-2025)
-- Please print out and bring four copies of your resume and cover letter to class on Friday
-- Debrief from talk today
-
 ## Computational Set-Up
 
 ```{python}
