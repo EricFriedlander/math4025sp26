@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.6.39">
+
+  <meta name="author" content="Dr.&nbsp;Eric Friedlander">
+  <title>Math 4025 - Spring 2026 – MATH 4025: Cross Validation and Resampling</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-72811bd306436bae30bfb620bac545c3.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+  
+  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">MATH 4025: Cross Validation and Resampling</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Dr.&nbsp;Eric Friedlander 
+</div>
+</div>
+</div>
+
+</section>
+<section id="concept-check" class="slide level2">
+<h2>Concept Check</h2>
+<ul>
+<li>Why do we split our data before fitting a model?</li>
+<li>Suppose we have a data set with <span class="math inline">\(n = 1000\)</span> observations. We perform a 70/30 split. How many observations are in the training set and how many are in the test set?</li>
+</ul>
+</section>
+<section>
+<section id="resampling-cross-validation" class="title-slide slide level1 center">
+<h1>Resampling &amp; Cross Validation</h1>
+
+</section>
+<section id="data-splitting-discussion" class="slide level2">
+<h2>Data Splitting: Discussion</h2>
+<div>
+<ul>
+<li class="fragment">Why do we split our data before fitting a model?
+<ul>
+<li class="fragment">To prevent overfitting</li>
+</ul></li>
+<li class="fragment">What are some pitfalls we might encounter if we compare A LOT of models on the test set? (E.g. 100 different thresholds or <span class="math inline">\(k = 1, 2, \ldots, 100\)</span> neighbors)
+<ul>
+<li class="fragment">We open ourselves up to information leakage</li>
+</ul></li>
+<li class="fragment">Potential solution… three way split (training/validation/test)</li>
+<li class="fragment">Better solution… cross validation and resampling</li>
+</ul>
+</div>
+</section>
+<section id="resampling" class="slide level2">
+<h2>Resampling</h2>
+
+<img data-src="../slides/images/11/resampling.svg" class="r-stretch quarto-figure-center"><p class="caption">Figure 10.1 from TMWR</p></section>
+<section id="cross-validation-terminology" class="slide level2">
+<h2>Cross-Validation Terminology</h2>
+<ul>
+<li>Divide training set into two sets
+<ul>
+<li>Analysis set (Training fold): fit the model (similar to training set)</li>
+<li>Assessment set (Validation fold): evaluation the model (similar to test set)</li>
+</ul></li>
+</ul>
+</section>
+<section id="k-fold-cross-validation-cv" class="slide level2 smaller">
+<h2>K-Fold Cross-Validation (CV)</h2>
+<div>
+<ul>
+<li class="fragment">Partition your data into <span class="math inline">\(K\)</span> randomly selected non-overlapping “folds”
+<ul>
+<li class="fragment">Folds don’t overlap and every training observation is in one fold</li>
+<li class="fragment">Each fold contained <span class="math inline">\(1/K\)</span> of the training data</li>
+</ul></li>
+<li class="fragment">Looping through the folds <span class="math inline">\(k = 1, \ldots, K\)</span>:
+<ul>
+<li class="fragment">Treat fold <span class="math inline">\(k\)</span> as the assessment set</li>
+<li class="fragment">Treat all folds except for <span class="math inline">\(k\)</span> as the analysis set</li>
+<li class="fragment">Fit model to analysis set (use whole modeling workflow)</li>
+<li class="fragment">Compute error metrics on assessment set</li>
+</ul></li>
+<li class="fragment">After loop, you will have <span class="math inline">\(K\)</span> copies of each error metrics</li>
+<li class="fragment">Average them together to get performance estimate</li>
+<li class="fragment">Can also look at distribution of performance metrics</li>
+</ul>
+</div>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+
+<img data-src="images/11/cv-viz.webp" class="r-stretch quarto-figure-center"><p class="caption"><a href="https://python.plainenglish.io/cross-validation-in-machine-learning-enhancing-model-performance-with-confidence-39402f6ca60f">Source</a></p></section></section>
+<section>
+<section id="cv-workflow-in-python" class="title-slide slide level1 center">
+<h1>CV Workflow in Python</h1>
+
+</section>
+<section id="data-ames-housing-prices" class="slide level2 smaller">
+<h2>Data: Ames Housing Prices</h2>
+<p>A data set from <a href="https://jse.amstat.org/v19n3/decock.pdf">De Cock (2011)</a> has 82 fields were recorded for 2,930 properties in Ames IA.</p>
+<p>Goal: Predict <code>Sale_Price</code>.</p>
+<div id="b19f2b7e" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a>ames <span class="op">=</span> pd.read_csv(<span class="st">"../data/ameshousing.csv"</span>)</span>
+<span id="cb1-2"><a></a>ames.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.DataFrame'&gt;
+RangeIndex: 2930 entries, 0 to 2929
+Data columns (total 74 columns):
+ #   Column              Non-Null Count  Dtype  
+---  ------              --------------  -----  
+ 0   MS_SubClass         2930 non-null   str    
+ 1   MS_Zoning           2930 non-null   str    
+ 2   Lot_Frontage        2930 non-null   int64  
+ 3   Lot_Area            2930 non-null   int64  
+ 4   Street              2930 non-null   str    
+ 5   Alley               2930 non-null   str    
+ 6   Lot_Shape           2930 non-null   str    
+ 7   Land_Contour        2930 non-null   str    
+ 8   Utilities           2930 non-null   str    
+ 9   Lot_Config          2930 non-null   str    
+ 10  Land_Slope          2930 non-null   str    
+ 11  Neighborhood        2930 non-null   str    
+ 12  Condition_1         2930 non-null   str    
+ 13  Condition_2         2930 non-null   str    
+ 14  Bldg_Type           2930 non-null   str    
+ 15  House_Style         2930 non-null   str    
+ 16  Overall_Cond        2930 non-null   str    
+ 17  Year_Built          2930 non-null   int64  
+ 18  Year_Remod_Add      2930 non-null   int64  
+ 19  Roof_Style          2930 non-null   str    
+ 20  Roof_Matl           2930 non-null   str    
+ 21  Exterior_1st        2930 non-null   str    
+ 22  Exterior_2nd        2930 non-null   str    
+ 23  Mas_Vnr_Type        1155 non-null   str    
+ 24  Mas_Vnr_Area        2930 non-null   int64  
+ 25  Exter_Cond          2930 non-null   str    
+ 26  Foundation          2930 non-null   str    
+ 27  Bsmt_Cond           2930 non-null   str    
+ 28  Bsmt_Exposure       2930 non-null   str    
+ 29  BsmtFin_Type_1      2930 non-null   str    
+ 30  BsmtFin_SF_1        2930 non-null   int64  
+ 31  BsmtFin_Type_2      2930 non-null   str    
+ 32  BsmtFin_SF_2        2930 non-null   int64  
+ 33  Bsmt_Unf_SF         2930 non-null   int64  
+ 34  Total_Bsmt_SF       2930 non-null   int64  
+ 35  Heating             2930 non-null   str    
+ 36  Heating_QC          2930 non-null   str    
+ 37  Central_Air         2930 non-null   str    
+ 38  Electrical          2930 non-null   str    
+ 39  First_Flr_SF        2930 non-null   int64  
+ 40  Second_Flr_SF       2930 non-null   int64  
+ 41  Gr_Liv_Area         2930 non-null   int64  
+ 42  Bsmt_Full_Bath      2930 non-null   int64  
+ 43  Bsmt_Half_Bath      2930 non-null   int64  
+ 44  Full_Bath           2930 non-null   int64  
+ 45  Half_Bath           2930 non-null   int64  
+ 46  Bedroom_AbvGr       2930 non-null   int64  
+ 47  Kitchen_AbvGr       2930 non-null   int64  
+ 48  TotRms_AbvGrd       2930 non-null   int64  
+ 49  Functional          2930 non-null   str    
+ 50  Fireplaces          2930 non-null   int64  
+ 51  Garage_Type         2930 non-null   str    
+ 52  Garage_Finish       2930 non-null   str    
+ 53  Garage_Cars         2930 non-null   int64  
+ 54  Garage_Area         2930 non-null   int64  
+ 55  Garage_Cond         2930 non-null   str    
+ 56  Paved_Drive         2930 non-null   str    
+ 57  Wood_Deck_SF        2930 non-null   int64  
+ 58  Open_Porch_SF       2930 non-null   int64  
+ 59  Enclosed_Porch      2930 non-null   int64  
+ 60  Three_season_porch  2930 non-null   int64  
+ 61  Screen_Porch        2930 non-null   int64  
+ 62  Pool_Area           2930 non-null   int64  
+ 63  Pool_QC             2930 non-null   str    
+ 64  Fence               2930 non-null   str    
+ 65  Misc_Feature        106 non-null    str    
+ 66  Misc_Val            2930 non-null   int64  
+ 67  Mo_Sold             2930 non-null   int64  
+ 68  Year_Sold           2930 non-null   int64  
+ 69  Sale_Type           2930 non-null   str    
+ 70  Sale_Condition      2930 non-null   str    
+ 71  Sale_Price          2930 non-null   int64  
+ 72  Longitude           2930 non-null   float64
+ 73  Latitude            2930 non-null   float64
+dtypes: float64(2), int64(32), str(40)
+memory usage: 2.4 MB</code></pre>
+</div>
+</div>
+</section>
+<section id="your-turn" class="slide level2 scrollable">
+<h2><span style="color:blue">Your Turn!!!</span></h2>
+<p>Answer the following questions using the <code>ames</code> dataset.</p>
+<ol type="1">
+<li><p>You start with an initial 70/30 training/test split. How many observations are in your training and test set?</p></li>
+<li><p>You then perform 10-Fold CV on the training set. How large is each analysis set and each assessment set and how many analysis and assessment sets do you have?</p></li>
+<li><p>Do your analysis sets overlap? Do your assessment sets overlap?</p></li>
+<li><p>How many times will you fit your model? How many different MSE’s will you have?</p></li>
+</ol>
+</section>
+<section id="initial-data-split" class="slide level2">
+<h2>Initial Data Split</h2>
+<div id="5f2e241c" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>ames_train, ames_test <span class="op">=</span> train_test_split(</span>
+<span id="cb3-2"><a></a>    ames, </span>
+<span id="cb3-3"><a></a>    train_size<span class="op">=</span><span class="fl">0.70</span>,</span>
+<span id="cb3-4"><a></a>    random_state<span class="op">=</span><span class="dv">4025</span></span>
+<span id="cb3-5"><a></a>)</span>
+<span id="cb3-6"><a></a></span>
+<span id="cb3-7"><a></a>X_train <span class="op">=</span> ames_train.drop(columns<span class="op">=</span>[<span class="st">'Sale_Price'</span>])</span>
+<span id="cb3-8"><a></a>y_train <span class="op">=</span> ames_train[<span class="st">'Sale_Price'</span>]</span>
+<span id="cb3-9"><a></a>X_test <span class="op">=</span> ames_test.drop(columns<span class="op">=</span>[<span class="st">'Sale_Price'</span>])</span>
+<span id="cb3-10"><a></a>y_test <span class="op">=</span> ames_test[<span class="st">'Sale_Price'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="define-folds" class="slide level2">
+<h2>Define Folds</h2>
+<div id="3825e476" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="co"># We use KFold to define the cross-validation splits</span></span>
+<span id="cb4-2"><a></a>kf <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">10</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">4025</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="other-types-of-cross-validation" class="slide level2 smaller">
+<h2>Other Types of Cross Validation</h2>
+<ul>
+<li><strong>Repeated K-Fold</strong>: Repeats K-Fold CV multiple times with different randomizations. Useful for getting a more robust estimate of performance.</li>
+<li><strong>Stratified K-Fold</strong>: Ensures that each fold has the same proportion of observations with a given label. Crucial for classification problems with imbalanced classes.</li>
+</ul>
+<div id="544abafa" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="co"># Repeated 10-Fold CV, 5 times (50 folds total)</span></span>
+<span id="cb5-2"><a></a>rkf <span class="op">=</span> RepeatedKFold(n_splits<span class="op">=</span><span class="dv">10</span>, n_repeats<span class="op">=</span><span class="dv">5</span>, random_state<span class="op">=</span><span class="dv">4025</span>)</span>
+<span id="cb5-3"><a></a></span>
+<span id="cb5-4"><a></a><span class="co"># Stratified 10-Fold CV</span></span>
+<span id="cb5-5"><a></a><span class="co"># Note: Ames is a regression problem, so StratifiedKFold doesn't apply directly here.</span></span>
+<span id="cb5-6"><a></a>skf <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">10</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">4025</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="define-models" class="slide level2">
+<h2>Define Model(s)</h2>
+<div id="9c8e2eed" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>lm_model <span class="op">=</span> LinearRegression()</span>
+<span id="cb6-2"><a></a>knn5_model <span class="op">=</span> KNeighborsRegressor(n_neighbors<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb6-3"><a></a>knn10_model <span class="op">=</span> KNeighborsRegressor(n_neighbors<span class="op">=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="define-preprocessing" class="slide level2">
+<h2>Define Preprocessing</h2>
+<p>We’ll set up a <code>ColumnTransformer</code> to handle preprocessing. For simplicity in this example, we will just isolate numeric and categorical predictors. We’ll do a deeper dive into preprocessing in the next lecture.</p>
+<div id="0aae746f" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="co"># Identify purely numeric and categorical columns</span></span>
+<span id="cb7-2"><a></a>numeric_features <span class="op">=</span> X_train.select_dtypes(include<span class="op">=</span>[<span class="st">'int64'</span>, <span class="st">'float64'</span>]).columns</span>
+<span id="cb7-3"><a></a>categorical_features <span class="op">=</span> X_train.select_dtypes(include<span class="op">=</span>[<span class="st">'object'</span>, <span class="st">'category'</span>]).columns</span>
+<span id="cb7-4"><a></a></span>
+<span id="cb7-5"><a></a><span class="co"># Simple preprocessing: scale numeric, one-hot encode categorical</span></span>
+<span id="cb7-6"><a></a>preprocessor <span class="op">=</span> ColumnTransformer(</span>
+<span id="cb7-7"><a></a>    transformers<span class="op">=</span>[</span>
+<span id="cb7-8"><a></a>        (<span class="st">'num'</span>, StandardScaler(), numeric_features),</span>
+<span id="cb7-9"><a></a>        (<span class="st">'cat'</span>, OneHotEncoder(handle_unknown<span class="op">=</span><span class="st">'ignore'</span>), categorical_features)</span>
+<span id="cb7-10"><a></a>    ])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="define-pipelines" class="slide level2">
+<h2>Define Pipelines</h2>
+<div id="0a7762f9" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>lm_pipeline <span class="op">=</span> Pipeline([</span>
+<span id="cb8-2"><a></a>    (<span class="st">'preprocessor'</span>, preprocessor),</span>
+<span id="cb8-3"><a></a>    (<span class="st">'model'</span>, lm_model)</span>
+<span id="cb8-4"><a></a>])</span>
+<span id="cb8-5"><a></a></span>
+<span id="cb8-6"><a></a>knn5_pipeline <span class="op">=</span> Pipeline([</span>
+<span id="cb8-7"><a></a>    (<span class="st">'preprocessor'</span>, preprocessor),</span>
+<span id="cb8-8"><a></a>    (<span class="st">'model'</span>, knn5_model)</span>
+<span id="cb8-9"><a></a>])</span>
+<span id="cb8-10"><a></a></span>
+<span id="cb8-11"><a></a>knn10_pipeline <span class="op">=</span> Pipeline([</span>
+<span id="cb8-12"><a></a>    (<span class="st">'preprocessor'</span>, preprocessor),</span>
+<span id="cb8-13"><a></a>    (<span class="st">'model'</span>, knn10_model)</span>
+<span id="cb8-14"><a></a>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="fit-and-assess-models" class="slide level2 smaller">
+<h2>Fit and Assess Models</h2>
+<p>We will use <code>cross_validate</code> to get both MSE and <span class="math inline">\(R^2\)</span>. Note that <code>scikit-learn</code> uses negative MSE by default so that higher is always better. We’ll negate it back.</p>
+<div id="5ce6651c" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>scoring <span class="op">=</span> {<span class="st">'r2'</span>: <span class="st">'r2'</span>, <span class="st">'neg_mse'</span>: <span class="st">'neg_mean_squared_error'</span>}</span>
+<span id="cb9-2"><a></a></span>
+<span id="cb9-3"><a></a>lm_cv <span class="op">=</span> cross_validate(lm_pipeline, X_train, y_train, cv<span class="op">=</span>kf, scoring<span class="op">=</span>scoring)</span>
+<span id="cb9-4"><a></a>knn5_cv <span class="op">=</span> cross_validate(knn5_pipeline, X_train, y_train, cv<span class="op">=</span>kf, scoring<span class="op">=</span>scoring)</span>
+<span id="cb9-5"><a></a>knn10_cv <span class="op">=</span> cross_validate(knn10_pipeline, X_train, y_train, cv<span class="op">=</span>kf, scoring<span class="op">=</span>scoring)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="what-does-this-create" class="slide level2 smaller">
+<h2>What does this create</h2>
+<div id="79aaf348" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>lm_cv.keys()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>dict_keys(['fit_time', 'score_time', 'test_r2', 'test_neg_mse'])</code></pre>
+</div>
+</div>
+<div id="6447cfaa" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a>lm_cv[<span class="st">'test_r2'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>array([0.74358873, 0.86138476, 0.81897963, 0.90096751, 0.88851772,
+       0.66240218, 0.47735248, 0.80420603, 0.82504415, 0.90033934])</code></pre>
+</div>
+</div>
+</section>
+<section id="collecting-metrics" class="slide level2 smaller">
+<h2>Collecting Metrics</h2>
+<p>Let’s look at the average RMSE and <span class="math inline">\(R^2\)</span> across the 10 folds:</p>
+<div id="4f71b01f" class="cell" data-execution_count="12">
+<div class="cell-output cell-output-display">
+<!--| quarto-html-table-processing: none -->
+<table id="itables_cada2333_22a2_49f3_b6c1_5d816f18a062"><tbody><tr>
+    <td style="vertical-align:middle; text-align:left">
+    <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+    Loading ITables v2.6.2 from the internet...
+    (need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</td>
+    </tr></tbody></table>
+<link href="https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
+
+    document.querySelectorAll("#itables_cada2333_22a2_49f3_b6c1_5d816f18a062:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "text_in_header_can_be_selected": true, "order": [], "classes": ["display", "nowrap"], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>Model</th>\n      <th>RMSE</th>\n      <th>R-squared</th>\n    </tr>\n  </thead></table>", "data_json": "[[0, \"Linear Regression\", 35598.831385, 0.788278], [0, \"KNN (K=5)\", 35512.329892, 0.805592], [0, \"KNN (K=10)\", 34440.90132, 0.816443]]"};
+        new ITable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+<section id="visualizing-cv-metrics" class="slide level2">
+<h2>Visualizing CV Metrics</h2>
+<p>We can visualize the distribution of <span class="math inline">\(R^2\)</span> and RMSE across the 10 folds:</p>
+<div id="b604aebf" class="cell" data-fig-height="4" data-fig-width="8" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div>
+<figure>
+<p><img data-src="11-cross-validation_files/figure-revealjs/cell-14-output-1.png" width="960" height="480"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="questions" class="slide level2 scrollable">
+<h2>Questions</h2>
+<ol type="1">
+<li>How many times did we train a model?</li>
+<li>Which model formulation was the best?</li>
+</ol>
+</section>
+<section id="final-model" class="slide level2">
+<h2>Final Model</h2>
+<ul>
+<li>After choosing best model/workflow, fit on full training set and assess on test set</li>
+</ul>
+<div id="b7083edb" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a>final_fit <span class="op">=</span> lm_pipeline.fit(X_train, y_train)</span>
+<span id="cb14-2"><a></a>test_preds <span class="op">=</span> final_fit.predict(X_test)</span>
+<span id="cb14-3"><a></a></span>
+<span id="cb14-4"><a></a>final_rmse <span class="op">=</span> np.sqrt(mean_squared_error(y_test, test_preds))</span>
+<span id="cb14-5"><a></a>final_r2 <span class="op">=</span> r2_score(y_test, test_preds)</span>
+<span id="cb14-6"><a></a></span>
+<span id="cb14-7"><a></a><span class="bu">print</span>(<span class="ss">f"Test RMSE: </span><span class="sc">{</span>final_rmse<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb14-8"><a></a><span class="bu">print</span>(<span class="ss">f"Test R-squared: </span><span class="sc">{</span>final_r2<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test RMSE: 26391.67
+Test R-squared: 0.8811</code></pre>
+</div>
+</div>
+</section>
+<section id="leave-one-out-cross-validation-loocv" class="slide level2 smaller scrollable">
+<h2>Leave-One-Out Cross-Validation (LOOCV)</h2>
+<ul>
+<li><span class="math inline">\(n\)</span>-Fold cross validation</li>
+<li>Iterate through training set
+<ul>
+<li>Treat observation <span class="math inline">\(i\)</span> has assessment set</li>
+<li>Treat other <span class="math inline">\(n-1\)</span> observations as analysis set</li>
+</ul></li>
+</ul>
+<p>Suppose you implement LOOCV on a dataset with <span class="math inline">\(n=100\)</span> observations.</p>
+<ol type="1">
+<li><p>What is the size (number of observations) of each analysis set?</p></li>
+<li><p>What is the size of each assessment set?</p></li>
+<li><p>How many times must you fit a model to complete the overall LOOCV process?</p></li>
+</ol>
+</section>
+<section id="loocv-vs.-k-fold-cv" class="slide level2">
+<h2>LOOCV vs.&nbsp;K-Fold CV</h2>
+<ul>
+<li>Typically we use 5-Fold or 10-Fold CV</li>
+<li><span class="math inline">\(K\)</span>-Fold is much less computationally expensive</li>
+<li><span class="math inline">\(K\)</span> actually gives better estimates of your test error… Why?</li>
+<li>Bias-Variance Trade-Off</li>
+<li>LOOCV has the lowest level of bias but highest level of variance</li>
+<li>5- and 10-Fold CV have medium levels of bias but lower variance</li>
+</ul>
+</section>
+<section id="recap" class="slide level2">
+<h2>Recap</h2>
+<ul>
+<li><strong>Data Splitting</strong>: We split data to prevent overfitting and information leakage.</li>
+<li><strong>Cross-Validation</strong>: Dividing training data into analysis (training) and assessment (validation) sets to robustly evaluate model performance.</li>
+<li><strong>K-Fold CV</strong>: Partitions data into <span class="math inline">\(K\)</span> non-overlapping folds. A common go-to due to its balance of bias and variance computational efficiency.</li>
+<li><strong>Variants</strong>: <code>RepeatedKFold</code> for more robust estimates, <code>StratifiedKFold</code> for classification.</li>
+<li><strong>Python implementation</strong>:
+<ul>
+<li>Define folds using <code>KFold</code></li>
+<li>Encapsulate preprocessing and modeling in a <code>Pipeline</code></li>
+<li>Evaluate using <code>cross_validate</code> or <code>cross_val_score</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="practice" class="slide level2">
+<h2>Practice!</h2>
+<p>Let’s practice using the credit data.</p>
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="../images/logo.png" class="slide-logo"></p>
+<div class="footer footer-default">
+<p><a href="https://EricFriedlander.github.io/math4025sp26/index.html">🔗 Math 4025 - Spring 2026 - Schedule</a></p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp("https:\/\/EricFriedlander\.github\.io\/math4025sp26\/");
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>
