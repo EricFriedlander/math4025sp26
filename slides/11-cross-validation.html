@@ -287,7 +287,7 @@ Dr.&nbsp;Eric Friedlander
 <h2>Data: Ames Housing Prices</h2>
 <p>A data set from <a href="https://jse.amstat.org/v19n3/decock.pdf">De Cock (2011)</a> has 82 fields were recorded for 2,930 properties in Ames IA.</p>
 <p>Goal: Predict <code>Sale_Price</code>.</p>
-<div id="b19f2b7e" class="cell" data-execution_count="2">
+<div id="9aadf644" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a>ames <span class="op">=</span> pd.read_csv(<span class="st">"../data/ameshousing.csv"</span>)</span>
 <span id="cb1-2"><a></a>ames.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -387,7 +387,7 @@ memory usage: 2.4 MB</code></pre>
 </section>
 <section id="initial-data-split" class="slide level2">
 <h2>Initial Data Split</h2>
-<div id="5f2e241c" class="cell" data-execution_count="3">
+<div id="58eaaf89" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>ames_train, ames_test <span class="op">=</span> train_test_split(</span>
 <span id="cb3-2"><a></a>    ames, </span>
 <span id="cb3-3"><a></a>    train_size<span class="op">=</span><span class="fl">0.70</span>,</span>
@@ -402,7 +402,7 @@ memory usage: 2.4 MB</code></pre>
 </section>
 <section id="define-folds" class="slide level2">
 <h2>Define Folds</h2>
-<div id="3825e476" class="cell" data-execution_count="4">
+<div id="334ba65a" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="co"># We use KFold to define the cross-validation splits</span></span>
 <span id="cb4-2"><a></a>kf <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">10</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">4025</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -413,7 +413,7 @@ memory usage: 2.4 MB</code></pre>
 <li><strong>Repeated K-Fold</strong>: Repeats K-Fold CV multiple times with different randomizations. Useful for getting a more robust estimate of performance.</li>
 <li><strong>Stratified K-Fold</strong>: Ensures that each fold has the same proportion of observations with a given label. Crucial for classification problems with imbalanced classes.</li>
 </ul>
-<div id="544abafa" class="cell" data-execution_count="5">
+<div id="4f05aa65" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="co"># Repeated 10-Fold CV, 5 times (50 folds total)</span></span>
 <span id="cb5-2"><a></a>rkf <span class="op">=</span> RepeatedKFold(n_splits<span class="op">=</span><span class="dv">10</span>, n_repeats<span class="op">=</span><span class="dv">5</span>, random_state<span class="op">=</span><span class="dv">4025</span>)</span>
 <span id="cb5-3"><a></a></span>
@@ -424,7 +424,7 @@ memory usage: 2.4 MB</code></pre>
 </section>
 <section id="define-models" class="slide level2">
 <h2>Define Model(s)</h2>
-<div id="9c8e2eed" class="cell" data-execution_count="6">
+<div id="66454d4f" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>lm_model <span class="op">=</span> LinearRegression()</span>
 <span id="cb6-2"><a></a>knn5_model <span class="op">=</span> KNeighborsRegressor(n_neighbors<span class="op">=</span><span class="dv">5</span>)</span>
 <span id="cb6-3"><a></a>knn10_model <span class="op">=</span> KNeighborsRegressor(n_neighbors<span class="op">=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -433,7 +433,7 @@ memory usage: 2.4 MB</code></pre>
 <section id="define-preprocessing" class="slide level2">
 <h2>Define Preprocessing</h2>
 <p>We’ll set up a <code>ColumnTransformer</code> to handle preprocessing. For simplicity in this example, we will just isolate numeric and categorical predictors. We’ll do a deeper dive into preprocessing in the next lecture.</p>
-<div id="0aae746f" class="cell" data-execution_count="7">
+<div id="54d3e197" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="co"># Identify purely numeric and categorical columns</span></span>
 <span id="cb7-2"><a></a>numeric_features <span class="op">=</span> X_train.select_dtypes(include<span class="op">=</span>[<span class="st">'int64'</span>, <span class="st">'float64'</span>]).columns</span>
 <span id="cb7-3"><a></a>categorical_features <span class="op">=</span> X_train.select_dtypes(include<span class="op">=</span>[<span class="st">'object'</span>, <span class="st">'category'</span>]).columns</span>
@@ -448,7 +448,7 @@ memory usage: 2.4 MB</code></pre>
 </section>
 <section id="define-pipelines" class="slide level2">
 <h2>Define Pipelines</h2>
-<div id="0a7762f9" class="cell" data-execution_count="8">
+<div id="80452f7c" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>lm_pipeline <span class="op">=</span> Pipeline([</span>
 <span id="cb8-2"><a></a>    (<span class="st">'preprocessor'</span>, preprocessor),</span>
 <span id="cb8-3"><a></a>    (<span class="st">'model'</span>, lm_model)</span>
@@ -468,7 +468,7 @@ memory usage: 2.4 MB</code></pre>
 <section id="fit-and-assess-models" class="slide level2 smaller">
 <h2>Fit and Assess Models</h2>
 <p>We will use <code>cross_validate</code> to get both MSE and <span class="math inline">\(R^2\)</span>. Note that <code>scikit-learn</code> uses negative MSE by default so that higher is always better. We’ll negate it back.</p>
-<div id="5ce6651c" class="cell" data-execution_count="9">
+<div id="071906fc" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>scoring <span class="op">=</span> {<span class="st">'r2'</span>: <span class="st">'r2'</span>, <span class="st">'neg_mse'</span>: <span class="st">'neg_mean_squared_error'</span>}</span>
 <span id="cb9-2"><a></a></span>
 <span id="cb9-3"><a></a>lm_cv <span class="op">=</span> cross_validate(lm_pipeline, X_train, y_train, cv<span class="op">=</span>kf, scoring<span class="op">=</span>scoring)</span>
@@ -478,13 +478,13 @@ memory usage: 2.4 MB</code></pre>
 </section>
 <section id="what-does-this-create" class="slide level2 smaller">
 <h2>What does this create</h2>
-<div id="79aaf348" class="cell" data-execution_count="10">
+<div id="96788bbf" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>lm_cv.keys()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>dict_keys(['fit_time', 'score_time', 'test_r2', 'test_neg_mse'])</code></pre>
 </div>
 </div>
-<div id="6447cfaa" class="cell" data-execution_count="11">
+<div id="90d01d84" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a>lm_cv[<span class="st">'test_r2'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>array([0.74358873, 0.86138476, 0.81897963, 0.90096751, 0.88851772,
@@ -495,10 +495,10 @@ memory usage: 2.4 MB</code></pre>
 <section id="collecting-metrics" class="slide level2 smaller">
 <h2>Collecting Metrics</h2>
 <p>Let’s look at the average RMSE and <span class="math inline">\(R^2\)</span> across the 10 folds:</p>
-<div id="4f71b01f" class="cell" data-execution_count="12">
+<div id="4dfd12bd" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_cada2333_22a2_49f3_b6c1_5d816f18a062"><tbody><tr>
+<table id="itables_5bee202f_f35f_40e6_9366_3a981ac50d57"><tbody><tr>
     <td style="vertical-align:middle; text-align:left">
     <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
     <g style="fill:#d9d7fc">
@@ -564,11 +564,11 @@ memory usage: 2.4 MB</code></pre>
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_cada2333_22a2_49f3_b6c1_5d816f18a062:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_5bee202f_f35f_40e6_9366_3a981ac50d57:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "text_in_header_can_be_selected": true, "order": [], "classes": ["display", "nowrap"], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>Model</th>\n      <th>RMSE</th>\n      <th>R-squared</th>\n    </tr>\n  </thead></table>", "data_json": "[[0, \"Linear Regression\", 35598.831385, 0.788278], [0, \"KNN (K=5)\", 35512.329892, 0.805592], [0, \"KNN (K=10)\", 34440.90132, 0.816443]]"};
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "classes": ["display", "nowrap"], "text_in_header_can_be_selected": true, "order": [], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>Model</th>\n      <th>RMSE</th>\n      <th>R-squared</th>\n    </tr>\n  </thead></table>", "data_json": "[[0, \"Linear Regression\", 35598.831385, 0.788278], [0, \"KNN (K=5)\", 35512.329892, 0.805592], [0, \"KNN (K=10)\", 34440.90132, 0.816443]]"};
         new ITable(table, dt_args);
     });
 </script>
@@ -578,7 +578,7 @@ memory usage: 2.4 MB</code></pre>
 <section id="visualizing-cv-metrics" class="slide level2">
 <h2>Visualizing CV Metrics</h2>
 <p>We can visualize the distribution of <span class="math inline">\(R^2\)</span> and RMSE across the 10 folds:</p>
-<div id="b604aebf" class="cell" data-fig-height="4" data-fig-width="8" data-execution_count="13">
+<div id="7cf4ac4d" class="cell" data-fig-height="4" data-fig-width="8" data-execution_count="13">
 <div class="cell-output cell-output-display" data-execution_count="13">
 <div>
 <figure>
@@ -600,7 +600,7 @@ memory usage: 2.4 MB</code></pre>
 <ul>
 <li>After choosing best model/workflow, fit on full training set and assess on test set</li>
 </ul>
-<div id="b7083edb" class="cell" data-execution_count="14">
+<div id="16dde114" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a>final_fit <span class="op">=</span> lm_pipeline.fit(X_train, y_train)</span>
 <span id="cb14-2"><a></a>test_preds <span class="op">=</span> final_fit.predict(X_test)</span>
 <span id="cb14-3"><a></a></span>
@@ -657,10 +657,6 @@ Test R-squared: 0.8811</code></pre>
 <li>Evaluate using <code>cross_validate</code> or <code>cross_val_score</code></li>
 </ul></li>
 </ul>
-</section>
-<section id="practice" class="slide level2">
-<h2>Practice!</h2>
-<p>Let’s practice using the credit data.</p>
 
 
 </section></section>
