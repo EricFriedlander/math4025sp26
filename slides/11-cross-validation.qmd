@@ -74,17 +74,7 @@ np.random.seed(4025)
 
 ![[Source](https://python.plainenglish.io/cross-validation-in-machine-learning-enhancing-model-performance-with-confidence-39402f6ca60f)](images/11/cv-viz.webp)
 
-## <span style="color:blue">Your Turn!!!</span>
 
-Suppose you start with a data set with $n=1000$ observations. You are trying to predict a numerical variable and your target metric is MSE.
-
-1. You start with an initial 70/30 training/test split. How many observations are in your training and test set?
-
-2. You then perform 10-Fold CV on the training set. How large is each analysis set and each assessment set and how many analysis and assessment sets do you have?
-
-3. Do your analysis sets overlap? Do your assessment sets overlap?
-
-4. How many times will you fit your model? How many different MSE's will you have?
 
 # CV Workflow in Python
 
@@ -99,12 +89,24 @@ ames = pd.read_csv("../data/ameshousing.csv")
 ames.info()
 ```
 
+## <span style="color:blue">Your Turn!!!</span>
+
+Answer the following questions using the `ames` dataset.
+
+1. You start with an initial 70/30 training/test split. How many observations are in your training and test set?
+
+2. You then perform 10-Fold CV on the training set. How large is each analysis set and each assessment set and how many analysis and assessment sets do you have?
+
+3. Do your analysis sets overlap? Do your assessment sets overlap?
+
+4. How many times will you fit your model? How many different MSE's will you have?
+
 ## Initial Data Split
 
 ```{python}
 ames_train, ames_test = train_test_split(
     ames, 
-    train_size=0.75,
+    train_size=0.70,
     random_state=4025
 )
 
@@ -160,7 +162,7 @@ preprocessor = ColumnTransformer(
     ])
 ```
 
-## Define Workflows/Pipelines
+## Define Pipelines
 
 ```{python}
 lm_pipeline = Pipeline([
@@ -317,7 +319,3 @@ Suppose you implement LOOCV on a dataset with $n=100$ observations.
   - Define folds using `KFold`
   - Encapsulate preprocessing and modeling in a `Pipeline`
   - Evaluate using `cross_validate` or `cross_val_score`
-
-## Practice!
-
-Let's practice using the credit data.
