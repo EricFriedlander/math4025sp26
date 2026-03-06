@@ -1300,7 +1300,7 @@
     "href": "slides/12-preprocessing.html#today",
     "title": "MATH 4025: Pre-processing",
     "section": "Today",
-    "text": "Today\nWe’ll cover some common pre-processing tasks:\n\nGeneral data cleaning\nDealing with zero-variance (zv) and/or near-zero variance (nzv) variables\nEncoding categorical variables\nStandardizing numeric predictors\nLumping rare categories together"
+    "text": "Today\nWe’ll cover some common pre-processing tasks provided by scikit-learn:\n\nStandardization (e.g. centering and scaling)\nNon-linear transformations (e.g. Box-Cox, Yeo-Johnson)\nNormalization (scaling observations)\nEncoding categorical variables\nGenerating polynomial features & discretization\nCustom transformations & feature selection"
   },
   {
     "objectID": "slides/12-preprocessing.html#reminder-pipelines-columntransformers",

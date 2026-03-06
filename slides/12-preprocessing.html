@@ -224,7 +224,7 @@ Dr.&nbsp;Eric Friedlander
 <section id="data-ames-housing-prices" class="slide level2 smaller">
 <h2>Data: Ames Housing Prices</h2>
 <p>Goal: Predict <code>Sale_Price</code>.</p>
-<div id="a3b86686" class="cell" data-execution_count="2">
+<div id="1df13ebb" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a>ames <span class="op">=</span> pd.read_csv(<span class="st">"../data/ameshousing.csv"</span>)</span>
 <span id="cb1-2"><a></a>ames.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -314,13 +314,14 @@ memory usage: 2.4 MB</code></pre>
 </section>
 <section id="today" class="slide level2">
 <h2>Today</h2>
-<p>We’ll cover some common pre-processing tasks:</p>
+<p>We’ll cover some common pre-processing tasks provided by <code>scikit-learn</code>:</p>
 <ul>
-<li>General data cleaning</li>
-<li>Dealing with zero-variance (zv) and/or near-zero variance (nzv) variables</li>
+<li>Standardization (e.g.&nbsp;centering and scaling)</li>
+<li>Non-linear transformations (e.g.&nbsp;Box-Cox, Yeo-Johnson)</li>
+<li>Normalization (scaling observations)</li>
 <li>Encoding categorical variables</li>
-<li>Standardizing numeric predictors</li>
-<li>Lumping rare categories together</li>
+<li>Generating polynomial features &amp; discretization</li>
+<li>Custom transformations &amp; feature selection</li>
 </ul>
 </section>
 <section id="reminder-pipelines-columntransformers" class="slide level2 smaller">
@@ -376,7 +377,7 @@ memory usage: 2.4 MB</code></pre>
 </section>
 <section id="example-factor-levels-in-wrong-order" class="slide level2">
 <h2>Example: Factor Levels in Wrong Order</h2>
-<div id="7183a667" class="cell" data-execution_count="3">
+<div id="89fcc88f" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>(</span>
 <span id="cb3-2"><a></a>    ggplot(ames, aes(x<span class="op">=</span><span class="st">'Overall_Cond'</span>)) <span class="op">+</span></span>
 <span id="cb3-3"><a></a>    geom_bar()</span>
@@ -392,7 +393,7 @@ memory usage: 2.4 MB</code></pre>
 </section>
 <section id="re-order-categories" class="slide level2">
 <h2>Re-Order Categories</h2>
-<div id="a487fdfe" class="cell" data-execution_count="4">
+<div id="7e5cbd1e" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="co"># Pandas approach</span></span>
 <span id="cb4-2"><a></a>qual_levels <span class="op">=</span> [<span class="st">"Very_Poor"</span>, <span class="st">"Poor"</span>, <span class="st">"Fair"</span>, <span class="st">"Below_Average"</span>, <span class="st">"Average"</span>, </span>
 <span id="cb4-3"><a></a>               <span class="st">"Above_Average"</span>, <span class="st">"Good"</span>, <span class="st">"Very_Good"</span>, <span class="st">"Excellent"</span>, <span class="st">"Very_Excellent"</span>]</span>
@@ -408,7 +409,7 @@ memory usage: 2.4 MB</code></pre>
 </section>
 <section id="example-re-ordered-factor-levels" class="slide level2">
 <h2>Example: Re-Ordered Factor Levels</h2>
-<div id="046cca4f" class="cell" data-execution_count="5">
+<div id="ce9720db" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>(</span>
 <span id="cb6-2"><a></a>    ggplot(ames, aes(x<span class="op">=</span><span class="st">'Overall_Cond'</span>)) <span class="op">+</span></span>
 <span id="cb6-3"><a></a>    geom_bar()</span>
