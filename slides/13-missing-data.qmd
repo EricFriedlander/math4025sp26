@@ -2,9 +2,9 @@
 title: 'MATH 4025: Missing Data'
 ---
 
-## Computational Set-Up
-
 ```{python}
+#| include: false
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -28,18 +28,30 @@ mask = rng.random(len(ames)) < 0.05
 ames.loc[mask, 'Year_Built'] = np.nan
 ```
 
+## Concept Check
+
+- Define the following types of bias (you may have to google):
+    + Selection bias
+    + Survivorship bias
+    + Non-response bias
+    + Response bias
+    + Social desirability bias
+
+
 # Missing Data
 
-## Missing Data {.smaller}
+## Missing values {.smaller}
 
--   Many times, you can't just drop missing data
+-   Many times, you can't just drop missing values
 -   Even if you can, dropping missing values can generate *biased* data/models
--   Sometimes missing data gives you more information
+-   Sometimes missing values give you more information
+-   MOST IMPORTANT TAKEAWAY: that data is missing in the first place, may be informative
 -   Types of missing data:
     +   Missing completely at random (MCAR): there is no pattern to your missing values
     +   Missing at random (MAR): missing values are dependent on other values in the data set
     +   Missing not at random (MNAR): missing values are dependent on the value that is missing
 -   Structured missingness (SM):  when the missingness of certain values are depends on one another, regardless of whether the missing values are MCAR, MAR, or MNAR
+-   Missing data is not necessarily the same as have a missing value... You could have observations which are not in your data set which create bias in your sample (Garbage in, Garbage out)
 
 ## MCAR: Examples
 
@@ -75,8 +87,8 @@ ames.loc[mask, 'Year_Built'] = np.nan
 -   Imputing with `scikit-learn`:
     +  `SimpleImputer(strategy='median')`: used for numeric (especially discrete) variables
     +  `SimpleImputer(strategy='mean')`: used for numeric variables
-    +  `KNNImputer()`: used for both numeric and categorical variables (computationally expensive)
     +  `SimpleImputer(strategy='most_frequent')`: used for nominal (having no order) categorical variable
+    +  `KNNImputer()`: used for both numeric and categorical variables (computationally expensive)
     
 ## Exploring Missing Data
 
