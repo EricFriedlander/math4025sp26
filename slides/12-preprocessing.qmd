@@ -64,18 +64,21 @@ We use **Pipelines** and **ColumnTransformers** to bundle preprocessing and mode
 - Common examples:
     + Fixing names of columns
     + Ensure all variable types are correct
-    + Ensure all factor levels are correct and in order (if applicable)
-    + Remove any variables that are not important (or harmful) to your analysis
+    + Ensure all categorical variables are correct and in order (if applicable)
+    + Remove any variables that are not important (or harmful) to your analysis (e.g. ID variables)
     + Ensure missing values are coded as such (i.e. as `NaN` instead of 0 or -1 or "missing")
-    + Filling in missing values where you know what the answer should be (i.e. if a missing value really means 0 instead of missing)
+    + Fill in missing values where you know what the answer should be (i.e. if a missing value really means 0 instead of missing)
 
 ## Example: Factor Levels in Wrong Order
 
 ```{python}
-ames['Overall_Cond'].unique()
+(
+    ggplot(ames, aes(x='Overall_Cond')) +
+    geom_bar()
+)
 ```
 
-## Re-Factoring (Ordinal Encoding)
+## Re-Order Categories
 
 ```{python}
 # Pandas approach
@@ -86,7 +89,14 @@ ames['Overall_Cond'] = pd.Categorical(ames['Overall_Cond'], categories=qual_leve
 ames['Overall_Cond'].cat.categories
 ```
 
-Note: In `scikit-learn`, you can use `OrdinalEncoder` in a pipeline if you want this step integrated into your workflow.
+## Example: Re-Ordered Factor Levels
+
+```{python}
+(
+    ggplot(ames, aes(x='Overall_Cond')) +
+    geom_bar()
+)
+```
 
 ## Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables {.smaller}
 
@@ -145,13 +155,9 @@ preproc_pipeline = Pipeline([
 ## Pipeline: Dummy Variables
 
 ```{python}
-# one_hot=True is the default encoding method in scikit-learn OneHotEncoder
-# unless we use drop='first' (dummy encoding)
-encoder = OneHotEncoder(drop='first', sparse_output=False, handle_unknown='ignore')
-
 # In a pipeline
 preproc_pipeline = Pipeline([
-    ('dummy', encoder)
+    ('dummy', OneHotEncoder())
 ])
 ```
 
@@ -162,7 +168,7 @@ scaler = StandardScaler()
 
 # In a pipeline
 preproc_pipeline = Pipeline([
-    ('scale', scaler)
+    ('scale', StandardScaler())
 ])
 ```
 
@@ -246,32 +252,32 @@ preprocessor = ColumnTransformer(
 ## Define Workflows
 
 ```{python}
-lm_wf = Pipeline([('preprocessor', preprocessor), ('model', lm_model)])
-knn5_wf = Pipeline([('preprocessor', preprocessor), ('model', knn5_model)])
-knn10_wf = Pipeline([('preprocessor', preprocessor), ('model', knn10_model)])
+# lm_wf = Pipeline([('preprocessor', preprocessor), ('model', lm_model)])
+# knn5_wf = Pipeline([('preprocessor', preprocessor), ('model', knn5_model)])
+# knn10_wf = Pipeline([('preprocessor', preprocessor), ('model', knn10_model)])
 ```
 
 ## Fit and Assess Models
 
 ```{python}
-scoring = {'r2': 'r2', 'neg_mse': 'neg_mean_squared_error'}
+# scoring = {'r2': 'r2', 'neg_mse': 'neg_mean_squared_error'}
 
-lm_res = cross_validate(lm_wf, X_train, y_train, cv=kf, scoring=scoring)
-knn5_res = cross_validate(knn5_wf, X_train, y_train, cv=kf, scoring=scoring)
-knn10_res = cross_validate(knn10_wf, X_train, y_train, cv=kf, scoring=scoring)
+# lm_res = cross_validate(lm_wf, X_train, y_train, cv=kf, scoring=scoring)
+# knn5_res = cross_validate(knn5_wf, X_train, y_train, cv=kf, scoring=scoring)
+# knn10_res = cross_validate(knn10_wf, X_train, y_train, cv=kf, scoring=scoring)
 ```
 
 ## Final Evaluate Model
 
 ```{python}
-# Re-fit our best theoretical model
-final_fit = knn10_wf.fit(X_train, y_train)
-test_preds = final_fit.predict(X_test)
+# # Re-fit our best theoretical model
+# final_fit = knn10_wf.fit(X_train, y_train)
+# test_preds = final_fit.predict(X_test)
 
-final_rmse = np.sqrt(mean_squared_error(y_test, test_preds))
-final_r2 = r2_score(y_test, test_preds)
-print(f"Test RMSE: {final_rmse:.2f}")
-print(f"Test R^2: {final_r2:.4f}")
+# final_rmse = np.sqrt(mean_squared_error(y_test, test_preds))
+# final_r2 = r2_score(y_test, test_preds)
+# print(f"Test RMSE: {final_rmse:.2f}")
+# print(f"Test R^2: {final_r2:.4f}")
 ```
 
 ## Tips
