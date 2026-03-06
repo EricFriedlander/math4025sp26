@@ -2,7 +2,7 @@
 title: "Preparation for Cross-Validation"
 ---
 
-## Assigned readings & videos
+## Assigned readings
 
 - Read Chapter 5.1 from ISLP
 - Read [Cross-validation](https://scikit-learn.org/stable/modules/cross_validation.html#) from scikit-learn documentation

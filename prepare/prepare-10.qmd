@@ -2,7 +2,7 @@
 title: "Preparation for ROC Curves"
 ---
 
-## Assigned readings & videos
+## Assigned readings
 
 - Read Chapter 4.5
 - Read [FixedThresholdClassifier documentation](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.FixedThresholdClassifier.html#sklearn.model_selection.FixedThresholdClassifier)

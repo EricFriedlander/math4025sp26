@@ -1,10 +1,10 @@
 ---
-title: 'MATH 4025: Preprocessing'
+title: 'MATH 4025: Pre-processing'
 ---
 
-## Computational Set-Up
-
 ```{python}
+#| include: false
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -26,6 +26,14 @@ warnings.filterwarnings('ignore')
 np.random.seed(4025)
 ```
 
+## Concept Check
+
+- What is data leakage?
+- Why is it important to prevent data leakage?
+- What is a pipeline?
+- What is a column transformer?
+- How do these prevent data leakage?
+
 # Pre-processing
 
 ## Data: Ames Housing Prices {.smaller}
@@ -41,12 +49,11 @@ ames.info()
 
 We'll cover some common pre-processing tasks:
 
+- General data cleaning
 - Dealing with zero-variance (zv) and/or near-zero variance (nzv) variables
-- Imputing missing entries (Next Lecture)
-- Label encoding ordinal categorical variables
-- Standardizing (centering and scaling) numeric predictors
-- Lumping predictors
-- One-hot/dummy encoding categorical predictor
+- Encoding categorical variables
+- Standardizing numeric predictors
+- Lumping rare categories together
 
 ## Reminder: Pipelines & ColumnTransformers {.smaller}
 
@@ -57,15 +64,28 @@ We use **Pipelines** and **ColumnTransformers** to bundle preprocessing and mode
 - **ColumnTransformer**: Applies different transformers (or pipelines) to different columns of an array or DataFrame.
   - *When to use*: When you have mixed data types (e.g., numeric vs. categorical) needing different preprocessing steps before being combined back together.
 
+## Pipelines & Cross-Validation {.smaller}
+
+- When using pipelines with cross-validation, the pipeline is fit on the analysis set in each iteration, and then used to transform the assessment set for that iteration
+- This prevents data leakage from the assessment set into the analysis set
+
+## When is pre-processing part of the model?
+
+- Some pre-processing is done before we split our data
+    + Idea: these steps shouldn't be impacted by patterns in training data (e.g. removing ID variables, renaming categories, etc.)
+- Some pre-processing is done after we split our data
+    + Idea: these steps should be impacted by patterns in training data (e.g. scaling, imputing missing values)
+    + Think of these as part of the model
+
 ## Pre-Split Cleaning {.smaller}
 
 - Before you split your data: make sure data is in correct format
 - This may mean different things for different data sets
 - Common examples:
     + Fixing names of columns
-    + Ensure all variable types are correct
+    + Ensure all variable types are correct (programming language dependent)
     + Ensure all categorical variables are correct and in order (if applicable)
-    + Remove any variables that are not important (or harmful) to your analysis (e.g. ID variables)
+    + Remove any variables that are not important (or harmful) to your analysis (e.g. ID variables, variables that your model shouldn't "see")
     + Ensure missing values are coded as such (i.e. as `NaN` instead of 0 or -1 or "missing")
     + Fill in missing values where you know what the answer should be (i.e. if a missing value really means 0 instead of missing)
 
@@ -98,79 +118,97 @@ ames['Overall_Cond'].cat.categories
 )
 ```
 
-## Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables {.smaller}
+## Post-Split Cleaning
 
-Heuristic for detecting near-zero variance features is:
+- Many pre-processing steps should be thought of as part of your model
+- Think: will the result of this step change based on my training data?
+- Examples:
+    - Scaling: mean and sd are computed from training data
+    - Imputing missing values: missing values are imputed using the training data
+- Some steps can be part of your model in certain cases but not in others:
+    - One-Hot-Encoding: if you want to keep all categories, this can be done before splitting (but may cause issues if a category is only present in an assessment set)
+    - Removing variables: if you know a variable is not important, you can remove it before splitting (are you removing the variable due to patterns in the training data or subject matter expertise?)
+    - Lumping rare categories: are you lumping the categories due to patterns in the training data or subject matter expertise?
+- Idea: think of CV as a way of evaluting your process more than just a single model fit
 
-- The fraction of unique values over the sample size is low.
-- The ratio of the frequency of the most prevalent value to the frequency of the second most prevalent value is large.
+## Standardization {.smaller}
 
-We can use `VarianceThreshold` from `sklearn.feature_selection` to automatically remove low-variance features.
+- **What it does**: Standardizes features by to put them on the same scale, or scaling features to a specific range.
+- **Functions**: 
+    - `StandardScaler`: Centers and scales features to have a mean of 0 and variance of 1. 
+    - `MinMaxScaler`: Scales features to lie between a given minimum and maximum value (often between zero and one`). Robust to very small standard deviations and preserves zero entries in sparse data.
+    - `MaxAbsScaler`: Scales each feature by its maximum absolute value. Meant for data that is already centered at zero or sparse data.
+    - `RobustScaler`: Uses robust statistics (e.g., median and interquartile range) to scale features in the presence of outliers.
 
-## Pipeline: Variance Threshold
+## Non-linear Transformation {.smaller}
 
-```{python}
-from sklearn.feature_selection import VarianceThreshold
+- **What it does**: Maps features to a different distribution to stabilize variance and minimize skewness.
+- **Functions**: 
+    - `QuantileTransformer`: Maps the data to a uniform or normal distribution using quantile information. Smooths out unusual distributions and is less influenced by outliers, but distorts correlations and distances within and across features.
+    - `PowerTransformer`: Applies monotonic transformations (Yeo-Johnson or Box-Cox) to map data as close to a Gaussian distribution as possible. Useful for stabilizing variance and minimizing skewness.
 
-# Removes any feature with variance below 0.01
-var_filter = VarianceThreshold(threshold=0.01)
+## Box-Cox Transformation {.smaller}
 
-# In a pipeline
-preproc_pipeline = Pipeline([
-    ('nzv', VarianceThreshold(threshold=0.01))
-])
-```
+- Available via `PowerTransformer(method='box-cox')`.
+- Attempts to make data more "normal" (Gaussian-like) by learning a parameter $\lambda$.
+- **Restriction**: Can **only** be applied to strictly positive data ($x_i > 0$).
+- **Formula**:
+$$
+x_i^{(\lambda)} =
+\begin{cases}
+\frac{x_i^\lambda - 1}{\lambda} & \text{if } \lambda \neq 0, \\
+\ln(x_i) & \text{if } \lambda = 0.
+\end{cases}
+$$
 
-## Encoding Ordinal Features
+## Yeo-Johnson Transformation {.smaller}
 
-Two types of categorical features:
+- Available via `PowerTransformer(method='yeo-johnson')`.
+- A more robust extension of Box-Cox that works with positive, negative, and zero values.
+- **Formula**:
+$$
+x_i^{(\lambda)} =
+\begin{cases}
+\frac{(x_i + 1)^\lambda - 1}{\lambda} & \text{if } \lambda \neq 0, x_i \ge 0 \\
+\ln(x_i + 1) & \text{if } \lambda = 0, x_i \ge 0 \\
+-\frac{(-x_i + 1)^{2 - \lambda} - 1}{2 - \lambda} & \text{if } \lambda \neq 2, x_i < 0 \\
+-\ln(-x_i + 1) & \text{if } \lambda = 2, x_i < 0
+\end{cases}
+$$
 
--   Ordinal (order is important)
--   Nominal (order is not important)
+## Normalization {.smaller}
 
-## Lump Small Categories Together
+- **What it does**: Scales individual *observations* (rows), rather than features (columns), so that they have a length (norm) of 1.
+- **Intuition**: Changes the *magnitude* of an observation without changing its *direction* in space.
+- **Example Use-Case**: Text classification. If Document A is just a longer version of Document B (same relative word frequencies, just more words), normalizing them ensures they look identical to your model.
+- **Functions**: 
+    - `Normalizer`: Scales individual samples to have a unit l1, l2, or max norm. Frequently used before clustering or calculating similarities between samples (like cosine similarity).
 
-Some categories may only appear rarely. We can group them into "Other".
+## Encoding Categorical Features
 
-```{python}
-ames['Neighborhood'].value_counts().head()
-```
+- **What it does**: Converts categorical text data into numeric formats that machine learning algorithms can process. Also includes handling rare categories.
+- **Functions**: 
+    - `OneHotEncoder`: Creates dummy variables (one-hot encoding).
+    - `OrdinalEncoder`: Assigns integer values to ordinal categories.
+    - `TargetEncoder`: Supervised encoding based on the target variable.
+    - `RareLabelEncoder`: Groups infrequent categories into a single label (from `feature_engine` package).
 
-## Lump Small Categories Together
+## Discretization
 
-```{python}
-# Group categories that appear in less than 5% of the data into 'Other'
-rare_encoder = RareLabelEncoder(tol=0.05, n_categories=1, replace_with='Other')
+- **What it does**: Partitions continuous features into discrete intervals or bins (also called quantization or binning).
+- **Functions**: `KBinsDiscretizer`, `Binarizer`.
 
-# In a pipeline
-preproc_pipeline = Pipeline([
-    ('lump', rare_encoder)
-])
-```
+## Generating Polynomial Features
 
-## One-hot/dummy encoding categorical predictors
+- **What it does**: Creates new features by generating polynomial and interaction terms, or generates B-spline basis functions for splines. This allows linear models to capture non-linear relationships.
+- **Functions**: `PolynomialFeatures`, `SplineTransformer`.
 
-![Figure 3.9: Machine Learning with R](../_archive/slides/images/12/ohe-vs-dummy.png)
+## Custom Transformers & Feature Selection
 
-## Pipeline: Dummy Variables
-
-```{python}
-# In a pipeline
-preproc_pipeline = Pipeline([
-    ('dummy', OneHotEncoder())
-])
-```
-
-## Pipeline: Center and scale
-
-```{python}
-scaler = StandardScaler()
-
-# In a pipeline
-preproc_pipeline = Pipeline([
-    ('scale', StandardScaler())
-])
-```
+- **What it does**: Applies user-defined functions to the data, or removes features based on specific criteria like lack of variability.
+- **Functions**: 
+    - `FunctionTransformer`: Wraps a custom Python function to be used in a pipeline.
+    - `VarianceThreshold`: Removes features whose variance doesn't meet a specified threshold (e.g., zero or near-zero variance features).
 
 ## Order of Preprocessing Step {.smaller}
 
@@ -191,94 +229,17 @@ Questions to ask:
 
 # Final Python Workflow
 
-## Clean Data Set
+## Let's practice on the Ames Housing Data Set
 
-```{python}
-ames = pd.read_csv("../data/ameshousing.csv")
-ames['Overall_Cond'] = pd.Categorical(ames['Overall_Cond'], categories=qual_levels, ordered=True)
+1. Do some pre-split cleaning.
+2. Define the data splits.
+3. Define the preprocessing steps. (Let's try out a few different pipelines)
+4. Define the models.
+5. Evaluate the models using cross-validation.
+6. Choose the best model.
+7. Fit the best model on the entire training set.
+8. Evaluate the best model on the test set.
 
-# Replace any missing garage types with 'No_Garage' if it makes logical sense
-ames['Garage_Type'] = ames['Garage_Type'].fillna('No_Garage')
-```
-
-## Initial Data Split
-
-```{python}
-ames_train, ames_test = train_test_split(
-    ames, 
-    train_size=0.75,
-    random_state=4025
-)
-
-X_train = ames_train.drop(columns=['Sale_Price'])
-y_train = ames_train['Sale_Price']
-X_test = ames_test.drop(columns=['Sale_Price'])
-y_test = ames_test['Sale_Price']
-```
-
-## Define Folds
-
-```{python}
-kf = KFold(n_splits=10, shuffle=True, random_state=4025)
-```
-
-## Define Model(s)
-
-```{python}
-lm_model = LinearRegression()
-knn5_model = KNeighborsRegressor(n_neighbors=5)
-knn10_model = KNeighborsRegressor(n_neighbors=10)
-```
-
-## Define Preprocessing
-
-```{python}
-numeric_features = X_train.select_dtypes(include=['int64', 'float64']).columns
-categorical_features = X_train.select_dtypes(include=['object', 'category']).columns
-
-preprocessor = ColumnTransformer(
-    transformers=[
-        ('num', Pipeline([
-            ('nzv', VarianceThreshold(threshold=0.01)),
-            ('scaler', StandardScaler())
-        ]), numeric_features),
-        ('cat', Pipeline([
-            ('lump', RareLabelEncoder(tol=0.05, n_categories=1, replace_with='Other')),
-            ('dummy', OneHotEncoder(handle_unknown='ignore'))
-        ]), categorical_features)
-    ])
-```
-
-## Define Workflows
-
-```{python}
-# lm_wf = Pipeline([('preprocessor', preprocessor), ('model', lm_model)])
-# knn5_wf = Pipeline([('preprocessor', preprocessor), ('model', knn5_model)])
-# knn10_wf = Pipeline([('preprocessor', preprocessor), ('model', knn10_model)])
-```
-
-## Fit and Assess Models
-
-```{python}
-# scoring = {'r2': 'r2', 'neg_mse': 'neg_mean_squared_error'}
-
-# lm_res = cross_validate(lm_wf, X_train, y_train, cv=kf, scoring=scoring)
-# knn5_res = cross_validate(knn5_wf, X_train, y_train, cv=kf, scoring=scoring)
-# knn10_res = cross_validate(knn10_wf, X_train, y_train, cv=kf, scoring=scoring)
-```
-
-## Final Evaluate Model
-
-```{python}
-# # Re-fit our best theoretical model
-# final_fit = knn10_wf.fit(X_train, y_train)
-# test_preds = final_fit.predict(X_test)
-
-# final_rmse = np.sqrt(mean_squared_error(y_test, test_preds))
-# final_r2 = r2_score(y_test, test_preds)
-# print(f"Test RMSE: {final_rmse:.2f}")
-# print(f"Test R^2: {final_r2:.4f}")
-```
 
 ## Tips
 
@@ -289,11 +250,13 @@ preprocessor = ColumnTransformer(
 ## Recap {.smaller}
 
 - **Preprocessing Needs**: Prevent information leakage by exclusively using training data parameters.
-- **`scikit-learn` Pipeline**: Crucial for bundling preprocessing steps with the estimator. Use it always to prevent data leakage.
+- **`scikit-learn` Pipeline**: Crucial for bundling preprocessing steps with the estimator to prevent data leakage.
 - **Common Tasks**:
-    + Handling Missing Data: Imputation strategies.
-    + Categorical encoding: `OneHotEncoder` (dummies), Ordinal encoding.
-    + Numeric features: `StandardScaler` (Z-score scaling).
-    + Feature filtering: `VarianceThreshold` (e.g. for Zero Variance).
-    + Rare categories: Lumping elements together.
-- **Order matters!**: Be mindful of when to apply scaling vs dummy-ing or imputation.
+    + **Standardization**: `StandardScaler`, `MinMaxScaler`, `RobustScaler`.
+    + **Non-linear Transformation**: `QuantileTransformer`, `PowerTransformer` (Box-Cox, Yeo-Johnson).
+    + **Normalization**: `Normalizer` (scales individual observations to unit norm).
+    + **Categorical Encoding**: `OneHotEncoder` (dummies), `OrdinalEncoder`, `RareLabelEncoder`.
+    + **Discretization**: `KBinsDiscretizer`, `Binarizer`.
+    + **Polynomial Features**: `PolynomialFeatures`, `SplineTransformer`.
+    + **Custom/Feature Selection**: `FunctionTransformer`, `VarianceThreshold`.
+- **Order matters!**: Be mindful of when to apply scaling vs. dummy-ing or imputation.

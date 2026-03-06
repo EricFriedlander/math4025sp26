@@ -2,6 +2,6 @@
 title: "Preparation for Multiple Linear Regression"
 ---
 
-## Assigned readings & videos
+## Assigned readings
 
 - Read Chapter 3.2, 3.3, and (optionally) 3.4 from ISLP

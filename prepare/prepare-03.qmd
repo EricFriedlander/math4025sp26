@@ -2,7 +2,7 @@
 title: "Preparation for Linear Regression & Gradient Descent"
 ---
 
-## Assigned readings & videos
+## Assigned readings
 
 - Read Chapter 3.1 from ISLP
 - If you haven't taken Multivariable Calculus or don't remember what a partial derivative or gradient is [watch this](https://www.youtube.com/watch?v=AXH9Xm6Rbfc)

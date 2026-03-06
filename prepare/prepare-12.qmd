@@ -1,0 +1,8 @@
+---
+title: "Preparation for Pre-processing"
+---
+
+## Assigned readings
+
+- Read Chapter 5.2 from ISLP
+- Read [preprocessing section of sklearn user guide](https://scikit-learn.org/stable/modules/preprocessing.html)
