@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.6.39">
 
   <meta name="author" content="Dr.&nbsp;Eric Friedlander">
-  <title>Math 4025 - Spring 2026 – MATH 4025: Preprocessing</title>
+  <title>Math 4025 - Spring 2026 – MATH 4025: Pre-processing</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -195,7 +195,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">MATH 4025: Preprocessing</h1>
+  <h1 class="title">MATH 4025: Pre-processing</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -206,28 +206,15 @@ Dr.&nbsp;Eric Friedlander
 </div>
 
 </section>
-<section id="computational-set-up" class="slide level2">
-<h2>Computational Set-Up</h2>
-<div id="9388b669" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-4"><a></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-5"><a></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split, KFold, cross_validate</span>
-<span id="cb1-6"><a></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
-<span id="cb1-7"><a></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsRegressor</span>
-<span id="cb1-8"><a></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
-<span id="cb1-9"><a></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler, OneHotEncoder, OrdinalEncoder</span>
-<span id="cb1-10"><a></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> VarianceThreshold</span>
-<span id="cb1-11"><a></a><span class="im">from</span> sklearn.compose <span class="im">import</span> ColumnTransformer</span>
-<span id="cb1-12"><a></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, r2_score</span>
-<span id="cb1-13"><a></a><span class="im">from</span> plotnine <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb1-14"><a></a><span class="im">from</span> itables <span class="im">import</span> show</span>
-<span id="cb1-15"><a></a><span class="im">import</span> warnings</span>
-<span id="cb1-16"><a></a></span>
-<span id="cb1-17"><a></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
-<span id="cb1-18"><a></a>np.random.seed(<span class="dv">4025</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="concept-check" class="slide level2">
+<h2>Concept Check</h2>
+<ul>
+<li>What is data leakage?</li>
+<li>Why is it important to prevent data leakage?</li>
+<li>What is a pipeline?</li>
+<li>What is a column transformer?</li>
+<li>How do these prevent data leakage?</li>
+</ul>
 </section>
 <section>
 <section id="pre-processing" class="title-slide slide level1 center">
@@ -237,9 +224,9 @@ Dr.&nbsp;Eric Friedlander
 <section id="data-ames-housing-prices" class="slide level2 smaller">
 <h2>Data: Ames Housing Prices</h2>
 <p>Goal: Predict <code>Sale_Price</code>.</p>
-<div id="4e666c7f" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>ames <span class="op">=</span> pd.read_csv(<span class="st">"../data/ameshousing.csv"</span>)</span>
-<span id="cb2-2"><a></a>ames.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="a3b86686" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a>ames <span class="op">=</span> pd.read_csv(<span class="st">"../data/ameshousing.csv"</span>)</span>
+<span id="cb1-2"><a></a>ames.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.DataFrame'&gt;
 RangeIndex: 2930 entries, 0 to 2929
@@ -329,12 +316,46 @@ memory usage: 2.4 MB</code></pre>
 <h2>Today</h2>
 <p>We’ll cover some common pre-processing tasks:</p>
 <ul>
+<li>General data cleaning</li>
 <li>Dealing with zero-variance (zv) and/or near-zero variance (nzv) variables</li>
-<li>Imputing missing entries (Next Lecture)</li>
-<li>Label encoding ordinal categorical variables</li>
-<li>Standardizing (centering and scaling) numeric predictors</li>
-<li>Lumping predictors</li>
-<li>One-hot/dummy encoding categorical predictor</li>
+<li>Encoding categorical variables</li>
+<li>Standardizing numeric predictors</li>
+<li>Lumping rare categories together</li>
+</ul>
+</section>
+<section id="reminder-pipelines-columntransformers" class="slide level2 smaller">
+<h2>Reminder: Pipelines &amp; ColumnTransformers</h2>
+<p>We use <strong>Pipelines</strong> and <strong>ColumnTransformers</strong> to bundle preprocessing and modeling steps, preventing <em>data leakage</em> and keeping our code organized.</p>
+<ul>
+<li><strong>Pipeline</strong>: Chains together a sequence of steps (like transformers) optionally ending with an estimator. Data flows sequentially through each step.
+<ul>
+<li><em>When to use</em>: When you want to apply a sequence of transformations to the <em>same</em> variables in order.</li>
+</ul></li>
+<li><strong>ColumnTransformer</strong>: Applies different transformers (or pipelines) to different columns of an array or DataFrame.
+<ul>
+<li><em>When to use</em>: When you have mixed data types (e.g., numeric vs.&nbsp;categorical) needing different preprocessing steps before being combined back together.</li>
+</ul></li>
+</ul>
+</section>
+<section id="pipelines-cross-validation" class="slide level2 smaller">
+<h2>Pipelines &amp; Cross-Validation</h2>
+<ul>
+<li>When using pipelines with cross-validation, the pipeline is fit on the analysis set in each iteration, and then used to transform the assessment set for that iteration</li>
+<li>This prevents data leakage from the assessment set into the analysis set</li>
+</ul>
+</section>
+<section id="when-is-pre-processing-part-of-the-model" class="slide level2">
+<h2>When is pre-processing part of the model?</h2>
+<ul>
+<li>Some pre-processing is done before we split our data
+<ul>
+<li>Idea: these steps shouldn’t be impacted by patterns in training data (e.g.&nbsp;removing ID variables, renaming categories, etc.)</li>
+</ul></li>
+<li>Some pre-processing is done after we split our data
+<ul>
+<li>Idea: these steps should be impacted by patterns in training data (e.g.&nbsp;scaling, imputing missing values)</li>
+<li>Think of these as part of the model</li>
+</ul></li>
 </ul>
 </section>
 <section id="pre-split-cleaning" class="slide level2 smaller">
@@ -345,135 +366,185 @@ memory usage: 2.4 MB</code></pre>
 <li>Common examples:
 <ul>
 <li>Fixing names of columns</li>
-<li>Ensure all variable types are correct</li>
-<li>Ensure all factor levels are correct and in order (if applicable)</li>
-<li>Remove any variables that are not important (or harmful) to your analysis</li>
+<li>Ensure all variable types are correct (programming language dependent)</li>
+<li>Ensure all categorical variables are correct and in order (if applicable)</li>
+<li>Remove any variables that are not important (or harmful) to your analysis (e.g.&nbsp;ID variables, variables that your model shouldn’t “see”)</li>
 <li>Ensure missing values are coded as such (i.e.&nbsp;as <code>NaN</code> instead of 0 or -1 or “missing”)</li>
-<li>Filling in missing values where you know what the answer should be (i.e.&nbsp;if a missing value really means 0 instead of missing)</li>
+<li>Fill in missing values where you know what the answer should be (i.e.&nbsp;if a missing value really means 0 instead of missing)</li>
 </ul></li>
 </ul>
 </section>
 <section id="example-factor-levels-in-wrong-order" class="slide level2">
 <h2>Example: Factor Levels in Wrong Order</h2>
-<div id="3ae6d503" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>ames[<span class="st">'Overall_Cond'</span>].unique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="7183a667" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>(</span>
+<span id="cb3-2"><a></a>    ggplot(ames, aes(x<span class="op">=</span><span class="st">'Overall_Cond'</span>)) <span class="op">+</span></span>
+<span id="cb3-3"><a></a>    geom_bar()</span>
+<span id="cb3-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>&lt;ArrowStringArray&gt;
-[      'Average', 'Above_Average',          'Good',          'Poor',
-     'Very_Good', 'Below_Average',     'Excellent',          'Fair',
-     'Very_Poor']
-Length: 9, dtype: str</code></pre>
+<div>
+<figure>
+<p><img data-src="12-preprocessing_files/figure-revealjs/cell-4-output-1.png" width="960" height="480"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
-<section id="re-factoring-ordinal-encoding" class="slide level2">
-<h2>Re-Factoring (Ordinal Encoding)</h2>
-<div id="6c30e8e6" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="co"># Pandas approach</span></span>
-<span id="cb6-2"><a></a>qual_levels <span class="op">=</span> [<span class="st">"Very_Poor"</span>, <span class="st">"Poor"</span>, <span class="st">"Fair"</span>, <span class="st">"Below_Average"</span>, <span class="st">"Average"</span>, </span>
-<span id="cb6-3"><a></a>               <span class="st">"Above_Average"</span>, <span class="st">"Good"</span>, <span class="st">"Very_Good"</span>, <span class="st">"Excellent"</span>, <span class="st">"Very_Excellent"</span>]</span>
-<span id="cb6-4"><a></a></span>
-<span id="cb6-5"><a></a>ames[<span class="st">'Overall_Cond'</span>] <span class="op">=</span> pd.Categorical(ames[<span class="st">'Overall_Cond'</span>], categories<span class="op">=</span>qual_levels, ordered<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb6-6"><a></a>ames[<span class="st">'Overall_Cond'</span>].cat.categories</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="re-order-categories" class="slide level2">
+<h2>Re-Order Categories</h2>
+<div id="a487fdfe" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="co"># Pandas approach</span></span>
+<span id="cb4-2"><a></a>qual_levels <span class="op">=</span> [<span class="st">"Very_Poor"</span>, <span class="st">"Poor"</span>, <span class="st">"Fair"</span>, <span class="st">"Below_Average"</span>, <span class="st">"Average"</span>, </span>
+<span id="cb4-3"><a></a>               <span class="st">"Above_Average"</span>, <span class="st">"Good"</span>, <span class="st">"Very_Good"</span>, <span class="st">"Excellent"</span>, <span class="st">"Very_Excellent"</span>]</span>
+<span id="cb4-4"><a></a></span>
+<span id="cb4-5"><a></a>ames[<span class="st">'Overall_Cond'</span>] <span class="op">=</span> pd.Categorical(ames[<span class="st">'Overall_Cond'</span>], categories<span class="op">=</span>qual_levels, ordered<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-6"><a></a>ames[<span class="st">'Overall_Cond'</span>].cat.categories</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>Index(['Very_Poor', 'Poor', 'Fair', 'Below_Average', 'Average',
        'Above_Average', 'Good', 'Very_Good', 'Excellent', 'Very_Excellent'],
       dtype='str')</code></pre>
 </div>
 </div>
-<p>Note: In <code>scikit-learn</code>, you can use <code>OrdinalEncoder</code> in a pipeline if you want this step integrated into your workflow.</p>
 </section>
-<section id="zero-variance-zv-andor-near-zero-variance-nzv-variables" class="slide level2 smaller">
-<h2>Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables</h2>
-<p>Heuristic for detecting near-zero variance features is:</p>
+<section id="example-re-ordered-factor-levels" class="slide level2">
+<h2>Example: Re-Ordered Factor Levels</h2>
+<div id="046cca4f" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>(</span>
+<span id="cb6-2"><a></a>    ggplot(ames, aes(x<span class="op">=</span><span class="st">'Overall_Cond'</span>)) <span class="op">+</span></span>
+<span id="cb6-3"><a></a>    geom_bar()</span>
+<span id="cb6-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+<figure>
+<p><img data-src="12-preprocessing_files/figure-revealjs/cell-6-output-1.png" width="960" height="480"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="post-split-cleaning" class="slide level2">
+<h2>Post-Split Cleaning</h2>
 <ul>
-<li>The fraction of unique values over the sample size is low.</li>
-<li>The ratio of the frequency of the most prevalent value to the frequency of the second most prevalent value is large.</li>
-</ul>
-<p>We can use <code>VarianceThreshold</code> from <code>sklearn.feature_selection</code> to automatically remove low-variance features.</p>
-</section>
-<section id="pipeline-variance-threshold" class="slide level2">
-<h2>Pipeline: Variance Threshold</h2>
-<div id="fe2b7103" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> VarianceThreshold</span>
-<span id="cb8-2"><a></a></span>
-<span id="cb8-3"><a></a><span class="co"># Removes any feature with variance below 0.01</span></span>
-<span id="cb8-4"><a></a>var_filter <span class="op">=</span> VarianceThreshold(threshold<span class="op">=</span><span class="fl">0.01</span>)</span>
-<span id="cb8-5"><a></a></span>
-<span id="cb8-6"><a></a><span class="co"># In a pipeline</span></span>
-<span id="cb8-7"><a></a>preproc_pipeline <span class="op">=</span> Pipeline([</span>
-<span id="cb8-8"><a></a>    (<span class="st">'nzv'</span>, VarianceThreshold(threshold<span class="op">=</span><span class="fl">0.01</span>))</span>
-<span id="cb8-9"><a></a>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="encoding-ordinal-features" class="slide level2">
-<h2>Encoding Ordinal Features</h2>
-<p>Two types of categorical features:</p>
+<li>Many pre-processing steps should be thought of as part of your model</li>
+<li>Think: will the result of this step change based on my training data?</li>
+<li>Examples:
 <ul>
-<li>Ordinal (order is important)</li>
-<li>Nominal (order is not important)</li>
+<li>Scaling: mean and sd are computed from training data</li>
+<li>Imputing missing values: missing values are imputed using the training data</li>
+</ul></li>
+<li>Some steps can be part of your model in certain cases but not in others:
+<ul>
+<li>One-Hot-Encoding: if you want to keep all categories, this can be done before splitting (but may cause issues if a category is only present in an assessment set)</li>
+<li>Removing variables: if you know a variable is not important, you can remove it before splitting (are you removing the variable due to patterns in the training data or subject matter expertise?)</li>
+<li>Lumping rare categories: are you lumping the categories due to patterns in the training data or subject matter expertise?</li>
+</ul></li>
+<li>Idea: think of CV as a way of evaluting your process more than just a single model fit</li>
 </ul>
 </section>
-<section id="lump-small-categories-together" class="slide level2">
-<h2>Lump Small Categories Together</h2>
-<p>Some categories may only appear rarely. We can group them into “Other”.</p>
-<div id="ad88b37b" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>ames[<span class="st">'Neighborhood'</span>].value_counts().head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>Neighborhood
-North_Ames       443
-College_Creek    267
-Old_Town         239
-Edwards          194
-Somerset         182
-Name: count, dtype: int64</code></pre>
-</div>
-</div>
+<section id="standardization" class="slide level2 smaller">
+<h2>Standardization</h2>
+<ul>
+<li><strong>What it does</strong>: Standardizes features by to put them on the same scale, or scaling features to a specific range.</li>
+<li><strong>Functions</strong>:
+<ul>
+<li><code>StandardScaler</code>: Centers and scales features to have a mean of 0 and variance of 1.</li>
+<li><code>MinMaxScaler</code>: Scales features to lie between a given minimum and maximum value (often between zero and one`). Robust to very small standard deviations and preserves zero entries in sparse data.</li>
+<li><code>MaxAbsScaler</code>: Scales each feature by its maximum absolute value. Meant for data that is already centered at zero or sparse data.</li>
+<li><code>RobustScaler</code>: Uses robust statistics (e.g., median and interquartile range) to scale features in the presence of outliers.</li>
+</ul></li>
+</ul>
 </section>
-<section id="lump-small-categories-together-1" class="slide level2">
-<h2>Lump Small Categories Together</h2>
-<div id="99d78fcb" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="co"># Calculate frequencies</span></span>
-<span id="cb11-2"><a></a>counts <span class="op">=</span> ames[<span class="st">'Neighborhood'</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb11-3"><a></a><span class="co"># Find infrequent categories (less than 5%)</span></span>
-<span id="cb11-4"><a></a>infrequent <span class="op">=</span> counts[counts <span class="op">&lt;</span> <span class="fl">0.05</span>].index</span>
-<span id="cb11-5"><a></a></span>
-<span id="cb11-6"><a></a><span class="co"># Replace them with 'Other'</span></span>
-<span id="cb11-7"><a></a>ames[<span class="st">'Neighborhood'</span>] <span class="op">=</span> ames[<span class="st">'Neighborhood'</span>].replace(infrequent, <span class="st">'Other'</span>)</span>
-<span id="cb11-8"><a></a>ames[<span class="st">'Neighborhood'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>Neighborhood
-Other                 1123
-North_Ames             443
-College_Creek          267
-Old_Town               239
-Edwards                194
-Somerset               182
-Northridge_Heights     166
-Gilbert                165
-Sawyer                 151
-Name: count, dtype: int64</code></pre>
-</div>
-</div>
-<p><em>Note: There are third-party extensions (like <code>feature-engine</code>) that supply <code>RareLabelEncoder</code> for adding this behavior easily to scikit-learn pipelines.</em></p>
+<section id="non-linear-transformation" class="slide level2 smaller">
+<h2>Non-linear Transformation</h2>
+<ul>
+<li><strong>What it does</strong>: Maps features to a different distribution to stabilize variance and minimize skewness.</li>
+<li><strong>Functions</strong>:
+<ul>
+<li><code>QuantileTransformer</code>: Maps the data to a uniform or normal distribution using quantile information. Smooths out unusual distributions and is less influenced by outliers, but distorts correlations and distances within and across features.</li>
+<li><code>PowerTransformer</code>: Applies monotonic transformations (Yeo-Johnson or Box-Cox) to map data as close to a Gaussian distribution as possible. Useful for stabilizing variance and minimizing skewness.</li>
+</ul></li>
+</ul>
 </section>
-<section id="one-hotdummy-encoding-categorical-predictors" class="slide level2">
-<h2>One-hot/dummy encoding categorical predictors</h2>
-
-<img data-src="../_archive/slides/images/12/ohe-vs-dummy.png" class="r-stretch quarto-figure-center"><p class="caption">Figure 3.9: Machine Learning with R</p></section>
-<section id="pipeline-dummy-variables" class="slide level2">
-<h2>Pipeline: Dummy Variables</h2>
-<div id="a2bd516d" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a><span class="co"># one_hot=True is the default encoding method in scikit-learn OneHotEncoder</span></span>
-<span id="cb13-2"><a></a><span class="co"># unless we use drop='first' (dummy encoding)</span></span>
-<span id="cb13-3"><a></a>encoder <span class="op">=</span> OneHotEncoder(drop<span class="op">=</span><span class="st">'first'</span>, sparse_output<span class="op">=</span><span class="va">False</span>, handle_unknown<span class="op">=</span><span class="st">'ignore'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="box-cox-transformation" class="slide level2 smaller">
+<h2>Box-Cox Transformation</h2>
+<ul>
+<li>Available via <code>PowerTransformer(method='box-cox')</code>.</li>
+<li>Attempts to make data more “normal” (Gaussian-like) by learning a parameter <span class="math inline">\(\lambda\)</span>.</li>
+<li><strong>Restriction</strong>: Can <strong>only</strong> be applied to strictly positive data (<span class="math inline">\(x_i &gt; 0\)</span>).</li>
+<li><strong>Formula</strong>: <span class="math display">\[
+x_i^{(\lambda)} =
+\begin{cases}
+\frac{x_i^\lambda - 1}{\lambda} &amp; \text{if } \lambda \neq 0, \\
+\ln(x_i) &amp; \text{if } \lambda = 0.
+\end{cases}
+\]</span></li>
+</ul>
 </section>
-<section id="pipeline-center-and-scale" class="slide level2">
-<h2>Pipeline: Center and scale</h2>
-<div id="0fd0a1b5" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a>scaler <span class="op">=</span> StandardScaler()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="yeo-johnson-transformation" class="slide level2 smaller">
+<h2>Yeo-Johnson Transformation</h2>
+<ul>
+<li>Available via <code>PowerTransformer(method='yeo-johnson')</code>.</li>
+<li>A more robust extension of Box-Cox that works with positive, negative, and zero values.</li>
+<li><strong>Formula</strong>: <span class="math display">\[
+x_i^{(\lambda)} =
+\begin{cases}
+\frac{(x_i + 1)^\lambda - 1}{\lambda} &amp; \text{if } \lambda \neq 0, x_i \ge 0 \\
+\ln(x_i + 1) &amp; \text{if } \lambda = 0, x_i \ge 0 \\
+-\frac{(-x_i + 1)^{2 - \lambda} - 1}{2 - \lambda} &amp; \text{if } \lambda \neq 2, x_i &lt; 0 \\
+-\ln(-x_i + 1) &amp; \text{if } \lambda = 2, x_i &lt; 0
+\end{cases}
+\]</span></li>
+</ul>
+</section>
+<section id="normalization" class="slide level2 smaller">
+<h2>Normalization</h2>
+<ul>
+<li><strong>What it does</strong>: Scales individual <em>observations</em> (rows), rather than features (columns), so that they have a length (norm) of 1.</li>
+<li><strong>Intuition</strong>: Changes the <em>magnitude</em> of an observation without changing its <em>direction</em> in space.</li>
+<li><strong>Example Use-Case</strong>: Text classification. If Document A is just a longer version of Document B (same relative word frequencies, just more words), normalizing them ensures they look identical to your model.</li>
+<li><strong>Functions</strong>:
+<ul>
+<li><code>Normalizer</code>: Scales individual samples to have a unit l1, l2, or max norm. Frequently used before clustering or calculating similarities between samples (like cosine similarity).</li>
+</ul></li>
+</ul>
+</section>
+<section id="encoding-categorical-features" class="slide level2">
+<h2>Encoding Categorical Features</h2>
+<ul>
+<li><strong>What it does</strong>: Converts categorical text data into numeric formats that machine learning algorithms can process. Also includes handling rare categories.</li>
+<li><strong>Functions</strong>:
+<ul>
+<li><code>OneHotEncoder</code>: Creates dummy variables (one-hot encoding).</li>
+<li><code>OrdinalEncoder</code>: Assigns integer values to ordinal categories.</li>
+<li><code>TargetEncoder</code>: Supervised encoding based on the target variable.</li>
+<li><code>RareLabelEncoder</code>: Groups infrequent categories into a single label (from <code>feature_engine</code> package).</li>
+</ul></li>
+</ul>
+</section>
+<section id="discretization" class="slide level2">
+<h2>Discretization</h2>
+<ul>
+<li><strong>What it does</strong>: Partitions continuous features into discrete intervals or bins (also called quantization or binning).</li>
+<li><strong>Functions</strong>: <code>KBinsDiscretizer</code>, <code>Binarizer</code>.</li>
+</ul>
+</section>
+<section id="generating-polynomial-features" class="slide level2">
+<h2>Generating Polynomial Features</h2>
+<ul>
+<li><strong>What it does</strong>: Creates new features by generating polynomial and interaction terms, or generates B-spline basis functions for splines. This allows linear models to capture non-linear relationships.</li>
+<li><strong>Functions</strong>: <code>PolynomialFeatures</code>, <code>SplineTransformer</code>.</li>
+</ul>
+</section>
+<section id="custom-transformers-feature-selection" class="slide level2">
+<h2>Custom Transformers &amp; Feature Selection</h2>
+<ul>
+<li><strong>What it does</strong>: Applies user-defined functions to the data, or removes features based on specific criteria like lack of variability.</li>
+<li><strong>Functions</strong>:
+<ul>
+<li><code>FunctionTransformer</code>: Wraps a custom Python function to be used in a pipeline.</li>
+<li><code>VarianceThreshold</code>: Removes features whose variance doesn’t meet a specified threshold (e.g., zero or near-zero variance features).</li>
+</ul></li>
+</ul>
 </section>
 <section id="order-of-preprocessing-step" class="slide level2 smaller scrollable">
 <h2>Order of Preprocessing Step</h2>
@@ -500,95 +571,18 @@ Name: count, dtype: int64</code></pre>
 <h1>Final Python Workflow</h1>
 
 </section>
-<section id="clean-data-set" class="slide level2">
-<h2>Clean Data Set</h2>
-<div id="204570ea" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a>ames <span class="op">=</span> pd.read_csv(<span class="st">"../data/ameshousing.csv"</span>)</span>
-<span id="cb15-2"><a></a>ames[<span class="st">'Overall_Cond'</span>] <span class="op">=</span> pd.Categorical(ames[<span class="st">'Overall_Cond'</span>], categories<span class="op">=</span>qual_levels, ordered<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb15-3"><a></a></span>
-<span id="cb15-4"><a></a><span class="co"># Replace any missing garage types with 'No_Garage' if it makes logical sense</span></span>
-<span id="cb15-5"><a></a>ames[<span class="st">'Garage_Type'</span>] <span class="op">=</span> ames[<span class="st">'Garage_Type'</span>].fillna(<span class="st">'No_Garage'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="initial-data-split" class="slide level2">
-<h2>Initial Data Split</h2>
-<div id="b25ed430" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a>ames_train, ames_test <span class="op">=</span> train_test_split(</span>
-<span id="cb16-2"><a></a>    ames, </span>
-<span id="cb16-3"><a></a>    train_size<span class="op">=</span><span class="fl">0.75</span>,</span>
-<span id="cb16-4"><a></a>    random_state<span class="op">=</span><span class="dv">4025</span></span>
-<span id="cb16-5"><a></a>)</span>
-<span id="cb16-6"><a></a></span>
-<span id="cb16-7"><a></a>X_train <span class="op">=</span> ames_train.drop(columns<span class="op">=</span>[<span class="st">'Sale_Price'</span>])</span>
-<span id="cb16-8"><a></a>y_train <span class="op">=</span> ames_train[<span class="st">'Sale_Price'</span>]</span>
-<span id="cb16-9"><a></a>X_test <span class="op">=</span> ames_test.drop(columns<span class="op">=</span>[<span class="st">'Sale_Price'</span>])</span>
-<span id="cb16-10"><a></a>y_test <span class="op">=</span> ames_test[<span class="st">'Sale_Price'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="define-folds" class="slide level2">
-<h2>Define Folds</h2>
-<div id="60d4aa81" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a>kf <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">10</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">4025</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="define-models" class="slide level2">
-<h2>Define Model(s)</h2>
-<div id="de3290b7" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a></a>lm_model <span class="op">=</span> LinearRegression()</span>
-<span id="cb18-2"><a></a>knn5_model <span class="op">=</span> KNeighborsRegressor(n_neighbors<span class="op">=</span><span class="dv">5</span>)</span>
-<span id="cb18-3"><a></a>knn10_model <span class="op">=</span> KNeighborsRegressor(n_neighbors<span class="op">=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="define-preprocessing" class="slide level2">
-<h2>Define Preprocessing</h2>
-<div id="d6f95f81" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a>numeric_features <span class="op">=</span> X_train.select_dtypes(include<span class="op">=</span>[<span class="st">'int64'</span>, <span class="st">'float64'</span>]).columns</span>
-<span id="cb19-2"><a></a>categorical_features <span class="op">=</span> X_train.select_dtypes(include<span class="op">=</span>[<span class="st">'object'</span>, <span class="st">'category'</span>]).columns</span>
-<span id="cb19-3"><a></a></span>
-<span id="cb19-4"><a></a>preprocessor <span class="op">=</span> ColumnTransformer(</span>
-<span id="cb19-5"><a></a>    transformers<span class="op">=</span>[</span>
-<span id="cb19-6"><a></a>        (<span class="st">'num'</span>, Pipeline([</span>
-<span id="cb19-7"><a></a>            (<span class="st">'nzv'</span>, VarianceThreshold(threshold<span class="op">=</span><span class="fl">0.01</span>)),</span>
-<span id="cb19-8"><a></a>            (<span class="st">'scaler'</span>, StandardScaler())</span>
-<span id="cb19-9"><a></a>        ]), numeric_features),</span>
-<span id="cb19-10"><a></a>        (<span class="st">'cat'</span>, OneHotEncoder(handle_unknown<span class="op">=</span><span class="st">'ignore'</span>), categorical_features)</span>
-<span id="cb19-11"><a></a>    ])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="define-workflows" class="slide level2">
-<h2>Define Workflows</h2>
-<div id="306ea3e6" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a>lm_wf <span class="op">=</span> Pipeline([(<span class="st">'preprocessor'</span>, preprocessor), (<span class="st">'model'</span>, lm_model)])</span>
-<span id="cb20-2"><a></a>knn5_wf <span class="op">=</span> Pipeline([(<span class="st">'preprocessor'</span>, preprocessor), (<span class="st">'model'</span>, knn5_model)])</span>
-<span id="cb20-3"><a></a>knn10_wf <span class="op">=</span> Pipeline([(<span class="st">'preprocessor'</span>, preprocessor), (<span class="st">'model'</span>, knn10_model)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="fit-and-assess-models" class="slide level2">
-<h2>Fit and Assess Models</h2>
-<div id="46901f25" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a>scoring <span class="op">=</span> {<span class="st">'r2'</span>: <span class="st">'r2'</span>, <span class="st">'neg_mse'</span>: <span class="st">'neg_mean_squared_error'</span>}</span>
-<span id="cb21-2"><a></a></span>
-<span id="cb21-3"><a></a>lm_res <span class="op">=</span> cross_validate(lm_wf, X_train, y_train, cv<span class="op">=</span>kf, scoring<span class="op">=</span>scoring)</span>
-<span id="cb21-4"><a></a>knn5_res <span class="op">=</span> cross_validate(knn5_wf, X_train, y_train, cv<span class="op">=</span>kf, scoring<span class="op">=</span>scoring)</span>
-<span id="cb21-5"><a></a>knn10_res <span class="op">=</span> cross_validate(knn10_wf, X_train, y_train, cv<span class="op">=</span>kf, scoring<span class="op">=</span>scoring)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="final-evaluate-model" class="slide level2">
-<h2>Final Evaluate Model</h2>
-<div id="3b1d8f77" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a></a><span class="co"># Re-fit our best theoretical model</span></span>
-<span id="cb22-2"><a></a>final_fit <span class="op">=</span> knn10_wf.fit(X_train, y_train)</span>
-<span id="cb22-3"><a></a>test_preds <span class="op">=</span> final_fit.predict(X_test)</span>
-<span id="cb22-4"><a></a></span>
-<span id="cb22-5"><a></a>final_rmse <span class="op">=</span> np.sqrt(mean_squared_error(y_test, test_preds))</span>
-<span id="cb22-6"><a></a>final_r2 <span class="op">=</span> r2_score(y_test, test_preds)</span>
-<span id="cb22-7"><a></a><span class="bu">print</span>(<span class="ss">f"Test RMSE: </span><span class="sc">{</span>final_rmse<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb22-8"><a></a><span class="bu">print</span>(<span class="ss">f"Test R^2: </span><span class="sc">{</span>final_r2<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Test RMSE: 30982.84
-Test R^2: 0.8318</code></pre>
-</div>
-</div>
+<section id="lets-practice-on-the-ames-housing-data-set" class="slide level2 scrollable">
+<h2>Let’s practice on the Ames Housing Data Set</h2>
+<ol type="1">
+<li>Do some pre-split cleaning.</li>
+<li>Define the data splits.</li>
+<li>Define the preprocessing steps. (Let’s try out a few different pipelines)</li>
+<li>Define the models.</li>
+<li>Evaluate the models using cross-validation.</li>
+<li>Choose the best model.</li>
+<li>Fit the best model on the entire training set.</li>
+<li>Evaluate the best model on the test set.</li>
+</ol>
 </section>
 <section id="tips" class="slide level2">
 <h2>Tips</h2>
@@ -602,16 +596,18 @@ Test R^2: 0.8318</code></pre>
 <h2>Recap</h2>
 <ul>
 <li><strong>Preprocessing Needs</strong>: Prevent information leakage by exclusively using training data parameters.</li>
-<li><strong><code>scikit-learn</code> Pipeline</strong>: Crucial for bundling preprocessing steps with the estimator. Use it always to prevent data leakage.</li>
+<li><strong><code>scikit-learn</code> Pipeline</strong>: Crucial for bundling preprocessing steps with the estimator to prevent data leakage.</li>
 <li><strong>Common Tasks</strong>:
 <ul>
-<li>Handling Missing Data: Imputation strategies.</li>
-<li>Categorical encoding: <code>OneHotEncoder</code> (dummies), Ordinal encoding.</li>
-<li>Numeric features: <code>StandardScaler</code> (Z-score scaling).</li>
-<li>Feature filtering: <code>VarianceThreshold</code> (e.g.&nbsp;for Zero Variance).</li>
-<li>Rare categories: Lumping elements together.</li>
+<li><strong>Standardization</strong>: <code>StandardScaler</code>, <code>MinMaxScaler</code>, <code>RobustScaler</code>.</li>
+<li><strong>Non-linear Transformation</strong>: <code>QuantileTransformer</code>, <code>PowerTransformer</code> (Box-Cox, Yeo-Johnson).</li>
+<li><strong>Normalization</strong>: <code>Normalizer</code> (scales individual observations to unit norm).</li>
+<li><strong>Categorical Encoding</strong>: <code>OneHotEncoder</code> (dummies), <code>OrdinalEncoder</code>, <code>RareLabelEncoder</code>.</li>
+<li><strong>Discretization</strong>: <code>KBinsDiscretizer</code>, <code>Binarizer</code>.</li>
+<li><strong>Polynomial Features</strong>: <code>PolynomialFeatures</code>, <code>SplineTransformer</code>.</li>
+<li><strong>Custom/Feature Selection</strong>: <code>FunctionTransformer</code>, <code>VarianceThreshold</code>.</li>
 </ul></li>
-<li><strong>Order matters!</strong>: Be mindful of when to apply scaling vs dummy-ing or imputation.</li>
+<li><strong>Order matters!</strong>: Be mindful of when to apply scaling vs.&nbsp;dummy-ing or imputation.</li>
 </ul>
 
 
