@@ -78,6 +78,7 @@ Run these commands from the **project root**.
 *   **Plotting:** Use `plotnine` for visualizations (ggplot2 style), but `seaborn` and `matplotlib` are also available.
 *   **Data Manipulation:** `pandas` is primary; `polars` is available.
 *   **Data Loading:** Use `pyreadr` for `.rds` files and `pyhere` for robust relative paths.
+*   **Modeling & Preprocessing:** Use `scikit-learn` (Pipelines, ColumnTransformers, StandardScaler, PowerTransformer, etc.) for robust preprocessing to prevent data leakage. Use `feature_engine` for specific tasks like lumping rare categories (`RareLabelEncoder`).
 *   **Configuration:** Global settings in `_quarto.yml`. Sidebar navigation is configured here.
 *   **Paths:** Relative paths should ideally generally work, but be mindful of the folder structure (e.g., referencing images from `course-info/`).
 *   **Data:** Store raw data in `data/`.

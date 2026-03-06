@@ -47,13 +47,14 @@ ames.info()
 
 ## Today
 
-We'll cover some common pre-processing tasks:
+We'll cover some common pre-processing tasks provided by `scikit-learn`:
 
-- General data cleaning
-- Dealing with zero-variance (zv) and/or near-zero variance (nzv) variables
+- Standardization (e.g. centering and scaling)
+- Non-linear transformations (e.g. Box-Cox, Yeo-Johnson)
+- Normalization (scaling observations)
 - Encoding categorical variables
-- Standardizing numeric predictors
-- Lumping rare categories together
+- Generating polynomial features & discretization
+- Custom transformations & feature selection
 
 ## Reminder: Pipelines & ColumnTransformers {.smaller}
 
