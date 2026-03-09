@@ -16,16 +16,12 @@ from sklearn.impute import SimpleImputer, KNNImputer
 from plotnine import *
 from itables import show
 import warnings
+import missingno as msno
 
 warnings.filterwarnings('ignore')
 np.random.seed(4025)
 
-ames = pd.read_csv("../data/ameshousing.csv")
-
-# Let's artificially inject some missing data for demonstration if needed
-rng = np.random.default_rng(4025)
-mask = rng.random(len(ames)) < 0.05
-ames.loc[mask, 'Year_Built'] = np.nan
+ames = pd.read_csv("../data/ameshousing_missing.csv")
 ```
 
 ## Concept Check
@@ -40,10 +36,17 @@ ames.loc[mask, 'Year_Built'] = np.nan
 
 # Missing Data
 
+## Missing Data
+
+-   This lecture we will primarily focus on missing **values** (i.e. we have observations that don't have values for one or more variables)
+-   Also (maybe more) important: missing data is not necessarily the same as having a missing value... 
+-   Ask yourself: Is my sample representative of the population I'm going to be applying the model to?
+-   You could have observations which are not in your data set which create bias in your sample (Garbage in, Garbage out)
+
 ## Missing values {.smaller}
 
 -   Many times, you can't just drop missing values
--   Even if you can, dropping missing values can generate *biased* data/models
+-   Even if you can, dropping observations with missing values can generate *biased* data/models
 -   Sometimes missing values give you more information
 -   MOST IMPORTANT TAKEAWAY: that data is missing in the first place, may be informative
 -   Types of missing data:
@@ -51,7 +54,7 @@ ames.loc[mask, 'Year_Built'] = np.nan
     +   Missing at random (MAR): missing values are dependent on other values in the data set
     +   Missing not at random (MNAR): missing values are dependent on the value that is missing
 -   Structured missingness (SM):  when the missingness of certain values are depends on one another, regardless of whether the missing values are MCAR, MAR, or MNAR
--   Missing data is not necessarily the same as have a missing value... You could have observations which are not in your data set which create bias in your sample (Garbage in, Garbage out)
+
 
 ## MCAR: Examples
 
@@ -77,7 +80,7 @@ ames.loc[mask, 'Year_Built'] = np.nan
 
 -   Health survey: all questions related to pregnancy are left blank by males
 -   Bank data set: combination of home, auto, and credit cards... not all customer have all three so have missing data in certain portions
--   Survey: many respondents by stop the survey early so all questions after a certain point are missing
+-   Survey: many respondents may stop the survey early so all questions after a certain point are missing
 -   Netflix: customers may only watch similar movies and TV shows
 
 ## Remedies for Missing Data
@@ -89,71 +92,30 @@ ames.loc[mask, 'Year_Built'] = np.nan
     +  `SimpleImputer(strategy='mean')`: used for numeric variables
     +  `SimpleImputer(strategy='most_frequent')`: used for nominal (having no order) categorical variable
     +  `KNNImputer()`: used for both numeric and categorical variables (computationally expensive)
+-   Treat missingness as a feature [more info](https://scikit-learn.org/stable/modules/impute.html#marking-imputed-values)
     
 ## Exploring Missing Data
 
-In pandas, `.isna()` or `.isnull()` checks for missing values.
+[Use `missingno` package](https://github.com/ResidentMario/missingno)
 
-```{python}
-missing_counts = ames.isna().sum()
-missing_cols = missing_counts[missing_counts > 0].reset_index()
-missing_cols.columns = ['Feature', 'Missing Count']
-
-show(missing_cols)
-```
+Let's practice on the (new) ames housing dataset.
 
 ## Missing Data: Garage_Type
 
 -   The reason that `Garage_Type` is missing is because there is no garage!
-    +   Solution: replace `NaN`s with `No_Garage`
-    +   Do this before data splitting (or using a custom imputer step)
+    +   Solution: replace `NaN`s with `No_Garage` (use `df.fillna()`)
+    +   Do this before data splitting
     
-## Fixing Garage_Type
 
-```{python}
-ames['Garage_Type'] = ames['Garage_Type'].fillna('No_Garage')
-```
-    
 ## Missing Data: Year_Built
 
 -   Typically MCAR (if artificially removed) or MNAR 
     +   Solution 1: Impute with mean or median
     +   Solution 2: Impute with KNN... maybe we can infer what the values are based on other values in the data set?
     
-## Pipeline: SimpleImputer
+## Imputing `Year_Built`
 
-```{python}
-# Replaces missing values with the median of the column
-mean_imputer = SimpleImputer(strategy='mean')
-```
-  
-## Pipeline: KNNImputer
-
-```{python}
-# Replaces missing values using the 5 nearest neighbors
-knn_imputer = KNNImputer(n_neighbors=5)
-```
-
-## Incorporating into Workflows/Pipelines
-
-```{python}
-ames_train, ames_test = train_test_split(
-    ames, 
-    train_size=0.75,
-    random_state=4025
-)
-
-X_train = ames_train.drop(columns=['Sale_Price'])
-numeric_features = X_train.select_dtypes(include=['int64', 'float64']).columns
-
-# We can chain imputation before scaling
-num_pipeline = Pipeline([
-    ('imputer', KNNImputer(n_neighbors=5)),
-    ('scaler', StandardScaler())
-])
-
-X_train_num_processed = num_pipeline.fit_transform(X_train[numeric_features])
-```
+Let's try three different imputers, KNN, mean, and median.
 
 ## Recap {.smaller}
 

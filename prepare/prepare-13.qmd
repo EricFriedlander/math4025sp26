@@ -1,0 +1,7 @@
+---
+title: "Missing Data"
+---
+
+## Assigned readings
+
+- [sklearn missing value imputation documentation](https://scikit-learn.org/stable/modules/impute.html#)

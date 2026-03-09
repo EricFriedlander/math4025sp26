@@ -30,7 +30,7 @@ The root directory constitutes the active Quarto project.
 *   `data/`: Course datasets (e.g., `house_prices.csv`, `outlets.csv`, `tips.csv`, `AmesHousing.rds`, `ameshousing.csv`, `ameshousing_missing.csv`, `framingham.csv`).
 *   `jobs/`: Job application assignments (empty).
 *   `prepare/`: Preparation materials.
-    *   `prepare-03.qmd` through `prepare-10.qmd`.
+    *   `prepare-03.qmd` through `prepare-13.qmd`.
 *   `images/`: Static image assets (e.g., logo).
 *   `_quarto.yml`: Main Quarto configuration.
 *   `environment.yml`: Conda environment definition (Python).
@@ -76,6 +76,7 @@ Run these commands from the **project root**.
 *   **Code Blocks:** Use `{python}` blocks primarily; `{r}` blocks for schedule.
 *   **Tables:** Use the `show` function from the `itables` library (Python) or `gt` (R) for display.
 *   **Plotting:** Use `plotnine` for visualizations (ggplot2 style), but `seaborn` and `matplotlib` are also available.
+*   **Missing Data Visualization:** Use the `missingno` library (imported as `msno`) to visualize missingness patterns.
 *   **Data Manipulation:** `pandas` is primary; `polars` is available.
 *   **Data Loading:** Use `pyreadr` for `.rds` files and `pyhere` for robust relative paths.
 *   **Modeling & Preprocessing:** Use `scikit-learn` (Pipelines, ColumnTransformers, StandardScaler, PowerTransformer, etc.) for robust preprocessing to prevent data leakage. Use `feature_engine` for specific tasks like lumping rare categories (`RareLabelEncoder`).

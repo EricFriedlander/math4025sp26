@@ -16,4 +16,5 @@ x,5,3/5/2026,Lecture,ROC and AUC,[Click here for readings](prepare/prepare-10.ht
 x,5,3/5/2026,Homework,HW 3: Classification,,,,[03-hw-knn](hw/03-hw-knn.html)
 x,6,3/12/2026,Lecture,Cross-Validation,[Click here for readings](prepare/prepare-11.html),[11-cross-validation](slides/11-cross-validation.html),[video-11](https://youtu.be/En3YlkZUb1c),
 x,6,3/12/2026,Lecture,Preprocessing & Pipelines,[Click here for readings](prepare/prepare-12.html),[12-preprocessing](slides/12-preprocessing.html),[video-12](https://youtu.be/w46FMZ8fbM4),
+x,6,3/12/2026,Lecture,Missing Data,[Click here for readings](prepare/prepare-13.html),[13-missing-data](slides/13-missing-data.html),[video-13](https://youtu.be/AuF1Sjo1qbI),
 x,6,3/12/2026,Homework,HW 4: Classification,,,,[04-hw-classification](hw/04-hw-classification.html)
