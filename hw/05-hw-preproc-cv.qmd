@@ -1,0 +1,236 @@
+---
+title: "Homework 05: Preprocessing and Cross Validation" 
+author: "Your Name"
+---
+
+```{python setup}
+#| include: false
+
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split, cross_validate, RepeatedKFold
+from sklearn.linear_model import LinearRegression
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import StandardScaler, OneHotEncoder, OrdinalEncoder
+from sklearn.feature_selection import VarianceThreshold
+from feature_engine.encoding import RareLabelEncoder
+import matplotlib.pyplot as plt
+import seaborn as sns
+from pyhere import here
+
+# load other packages here if necessary
+```
+
+# Introduction
+
+In this homework you will practice pre-processing data and using cross-validation to evaluate regression models.
+
+## Learning goals
+
+In this assignment, you will...
+
+-   Use exploratory data analysis to inform feature engineering steps
+-   Pre-process data and impute missing values
+-   Evaluate and compare models using cross-validation
+
+# Getting Started
+
+## Clone the repo
+
+The following directions will guide you through the process of setting up your homework.
+
+## Exercise 0
+
+::: {.callout-tip title="Question"}
+[Click this link]([Insert Classroom Link Here]) to accept the assignment and clone it to your computer.
+:::
+
+## Data: LEGO
+
+The data for this analysis includes information about LEGO sets from themes produced January 1, 2018 and September 11, 2020. The data were originally scraped from Brickset.com, an online LEGO set guide and were obtained for this assignment from Peterson and Zieglar ([2021](https://www.tandfonline.com/doi/full/10.1080/26939169.2021.1946450)).
+
+You will work with data on about 400 randomly selected LEGO sets produced during this time period. The primary variables are interest in this analysis are:
+
+-   `Item_Number`: a serial code corresponding to the set.
+-   `Set_Name`: The name of the LEGO set.
+-   `Theme`: Theme of the LEGO set.
+-   `Pieces`: Number of pieces in the set from brickset.com.
+-   `Amazon_Price`: Amazon price of the set scraped from brickset.com (in U.S. dollars).
+-   `Year` : Year the LEGO set was produced.
+-   `Ages`: Variable stating what aged children the set is appropriate for.
+-   `Pages`: Number of pages in the instruction booklet.
+-   `Minifigures`: Number of minifigures (LEGO people) in the set scraped from brickset.com. LEGO sets with no minifigures have been coded as NA. NA's also represent missing data. This is due to how brickset.com reports their data.
+-   `Packaging`: What type of packaging the set came in.
+-   `Weight`: The weight of the set.
+-   `Unique_Pieces`: The number of unique pieces in each set.
+-   `Availability`: Where the set can be purchased.
+-   `Size`: General size of the interlocking bricks (Large = LEGO Duplo sets - which include large brick pieces safe for children ages 1 to 5, Small = LEGO sets which- include the traditional smaller brick pieces created for age groups 5 and - older, e.g., City, Friends).
+
+Your ultimate goal will be to predict `Amazon_Price` from the other features.
+
+# Loading & Cleaning the Data
+
+The first four exercises of this assignment are meant to be completed with the group you will be assigned in class.
+
+## Exercise 1
+
+::: {.callout-tip title="Question"}
+The data are contained in `lego-sample.csv`. Load the data into a pandas `DataFrame`.
+:::
+
+## Exercise 2
+
+::: {.callout-tip title="Question"}
+Two of the variables in the data set shouldn't be useful because they just serve to identify the different LEGO sets. Which two are they? Remove them from your `DataFrame`. Discuss your answer with your group and make sure Dr. Friedlander checks your group off before you move on.
+:::
+
+## Exercise 3
+
+::: {.callout-tip title="Question"}
+Notice that the `Weight` variable is a bit odd... It seems like it should be numeric but it's an object/string type. Why? On the board, write a detailed prompt you can use with your favorite Generative AI Chatbot to write the code for you. Have Dr. Friedlander check your group off before you move on.
+:::
+
+## Exercise 4
+
+::: {.callout-tip title="Question"}
+For each of the remaining features do the following:
+
+1. With your group, divide up the remaining features evenly: Identify if they are the correct data type. Are categorical variables coded as categories or objects? Are numerical variables coded as numbers? You will need to read descriptions of the data to make this determination. Use `.info()` to help.
+2. Identify any variables with missing values. Identify and then fix any variables for whom missing values (i.e. `NaN`s) indicate something other than that the data is missing (there is at least one). Fill in these missing values appropriately using `pandas` (we will use `scikit-learn` for the other missing values).
+3. For all of the categorical variables, identify ones that you think may be problematic because they may have near-zero variance. Decide whether to remove them now, or remove them as part of your `ColumnTransformer` (e.g., using `VarianceThreshold`). Make an argument for why your choice is appropriate.
+4. For all of the categorical variables, identify ones that you think may be problematic because they have many categories that don't have a lot of observations and likely need to be "lumped". Decide whether to group them manually now, or handle them as part of your `ColumnTransformer` using `RareLabelEncoder`. Make an argument for why your choice is appropriate.
+
+Dicuss your plan with your group and write it on the white board. Make sure Dr. Friedlander checks your group off before you move on. 
+:::
+
+# Data Splitting & Preprocessing
+
+## Exercise 5
+
+::: {.callout-tip title="Question"}
+Split your data into training and test sets using `train_test_split`. Use your own judgement to determine the training to test split ratio. Make sure to set `random_state=4025`.
+:::
+
+
+## Exercise 6
+
+::: {.callout-tip title="Question"}
+Generate at least three different preprocessing pipelines, using `ColumnTransformer` and `Pipeline`, designed to be used with linear regression that treat preprocessing differently. Hint: you'll likely want to try out different missing value imputation or lumping strategies. DO NOT USE AI TO HELP YOU WITH THIS QUESTION.
+:::
+
+
+## Exercise 7
+
+::: {.callout-tip title="Question"}
+Write a a detailed prompt you can use to have AI complete the following task. The prompt should contain detailed instructions for which preprocessing steps you'd like to use and the order in which they should be applied. Make sure to include the prompt as a Mardkown cell in your notebook. You final code should only inluce functions and objects we have introduced in this class. If it doesn't you must iteratate so that it does. Once you've written the prompt, use it to generate the code for the task below. Comment on your the quality of your prompt. Did you output exactly what you wanted? Did you have to iterate? Did you have to make small changes to get the output you wanted?
+
+Generate at least three different preprocessing pipelines, using `ColumnTransformer` and `Pipeline`, designed to be used with $K$-nearest neighbors that treat preprocessing differently. Hint: you'll likely want to try out different missing value imputation or lumping strategies. Remember that KNN requires all features to be properly scaled.
+:::
+
+# Model-Fitting & Evaluation
+
+## Exercise 8
+
+::: {.callout-tip title="Question"}
+Create a list or dictionary that contains 12 different `Pipeline` objects:
+
+-   three linear regression pipelines: one `LinearRegression` model combined with each of the three preprocessing transformers you created above
+-   nine different KNN pipelines: choose three different $K$s for your `KNeighborsRegressor` models and create one pipeline for each combination of KNN model and preprocessing transformer
+
+You are not permitted to use AI to help you with this question.
+:::
+
+## Exercise 9
+
+::: {.callout-tip title="Question"}
+Use 5-fold cross-validation with 5 repeats (`RepeatedKFold`) to compute the RMSE and R-squared for each of the 12 workflows you created above. You will likely have to write a for-loop to do this. You can use the `cross_validate` function. Note that this step may take a few minutes to execute. Store the results in a DataFrame.
+
+You are not permitted to use AI to write any code for you in this question.
+:::
+
+## Exercise 10
+
+::: {.callout-tip title="Question"}
+Plot the results of your cross validation and select your best workflow. Consider both the mean and the variation of the metrics across the folds.
+
+You are encouraged to use AI to help you with this question. Tip: copy and paste the code you used to generate the cross-validation results and ask AI to help you generate the plot. Be specific about the output you went. Paste your final conversation into a Markdown cell in your notebook. Your final code must include only functions and objects we have introduced in this class. If it doesn't you must iteratate so that it does.
+:::
+
+## Exercise 11
+
+::: {.callout-tip title="Question"}
+Re-fit your best model `Pipeline` on the whole training set and estimate your error metrics on the test set.
+:::
+
+# Conceptual Question
+
+## Exercise 12
+
+::: {.callout-tip title="Question"}
+The time to complete cross-validation can be substantially improved by using parallel processing. Below is the output for the Gemini prompt "Generate pseudo-code in Python to do cross-validation with repetition and multiple models". Can the for-loops below be parallelized? The primary question you want to ask yourself is "Are the different iterations of my loops independent of each other?". If there are small changes you need to make to the code to make it parallelizable, state what they are. 
+
+```{python}
+#| eval: FALSE
+
+# Define the number of folds (k) and the number of repetitions (r)
+k = 5
+r = 3
+
+# Define the list of models to evaluate
+models = {
+    'model1': train_model1,
+    'model2': train_model2,
+    'model3': train_model3
+}
+
+# Initialize a dictionary to store the performance metrics for each model
+all_performance_metrics = {}
+
+# Loop through each model
+for model_name, model_func in models.items():
+    # Initialize a list to store the performance metrics for this model
+    model_performance_metrics = []
+    
+    # Loop through each repetition
+    for rep in range(r):
+        # Create k-fold cross-validation object for this repetition
+        kf = KFold(n_splits=k, shuffle=True, random_state=rep)
+        
+        # Initialize a list to store the performance metrics for this repetition
+        performance_metrics = []
+        
+        # Loop through each fold
+        for train_index, val_index in kf.split(dataset):
+            # Split the data
+            training_set = dataset.iloc[train_index]
+            validation_set = dataset.iloc[val_index]
+            
+            # Train the model on the training set
+            model = model_func(training_set)
+            
+            # Evaluate the model on the validation set
+            performance = evaluate_model(model, validation_set)
+            
+            # Store the performance metric
+            performance_metrics.append(performance)
+                
+        # Store the performance metrics for this repetition
+        model_performance_metrics.append(performance_metrics)
+        
+    # Store the performance metrics for this model
+    all_performance_metrics[model_name] = model_performance_metrics
+
+# Calculate the average performance metric for each model across all repetitions
+average_performance = {
+    name: np.mean(metrics) 
+    for name, metrics in all_performance_metrics.items()
+}
+
+# Output the average performance for each model
+print("Average Performance for each model:")
+print(average_performance)
+```
+:::
