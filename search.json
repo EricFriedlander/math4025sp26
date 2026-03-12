@@ -1430,92 +1430,92 @@
     "text": "Recap\n\nPreprocessing Needs: Prevent information leakage by exclusively using training data parameters.\nscikit-learn Pipeline: Crucial for bundling preprocessing steps with the estimator to prevent data leakage.\nCommon Tasks:\n\nStandardization: StandardScaler, MinMaxScaler, RobustScaler.\nNon-linear Transformation: QuantileTransformer, PowerTransformer (Box-Cox, Yeo-Johnson).\nNormalization: Normalizer (scales individual observations to unit norm).\nCategorical Encoding: OneHotEncoder (dummies), OrdinalEncoder, RareLabelEncoder.\nDiscretization: KBinsDiscretizer, Binarizer.\nPolynomial Features: PolynomialFeatures, SplineTransformer.\nCustom/Feature Selection: FunctionTransformer, VarianceThreshold.\n\nOrder matters!: Be mindful of when to apply scaling vs. dummy-ing or imputation."
   },
   {
-    "objectID": "exams/Study-Guide.html",
-    "href": "exams/Study-Guide.html",
+    "objectID": "exams/Study-Guide-Midterm.html",
+    "href": "exams/Study-Guide-Midterm.html",
     "title": "Midterm Study Guide",
     "section": "",
     "text": "Rules: No electronic devices. One sheet (front and back) of handwritten notes permitted.\nCoverage: Slides 00–13 and readings/videos, HW 1-5, and Quizzes 1-5 (everything assigned through March 12)."
   },
   {
-    "objectID": "exams/Study-Guide.html#ml-terminology-and-big-picture-slides-0102",
-    "href": "exams/Study-Guide.html#ml-terminology-and-big-picture-slides-0102",
+    "objectID": "exams/Study-Guide-Midterm.html#ml-terminology-and-big-picture-slides-0102",
+    "href": "exams/Study-Guide-Midterm.html#ml-terminology-and-big-picture-slides-0102",
     "title": "Midterm Study Guide",
     "section": "1. ML Terminology and Big Picture (Slides 01–02)",
     "text": "1. ML Terminology and Big Picture (Slides 01–02)\nKey vocabulary:\n\n\\(n\\): number of observations (rows)\n\\(p\\): number of predictors/features (columns, excluding response)\n\\(Y\\): response (output) variable\n\\(X = (X_1, \\ldots, X_p)\\): predictor variables\nSupervised learning: labeled response \\(Y\\) is provided; goal is to predict \\(Y\\) from \\(X\\)\nUnsupervised learning: no response variable; goal is to find structure in \\(X\\) (e.g., clustering)\nRegression: \\(Y\\) is quantitative (continuous)\nClassification: \\(Y\\) is categorical (discrete classes)\nInference: understand how \\(X\\) affects \\(Y\\)\nPrediction: predict \\(Y\\) for new observations; \\(f\\) is a “black box”\nParametric: assumes a specific functional form for \\(f\\) (e.g., linear); reduces problem to estimating a fixed set of parameters\nNon-parametric: makes no strong assumptions about \\(f\\); more flexible but requires more data\n\nThings to watch for:\n\nIdentifying \\(n\\) and \\(p\\) correctly: \\(p\\) is the number of predictors, not including \\(Y\\)\nDistinguish regression from classification by looking at whether \\(Y\\) is continuous or categorical\nSupervised vs. unsupervised: does the data come with labels?"
   },
   {
-    "objectID": "exams/Study-Guide.html#statistical-learning-and-error-decomposition-slide-02",
-    "href": "exams/Study-Guide.html#statistical-learning-and-error-decomposition-slide-02",
+    "objectID": "exams/Study-Guide-Midterm.html#statistical-learning-and-error-decomposition-slide-02",
+    "href": "exams/Study-Guide-Midterm.html#statistical-learning-and-error-decomposition-slide-02",
     "title": "Midterm Study Guide",
     "section": "2. Statistical Learning and Error Decomposition (Slide 02)",
     "text": "2. Statistical Learning and Error Decomposition (Slide 02)\nKey vocabulary:\n\n\\(f(X)\\): the true (unknown) function relating \\(X\\) to \\(Y\\)\n\\(\\hat{f}(X)\\): our estimated function\nReducible error: due to \\(\\hat{f} \\neq f\\); can be improved with better models/data\nIrreducible error (\\(\\varepsilon\\)): natural variability in \\(Y\\) not explained by any \\(X\\); cannot be reduced regardless of model complexity\n\nKey formulas:\n\\[Y = f(X) + \\varepsilon\\]\n\\[\\text{MSE} = \\frac{1}{n} \\sum_{i=1}^{n}(y_i - \\hat{y}_i)^2\\]\nThings to watch for:\n\nIrreducible error is a floor on prediction error — no model can beat it\nA model with training MSE = 0 does not have zero error in general; irreducible error always remains"
   },
   {
-    "objectID": "exams/Study-Guide.html#bias-variance-tradeoff-slides-0203",
-    "href": "exams/Study-Guide.html#bias-variance-tradeoff-slides-0203",
+    "objectID": "exams/Study-Guide-Midterm.html#bias-variance-tradeoff-slides-0203",
+    "href": "exams/Study-Guide-Midterm.html#bias-variance-tradeoff-slides-0203",
     "title": "Midterm Study Guide",
     "section": "3. Bias-Variance Tradeoff (Slides 02–03)",
     "text": "3. Bias-Variance Tradeoff (Slides 02–03)\nKey vocabulary:\n\nBias: error from wrong assumptions in the model; high-bias models underfit\nVariance: sensitivity of \\(\\hat{f}\\) to fluctuations in training data; high-variance models overfit\nOverfitting: low training error, high test error (high variance, low bias)\nUnderfitting: high training error, high test error (high bias, low variance)\nTest MSE U-shape: as flexibility increases, test MSE first decreases then increases\n\nKey formula (bias-variance decomposition):\n\\[E\\left[(y_0 - \\hat{f}(x_0))^2\\right] = \\text{Var}(\\hat{f}(x_0)) + \\left[\\text{Bias}(\\hat{f}(x_0))\\right]^2 + \\text{Var}(\\varepsilon)\\]\nThings to watch for:\n\nAs flexibility increases: variance \\(\\uparrow\\), bias \\(\\downarrow\\)\nAs flexibility decreases: variance \\(\\downarrow\\), bias \\(\\uparrow\\)\nFor KNN: as \\(K\\) increases, the model becomes less flexible (more bias, less variance)\nLow training error + high test error = overfitting (high variance)\nHigh training error + high test error = underfitting (high bias)"
   },
   {
-    "objectID": "exams/Study-Guide.html#linear-regression-and-gradient-descent-slides-0304",
-    "href": "exams/Study-Guide.html#linear-regression-and-gradient-descent-slides-0304",
+    "objectID": "exams/Study-Guide-Midterm.html#linear-regression-and-gradient-descent-slides-0304",
+    "href": "exams/Study-Guide-Midterm.html#linear-regression-and-gradient-descent-slides-0304",
     "title": "Midterm Study Guide",
     "section": "4. Linear Regression and Gradient Descent (Slides 03–04)",
     "text": "4. Linear Regression and Gradient Descent (Slides 03–04)\nKey vocabulary:\n\nSLR (Simple Linear Regression): one predictor, \\(\\hat{Y} = \\hat{\\beta}_0 + \\hat{\\beta}_1 X\\)\nMLR (Multiple Linear Regression): multiple predictors\nOLS: minimizes the Residual Sum of Squares (RSS) \\(= \\sum(y_i - \\hat{y}_i)^2\\)\nCoefficient interpretation (MLR): holding all other predictors constant, a one-unit increase in \\(X_j\\) is associated with a \\(\\hat{\\beta}_j\\)-unit change in \\(\\hat{Y}\\)\nGradient descent: iterative optimization; update parameters by moving opposite to the gradient\nLearning rate (\\(\\alpha\\)): controls step size; too large → diverge; too small → slow convergence\n\nKey formulas:\n\\[\\hat{Y} = \\hat{\\beta}_0 + \\hat{\\beta}_1 X_1 + \\cdots + \\hat{\\beta}_p X_p\\]\n\\[\\theta \\leftarrow \\theta - \\alpha \\nabla_\\theta J(\\theta)\\]\nThings to watch for:\n\nIn MLR, interpret coefficients ceteris paribus (all others held constant)\nLearning rate is not the number of iterations; it controls step size\nGradient descent moves opposite to the gradient to decrease the loss"
   },
   {
-    "objectID": "exams/Study-Guide.html#data-splitting-and-leakage-slide-05",
-    "href": "exams/Study-Guide.html#data-splitting-and-leakage-slide-05",
+    "objectID": "exams/Study-Guide-Midterm.html#data-splitting-and-leakage-slide-05",
+    "href": "exams/Study-Guide-Midterm.html#data-splitting-and-leakage-slide-05",
     "title": "Midterm Study Guide",
     "section": "5. Data Splitting and Leakage (Slide 05)",
     "text": "5. Data Splitting and Leakage (Slide 05)\nKey vocabulary:\n\nTraining set: used to fit the model\nValidation set: used to tune hyperparameters and make modeling decisions\nTest set: held out until the very end; used once to report final performance\nInformation leakage: when information from the test/validation set “leaks” into the training process\n\nThings to watch for:\n\nThe test set must never influence any modeling decision\nLeakage example: fitting a scaler on all data before splitting — test statistics influence the scaler\nThe validation set is used for model selection; the test set is used for final evaluation"
   },
   {
-    "objectID": "exams/Study-Guide.html#k-nearest-neighbors-slides-0607",
-    "href": "exams/Study-Guide.html#k-nearest-neighbors-slides-0607",
+    "objectID": "exams/Study-Guide-Midterm.html#k-nearest-neighbors-slides-0607",
+    "href": "exams/Study-Guide-Midterm.html#k-nearest-neighbors-slides-0607",
     "title": "Midterm Study Guide",
     "section": "6. K-Nearest Neighbors (Slides 06–07)",
     "text": "6. K-Nearest Neighbors (Slides 06–07)\nKey vocabulary:\n\nKNN regression: predict \\(\\hat{f}(x_0)\\) as the average of the \\(K\\) nearest neighbors’ \\(Y\\) values\nKNN classification: predict the majority class among \\(K\\) nearest neighbors\nDistance metric: typically Euclidean distance\n\\(K\\) and flexibility: small \\(K\\) = more flexible (low bias, high variance); large \\(K\\) = less flexible (high bias, low variance)\nFeature scaling: necessary because KNN uses distance; features on larger scales dominate\n\nKey formula:\n\\[\\hat{f}(x_0) = \\frac{1}{K} \\sum_{x_i \\in \\mathcal{N}_0} y_i\\]\nThings to watch for:\n\nKNN is a non-parametric method — the “\\(K\\)” is a hyperparameter, not a model parameter\nAt \\(K = 1\\): training error = 0 (each point predicts itself), but test error is usually high\nAlways scale features before applying KNN"
   },
   {
-    "objectID": "exams/Study-Guide.html#preprocessing-and-pipelines-slides-07-12",
-    "href": "exams/Study-Guide.html#preprocessing-and-pipelines-slides-07-12",
+    "objectID": "exams/Study-Guide-Midterm.html#preprocessing-and-pipelines-slides-07-12",
+    "href": "exams/Study-Guide-Midterm.html#preprocessing-and-pipelines-slides-07-12",
     "title": "Midterm Study Guide",
     "section": "7. Preprocessing and Pipelines (Slides 07, 12)",
     "text": "7. Preprocessing and Pipelines (Slides 07, 12)\nKey vocabulary:\n\nStandardScaler: standardizes to mean 0, std 1: \\(z = (x - \\bar{x}) / s\\)\nOneHotEncoder: converts categorical variable with \\(c\\) categories to \\(c\\) (or \\(c-1\\) with drop=\"first\") binary columns\nOrdinalEncoder: encodes ordered categories as integers\nRareLabelEncoder: groups infrequent categories into an “Other” or “Rare” category\nColumnTransformer: applies different transformers to different columns\nPipeline: chains preprocessing steps and model in sequence; prevents leakage when used with CV\nBox-Cox: power transform for positive, skewed features; parameterized by \\(\\lambda\\)\nYeo-Johnson: like Box-Cox but handles zero/negative values\n\nKey formula (StandardScaler):\n\\[z = \\frac{x - \\bar{x}}{s}\\]\nKey formula (Box-Cox):\n\\[x^{(\\lambda)} = \\begin{cases} \\frac{x^\\lambda - 1}{\\lambda} & \\lambda \\neq 0 \\\\ \\ln(x) & \\lambda = 0 \\end{cases}\\]\nThings to watch for:\n\nThe correct workflow: fit all transformers on training data only; transform both train and test using training statistics\ndrop=\"first\" in OneHotEncoder: a \\(c\\)-category variable creates \\(c-1\\) columns\nPipeline + cross-validation: each fold fits transformers on the analysis set only"
   },
   {
-    "objectID": "exams/Study-Guide.html#logistic-regression-slide-08",
-    "href": "exams/Study-Guide.html#logistic-regression-slide-08",
+    "objectID": "exams/Study-Guide-Midterm.html#logistic-regression-slide-08",
+    "href": "exams/Study-Guide-Midterm.html#logistic-regression-slide-08",
     "title": "Midterm Study Guide",
     "section": "8. Logistic Regression (Slide 08)",
     "text": "8. Logistic Regression (Slide 08)\nKey vocabulary:\n\nLogistic function (sigmoid): maps any real number to \\((0,1)\\), interpreted as probability\nLog-odds (logit): \\(\\log\\left(\\frac{p}{1-p}\\right)\\); logistic regression is linear in the log-odds\nOdds: \\(\\frac{p(X)}{1 - p(X)}\\); \\(e^{\\hat{\\beta}_j}\\) = multiplicative change in odds per unit increase in \\(X_j\\)\n\nKey formulas:\n\\[p(X) = \\frac{e^{\\beta_0 + \\beta_1 X}}{1 + e^{\\beta_0 + \\beta_1 X}}\\]\n\\[\\log\\!\\left(\\frac{p(X)}{1 - p(X)}\\right) = \\beta_0 + \\beta_1 X\\]\nThings to watch for:\n\n\\(p(X)\\) is a probability (between 0 and 1), not a class label\nLogistic regression models log-odds as a linear function of \\(X\\); the probability itself is nonlinear in \\(X\\)\nThe default threshold of 0.5 is not always optimal"
   },
   {
-    "objectID": "exams/Study-Guide.html#classification-metrics-slide-09",
-    "href": "exams/Study-Guide.html#classification-metrics-slide-09",
+    "objectID": "exams/Study-Guide-Midterm.html#classification-metrics-slide-09",
+    "href": "exams/Study-Guide-Midterm.html#classification-metrics-slide-09",
     "title": "Midterm Study Guide",
     "section": "9. Classification Metrics (Slide 09)",
     "text": "9. Classification Metrics (Slide 09)\nConfusion matrix:\n\n\n\n\nPredicted Positive\nPredicted Negative\n\n\n\n\nActually Positive\nTP\nFN\n\n\nActually Negative\nFP\nTN\n\n\n\nKey formulas:\n\\[\\text{Accuracy} = \\frac{TP + TN}{TP + FP + FN + TN}\\]\n\\[\\text{Recall (Sensitivity, TPR)} = \\frac{TP}{TP + FN}\\]\n\\[\\text{Precision (PPV)} = \\frac{TP}{TP + FP}\\]\n\\[\\text{Specificity (TNR)} = \\frac{TN}{TN + FP}\\]\n\\[\\text{F1} = \\frac{2 \\cdot \\text{Precision} \\cdot \\text{Recall}}{\\text{Precision} + \\text{Recall}}\\]\nWhen to prioritize which metric:\n\nRecall: when missing a positive is costly (e.g., cancer screening)\nPrecision: when false alarms are costly (e.g., invasive surgery)\nAccuracy: misleading when classes are imbalanced\nF1: balances precision and recall"
   },
   {
-    "objectID": "exams/Study-Guide.html#roc-curve-and-auc-slide-10",
-    "href": "exams/Study-Guide.html#roc-curve-and-auc-slide-10",
+    "objectID": "exams/Study-Guide-Midterm.html#roc-curve-and-auc-slide-10",
+    "href": "exams/Study-Guide-Midterm.html#roc-curve-and-auc-slide-10",
     "title": "Midterm Study Guide",
     "section": "10. ROC Curve and AUC (Slide 10)",
     "text": "10. ROC Curve and AUC (Slide 10)\nKey vocabulary:\n\nROC curve: plots TPR (sensitivity) on \\(y\\)-axis vs. FPR (\\(1 -\\) specificity) on \\(x\\)-axis, across all thresholds\nAUC: area under ROC curve; ranges from 0.5 (random) to 1.0 (perfect)\nThreshold: value above which a predicted probability is classified as positive\n\nThings to watch for:\n\nAUC = 0.5 → classifier performs no better than random guessing\nAUC = 1.0 → perfect separation\nLowering threshold: TPR increases, FPR increases (more positives predicted → more TP and more FP)\nAUC summarizes performance across all thresholds; a higher AUC does not guarantee better performance at any specific threshold"
   },
   {
-    "objectID": "exams/Study-Guide.html#cross-validation-slide-11",
-    "href": "exams/Study-Guide.html#cross-validation-slide-11",
+    "objectID": "exams/Study-Guide-Midterm.html#cross-validation-slide-11",
+    "href": "exams/Study-Guide-Midterm.html#cross-validation-slide-11",
     "title": "Midterm Study Guide",
     "section": "11. Cross-Validation (Slide 11)",
     "text": "11. Cross-Validation (Slide 11)\nKey vocabulary:\n\nK-Fold CV: split data into \\(K\\) folds; each fold serves as assessment set once\nLOOCV: \\(K = n\\); each observation is the assessment set once\nAnalysis set: the \\(K-1\\) folds used to fit the model\nAssessment set: the held-out fold used to evaluate\nCV estimate of test error: average of \\(K\\) assessment-set errors\n\nThings to watch for:\n\nK-Fold CV: each observation appears in the assessment set exactly once\nWith \\(n\\) observations and \\(K\\) folds: each assessment fold has \\(n/K\\) observations\nLOOCV has low bias but high variance and is computationally expensive\nK-Fold (typically \\(K = 5\\) or \\(K = 10\\)) is often preferred in practice"
   },
   {
-    "objectID": "exams/Study-Guide.html#missing-data-slide-13",
-    "href": "exams/Study-Guide.html#missing-data-slide-13",
+    "objectID": "exams/Study-Guide-Midterm.html#missing-data-slide-13",
+    "href": "exams/Study-Guide-Midterm.html#missing-data-slide-13",
     "title": "Midterm Study Guide",
     "section": "12. Missing Data (Slide 13)",
     "text": "12. Missing Data (Slide 13)\nKey vocabulary:\n\nMCAR (Missing Completely At Random): probability of missingness is unrelated to any variable — the data are a random subsample of the complete data. Easiest to handle.\nMAR (Missing At Random): probability of missingness depends on observed variables, not on the missing value itself.\nMNAR (Missing Not At Random): probability of missingness depends on the unobserved (missing) value itself. Hardest to handle.\nStructurally Missing: missing by design (e.g., a follow-up question that doesn’t apply).\nImputation strategies: mean/median/mode imputation; KNN imputation; model-based imputation; multiple imputation\n\nThings to watch for:\n\nMNAR is the hardest case — the missing data itself is informative\nImputation must occur inside a Pipeline to prevent leakage\nMedian imputation is more robust to outliers than mean imputation\nCreating a missingness indicator column can help models learn that a value was missing"
