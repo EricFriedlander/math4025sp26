@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>gemini – Math 4025 - Spring 2026</title>
+<title>claude – Math 4025 - Spring 2026</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -154,21 +188,24 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#gemini-context-math-4025-spring-2026" id="toc-gemini-context-math-4025-spring-2026" class="nav-link active" data-scroll-target="#gemini-context-math-4025-spring-2026">Gemini Context: Math 4025 (Spring 2026)</a>
+  <li><a href="#claude.md" id="toc-claude.md" class="nav-link active" data-scroll-target="#claude.md">CLAUDE.md</a>
   <ul class="collapse">
   <li><a href="#project-overview" id="toc-project-overview" class="nav-link" data-scroll-target="#project-overview">Project Overview</a></li>
-  <li><a href="#directory-structure" id="toc-directory-structure" class="nav-link" data-scroll-target="#directory-structure">Directory Structure</a></li>
-  <li><a href="#development-usage" id="toc-development-usage" class="nav-link" data-scroll-target="#development-usage">Development &amp; Usage</a>
+  <li><a href="#common-commands" id="toc-common-commands" class="nav-link" data-scroll-target="#common-commands">Common Commands</a></li>
+  <li><a href="#architecture" id="toc-architecture" class="nav-link" data-scroll-target="#architecture">Architecture</a>
   <ul class="collapse">
-  <li><a href="#tools" id="toc-tools" class="nav-link" data-scroll-target="#tools">1. Tools</a></li>
-  <li><a href="#automatic-deployment" id="toc-automatic-deployment" class="nav-link" data-scroll-target="#automatic-deployment">2. Automatic Deployment</a></li>
-  <li><a href="#common-commands" id="toc-common-commands" class="nav-link" data-scroll-target="#common-commands">3. Common Commands</a></li>
-  <li><a href="#key-conventions" id="toc-key-conventions" class="nav-link" data-scroll-target="#key-conventions">3. Key Conventions</a></li>
+  <li><a href="#content-pipeline" id="toc-content-pipeline" class="nav-link" data-scroll-target="#content-pipeline">Content pipeline</a></li>
+  <li><a href="#schedule-management" id="toc-schedule-management" class="nav-link" data-scroll-target="#schedule-management">Schedule management</a></li>
+  <li><a href="#slides" id="toc-slides" class="nav-link" data-scroll-target="#slides">Slides</a></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework">Homework</a></li>
+  <li><a href="#quizzes-exams-separate-repo" id="toc-quizzes-exams-separate-repo" class="nav-link" data-scroll-target="#quizzes-exams-separate-repo">Quizzes &amp; Exams (separate repo)</a></li>
+  <li><a href="#freeze-behavior" id="toc-freeze-behavior" class="nav-link" data-scroll-target="#freeze-behavior">Freeze behavior</a></li>
   </ul></li>
-  <li><a href="#workflow-automation" id="toc-workflow-automation" class="nav-link" data-scroll-target="#workflow-automation">Workflow Automation</a></li>
+  <li><a href="#key-conventions" id="toc-key-conventions" class="nav-link" data-scroll-target="#key-conventions">Key Conventions</a></li>
+  <li><a href="#environment" id="toc-environment" class="nav-link" data-scroll-target="#environment">Environment</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/GEMINI.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/CLAUDE.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
@@ -176,106 +213,97 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="gemini-context-math-4025-spring-2026" class="level1">
-<h1>Gemini Context: Math 4025 (Spring 2026)</h1>
+<section id="claude.md" class="level1">
+<h1>CLAUDE.md</h1>
+<p>This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.</p>
 <section id="project-overview" class="level2">
 <h2 class="anchored" data-anchor-id="project-overview">Project Overview</h2>
-<p>This directory contains the source materials for the <strong>Statistical Machine Learning</strong> (Math 4025) course website for Spring 2026.</p>
+<p>This is the <strong>Math 4025: Statistical Machine Learning</strong> (Spring 2026) course website for Dr.&nbsp;Eric Friedlander at the College of Idaho. It is a <a href="https://quarto.org/">Quarto</a> website that auto-deploys to GitHub Pages at https://EricFriedlander.github.io/math4025sp26/.</p>
+<p>The <strong>Quizzes and Exams</strong> for the course are stored separately in <code>/home/efriedlander/Dropbox/Teaching/MATH-4025-Quizzes/</code> — this folder must <strong>never</strong> be pushed to GitHub or published publicly.</p>
+</section>
+<section id="common-commands" class="level2">
+<h2 class="anchored" data-anchor-id="common-commands">Common Commands</h2>
+<p>All commands run from the project root using the <code>math-4025-sp26</code> conda environment.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Activate environment</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate math-4025-sp26</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview site locally (live reload)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Render the entire site</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Render a single file</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render slides/13-missing-data.qmd</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render hw/04-hw-classification.qmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Deployment to GitHub Pages happens automatically via GitHub Actions on push to <code>master</code>. To manually publish:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> publish gh-pages</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="architecture" class="level2">
+<h2 class="anchored" data-anchor-id="architecture">Architecture</h2>
+<section id="content-pipeline" class="level3">
+<h3 class="anchored" data-anchor-id="content-pipeline">Content pipeline</h3>
+<p>All content is written in <code>.qmd</code> (Quarto Markdown). The site is configured in <code>_quarto.yml</code> (sidebar navigation, theme, footer). The homepage (<code>index.qmd</code>) renders the course schedule from <code>course-info/schedule.csv</code> using <strong>R + <code>gt</code></strong> — this is the only R-heavy file. All slides and homework use <strong>Python</strong>.</p>
+</section>
+<section id="schedule-management" class="level3">
+<h3 class="anchored" data-anchor-id="schedule-management">Schedule management</h3>
+<p><code>course-info/schedule.csv</code> is the single source of truth for what appears on the schedule page. Add a row and set the <code>Publish</code> column to <code>x</code> to make it visible. Columns: <code>Publish, week, due, type, topic, reading, slides, video, assignment</code>.</p>
+</section>
+<section id="slides" class="level3">
+<h3 class="anchored" data-anchor-id="slides">Slides</h3>
 <ul>
-<li><strong>Course:</strong> Math 4025 (Spring 2026).</li>
-<li><strong>Instructor:</strong> Dr.&nbsp;Eric Friedlander.</li>
-<li><strong>Institution:</strong> College of Idaho.</li>
-<li><strong>Primary Language:</strong> Python (primary), with R used for the schedule (<code>index.qmd</code>).</li>
-<li><strong>Textbook:</strong> ISLP (Introduction to Statistical Learning with Python).</li>
-<li><strong>Live Site:</strong> https://EricFriedlander.github.io/math4025sp26/</li>
+<li><p>Located in <code>slides/</code>, rendered as <strong>Reveal.js</strong> presentations</p></li>
+<li><p>Shared config in <code>slides/_metadata.yml</code> (author, footer, theme, <code>scrollable: true</code>, <code>echo: true</code>)</p></li>
+<li><p>Numbered sequentially: <code>00-welcome</code>, <code>01-big-picture</code>, …, <code>13-missing-data</code></p></li>
+<li><p>Standard slide setup block:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotnine <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itables <span class="im">import</span> show</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul>
 </section>
-<section id="directory-structure" class="level2">
-<h2 class="anchored" data-anchor-id="directory-structure">Directory Structure</h2>
-<p>The root directory constitutes the active Quarto project.</p>
+<section id="homework" class="level3">
+<h3 class="anchored" data-anchor-id="homework">Homework</h3>
 <ul>
-<li><code>_archive/</code>: Legacy R-based materials from Spring 2025 (MAT 427). Use for reference only.
-<ul>
-<li><code>slides/</code>: Legacy lecture slides.</li>
-<li><code>hw/</code>: Legacy homework assignments.</li>
-</ul></li>
-<li><code>course-info/</code>: Course-level documentation.
-<ul>
-<li><code>syllabus.qmd</code>: Course syllabus (updated with 2026 grading, URL, and office hours).</li>
-<li><code>overview.qmd</code>: Course overview (Instructor, Class Meetings, and office hours).</li>
-<li><code>computing-access.qmd</code> &amp; <code>computing-python-resources.qmd</code>: Computing setup and resources.</li>
-<li><code>schedule.csv</code>: Source of truth for the course schedule (includes links to slides, readings, and lecture videos).</li>
-</ul></li>
-<li><code>slides/</code>: Lecture slides (migrated from archive and converted to Python).
-<ul>
-<li><code>00-welcome.qmd</code>, <code>01-big-picture.qmd</code>, <code>02-StatisticalLearning.qmd</code>, <code>03-SLR-Gradient_Desc.qmd</code>, <code>04-MultipleRegression.qmd</code>, <code>05-data-splitting.qmd</code>, <code>06-knn.qmd</code>, <code>07-preprocessing-pipelines.qmd</code>, <code>08-classification-logistic.qmd</code>, <code>09-classification-metrics.qmd</code>, <code>10-roc-auc.qmd</code>, <code>11-cross-validation.qmd</code>, <code>12-preprocessing.qmd</code>, <code>13-missing-data.qmd</code>.</li>
-<li><code>_metadata.yml</code>: Shared configuration for all slides (includes <code>scrollable: true</code>).</li>
-<li><code>images/</code>: Slide-specific images.</li>
-</ul></li>
-<li><code>hw/</code>: Homework assignments.
-<ul>
-<li><code>01-hw-eda.qmd</code>, <code>02-hw-mlr.qmd</code>, <code>03-hw-knn.qmd</code>, <code>04-hw-classification.qmd</code>.</li>
-</ul></li>
-<li><code>data/</code>: Course datasets (e.g., <code>house_prices.csv</code>, <code>outlets.csv</code>, <code>tips.csv</code>, <code>AmesHousing.rds</code>, <code>ameshousing.csv</code>, <code>ameshousing_missing.csv</code>, <code>framingham.csv</code>).</li>
-<li><code>jobs/</code>: Job application assignments (empty).</li>
-<li><code>prepare/</code>: Preparation materials.
-<ul>
-<li><code>prepare-03.qmd</code> through <code>prepare-13.qmd</code>.</li>
-</ul></li>
-<li><code>images/</code>: Static image assets (e.g., logo).</li>
-<li><code>_quarto.yml</code>: Main Quarto configuration.</li>
-<li><code>environment.yml</code>: Conda environment definition (Python).</li>
-<li><code>renv.lock</code>, <code>.Rprofile</code>, <code>renv/</code>: R environment definition (renv).</li>
-<li><code>index.qmd</code>: Homepage (displays the Course Schedule via R/gt).</li>
+<li>Located in <code>hw/</code>, rendered as standard HTML documents</li>
+<li>Students submit via GitHub Classroom (linked in sidebar)</li>
 </ul>
 </section>
-<section id="development-usage" class="level2">
-<h2 class="anchored" data-anchor-id="development-usage">Development &amp; Usage</h2>
-<section id="tools" class="level3">
-<h3 class="anchored" data-anchor-id="tools">1. Tools</h3>
+<section id="quizzes-exams-separate-repo" class="level3">
+<h3 class="anchored" data-anchor-id="quizzes-exams-separate-repo">Quizzes &amp; Exams (separate repo)</h3>
 <ul>
-<li><strong>Quarto:</strong> Website builder.</li>
-<li><strong>Python:</strong> Primary programming language.</li>
-<li><strong>R:</strong> Used for specific components (e.g., schedule generation).</li>
-<li><strong>Conda/Mamba:</strong> Use the <code>math-4025-sp26</code> environment for all Python code in this workspace.</li>
-<li><strong>renv:</strong> Manages R dependencies.</li>
-<li><strong>VS Code:</strong> Primary editor.</li>
+<li>Stored in <code>/home/efriedlander/Dropbox/Teaching/MATH-4025-Quizzes/</code></li>
+<li>Rendered to <strong>PDF</strong> (not HTML): <code>format: pdf</code> in the YAML front matter</li>
+<li>Files follow the pattern <code>Quiz-N.qmd</code> / <code>Quiz-N.pdf</code></li>
 </ul>
 </section>
-<section id="automatic-deployment" class="level3">
-<h3 class="anchored" data-anchor-id="automatic-deployment">2. Automatic Deployment</h3>
-<p>The website is automatically rendered and published to GitHub Pages via a GitHub Action whenever changes are pushed to the <code>main</code> branch. * <strong>Workflow file:</strong> <code>.github/workflows/publish.yml</code></p>
-</section>
-<section id="common-commands" class="level3">
-<h3 class="anchored" data-anchor-id="common-commands">3. Common Commands</h3>
-<p>Run these commands from the <strong>project root</strong>.</p>
+<section id="freeze-behavior" class="level3">
+<h3 class="anchored" data-anchor-id="freeze-behavior">Freeze behavior</h3>
 <ul>
-<li><strong>Preview Site:</strong> <code>bash     quarto preview</code></li>
-<li><strong>Render Site:</strong> <code>bash     quarto render</code></li>
-<li><strong>Publish Site:</strong> <code>bash     quarto publish gh-pages</code></li>
-<li><strong>Render Specific File:</strong> <code>bash     quarto render course-info/syllabus.qmd</code></li>
-</ul>
-</section>
-<section id="key-conventions" class="level3">
-<h3 class="anchored" data-anchor-id="key-conventions">3. Key Conventions</h3>
-<ul>
-<li><strong>Content:</strong> Written in <code>.qmd</code> (Quarto Markdown).</li>
-<li><strong>Code Blocks:</strong> Use <code>{python}</code> blocks primarily; <code>{r}</code> blocks for schedule.</li>
-<li><strong>Tables:</strong> Use the <code>show</code> function from the <code>itables</code> library (Python) or <code>gt</code> (R) for display.</li>
-<li><strong>Plotting:</strong> Use <code>plotnine</code> for visualizations (ggplot2 style), but <code>seaborn</code> and <code>matplotlib</code> are also available.</li>
-<li><strong>Missing Data Visualization:</strong> Use the <code>missingno</code> library (imported as <code>msno</code>) to visualize missingness patterns.</li>
-<li><strong>Data Manipulation:</strong> <code>pandas</code> is primary; <code>polars</code> is available.</li>
-<li><strong>Data Loading:</strong> Use <code>pyreadr</code> for <code>.rds</code> files and <code>pyhere</code> for robust relative paths.</li>
-<li><strong>Modeling &amp; Preprocessing:</strong> Use <code>scikit-learn</code> (Pipelines, ColumnTransformers, StandardScaler, PowerTransformer, etc.) for robust preprocessing to prevent data leakage. Use <code>feature_engine</code> for specific tasks like lumping rare categories (<code>RareLabelEncoder</code>).</li>
-<li><strong>Configuration:</strong> Global settings in <code>_quarto.yml</code>. Sidebar navigation is configured here.</li>
-<li><strong>Paths:</strong> Relative paths should ideally generally work, but be mindful of the folder structure (e.g., referencing images from <code>course-info/</code>).</li>
-<li><strong>Data:</strong> Store raw data in <code>data/</code>.</li>
+<li><code>execute: freeze: auto</code> is set globally in <code>_quarto.yml</code> — Quarto caches executed outputs in <code>_freeze/</code> and only re-executes changed files</li>
+<li><code>index.qmd</code> overrides this with <code>freeze: false</code> so the schedule always re-renders</li>
 </ul>
 </section>
 </section>
-<section id="workflow-automation" class="level2">
-<h2 class="anchored" data-anchor-id="workflow-automation">Workflow Automation</h2>
-<p>The project utilizes the Gemini CLI for assistance. * <strong>.gemini/prompts/</strong>: Stores reusable prompts for common tasks. * <code>sync-context.md</code>: Analyzes project changes, updates documentation, and handles git operations.</p>
+<section id="key-conventions" class="level2">
+<h2 class="anchored" data-anchor-id="key-conventions">Key Conventions</h2>
+<ul>
+<li><strong>Tables:</strong> Use <code>from itables import show</code> and call <code>show(df)</code> in Python blocks</li>
+<li><strong>Plots:</strong> Prefer <code>plotnine</code> (ggplot2-style); <code>seaborn</code>/<code>matplotlib</code> also available</li>
+<li><strong>Missing data viz:</strong> Use <code>import missingno as msno</code></li>
+<li><strong>Data loading:</strong> Use <code>pyhere</code> for robust relative paths; <code>pyreadr</code> for <code>.rds</code> files</li>
+<li><strong>Preprocessing/modeling:</strong> Use <code>scikit-learn</code> Pipelines and <code>ColumnTransformer</code> to avoid data leakage; use <code>feature_engine.RareLabelEncoder</code> for lumping rare categories</li>
+<li><strong>Data:</strong> Raw datasets live in <code>data/</code> (e.g., <code>ameshousing.csv</code>, <code>ameshousing_missing.csv</code>, <code>framingham.csv</code>)</li>
+<li><strong>Paths in slides:</strong> Data is at <code>../data/</code> relative to the <code>slides/</code> directory</li>
+</ul>
+</section>
+<section id="environment" class="level2">
+<h2 class="anchored" data-anchor-id="environment">Environment</h2>
+<ul>
+<li><strong>Python:</strong> <code>math-4025-sp26</code> conda env (Python 3.14, defined in <code>environment.yml</code>)</li>
+<li><strong>R:</strong> Managed via <code>renv</code> (only needed for <code>index.qmd</code> schedule rendering)</li>
+<li><strong>Key Python packages:</strong> <code>scikit-learn</code>, <code>pandas</code>, <code>numpy</code>, <code>plotnine</code>, <code>itables</code>, <code>missingno</code>, <code>feature_engine</code>, <code>statsmodels</code>, <code>islp</code>, <code>pyreadr</code>, <code>pyhere</code>, <code>polars</code>, <code>seaborn</code></li>
+</ul>
 
 
 </section>
@@ -707,7 +735,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/GEMINI.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/CLAUDE.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This site is built with <a href="https://quarto.org/">Quarto</a></p>
 </div>

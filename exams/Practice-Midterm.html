@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="MATH 4025">
 
-<title>gemini – Math 4025 - Spring 2026</title>
+<title>Practice Midterm Exam – Math 4025 - Spring 2026</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,22 +24,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a468f417d409e5b90f43decb280e538f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a468f417d409e5b90f43decb280e538f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -67,6 +68,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -79,7 +109,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Practice Midterm Exam</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -93,8 +123,8 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-center sidebar-header">
-      <a href="./index.html" class="sidebar-logo-link">
-      <img src="./images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
       <div class="sidebar-tools-main">
     <a href="https://classroom.github.com/classrooms/256856191-math4025sp26-classroom" title="GitHub" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
@@ -110,25 +140,25 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./course-info/overview.html" class="sidebar-item-text sidebar-link">
+  <a href="../course-info/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./course-info/syllabus.html" class="sidebar-item-text sidebar-link">
+  <a href="../course-info/syllabus.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Syllabus</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Schedule</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./course-info/computing-python-resources.html" class="sidebar-item-text sidebar-link">
+  <a href="../course-info/computing-python-resources.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Python resources</span></a>
   </div>
 </li>
@@ -154,131 +184,202 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#gemini-context-math-4025-spring-2026" id="toc-gemini-context-math-4025-spring-2026" class="nav-link active" data-scroll-target="#gemini-context-math-4025-spring-2026">Gemini Context: Math 4025 (Spring 2026)</a>
-  <ul class="collapse">
-  <li><a href="#project-overview" id="toc-project-overview" class="nav-link" data-scroll-target="#project-overview">Project Overview</a></li>
-  <li><a href="#directory-structure" id="toc-directory-structure" class="nav-link" data-scroll-target="#directory-structure">Directory Structure</a></li>
-  <li><a href="#development-usage" id="toc-development-usage" class="nav-link" data-scroll-target="#development-usage">Development &amp; Usage</a>
-  <ul class="collapse">
-  <li><a href="#tools" id="toc-tools" class="nav-link" data-scroll-target="#tools">1. Tools</a></li>
-  <li><a href="#automatic-deployment" id="toc-automatic-deployment" class="nav-link" data-scroll-target="#automatic-deployment">2. Automatic Deployment</a></li>
-  <li><a href="#common-commands" id="toc-common-commands" class="nav-link" data-scroll-target="#common-commands">3. Common Commands</a></li>
-  <li><a href="#key-conventions" id="toc-key-conventions" class="nav-link" data-scroll-target="#key-conventions">3. Key Conventions</a></li>
-  </ul></li>
-  <li><a href="#workflow-automation" id="toc-workflow-automation" class="nav-link" data-scroll-target="#workflow-automation">Workflow Automation</a></li>
-  </ul></li>
+  <li><a href="#section-1-multiple-choice-45-points-3-points-each" id="toc-section-1-multiple-choice-45-points-3-points-each" class="nav-link active" data-scroll-target="#section-1-multiple-choice-45-points-3-points-each">Section 1: Multiple Choice (45 points, 3 points each)</a></li>
+  <li><a href="#section-2-truefalse-with-explanation-25-points-4-points-each" id="toc-section-2-truefalse-with-explanation-25-points-4-points-each" class="nav-link" data-scroll-target="#section-2-truefalse-with-explanation-25-points-4-points-each">Section 2: True/False with Explanation (25 points, ~4 points each)</a></li>
+  <li><a href="#section-3-conceptual-short-answer-30-points-10-points-each" id="toc-section-3-conceptual-short-answer-30-points-10-points-each" class="nav-link" data-scroll-target="#section-3-conceptual-short-answer-30-points-10-points-each">Section 3: Conceptual / Short Answer (30 points, 10 points each)</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/GEMINI.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/exams/Practice-Midterm.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Practice-Midterm.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Practice Midterm Exam</h1>
+<p class="subtitle lead">Spring 2026</p>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="gemini-context-math-4025-spring-2026" class="level1">
-<h1>Gemini Context: Math 4025 (Spring 2026)</h1>
-<section id="project-overview" class="level2">
-<h2 class="anchored" data-anchor-id="project-overview">Project Overview</h2>
-<p>This directory contains the source materials for the <strong>Statistical Machine Learning</strong> (Math 4025) course website for Spring 2026.</p>
-<ul>
-<li><strong>Course:</strong> Math 4025 (Spring 2026).</li>
-<li><strong>Instructor:</strong> Dr.&nbsp;Eric Friedlander.</li>
-<li><strong>Institution:</strong> College of Idaho.</li>
-<li><strong>Primary Language:</strong> Python (primary), with R used for the schedule (<code>index.qmd</code>).</li>
-<li><strong>Textbook:</strong> ISLP (Introduction to Statistical Learning with Python).</li>
-<li><strong>Live Site:</strong> https://EricFriedlander.github.io/math4025sp26/</li>
-</ul>
-</section>
-<section id="directory-structure" class="level2">
-<h2 class="anchored" data-anchor-id="directory-structure">Directory Structure</h2>
-<p>The root directory constitutes the active Quarto project.</p>
-<ul>
-<li><code>_archive/</code>: Legacy R-based materials from Spring 2025 (MAT 427). Use for reference only.
-<ul>
-<li><code>slides/</code>: Legacy lecture slides.</li>
-<li><code>hw/</code>: Legacy homework assignments.</li>
-</ul></li>
-<li><code>course-info/</code>: Course-level documentation.
-<ul>
-<li><code>syllabus.qmd</code>: Course syllabus (updated with 2026 grading, URL, and office hours).</li>
-<li><code>overview.qmd</code>: Course overview (Instructor, Class Meetings, and office hours).</li>
-<li><code>computing-access.qmd</code> &amp; <code>computing-python-resources.qmd</code>: Computing setup and resources.</li>
-<li><code>schedule.csv</code>: Source of truth for the course schedule (includes links to slides, readings, and lecture videos).</li>
-</ul></li>
-<li><code>slides/</code>: Lecture slides (migrated from archive and converted to Python).
-<ul>
-<li><code>00-welcome.qmd</code>, <code>01-big-picture.qmd</code>, <code>02-StatisticalLearning.qmd</code>, <code>03-SLR-Gradient_Desc.qmd</code>, <code>04-MultipleRegression.qmd</code>, <code>05-data-splitting.qmd</code>, <code>06-knn.qmd</code>, <code>07-preprocessing-pipelines.qmd</code>, <code>08-classification-logistic.qmd</code>, <code>09-classification-metrics.qmd</code>, <code>10-roc-auc.qmd</code>, <code>11-cross-validation.qmd</code>, <code>12-preprocessing.qmd</code>, <code>13-missing-data.qmd</code>.</li>
-<li><code>_metadata.yml</code>: Shared configuration for all slides (includes <code>scrollable: true</code>).</li>
-<li><code>images/</code>: Slide-specific images.</li>
-</ul></li>
-<li><code>hw/</code>: Homework assignments.
-<ul>
-<li><code>01-hw-eda.qmd</code>, <code>02-hw-mlr.qmd</code>, <code>03-hw-knn.qmd</code>, <code>04-hw-classification.qmd</code>.</li>
-</ul></li>
-<li><code>data/</code>: Course datasets (e.g., <code>house_prices.csv</code>, <code>outlets.csv</code>, <code>tips.csv</code>, <code>AmesHousing.rds</code>, <code>ameshousing.csv</code>, <code>ameshousing_missing.csv</code>, <code>framingham.csv</code>).</li>
-<li><code>jobs/</code>: Job application assignments (empty).</li>
-<li><code>prepare/</code>: Preparation materials.
-<ul>
-<li><code>prepare-03.qmd</code> through <code>prepare-13.qmd</code>.</li>
-</ul></li>
-<li><code>images/</code>: Static image assets (e.g., logo).</li>
-<li><code>_quarto.yml</code>: Main Quarto configuration.</li>
-<li><code>environment.yml</code>: Conda environment definition (Python).</li>
-<li><code>renv.lock</code>, <code>.Rprofile</code>, <code>renv/</code>: R environment definition (renv).</li>
-<li><code>index.qmd</code>: Homepage (displays the Course Schedule via R/gt).</li>
-</ul>
-</section>
-<section id="development-usage" class="level2">
-<h2 class="anchored" data-anchor-id="development-usage">Development &amp; Usage</h2>
-<section id="tools" class="level3">
-<h3 class="anchored" data-anchor-id="tools">1. Tools</h3>
-<ul>
-<li><strong>Quarto:</strong> Website builder.</li>
-<li><strong>Python:</strong> Primary programming language.</li>
-<li><strong>R:</strong> Used for specific components (e.g., schedule generation).</li>
-<li><strong>Conda/Mamba:</strong> Use the <code>math-4025-sp26</code> environment for all Python code in this workspace.</li>
-<li><strong>renv:</strong> Manages R dependencies.</li>
-<li><strong>VS Code:</strong> Primary editor.</li>
-</ul>
-</section>
-<section id="automatic-deployment" class="level3">
-<h3 class="anchored" data-anchor-id="automatic-deployment">2. Automatic Deployment</h3>
-<p>The website is automatically rendered and published to GitHub Pages via a GitHub Action whenever changes are pushed to the <code>main</code> branch. * <strong>Workflow file:</strong> <code>.github/workflows/publish.yml</code></p>
-</section>
-<section id="common-commands" class="level3">
-<h3 class="anchored" data-anchor-id="common-commands">3. Common Commands</h3>
-<p>Run these commands from the <strong>project root</strong>.</p>
-<ul>
-<li><strong>Preview Site:</strong> <code>bash     quarto preview</code></li>
-<li><strong>Render Site:</strong> <code>bash     quarto render</code></li>
-<li><strong>Publish Site:</strong> <code>bash     quarto publish gh-pages</code></li>
-<li><strong>Render Specific File:</strong> <code>bash     quarto render course-info/syllabus.qmd</code></li>
-</ul>
-</section>
-<section id="key-conventions" class="level3">
-<h3 class="anchored" data-anchor-id="key-conventions">3. Key Conventions</h3>
-<ul>
-<li><strong>Content:</strong> Written in <code>.qmd</code> (Quarto Markdown).</li>
-<li><strong>Code Blocks:</strong> Use <code>{python}</code> blocks primarily; <code>{r}</code> blocks for schedule.</li>
-<li><strong>Tables:</strong> Use the <code>show</code> function from the <code>itables</code> library (Python) or <code>gt</code> (R) for display.</li>
-<li><strong>Plotting:</strong> Use <code>plotnine</code> for visualizations (ggplot2 style), but <code>seaborn</code> and <code>matplotlib</code> are also available.</li>
-<li><strong>Missing Data Visualization:</strong> Use the <code>missingno</code> library (imported as <code>msno</code>) to visualize missingness patterns.</li>
-<li><strong>Data Manipulation:</strong> <code>pandas</code> is primary; <code>polars</code> is available.</li>
-<li><strong>Data Loading:</strong> Use <code>pyreadr</code> for <code>.rds</code> files and <code>pyhere</code> for robust relative paths.</li>
-<li><strong>Modeling &amp; Preprocessing:</strong> Use <code>scikit-learn</code> (Pipelines, ColumnTransformers, StandardScaler, PowerTransformer, etc.) for robust preprocessing to prevent data leakage. Use <code>feature_engine</code> for specific tasks like lumping rare categories (<code>RareLabelEncoder</code>).</li>
-<li><strong>Configuration:</strong> Global settings in <code>_quarto.yml</code>. Sidebar navigation is configured here.</li>
-<li><strong>Paths:</strong> Relative paths should ideally generally work, but be mindful of the folder structure (e.g., referencing images from <code>course-info/</code>).</li>
-<li><strong>Data:</strong> Store raw data in <code>data/</code>.</li>
-</ul>
-</section>
-</section>
-<section id="workflow-automation" class="level2">
-<h2 class="anchored" data-anchor-id="workflow-automation">Workflow Automation</h2>
-<p>The project utilizes the Gemini CLI for assistance. * <strong>.gemini/prompts/</strong>: Stores reusable prompts for common tasks. * <code>sync-context.md</code>: Analyzes project changes, updates documentation, and handles git operations.</p>
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>MATH 4025 </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
 
 
+</header>
+
+
+<p><strong>Name:</strong> ____________________________________</p>
+<p><strong>Instructions:</strong> No electronic devices. You may use one sheet (front and back) of handwritten notes. Show your work on conceptual questions to receive full credit. This practice exam has the same structure and point values as the actual midterm.</p>
+<hr>
+<section id="section-1-multiple-choice-45-points-3-points-each" class="level2">
+<h2 class="anchored" data-anchor-id="section-1-multiple-choice-45-points-3-points-each">Section 1: Multiple Choice (45 points, 3 points each)</h2>
+<p><em>Circle the single best answer.</em></p>
+<p><strong>1.</strong> A spam filter learns from labeled emails (spam/not spam) by identifying patterns. Using Tom Mitchell’s definition of machine learning, which of the following correctly identifies the <strong>Task (T)</strong>, <strong>Experience (E)</strong>, and <strong>Performance measure (P)</strong>?</p>
+<ol type="A">
+<li>T: reading emails; E: accuracy on labeled emails; P: the spam filter software</li>
+<li>T: classifying emails as spam/not spam; E: labeled training emails; P: accuracy on new emails</li>
+<li>T: accuracy rate; E: classifying emails; P: the number of emails processed</li>
+<li>T: filtering spam; E: test accuracy; P: the training dataset</li>
+<li>T: the email dataset; E: performance on test data; P: precision of the filter</li>
+</ol>
+<p><strong>2.</strong> A music streaming service wants to predict whether a user will skip a song within the first 10 seconds, based on listening history and song features. This is best described as:</p>
+<ol type="A">
+<li>Unsupervised regression</li>
+<li>Supervised regression</li>
+<li>Supervised classification</li>
+<li>Clustering</li>
+<li>Dimensionality reduction</li>
+</ol>
+<p><strong>3.</strong> A model achieves <strong>very low training MSE</strong> but <strong>high test MSE</strong>. Which of the following is most likely true about the model?</p>
+<ol type="A">
+<li>It has high bias and low variance (underfitting)</li>
+<li>It has low bias and high variance (overfitting)</li>
+<li>It has reached the optimal bias-variance tradeoff</li>
+<li>Irreducible error is dominating test MSE</li>
+<li>The training and test sets have incompatible distributions</li>
+</ol>
+<p><strong>4.</strong> Which of the following statements best distinguishes <strong>parametric</strong> from <strong>non-parametric</strong> methods?</p>
+<ol type="A">
+<li>Parametric methods require more data than non-parametric methods</li>
+<li>Non-parametric methods always outperform parametric methods</li>
+<li>Parametric methods assume a specific functional form for <span class="math inline">\(f\)</span>, while non-parametric methods do not</li>
+<li>Non-parametric methods always produce smoother estimates of <span class="math inline">\(f\)</span></li>
+<li>Parametric methods cannot be used for classification</li>
+</ol>
+<p><strong>5.</strong> In KNN regression, as <span class="math inline">\(K \to 1\)</span>, what happens to <strong>training error</strong>?</p>
+<ol type="A">
+<li>Training error increases because the model becomes more flexible</li>
+<li>Training error approaches zero because each training point is predicted by itself</li>
+<li>Training error equals test error because the model is perfectly calibrated</li>
+<li>Training error is unaffected by the choice of <span class="math inline">\(K\)</span></li>
+<li>Training error increases due to high variance</li>
+</ol>
+<p><strong>6.</strong> Gradient descent updates parameters by moving in the direction <strong>opposite</strong> to the gradient. Why?</p>
+<ol type="A">
+<li>The gradient points toward the nearest local minimum</li>
+<li>Moving opposite to the gradient decreases the loss function most rapidly</li>
+<li>The gradient measures the curvature of the loss, not its slope</li>
+<li>Moving in the gradient direction would increase the learning rate</li>
+<li>The negative gradient points toward the global maximum</li>
+</ol>
+<p><strong>7.</strong> A data scientist fits a StandardScaler to the entire dataset (training + test combined) and then splits. This introduces <strong>information leakage</strong> because:</p>
+<ol type="A">
+<li>The scaler changes the labels of the test set</li>
+<li>The test set mean and standard deviation influence the scaler, allowing test-set information to “leak” into preprocessing</li>
+<li>StandardScaler cannot be applied to categorical variables</li>
+<li>The scaler removes the response variable from the test set</li>
+<li>Scaling the test set increases variance</li>
+</ol>
+<p><strong>8.</strong> A dataset has a categorical feature <code>Season</code> with four categories: Spring, Summer, Fall, Winter. If <code>OneHotEncoder</code> is applied with <code>drop="first"</code>, how many new binary columns are created?</p>
+<ol type="A">
+<li>1</li>
+<li>2</li>
+<li>3</li>
+<li>4</li>
+<li>5</li>
+</ol>
+<p><strong>9.</strong> In logistic regression, the <strong>coefficient <span class="math inline">\(\hat{\beta}_1 = 0.8\)</span></strong> on a predictor <span class="math inline">\(X_1\)</span> is best interpreted as:</p>
+<ol type="A">
+<li>A one-unit increase in <span class="math inline">\(X_1\)</span> multiplies the probability of <span class="math inline">\(Y=1\)</span> by 0.8</li>
+<li>A one-unit increase in <span class="math inline">\(X_1\)</span> is associated with a 0.8-unit increase in <span class="math inline">\(p(X)\)</span></li>
+<li>A one-unit increase in <span class="math inline">\(X_1\)</span> is associated with an increase of 0.8 in the log-odds of <span class="math inline">\(Y = 1\)</span>, holding other predictors constant</li>
+<li><span class="math inline">\(X_1\)</span> is responsible for 80% of the variance in <span class="math inline">\(Y\)</span></li>
+<li>The odds of <span class="math inline">\(Y = 1\)</span> decrease by 0.8 for each unit increase in <span class="math inline">\(X_1\)</span></li>
+</ol>
+<p><strong>10.</strong> A classifier produces <span class="math inline">\(TP = 60\)</span>, <span class="math inline">\(FP = 15\)</span>, <span class="math inline">\(FN = 20\)</span>, <span class="math inline">\(TN = 105\)</span>. What is the <strong>F1 score</strong>?</p>
+<ol type="A">
+<li><span class="math inline">\(\frac{60}{75} \approx 0.80\)</span></li>
+<li><span class="math inline">\(\frac{60}{80} = 0.75\)</span></li>
+<li><span class="math inline">\(\frac{2 \times 0.80 \times 0.75}{0.80 + 0.75} \approx 0.774\)</span></li>
+<li><span class="math inline">\(\frac{165}{200} = 0.825\)</span></li>
+<li><span class="math inline">\(\frac{60}{60+35} \approx 0.632\)</span></li>
+</ol>
+<p><strong>11.</strong> <strong>Specificity</strong> (True Negative Rate) is defined as <span class="math inline">\(\frac{TN}{TN + FP}\)</span>. In which of the following scenarios would high specificity be particularly important?</p>
+<ol type="A">
+<li>Diagnosing a highly contagious disease where missing a case is catastrophic</li>
+<li>Screening for a condition where a false positive leads to unnecessary invasive surgery</li>
+<li>Detecting fraud where every suspicious transaction should be flagged</li>
+<li>Cancer detection where catching every case outweighs the cost of follow-up</li>
+<li>Identifying spam where missing spam is worse than a false alarm</li>
+</ol>
+<p><strong>12.</strong> On an ROC curve, if you <strong>lower the classification threshold</strong> (e.g., from 0.5 to 0.2), what generally happens?</p>
+<ol type="A">
+<li>Both sensitivity and specificity increase</li>
+<li>Sensitivity increases and specificity decreases</li>
+<li>Sensitivity decreases and specificity increases</li>
+<li>Both sensitivity and specificity decrease</li>
+<li>The AUC changes</li>
+</ol>
+<p><strong>13.</strong> In K-Fold cross-validation, the <strong>analysis set</strong> (training fold) and the <strong>assessment set</strong> (validation fold) play distinct roles. Which is used to <strong>fit</strong> the model?</p>
+<ol type="A">
+<li>The assessment set, to avoid overfitting to the analysis set</li>
+<li>The full dataset, including both folds</li>
+<li>The analysis set — the model is fit on this portion, then evaluated on the assessment set</li>
+<li>The assessment set for each fold, then averaged across folds</li>
+<li>The test set held out from the entire cross-validation procedure</li>
+</ol>
+<p><strong>14.</strong> The <strong>Box-Cox transformation</strong> applied to a predictor helps:</p>
+<ol type="A">
+<li>Encode categorical variables as numeric values</li>
+<li>Impute missing values using the median</li>
+<li>Transform a skewed, positive-valued feature toward normality (symmetry and constant variance)</li>
+<li>Reduce the number of predictors through feature selection</li>
+<li>Standardize a feature to have mean 0 and standard deviation 1</li>
+</ol>
+<p><strong>15.</strong> A survey collects income data. High-income respondents are significantly more likely to leave the income field blank than low-income respondents. This missing data mechanism is best described as:</p>
+<ol type="A">
+<li>MCAR — Missing Completely At Random</li>
+<li>MAR — Missing At Random (missingness depends on observed data, not the missing value itself)</li>
+<li>MNAR — Missing Not At Random (missingness depends on the unobserved value)</li>
+<li>Structurally Missing</li>
+<li>Listwise deletion</li>
+</ol>
 </section>
+<section id="section-2-truefalse-with-explanation-25-points-4-points-each" class="level2">
+<h2 class="anchored" data-anchor-id="section-2-truefalse-with-explanation-25-points-4-points-each">Section 2: True/False with Explanation (25 points, ~4 points each)</h2>
+<p><em>State whether each claim is <strong>True</strong> or <strong>False</strong>, then provide a 1–3 sentence explanation justifying your answer. No credit for the answer without the explanation.</em></p>
+<p><strong>16.</strong> “KNN is a parametric method because it uses the <span class="math inline">\(K\)</span> parameter to make predictions.”</p>
+<p><strong>True / False</strong> (circle one)</p>
+<hr>
+<p><strong>17.</strong> “In logistic regression, the model directly predicts the class label (0 or 1) for each observation.”</p>
+<p><strong>True / False</strong> (circle one)</p>
+<hr>
+<p><strong>18.</strong> “Bias and variance cannot both be low at the same time — any reduction in one must increase the other.”</p>
+<p><strong>True / False</strong> (circle one)</p>
+<hr>
+<p><strong>19.</strong> “Fitting a model on the entire dataset and evaluating its training error gives a reliable estimate of how the model will perform on new, unseen data.”</p>
+<p><strong>True / False</strong> (circle one)</p>
+<hr>
+<p><strong>20.</strong> “A <code>SimpleImputer</code> with <code>strategy='median'</code> should be placed inside a scikit-learn <code>Pipeline</code> to prevent information leakage.”</p>
+<p><strong>True / False</strong> (circle one)</p>
+<hr>
+<p><strong>21.</strong> “A model that achieves 0% training error is always the best model to deploy in production.”</p>
+<p><strong>True / False</strong> (circle one)</p>
+</section>
+<section id="section-3-conceptual-short-answer-30-points-10-points-each" class="level2">
+<h2 class="anchored" data-anchor-id="section-3-conceptual-short-answer-30-points-10-points-each">Section 3: Conceptual / Short Answer (30 points, 10 points each)</h2>
+<p><strong>22.</strong> A colleague trains a very flexible model (e.g., a nearest-neighbor regressor with <span class="math inline">\(K=1\)</span>) on a small dataset of 50 observations and reports a training MSE of 0.</p>
+<p><strong>(a)</strong> Using the <strong>bias-variance tradeoff</strong>, explain why you are skeptical that this model will generalize well.</p>
+<p><strong>(b)</strong> What would you do to obtain a <strong>more trustworthy estimate</strong> of this model’s true test error? Describe your approach.</p>
+<p><strong>23.</strong> A hospital is deploying a classifier to screen patients for cancer.</p>
+<p><strong>(a)</strong> Explain what the <strong>ROC curve</strong> represents and how to read it. In particular, what does the point in the upper-left corner of the ROC space represent?</p>
+<p><strong>(b)</strong> The default classification threshold is 0.5. Argue for why the hospital might want to use a <strong>lower threshold</strong> (e.g., 0.2). What metric is most important in this context, and why?</p>
+<p><strong>24.</strong> Describe the three main <strong>missing data mechanisms</strong>: MCAR, MAR, and MNAR.</p>
+<p><strong>(a)</strong> Define each mechanism and give an <strong>original example</strong> of each (not examples from lecture or course materials).</p>
+<p><strong>(b)</strong> Why does the <strong>missing data mechanism matter</strong> for how you handle the missing values? Give at least one concrete implication.</p>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -707,7 +808,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/GEMINI.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/exams/Practice-Midterm.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This site is built with <a href="https://quarto.org/">Quarto</a></p>
 </div>
