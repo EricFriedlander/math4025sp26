@@ -1430,6 +1430,13 @@
     "text": "Recap\n\nPreprocessing Needs: Prevent information leakage by exclusively using training data parameters.\nscikit-learn Pipeline: Crucial for bundling preprocessing steps with the estimator to prevent data leakage.\nCommon Tasks:\n\nStandardization: StandardScaler, MinMaxScaler, RobustScaler.\nNon-linear Transformation: QuantileTransformer, PowerTransformer (Box-Cox, Yeo-Johnson).\nNormalization: Normalizer (scales individual observations to unit norm).\nCategorical Encoding: OneHotEncoder (dummies), OrdinalEncoder, RareLabelEncoder.\nDiscretization: KBinsDiscretizer, Binarizer.\nPolynomial Features: PolynomialFeatures, SplineTransformer.\nCustom/Feature Selection: FunctionTransformer, VarianceThreshold.\n\nOrder matters!: Be mindful of when to apply scaling vs. dummy-ing or imputation."
   },
   {
+    "objectID": "test_quarto.html",
+    "href": "test_quarto.html",
+    "title": "Test Quarto Plotnine Grid",
+    "section": "",
+    "text": "import pandas as pd\nimport numpy as np\nfrom plotnine import *\nfrom sklearn.metrics import roc_auc_score, roc_curve\n\nnp.random.seed(4025)\nprobs = np.concatenate([np.random.uniform(0, 0.1, 100), np.random.uniform(0.9, 1, 100)])\nclasses = np.array(['Negative'] * 100 + ['Positive'] * 100)\nexample1 = pd.DataFrame({'prob': probs, 'class': classes})\ny_true_binary = np.where(example1['class'] == 'Positive', 1, 0)\nauc_val = roc_auc_score(y_true_binary, example1['prob'])\nfpr, tpr, _ = roc_curve(y_true_binary, example1['prob'])\nroc_df = pd.DataFrame({'fpr': fpr, 'tpr': tpr})\n\np1 = (ggplot(example1, aes(x='class', y='prob'))\n    + geom_jitter(alpha=0.6, width=0.2, height=0)\n    + labs(y=\"Predicted Probability of Positive\", x=\"\")\n)\n\np2 = (ggplot(roc_df, aes(x='fpr', y='tpr'))\n    + geom_line(color=\"blue\")\n    + annotate('text', x=0.5, y=0.2, label=f\"AUC: {auc_val*100:.0f}%\", size=12)\n    + labs(x=\"False Positive Rate\", y=\"True Positive Rate\")\n)\n\n(p1 | p2)"
+  },
+  {
     "objectID": "exams/Study-Guide-Midterm.html",
     "href": "exams/Study-Guide-Midterm.html",
     "title": "Midterm Study Guide",
@@ -1519,13 +1526,6 @@
     "title": "Midterm Study Guide",
     "section": "12. Missing Data (Slide 13)",
     "text": "12. Missing Data (Slide 13)\nKey vocabulary:\n\nMCAR (Missing Completely At Random): probability of missingness is unrelated to any variable — the data are a random subsample of the complete data. Easiest to handle.\nMAR (Missing At Random): probability of missingness depends on observed variables, not on the missing value itself.\nMNAR (Missing Not At Random): probability of missingness depends on the unobserved (missing) value itself. Hardest to handle.\nStructurally Missing: missing by design (e.g., a follow-up question that doesn’t apply).\nImputation strategies: mean/median/mode imputation; KNN imputation; model-based imputation; multiple imputation\n\nThings to watch for:\n\nMNAR is the hardest case — the missing data itself is informative\nImputation must occur inside a Pipeline to prevent leakage\nMedian imputation is more robust to outliers than mean imputation\nCreating a missingness indicator column can help models learn that a value was missing"
-  },
-  {
-    "objectID": "test_quarto.html",
-    "href": "test_quarto.html",
-    "title": "Test Quarto Plotnine Grid",
-    "section": "",
-    "text": "import pandas as pd\nimport numpy as np\nfrom plotnine import *\nfrom sklearn.metrics import roc_auc_score, roc_curve\n\nnp.random.seed(4025)\nprobs = np.concatenate([np.random.uniform(0, 0.1, 100), np.random.uniform(0.9, 1, 100)])\nclasses = np.array(['Negative'] * 100 + ['Positive'] * 100)\nexample1 = pd.DataFrame({'prob': probs, 'class': classes})\ny_true_binary = np.where(example1['class'] == 'Positive', 1, 0)\nauc_val = roc_auc_score(y_true_binary, example1['prob'])\nfpr, tpr, _ = roc_curve(y_true_binary, example1['prob'])\nroc_df = pd.DataFrame({'fpr': fpr, 'tpr': tpr})\n\np1 = (ggplot(example1, aes(x='class', y='prob'))\n    + geom_jitter(alpha=0.6, width=0.2, height=0)\n    + labs(y=\"Predicted Probability of Positive\", x=\"\")\n)\n\np2 = (ggplot(roc_df, aes(x='fpr', y='tpr'))\n    + geom_line(color=\"blue\")\n    + annotate('text', x=0.5, y=0.2, label=f\"AUC: {auc_val*100:.0f}%\", size=12)\n    + labs(x=\"False Positive Rate\", y=\"True Positive Rate\")\n)\n\n(p1 | p2)"
   },
   {
     "objectID": "slides/07-preprocessing-pipelines.html#concept-check",
