@@ -1,0 +1,309 @@
+---
+title: "Practice Midterm Exam"
+subtitle: "Spring 2026"
+author: "MATH 4025"
+format: pdf
+---
+
+**Name:** ____________________________________
+
+**Instructions:** No electronic devices. You may use one sheet (front and back) of handwritten notes. Show your work on conceptual questions to receive full credit. This practice exam has the same structure and point values as the actual midterm.
+
+---
+
+## Section 1: Multiple Choice (45 points, 3 points each)
+
+*Circle the single best answer.*
+
+**1.** A spam filter learns from labeled emails (spam/not spam) by identifying patterns. Using Tom Mitchell's definition of machine learning, which of the following correctly identifies the **Task (T)**, **Experience (E)**, and **Performance measure (P)**?
+
+A) T: reading emails; E: accuracy on labeled emails; P: the spam filter software
+B) T: classifying emails as spam/not spam; E: labeled training emails; P: accuracy on new emails
+C) T: accuracy rate; E: classifying emails; P: the number of emails processed
+D) T: filtering spam; E: test accuracy; P: the training dataset
+E) T: the email dataset; E: performance on test data; P: precision of the filter
+
+\vspace{0.3cm}
+
+**2.** A music streaming service wants to predict whether a user will skip a song within the first 10 seconds, based on listening history and song features. This is best described as:
+
+A) Unsupervised regression
+B) Supervised regression
+C) Supervised classification
+D) Clustering
+E) Dimensionality reduction
+
+\vspace{0.3cm}
+
+**3.** A model achieves **very low training MSE** but **high test MSE**. Which of the following is most likely true about the model?
+
+A) It has high bias and low variance (underfitting)
+B) It has low bias and high variance (overfitting)
+C) It has reached the optimal bias-variance tradeoff
+D) Irreducible error is dominating test MSE
+E) The training and test sets have incompatible distributions
+
+\vspace{0.3cm}
+
+**4.** Which of the following statements best distinguishes **parametric** from **non-parametric** methods?
+
+A) Parametric methods require more data than non-parametric methods
+B) Non-parametric methods always outperform parametric methods
+C) Parametric methods assume a specific functional form for $f$, while non-parametric methods do not
+D) Non-parametric methods always produce smoother estimates of $f$
+E) Parametric methods cannot be used for classification
+
+\vspace{0.3cm}
+
+**5.** In KNN regression, as $K \to 1$, what happens to **training error**?
+
+A) Training error increases because the model becomes more flexible
+B) Training error approaches zero because each training point is predicted by itself
+C) Training error equals test error because the model is perfectly calibrated
+D) Training error is unaffected by the choice of $K$
+E) Training error increases due to high variance
+
+\newpage
+
+**6.** Gradient descent updates parameters by moving in the direction **opposite** to the gradient. Why?
+
+A) The gradient points toward the nearest local minimum
+B) Moving opposite to the gradient decreases the loss function most rapidly
+C) The gradient measures the curvature of the loss, not its slope
+D) Moving in the gradient direction would increase the learning rate
+E) The negative gradient points toward the global maximum
+
+\vspace{0.3cm}
+
+**7.** Consider the following code:
+
+```python
+imputer = SimpleImputer(strategy='mean')
+X_imputed = imputer.fit_transform(X)
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X_imputed, y, test_size=0.25
+)
+```
+
+This code introduces information leakage. What is the problem?
+
+A) `SimpleImputer` must use `strategy='median'`; `strategy='mean'` is not valid
+B) `fit_transform` is applied to all of `X` before splitting, so the imputed column means include test-set observations
+C) `train_test_split` should always be called before any imports
+D) `test_size=0.25` is too large and causes the imputer to overfit
+E) There is no leakage; this is the standard and correct imputation workflow
+
+\vspace{0.3cm}
+
+**8.** Consider the following code applied to the `data` table shown on the left:
+
+```{=latex}
+\begin{minipage}[t]{0.25\textwidth}
+\vspace{0pt}
+\begin{tabular}{|l|}
+\hline
+\textbf{Season} \\
+\hline
+Spring \\
+Summer \\
+Fall \\
+Winter \\
+Spring \\
+Fall \\
+\hline
+\end{tabular}
+\end{minipage}%
+\hspace{0.04\textwidth}
+\begin{minipage}[t]{0.68\textwidth}
+\vspace{0pt}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ohe }\OperatorTok{=}\NormalTok{ OneHotEncoder(drop}\OperatorTok{=}\StringTok{\textquotesingle{}first\textquotesingle{}}\NormalTok{,}
+\NormalTok{                    sparse\_output}\OperatorTok{=}\VariableTok{False}\NormalTok{)}
+\NormalTok{result }\OperatorTok{=}\NormalTok{ ohe.fit\_transform(data)}
+\BuiltInTok{print}\NormalTok{(result.shape)}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage}
+```
+
+What shape does `result` have?
+
+A) `(6, 4)` — one column per category
+B) `(6, 3)` — `drop='first'` removes one column, leaving three
+C) `(6, 1)` — `OneHotEncoder` compresses all categories into a single numeric column
+D) `(4, 6)` — transposed, one row per category
+E) `(6, 2)` — only the two most frequent categories are kept
+
+\vspace{0.3cm}
+
+**9.** In logistic regression, the **coefficient $\hat{\beta}_1 = 0.8$** on a predictor $X_1$ is best interpreted as:
+
+A) A one-unit increase in $X_1$ multiplies the probability of $Y=1$ by 0.8
+B) A one-unit increase in $X_1$ is associated with a 0.8-unit increase in $p(X)$
+C) A one-unit increase in $X_1$ is associated with an increase of 0.8 in the log-odds of $Y = 1$, holding other predictors constant
+D) $X_1$ is responsible for 80% of the variance in $Y$
+E) The odds of $Y = 1$ decrease by 0.8 for each unit increase in $X_1$
+
+\vspace{0.3cm}
+
+**10.** A classifier produces $TP = 60$, $FP = 15$, $FN = 20$, $TN = 105$. What is the **F1 score**?
+
+A) $\frac{60}{75} \approx 0.80$
+B) $\frac{60}{80} = 0.75$
+C) $\frac{2 \times 0.80 \times 0.75}{0.80 + 0.75} \approx 0.774$
+D) $\frac{165}{200} = 0.825$
+E) $\frac{60}{60+35} \approx 0.632$
+
+\newpage
+
+**11.** **Specificity** (True Negative Rate) is defined as $\frac{TN}{TN + FP}$. In which of the following scenarios would high specificity be particularly important?
+
+A) Diagnosing a highly contagious disease where missing a case is catastrophic
+B) Screening for a condition where a false positive leads to unnecessary invasive surgery
+C) Detecting fraud where every suspicious transaction should be flagged
+D) Cancer detection where catching every case outweighs the cost of follow-up
+E) Identifying spam where missing spam is worse than a false alarm
+
+\vspace{0.3cm}
+
+**12.** On an ROC curve, if you **lower the classification threshold** (e.g., from 0.5 to 0.2), what generally happens?
+
+A) Both sensitivity and specificity increase
+B) Sensitivity increases and specificity decreases
+C) Sensitivity decreases and specificity increases
+D) Both sensitivity and specificity decrease
+E) The AUC changes
+
+\vspace{0.3cm}
+
+**13.** In K-Fold cross-validation, the **analysis set** (training folds) and the **assessment set** (validation fold) play distinct roles. Which is used to **fit** the model?
+
+A) The assessment set, to avoid overfitting to the analysis set
+B) The full dataset, including both folds
+C) The analysis set — the model is fit on this portion, then evaluated on the assessment set
+D) The assessment set for each fold, then averaged across folds
+E) The test set held out from the entire cross-validation procedure
+
+\vspace{0.3cm}
+
+**14.** The **Box-Cox transformation** applied to a predictor helps:
+
+A) Encode categorical variables as numeric values
+B) Impute missing values using the median
+C) Transform a skewed, positive-valued feature toward normality (symmetry and constant variance)
+D) Reduce the number of predictors through feature selection
+E) Standardize a feature to have mean 0 and standard deviation 1
+
+\newpage
+
+**15.** A survey collects income data. High-income respondents are significantly more likely to leave the income field blank than low-income respondents. This missing data mechanism is best described as:
+
+A) MCAR — Missing Completely At Random
+B) MAR — Missing At Random (missingness depends on observed data, not the missing value itself)
+C) MNAR — Missing Not At Random (missingness depends on the unobserved value)
+D) Structurally Missing
+E) Listwise deletion
+
+
+
+## Section 2: True/False with Explanation (25 points, ~4 points each)
+
+*State whether each claim is **True** or **False**, then provide a 1–3 sentence explanation justifying your answer. No credit for the answer without the explanation.*
+
+**16.** "KNN is a parametric method because it uses the $K$ parameter to make predictions."
+
+**True / False** (circle one)
+
+\vspace{3cm}
+
+---
+
+**17.** "In logistic regression, the model directly predicts the class label (0 or 1) for each observation."
+
+**True / False** (circle one)
+
+\vspace{3cm}
+
+---
+
+**18.** "Bias and variance cannot both be low at the same time — any reduction in one must increase the other."
+
+**True / False** (circle one)
+
+\vspace{3cm}
+
+---
+
+**19.** "Fitting a model on the entire dataset and evaluating its training error gives a reliable estimate of how the model will perform on new, unseen data."
+
+**True / False** (circle one)
+
+\vspace{3cm}
+
+---
+
+**20.** Consider the following code:
+
+```python
+pipe = Pipeline([
+    ('imputer', SimpleImputer(strategy='median')),
+    ('scaler',  StandardScaler()),
+    ('model',   LogisticRegression())
+])
+
+scores = cross_val_score(pipe, X, y, cv=5)
+```
+
+"The above code correctly prevents imputation leakage during cross-validation."
+
+**True / False** (circle one)
+
+\vspace{3cm}
+
+---
+
+**21.** "A model that achieves 0% training error is always the best model to deploy in production."
+
+**True / False** (circle one)
+
+\vspace{3cm}
+
+\newpage
+
+## Section 3: Conceptual / Short Answer (30 points, 10 points each)
+
+**22.** A colleague trains a very flexible model (e.g., a nearest-neighbor regressor with $K=1$) on a small dataset of 50 observations and reports a training MSE of 0.
+
+**(a)** Using the **bias-variance tradeoff**, explain why you are skeptical that this model will generalize well.
+
+\vspace{5cm}
+
+**(b)** What would you do to obtain a **more trustworthy estimate** of this model's true test error? Describe your approach.
+
+\vfill
+
+\newpage
+
+**23.** A hospital is deploying a classifier to screen patients for cancer.
+
+**(a)** Explain what the **ROC curve** represents and how to read it. In particular, what does the point in the upper-left corner of the ROC space represent?
+
+\vspace{5cm}
+
+**(b)** The default classification threshold is 0.5. Argue for why the hospital might want to use a **lower threshold** (e.g., 0.2). What metric is most important in this context, and why?
+
+\vfill
+
+\newpage
+
+**24.** Describe the three main **missing data mechanisms**: MCAR, MAR, and MNAR.
+
+**(a)** Define each mechanism and give an **original example** of each (not examples from lecture or course materials).
+
+\vspace{8cm}
+
+**(b)** Why does the **missing data mechanism matter** for how you handle the missing values? Give at least one concrete implication.
+
+\vfill

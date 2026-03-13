@@ -1,0 +1,140 @@
+---
+title: "Practice Midterm — Solutions"
+subtitle: "Spring 2026"
+author: "MATH 4025"
+format: pdf
+---
+
+## Section 1: Multiple Choice
+
+**1. B**
+
+T = classifying emails as spam/not spam (the task the system performs); E = labeled training emails (what the system learns from); P = accuracy on new emails (how we measure improvement). The other options scramble these roles.
+
+**2. C**
+
+The response is binary (skip / not skip) and labeled training data is available, making this supervised classification. If the response were continuous (e.g., predicting how many seconds until a skip), it would be regression.
+
+**3. B**
+
+Very low training MSE with high test MSE is the classic signature of overfitting: the model has memorized the training data (low bias) but does not generalize (high variance). Underfitting would produce high error on *both* sets.
+
+**4. C**
+
+The defining feature of parametric methods is that they assume a specific functional form for $f$ (e.g., linear), reducing estimation to finding a fixed number of parameters. Non-parametric methods let the data determine the shape of $f$. The other options are common misconceptions.
+
+**5. B**
+
+At $K = 1$, every training point's nearest neighbor is itself, so the predicted value equals the true value for every training observation. Training error is exactly zero. Test error, however, will typically be high because the model has overfit.
+
+**6. B**
+
+The gradient $\nabla_\theta J(\theta)$ points in the direction of steepest *increase* of the loss. Moving in the *opposite* direction (negative gradient) therefore decreases the loss most rapidly — this is the principle of steepest descent.
+
+**7. B**
+
+`imputer.fit_transform(X)` computes the column means using all observations — including those that will later become the test set. Those test-set values influence the imputed means, allowing test-set information to leak into preprocessing. The fix is to place the imputer inside a `Pipeline` used with `cross_val_score` or to fit the imputer on `X_train` only.
+
+**8. B**
+
+There are 4 unique categories (Spring, Summer, Fall, Winter). `OneHotEncoder` without `drop` would produce 4 columns. With `drop='first'`, one reference category is dropped, leaving $4 - 1 = 3$ columns. The number of rows stays 6 (one per observation).
+
+**9. C**
+
+In logistic regression, $\log\!\left(\frac{p}{1-p}\right) = \beta_0 + \beta_1 X_1 + \cdots$, so $\hat{\beta}_1$ is the change in *log-odds* per one-unit increase in $X_1$, holding other predictors constant. The probability $p(X)$ is a nonlinear (sigmoid) function of $X$, so $\hat{\beta}_1$ does not directly describe a change in probability.
+
+**10. C**
+
+First compute precision and recall:
+
+$$\text{Precision} = \frac{60}{60 + 15} = \frac{60}{75} = 0.80 \qquad \text{Recall} = \frac{60}{60 + 20} = \frac{60}{80} = 0.75$$
+
+$$\text{F1} = \frac{2 \times 0.80 \times 0.75}{0.80 + 0.75} = \frac{1.20}{1.55} \approx 0.774$$
+
+**11. B**
+
+High specificity (TNR) means the model correctly identifies most *negative* cases — i.e., few false positives. This is critical when a false positive triggers a costly or harmful action, such as unnecessary invasive surgery. In disease-detection or fraud scenarios where missing a positive is dangerous, recall (sensitivity) matters more.
+
+**12. B**
+
+Lowering the threshold means more observations are predicted positive. This catches more true positives (sensitivity/TPR increases) but also flags more true negatives as positive (FPR increases, specificity decreases). The AUC itself does not change — it summarizes performance across *all* thresholds.
+
+**13. C**
+
+The analysis set (the $K-1$ folds combined) is used to fit the model. The assessment set (the held-out fold) is used only to evaluate it. This mimics how the model will be used on new data and gives an unbiased estimate of test error.
+
+**14. C**
+
+Box-Cox is a family of power transformations ($x^{(\lambda)}$) applied to positive-valued, skewed features. The goal is to make the distribution more symmetric and to stabilize variance — it does not encode categories, impute values, or standardize to mean 0/std 1.
+
+**15. C**
+
+The missingness depends on the *value of the missing variable itself* (high income → more likely to not report income). This is MNAR. MAR would apply if missingness depended on another *observed* variable (e.g., older respondents skip the question). MNAR is the hardest mechanism to handle.
+
+\newpage
+
+## Section 2: True/False with Explanation
+
+**16. FALSE**
+
+KNN is a **non-parametric** method. The "$K$" in KNN is a hyperparameter (a tuning choice), not a model parameter in the statistical sense. Parametric methods assume a fixed functional form for $f$ and estimate a finite set of parameters (e.g., $\beta_0, \beta_1$ in linear regression). KNN makes no such assumption — it uses the local neighborhood of the data to make predictions.
+
+**17. FALSE**
+
+Logistic regression models $p(X) = P(Y=1 \mid X)$, which is a *probability* between 0 and 1. To obtain a class label, a threshold (commonly 0.5) must be applied to that probability. The model itself outputs probabilities, not labels.
+
+**18. FALSE**
+
+While bias and variance do trade off as model flexibility changes, it is not true that *any* reduction in one must increase the other. In principle, a sufficiently good model on a large dataset can achieve both low bias and low variance.
+
+**19. FALSE**
+
+Training error is almost always optimistically low — the model has been fit specifically to minimize error on the training data, and complex models can memorize it. This is especially severe with flexible models (e.g., $K=1$ KNN, deep trees). A reliable estimate of future performance requires evaluating on *held-out* data the model has never seen, using a test set or cross-validation.
+
+**20. TRUE**
+
+Because the `Pipeline` encapsulates the imputer, `cross_val_score` will re-fit the entire pipeline (including the `SimpleImputer`) on each training fold and then apply the fold-specific imputed means to the validation fold only. Test-fold observations never influence the computed medians. This is exactly the correct pattern for leakage-free preprocessing.
+
+**21. FALSE**
+
+A model with 0% training error is almost certainly **overfitting** — it has memorized the training data rather than learning the underlying pattern. It is likely to perform poorly on new data. The goal of machine learning is to generalize to unseen observations, not to achieve perfect performance on data the model has already seen.
+
+\newpage
+
+## Section 3: Conceptual / Short Answer
+
+**22.**
+
+**(a)** A $K=1$ KNN model has essentially zero bias on the training set because it predicts each point using itself, but it has extremely high variance: tiny changes in the training data can completely change predictions for nearby test points. The bias-variance decomposition says
+
+$$E[(y_0 - \hat{f}(x_0))^2] = \text{Var}(\hat{f}(x_0)) + [\text{Bias}(\hat{f}(x_0))]^2 + \text{Var}(\varepsilon).$$
+
+With $K=1$ on only 50 observations, $\text{Var}(\hat{f})$ will be very large. Training MSE = 0 does not mean test MSE is low — it likely reflects extreme overfitting, not a good model.
+
+**(b)** To get a trustworthy estimate, I would use **K-Fold cross-validation** (e.g., $K=5$ or $K=10$, where $K$ is the number of folds not the number of neighbors). This splits the 50 observations into folds, trains the model on each set of $K-1$ folds, and evaluates on the held-out fold. Averaging the assessment-fold errors gives an estimate of test MSE that accounts for the model's tendency to overfit. I would also compare $K=1$ against larger values of $K$ (e.g., 5, 10) using this CV estimate to find a better-generalizing model.
+
+---
+
+**23.**
+
+**(a)** The ROC curve plots the **True Positive Rate (Sensitivity/Recall)** on the $y$-axis against the **False Positive Rate ($1 -$ Specificity)** on the $x$-axis, sweeping over all possible classification thresholds. Each point on the curve corresponds to a different threshold. A point at the **upper-left corner** $(0, 1)$ represents a perfect classifier: TPR = 1 (all sick patients identified) and FPR = 0 (no healthy patients misclassified). The diagonal line (AUC = 0.5) represents random guessing.
+
+**(b)** With a 0.5 threshold, many cancer patients whose predicted probability falls between 0.2 and 0.5 would be classified as healthy and sent home untreated — a potentially fatal false negative. Lowering the threshold to 0.2 means any patient with $\hat{p} \geq 0.2$ is flagged as positive, which greatly increases **recall (sensitivity)**: we catch more true cancer cases. The cost is more false positives (healthy patients flagged for follow-up), but in cancer screening the cost of a false negative vastly outweighs the cost of an unnecessary follow-up test. **Recall** is therefore the most important metric in this context.
+
+---
+
+**24.**
+
+**(a)**
+
+- **MCAR (Missing Completely At Random):** The probability that a value is missing is unrelated to any variable — observed or unobserved. The missing data are a random subsample of the complete data. *Example:* A researcher accidentally spills coffee on some paper surveys, making random responses unreadable. Whether a response is missing has nothing to do with the respondent's answers or characteristics.
+
+- **MAR (Missing At Random):** The probability of missingness depends on *observed* variables, but not on the missing value itself. *Example:* In an online survey, younger respondents are less likely to answer the income question. If we know age (observed), we can model the missingness. The missingness is related to age, not to the actual income value.
+
+- **MNAR (Missing Not At Random):** The probability of missingness depends on the *value that is missing*. *Example:* Patients with very high blood pressure are more likely to skip the blood pressure measurement (e.g., they avoid the appointment). The fact that blood pressure is missing is directly related to how high it is — we can't infer this from other observed variables.
+
+**(b)** The mechanism matters because it determines whether ignoring or simply imputing missing values will bias results:
+
+- Under **MCAR**, complete-case analysis (dropping missing rows) is unbiased — the remaining data are still a representative sample. Or we can impute with simple methods (e.g., mean imputation) without introducing bias, though it may reduce variance and distort relationships.
+- Under **MAR**, simple imputation using observed predictors (e.g., regression imputation or KNN imputation) can yield unbiased estimates, but imputing with just the mean/median may not.
+- Under **MNAR**, neither complete-case analysis nor standard imputation is sufficient — the missingness itself is informative about the missing value, so ignoring it can introduce systematic bias. More sophisticated methods (e.g., selection models, sensitivity analysis) or domain knowledge are required.

@@ -1,0 +1,283 @@
+---
+title: "Midterm Study Guide"
+subtitle: "Spring 2026"
+author: "MATH 4025"
+---
+
+# Exam Information
+
+**Rules:** No electronic devices. One sheet (front and back) of **handwritten** notes permitted.
+
+**Coverage:** Slides 00–13 and readings/videos, HW 1-5, and Quizzes 1-5 (everything assigned through March 12).
+
+# Topic Summaries
+
+## 1. ML Terminology and Big Picture (Slides 01–02)
+
+**Key vocabulary:**
+
+- **$n$**: number of observations (rows)
+- **$p$**: number of predictors/features (columns, excluding response)
+- **$Y$**: response (output) variable
+- **$X = (X_1, \ldots, X_p)$**: predictor variables
+- **Supervised learning**: labeled response $Y$ is provided; goal is to predict $Y$ from $X$
+- **Unsupervised learning**: no response variable; goal is to find structure in $X$ (e.g., clustering)
+- **Regression**: $Y$ is quantitative (continuous)
+- **Classification**: $Y$ is categorical (discrete classes)
+- **Inference**: understand *how* $X$ affects $Y$
+- **Prediction**: predict $Y$ for new observations; $f$ is a "black box"
+- **Parametric**: assumes a specific functional form for $f$ (e.g., linear); reduces problem to estimating a fixed set of parameters
+- **Non-parametric**: makes no strong assumptions about $f$; more flexible but requires more data
+
+**Things to watch for:**
+
+- Identifying $n$ and $p$ correctly: $p$ is the number of *predictors*, not including $Y$
+- Distinguish regression from classification by looking at whether $Y$ is continuous or categorical
+- Supervised vs. unsupervised: does the data come with labels?
+
+---
+
+## 2. Statistical Learning and Error Decomposition (Slide 02)
+
+**Key vocabulary:**
+
+- **$f(X)$**: the true (unknown) function relating $X$ to $Y$
+- **$\hat{f}(X)$**: our estimated function
+- **Reducible error**: due to $\hat{f} \neq f$; can be improved with better models/data
+- **Irreducible error ($\varepsilon$)**: natural variability in $Y$ not explained by any $X$; cannot be reduced regardless of model complexity
+
+**Key formulas:**
+
+$$Y = f(X) + \varepsilon$$
+
+$$\text{MSE} = \frac{1}{n} \sum_{i=1}^{n}(y_i - \hat{y}_i)^2$$
+
+**Things to watch for:**
+
+- Irreducible error is a *floor* on prediction error — no model can beat it
+- A model with training MSE = 0 does not have zero error in general; irreducible error always remains
+
+---
+
+## 3. Bias-Variance Tradeoff (Slides 02–03)
+
+**Key vocabulary:**
+
+- **Bias**: error from wrong assumptions in the model; high-bias models underfit
+- **Variance**: sensitivity of $\hat{f}$ to fluctuations in training data; high-variance models overfit
+- **Overfitting**: low training error, high test error (high variance, low bias)
+- **Underfitting**: high training error, high test error (high bias, low variance)
+- **Test MSE U-shape**: as flexibility increases, test MSE first decreases then increases
+
+**Key formula (bias-variance decomposition):**
+
+$$E\left[(y_0 - \hat{f}(x_0))^2\right] = \text{Var}(\hat{f}(x_0)) + \left[\text{Bias}(\hat{f}(x_0))\right]^2 + \text{Var}(\varepsilon)$$
+
+**Things to watch for:**
+
+- As flexibility increases: variance $\uparrow$, bias $\downarrow$
+- As flexibility decreases: variance $\downarrow$, bias $\uparrow$
+- For KNN: as $K$ increases, the model becomes *less* flexible (more bias, less variance)
+- Low training error + high test error = overfitting (high variance)
+- High training error + high test error = underfitting (high bias)
+
+---
+
+## 4. Linear Regression and Gradient Descent (Slides 03–04)
+
+**Key vocabulary:**
+
+- **SLR (Simple Linear Regression)**: one predictor, $\hat{Y} = \hat{\beta}_0 + \hat{\beta}_1 X$
+- **MLR (Multiple Linear Regression)**: multiple predictors
+- **OLS**: minimizes the Residual Sum of Squares (RSS) $= \sum(y_i - \hat{y}_i)^2$
+- **Coefficient interpretation (MLR)**: holding all other predictors constant, a one-unit increase in $X_j$ is associated with a $\hat{\beta}_j$-unit change in $\hat{Y}$
+- **Gradient descent**: iterative optimization; update parameters by moving opposite to the gradient
+- **Learning rate ($\alpha$)**: controls step size; too large → diverge; too small → slow convergence
+
+**Key formulas:**
+
+$$\hat{Y} = \hat{\beta}_0 + \hat{\beta}_1 X_1 + \cdots + \hat{\beta}_p X_p$$
+
+$$\theta \leftarrow \theta - \alpha \nabla_\theta J(\theta)$$
+
+**Things to watch for:**
+
+- In MLR, interpret coefficients *ceteris paribus* (all others held constant)
+- Learning rate is not the number of iterations; it controls step size
+- Gradient descent moves *opposite* to the gradient to decrease the loss
+
+---
+
+## 5. Data Splitting and Leakage (Slide 05)
+
+**Key vocabulary:**
+
+- **Training set**: used to fit the model
+- **Validation set**: used to tune hyperparameters and make modeling decisions
+- **Test set**: held out until the very end; used once to report final performance
+- **Information leakage**: when information from the test/validation set "leaks" into the training process
+
+**Things to watch for:**
+
+- The test set must *never* influence any modeling decision
+- Leakage example: fitting a scaler on all data before splitting — test statistics influence the scaler
+- The validation set is used for model selection; the test set is used for final evaluation
+
+---
+
+## 6. K-Nearest Neighbors (Slides 06–07)
+
+**Key vocabulary:**
+
+- **KNN regression**: predict $\hat{f}(x_0)$ as the average of the $K$ nearest neighbors' $Y$ values
+- **KNN classification**: predict the majority class among $K$ nearest neighbors
+- **Distance metric**: typically Euclidean distance
+- **$K$ and flexibility**: small $K$ = more flexible (low bias, high variance); large $K$ = less flexible (high bias, low variance)
+- **Feature scaling**: necessary because KNN uses distance; features on larger scales dominate
+
+**Key formula:**
+
+$$\hat{f}(x_0) = \frac{1}{K} \sum_{x_i \in \mathcal{N}_0} y_i$$
+
+**Things to watch for:**
+
+- KNN is a *non-parametric* method — the "$K$" is a hyperparameter, not a model parameter
+- At $K = 1$: training error = 0 (each point predicts itself), but test error is usually high
+- Always scale features before applying KNN
+
+---
+
+## 7. Preprocessing and Pipelines (Slides 07, 12)
+
+**Key vocabulary:**
+
+- **`StandardScaler`**: standardizes to mean 0, std 1: $z = (x - \bar{x}) / s$
+- **`OneHotEncoder`**: converts categorical variable with $c$ categories to $c$ (or $c-1$ with `drop="first"`) binary columns
+- **`OrdinalEncoder`**: encodes ordered categories as integers
+- **`RareLabelEncoder`**: groups infrequent categories into an "Other" or "Rare" category
+- **`ColumnTransformer`**: applies different transformers to different columns
+- **`Pipeline`**: chains preprocessing steps and model in sequence; prevents leakage when used with CV
+- **Box-Cox**: power transform for positive, skewed features; parameterized by $\lambda$
+- **Yeo-Johnson**: like Box-Cox but handles zero/negative values
+
+**Key formula (StandardScaler):**
+
+$$z = \frac{x - \bar{x}}{s}$$
+
+**Key formula (Box-Cox):**
+
+$$x^{(\lambda)} = \begin{cases} \frac{x^\lambda - 1}{\lambda} & \lambda \neq 0 \\ \ln(x) & \lambda = 0 \end{cases}$$
+
+**Things to watch for:**
+
+- The correct workflow: fit all transformers on training data only; transform both train and test using training statistics
+- `drop="first"` in OneHotEncoder: a $c$-category variable creates $c-1$ columns
+- Pipeline + cross-validation: each fold fits transformers on the analysis set only
+
+---
+
+## 8. Logistic Regression (Slide 08)
+
+**Key vocabulary:**
+
+- **Logistic function (sigmoid)**: maps any real number to $(0,1)$, interpreted as probability
+- **Log-odds (logit)**: $\log\left(\frac{p}{1-p}\right)$; logistic regression is linear in the log-odds
+- **Odds**: $\frac{p(X)}{1 - p(X)}$; $e^{\hat{\beta}_j}$ = multiplicative change in odds per unit increase in $X_j$
+
+**Key formulas:**
+
+$$p(X) = \frac{e^{\beta_0 + \beta_1 X}}{1 + e^{\beta_0 + \beta_1 X}}$$
+
+$$\log\!\left(\frac{p(X)}{1 - p(X)}\right) = \beta_0 + \beta_1 X$$
+
+**Things to watch for:**
+
+- $p(X)$ is a *probability* (between 0 and 1), not a class label
+- Logistic regression models log-odds as a linear function of $X$; the probability itself is nonlinear in $X$
+- The default threshold of 0.5 is not always optimal
+
+---
+
+## 9. Classification Metrics (Slide 09)
+
+**Confusion matrix:**
+
+|  | Predicted Positive | Predicted Negative |
+|---|---|---|
+| **Actually Positive** | TP | FN |
+| **Actually Negative** | FP | TN |
+
+**Key formulas:**
+
+$$\text{Accuracy} = \frac{TP + TN}{TP + FP + FN + TN}$$
+
+$$\text{Recall (Sensitivity, TPR)} = \frac{TP}{TP + FN}$$
+
+$$\text{Precision (PPV)} = \frac{TP}{TP + FP}$$
+
+$$\text{Specificity (TNR)} = \frac{TN}{TN + FP}$$
+
+$$\text{F1} = \frac{2 \cdot \text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}$$
+
+**When to prioritize which metric:**
+
+- **Recall**: when missing a positive is costly (e.g., cancer screening)
+- **Precision**: when false alarms are costly (e.g., invasive surgery)
+- **Accuracy**: misleading when classes are imbalanced
+- **F1**: balances precision and recall
+
+---
+
+## 10. ROC Curve and AUC (Slide 10)
+
+**Key vocabulary:**
+
+- **ROC curve**: plots TPR (sensitivity) on $y$-axis vs. FPR ($1 -$ specificity) on $x$-axis, across all thresholds
+- **AUC**: area under ROC curve; ranges from 0.5 (random) to 1.0 (perfect)
+- **Threshold**: value above which a predicted probability is classified as positive
+
+**Things to watch for:**
+
+- AUC = 0.5 → classifier performs no better than random guessing
+- AUC = 1.0 → perfect separation
+- Lowering threshold: TPR increases, FPR increases (more positives predicted → more TP and more FP)
+- AUC summarizes performance across *all* thresholds; a higher AUC does not guarantee better performance at any *specific* threshold
+
+---
+
+## 11. Cross-Validation (Slide 11)
+
+**Key vocabulary:**
+
+- **K-Fold CV**: split data into $K$ folds; each fold serves as assessment set once
+- **LOOCV**: $K = n$; each observation is the assessment set once
+- **Analysis set**: the $K-1$ folds used to fit the model
+- **Assessment set**: the held-out fold used to evaluate
+- **CV estimate of test error**: average of $K$ assessment-set errors
+
+**Things to watch for:**
+
+- K-Fold CV: each observation appears in the assessment set *exactly once*
+- With $n$ observations and $K$ folds: each assessment fold has $n/K$ observations
+- LOOCV has low bias but high variance and is computationally expensive
+- K-Fold (typically $K = 5$ or $K = 10$) is often preferred in practice
+
+---
+
+## 12. Missing Data (Slide 13)
+
+**Key vocabulary:**
+
+- **MCAR** (Missing Completely At Random): probability of missingness is unrelated to any variable — the data are a random subsample of the complete data. *Easiest* to handle.
+- **MAR** (Missing At Random): probability of missingness depends on *observed* variables, not on the missing value itself.
+- **MNAR** (Missing Not At Random): probability of missingness depends on the *unobserved* (missing) value itself. *Hardest* to handle.
+- **Structurally Missing**: missing by design (e.g., a follow-up question that doesn't apply).
+- **Imputation strategies**: mean/median/mode imputation; KNN imputation; model-based imputation; multiple imputation
+
+**Things to watch for:**
+
+- MNAR is the hardest case — the missing data itself is informative
+- Imputation must occur *inside* a Pipeline to prevent leakage
+- Median imputation is more robust to outliers than mean imputation
+- Creating a missingness indicator column can help models learn that a value was missing
+

@@ -45,7 +45,7 @@ The following directions will guide you through the process of setting up your h
 ## Exercise 0
 
 ::: {.callout-tip title="Question"}
-[Click this link]([Insert Classroom Link Here]) to accept the assignment and clone it to your computer.
+[Click this link](https://classroom.github.com/a/IaCAz_-o) to accept the assignment and clone it to your computer.
 :::
 
 ## Data: LEGO

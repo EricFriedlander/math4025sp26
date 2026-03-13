@@ -1,20 +1,22 @@
-Publish,week,due,type,topic,reading,slides,video,assignment
-x,1,,Lecture,Welcome,,[00-welcome](slides/00-welcome.html),,
-x,1,2/5/2026,Lecture,The Big Picture,[Chapter 1: ISLP](https://www.statlearning.com/) <br> [syllabus](course-info/syllabus.qmd),[01-big-picture](slides/01-big-picture.html),,
-x,1,2/10/2026,Lecture,What Is Statistical Learning,Chapter 2: ISLP,[02-statistical-learning](slides/02-StatisticalLearning.html),,
-x,2,2/17/2026,Homework,HW 1: EDA,,,,[01-hw-eda](hw/01-hw-eda.html)
-x,3,2/17/2026,Lecture,SLR & Gradient Descent,[Click here for readings](prepare/prepare-03.html),[03-slr-gradient-descent](slides/03-SLR-Gradient_Desc.html),[03-video](https://www.youtube.com/watch?v=5YQxLMI-mX0),
-x,3,2/17/2026,Lecture,Linear Regression,[Click here for readings](prepare/prepare-04.html),[04-MultipleRegression](slides/04-MultipleRegression.html),[04-video](https://youtu.be/BN3vkdUFQg8),
-x,3,2/17/2026,Lecture,Data Splitting,,[05-data-splitting](slides/05-data-splitting.html),[05-video](https://youtu.be/WZvANauLG38),
-x,4,2/24/2026,Homework,HW 2: Linear Regression,,,,[02-hw-mlr](hw/02-hw-mlr.html)
-x,4,2/24/2026,Lecture,K-Nearest Neighbors,[Click here for readings](prepare/prepare-06.html),[06-knn](slides/06-knn.html),[06-video](https://www.youtube.com/watch?v=0KOhU1V8CxQ),
-x,4,2/24/2026,Lecture,Pipelines & Preprocessing,[Click here for readings](prepare/prepare-07.html),[07-preprocessing-pipelines](slides/07-preprocessing-pipelines.html),[07-video](https://www.youtube.com/watch?v=EWEMuHDaMU4),
-x,4,2/26/2026,Lecture,Logistic Regression & Classification,[Click here for readings](prepare/prepare-08.html),[08-classification](slides/08-classification-logistic.html),[08-video](https://youtu.be/rQSPh36UcSg),
-x,5,3/3/2026,In-Class,Jim Beck,,,,
-x,5,3/5/2026,Lecture,Classification Metrics,[Click here for readings](prepare/prepare-09.html),[09-classification-metrics](slides/09-classification-metrics.html),[video-09](https://youtu.be/4UMQUzJ67So),
-x,5,3/5/2026,Lecture,ROC and AUC,[Click here for readings](prepare/prepare-10.html),[10-roc-auc](slides/10-roc-auc.html),[video-10](https://youtu.be/l1M840RU-_E),
-x,5,3/5/2026,Homework,HW 3: Classification,,,,[03-hw-knn](hw/03-hw-knn.html)
-x,6,3/12/2026,Lecture,Cross-Validation,[Click here for readings](prepare/prepare-11.html),[11-cross-validation](slides/11-cross-validation.html),[video-11](https://youtu.be/En3YlkZUb1c),
-x,6,3/12/2026,Lecture,Preprocessing & Pipelines,[Click here for readings](prepare/prepare-12.html),[12-preprocessing](slides/12-preprocessing.html),[video-12](https://youtu.be/w46FMZ8fbM4),
-x,6,3/12/2026,Lecture,Missing Data,[Click here for readings](prepare/prepare-13.html),[13-missing-data](slides/13-missing-data.html),[video-13](https://youtu.be/AuF1Sjo1qbI),
-x,6,3/12/2026,Homework,HW 4: Classification,,,,[04-hw-classification](hw/04-hw-classification.html)
+Publish,week,due,type,topic,reading,slides,video,assignment,notes
+x,1,,Lecture,Welcome,,[00-welcome](slides/00-welcome.html),,,
+x,1,2/5/2026,Lecture,The Big Picture,[Chapter 1: ISLP](https://www.statlearning.com/) <br> [syllabus](course-info/syllabus.qmd),[01-big-picture](slides/01-big-picture.html),,,
+x,1,2/10/2026,Lecture,What Is Statistical Learning,Chapter 2: ISLP,[02-statistical-learning](slides/02-StatisticalLearning.html),,,
+x,2,2/17/2026,Homework,HW 1: EDA,,,,[01-hw-eda](hw/01-hw-eda.html),
+x,3,2/17/2026,Lecture,SLR & Gradient Descent,[Click here for readings](prepare/prepare-03.html),[03-slr-gradient-descent](slides/03-SLR-Gradient_Desc.html),[03-video](https://www.youtube.com/watch?v=5YQxLMI-mX0),,
+x,3,2/17/2026,Lecture,Linear Regression,[Click here for readings](prepare/prepare-04.html),[04-MultipleRegression](slides/04-MultipleRegression.html),[04-video](https://youtu.be/BN3vkdUFQg8),,
+x,3,2/17/2026,Lecture,Data Splitting,,[05-data-splitting](slides/05-data-splitting.html),[05-video](https://youtu.be/WZvANauLG38),,
+x,4,2/24/2026,Homework,HW 2: Linear Regression,,,,[02-hw-mlr](hw/02-hw-mlr.html),
+x,4,2/24/2026,Lecture,K-Nearest Neighbors,[Click here for readings](prepare/prepare-06.html),[06-knn](slides/06-knn.html),[06-video](https://www.youtube.com/watch?v=0KOhU1V8CxQ),,
+x,4,2/24/2026,Lecture,Pipelines & Preprocessing,[Click here for readings](prepare/prepare-07.html),[07-preprocessing-pipelines](slides/07-preprocessing-pipelines.html),[07-video](https://www.youtube.com/watch?v=EWEMuHDaMU4),,
+x,4,2/26/2026,Lecture,Logistic Regression & Classification,[Click here for readings](prepare/prepare-08.html),[08-classification](slides/08-classification-logistic.html),[08-video](https://youtu.be/rQSPh36UcSg),,
+x,5,3/3/2026,In-Class,Jim Beck,,,,,
+x,5,3/5/2026,Lecture,Classification Metrics,[Click here for readings](prepare/prepare-09.html),[09-classification-metrics](slides/09-classification-metrics.html),[video-09](https://youtu.be/4UMQUzJ67So),,
+x,5,3/5/2026,Lecture,ROC and AUC,[Click here for readings](prepare/prepare-10.html),[10-roc-auc](slides/10-roc-auc.html),[video-10](https://youtu.be/l1M840RU-_E),,
+x,5,3/5/2026,Homework,HW 3: Classification,,,,[03-hw-knn](hw/03-hw-knn.html),
+x,6,3/12/2026,Lecture,Cross-Validation,[Click here for readings](prepare/prepare-11.html),[11-cross-validation](slides/11-cross-validation.html),[video-11](https://youtu.be/En3YlkZUb1c),,
+x,6,3/12/2026,Lecture,Preprocessing & Pipelines,[Click here for readings](prepare/prepare-12.html),[12-preprocessing](slides/12-preprocessing.html),[video-12](https://youtu.be/w46FMZ8fbM4),,
+x,6,3/12/2026,Lecture,Missing Data,[Click here for readings](prepare/prepare-13.html),[13-missing-data](slides/13-missing-data.html),[video-13](https://youtu.be/AuF1Sjo1qbI),,
+x,6,3/12/2026,Homework,HW 4: Classification,,,,[04-hw-classification](hw/04-hw-classification.html),
+x,7,3/17/2026,Homework,HW 5: Preprocessing & Cross-Validation,,,,[05-hw-preproc-cv](hw/05-hw-preproc-cv.html),On midterm but can turn in before 3/19 without penalty
+x,7,3/19/2026,Exam,Midterm,[Study Guide](exams/Study-Guide-Midterm.html),[Practice-Exam](exams/Practice-Midterm.qmd),,[Solutions Posted Soon](exams/Practice-Midterm-Solutions.qmd),

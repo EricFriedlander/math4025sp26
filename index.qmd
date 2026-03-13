@@ -25,7 +25,7 @@ d |>
     mutate(due = mdy(due)) |>
     gt() |>
     fmt_date(due, date_style = 31) |>
-    sub_missing(columns = c(week, due, topic, reading, slides, video, assignment), missing_text = "") |>
+    sub_missing(columns = c(week, due, topic, reading, slides, video, assignment, notes), missing_text = "") |>
     cols_align(
         align = "center",
         columns = c(week)
