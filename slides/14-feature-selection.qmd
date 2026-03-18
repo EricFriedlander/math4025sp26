@@ -1,18 +1,6 @@
 ---
 title: 'MATH 4025: Feature Selection'
 author: Eric Friedlander
-logo: "../images/logo.png"
-format: 
-  revealjs:
-    theme: slides.scss
-    multiplex: false
-    transition: fade
-    slide-number: false
-    incremental: false 
-    chalkboard: true
-execute:
-  freeze: auto
-  echo: true
 ---
 
 ## Computational Set-Up
@@ -55,87 +43,72 @@ np.random.seed(4025)
 
 # Subset Selection
 
-## Exercise
+## Forward Selection
 
--   With your group, write out the steps for the following algorithms on the board
-  +   Group 1: Forward selection
-  +   Group 2: Backward elimination
-  +   Group 3: Step-wise selection
-  +   Group 4: Best-subset selection
+-   Start from the **empty model** (no predictors)
+-   At each step, add the single feature that improves fit the most
+-   Repeat until a stopping criterion is met (AIC, BIC, CV error, etc.)
+-   Greedy: never removes a feature once added
 
-## Best-Subset Selection {.smaller}
+## Backward Selection
 
-1. Let $\mathcal{M}_0$ denote the null model, which contains no predictors. This model simply predicts the sample mean for each observation.
-2. For $k = 1, 2, \ldots, p$:
-   a. Fit all $\binom{p}{k}$ models that contain exactly $k$ predictors.
-   b. Pick the best among these $\binom{p}{k}$ models, and call it $\mathcal{M}_k$. Here "best" is defined as having the smallest $RSS$, or equivalently largest $R^2$.
-3. Select a single best model from among $\mathcal{M}_0, \ldots, \mathcal{M}_p$ using cross-validated prediction error, $C_p$ (AIC), BIC, or adjusted $R^2$.
+-   Start from the **full model** (all $p$ predictors)
+-   At each step, remove the single least useful feature
+-   Repeat until a stopping criterion is met
+-   Requires $n > p$ so the full model can be fit
 
--   **Pros**: Conceptually simple, guaranteed to find the best model for training data.
--   **Cons**: Computationally infeasible for large $p$ (need to fit $2^p$ models).
+## Forward Selection {.smaller}
 
-## Forward Stepwise Selection {.smaller}
-
-1. Let $\mathcal{M}_0$ denote the null model, which contains no predictors.
+1. Let $\mathcal{M}_0$ denote the empty model.
 2. For $k = 0, \ldots, p-1$:
    a. Consider all $p - k$ models that augment the predictors in $\mathcal{M}_k$ with one additional predictor.
-   b. Choose the *best* among these $p - k$ models, and call it $\mathcal{M}_{k+1}$. Here "best" is defined as having the smallest $RSS$ or highest $R^2$.
-3. Select a single best model from among $\mathcal{M}_0, \ldots, \mathcal{M}_p$ using cross-validated prediction error, $C_p$ (AIC), BIC, or adjusted $R^2$.
+   b. Choose the *best* among these $p - k$ models, and call it $\mathcal{M}_{k+1}$.
+3. Select a single best model from among $\mathcal{M}_0, \ldots, \mathcal{M}_p$.
 
 -   **Pros**: Computationally efficient ($1 + \frac{p(p+1)}{2}$ models).
 -   **Cons**: Not guaranteed to find the best possible model out of all $2^p$ models.
 
-## Backward Stepwise Selection {.smaller}
+## Backward Selection {.smaller}
 
 1. Let $\mathcal{M}_p$ denote the full model, which contains all $p$ predictors.
 2. For $k = p, p-1, \ldots, 1$:
    a. Consider all $k$ models that contain all but one of the predictors in $\mathcal{M}_k$, for a total of $k - 1$ predictors.
-   b. Choose the *best* among these $k$ models, and call it $\mathcal{M}_{k-1}$. Here "best" is defined as having the smallest $RSS$ or highest $R^2$.
+   b. Choose the *best* among these $k$ models.
 3. Select a single best model from among $\mathcal{M}_0, \ldots, \mathcal{M}_p$ using cross-validated prediction error, $C_p$ (AIC), BIC, or adjusted $R^2$.
 
 -   **Pros**: Computationally efficient.
 -   **Cons**: Not guaranteed to find the best possible model. Requires $n > p$ so that the full model $\mathcal{M}_p$ can be fit.
 
-## Data Prep for Example {.smaller}
+::: {.callout-note}
+## Forward vs. Backward
+Both fit $1 + \frac{p(p+1)}{2}$ models — far fewer than $2^p$. Forward works when $n < p$; backward does not. Neither is guaranteed to find the globally best subset.
+:::
 
-Let's use Ames Housing Data to demonstrate subset selection.
+## Forward-Backward Selection
 
-```{python}
-ames = pd.read_csv("../data/ameshousing.csv")
-ames = ames.dropna(subset=['Sale_Price']) # drop missing targets
+-   Also called **bidirectional stepwise** selection
+-   Start from the **empty model** (or any starting model)
+-   At each step, consider **both** adding and removing a feature
+-   Add the feature that most improves fit *if* it passes an entry threshold; remove any current feature that falls below a removal threshold
+-   More flexible than pure forward or backward — can correct earlier mistakes
+-   **Cons**: Still greedy, still no guarantee of finding the best subset
 
-# We'll select just a few numeric and categorical columns for demonstration
-features = ['Lot_Area', 'Year_Built', 'Gr_Liv_Area', 'Full_Bath', 'Half_Bath', 
-            'Bedroom_AbvGr', 'TotRms_AbvGrd', 'Neighborhood', 'Bldg_Type']
+## Best-Subset Selection {.smaller}
 
-X = ames[features]
-y = ames['Sale_Price']
+1. Let $\mathcal{M}_0$ denote the empty model
+2. For $k = 1, 2, \ldots, p$:
+   a. Fit all $\binom{p}{k}$ models that contain exactly $k$ predictors.
+   b. Pick the best (according to some criterion) among these $\binom{p}{k}$ models, and call it $\mathcal{M}_k$.
+3. Select a single best model from among $\mathcal{M}_0, \ldots, \mathcal{M}_p$.
+4. + Can use cross-validated prediction error, $C_p$ (AIC), BIC, adjusted $R^2$ etc...
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=4025)
-```
+-   **Pros**: Conceptually simple, guaranteed to find the best model for training data.
+-   **Cons**: Computationally infeasible for large $p$ (need to fit $2^p$ models). Not very popular in practice.
 
-## Preprocessing Pipeline {.smaller}
-
-We still must preprocess cleanly before applying feature selection.
-
-```{python}
-num_vars = X_train.select_dtypes(include=['int64', 'float64']).columns.tolist()
-cat_vars = X_train.select_dtypes(include=['object', 'category']).columns.tolist()
-
-preproc = ColumnTransformer(transformers=[
-    ('num', Pipeline([
-        ('imputer', SimpleImputer(strategy='median')),
-        ('scaler', StandardScaler())
-    ]), num_vars),
-    ('cat', Pipeline([
-        ('imputer', SimpleImputer(strategy='most_frequent')),
-        ('onehot', OneHotEncoder(drop='first', sparse_output=False, handle_unknown='ignore'))
-    ]), cat_vars)
-], remainder='passthrough')
-
-X_train_transformed = preproc.fit_transform(X_train)
-feature_names = preproc.get_feature_names_out()
-```
+::: {.callout-tip}
+## Quick Check
+How many models must be fit when $p = 10$?
+:::
 
 ## Subset Selection in Python {.smaller}
 
@@ -143,92 +116,10 @@ feature_names = preproc.get_feature_names_out()
 -   Also provides `SelectKBest` (univariate tests), `SelectFromModel` (model weights), `RFE` (Recursive Feature Elimination).
 -   *Note*: Best-subset selection is not natively implemented in `scikit-learn` because it is computationally expensive and regularization (shrinkage-based) methods almost always perform better computationally and prediction-wise.
 
-## Forward Selection via SFS {.smaller}
+## Practice
 
-Let's use `SequentialFeatureSelector` to select 5 features via forward selection.
-
-```{python}
-from sklearn.feature_selection import SequentialFeatureSelector
-
-lm_model = LinearRegression()
-
-sfs_forward = SequentialFeatureSelector(lm_model, 
-                                        n_features_to_select=5,
-                                        direction='forward',
-                                        cv=5) # 5-fold CV to evaluate subsets
-sfs_forward.fit(X_train_transformed, y_train)
-
-# Which features were selected?
-selected_forward = np.array(feature_names)[sfs_forward.get_support()]
-selected_forward
-```
-
-## Backward Elimination via SFS {.smaller}
-
-We can switch `direction` to `backward` to perform backward elimination.
-
-```{python}
-sfs_backward = SequentialFeatureSelector(lm_model, 
-                                         n_features_to_select=5,
-                                         direction='backward',
-                                         cv=5)
-# Ignore warnings from singular matrices in cross-validation if they occur
-with warnings.catch_warnings():
-    warnings.simplefilter('ignore')
-    sfs_backward.fit(X_train_transformed, y_train)
-
-selected_backward = np.array(feature_names)[sfs_backward.get_support()]
-selected_backward
-```
-
-## Comparing Outcomes
-
-Did forward and backward selection choose the same features?
-
-```{python}
-print("Forward Selected:", [f.split('__')[-1] for f in selected_forward])
-print("Backward Selected:", [f.split('__')[-1] for f in selected_backward])
-```
-
-- Sometimes they differ! Neither is guaranteed to find the *global* optimum.
-- Both depend on the cross-validation splits.
-
-## Choosing the number of features {.smaller}
-
-- We can set `n_features_to_select='auto'` combined with a `tol` argument (stopping criterion based on score improvement).
-
-```{python}
-# Stop when the CV score doesn't improve by at least 1e-3
-sfs_auto = SequentialFeatureSelector(lm_model, 
-                                     n_features_to_select='auto',
-                                     tol=1e-3, 
-                                     direction='forward',
-                                     cv=5)
-sfs_auto.fit(X_train_transformed, y_train)
-
-# How many did it select?
-sum(sfs_auto.get_support())
-```
-
-```{python}
-selected_auto = np.array(feature_names)[sfs_auto.get_support()]
-print([f.split('__')[-1] for f in selected_auto])
-```
-
-## Using the Selected Features in a Pipeline
-
-You can embed `SequentialFeatureSelector` directly in a pipeline!
-
-```{python}
-pipe = Pipeline([
-    ('preproc', preproc),
-    ('feature_selection', SequentialFeatureSelector(LinearRegression(), n_features_to_select=5, cv=5)),
-    ('model', LinearRegression())
-])
-
-pipe.fit(X_train, y_train)
-pipe.score(X_test, y_test)
-```
+- Note: You can embed `SequentialFeatureSelector` directly in a pipeline!
+- Let's practice forward and backward selection on the Ames housing dataset.
 
 ## Summary of Subset Selection
 
