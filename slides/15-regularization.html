@@ -146,24 +146,12 @@ Eric Friedlander
 <p>The data for this lecture comes from the article FiveThirtyEight <a href="https://fivethirtyeight.com/features/the-ultimate-halloween-candy-power-ranking"><em>The Ultimate Halloween Candy Power Ranking</em></a> by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment where people could vote on a series of randomly generated candy match-ups (e.g., Reese’s vs.&nbsp;Skittles).</p>
 <p>The data set contains characteristics and the win percentage from 85 candies in the experiment.</p>
 </section>
-<section id="concept-check" class="slide level2">
-<h2>Concept Check</h2>
-<p>Do the following:</p>
-<ul>
-<li>Load the data (hint you can use <code>pd.read_csv("&lt;URL&gt;")</code> to load the data directly from the URL)</li>
-<li>Inspect the data</li>
-<li>Drop the column <code>competitorname</code> (why do you think we want to drop it?)</li>
-<li>Convert the <code>sugarpercent</code> and <code>pricepercent</code> columns from probabilities to percentages.</li>
-<li>Notice that the columns <code>chocolate</code>, <code>fruity</code>, <code>caramel</code>, <code>peanutyalmondy</code>, <code>nougat</code>, <code>crispedricewafer</code>, <code>hard</code>, <code>bar</code>, and <code>pluribus</code> are all 0/1 boolean variables. Convert them to categorical variables.</li>
-<li>Split your data using a 75/25 train/test split</li>
-</ul>
-</section>
 <section>
 <section id="shrinkagepenalizedregularization-methods" class="title-slide slide level1 center">
 <h1>Shrinkage/Penalized/Regularization Methods</h1>
 
 </section>
-<section id="concept-check-1" class="slide level2">
+<section id="concept-check" class="slide level2">
 <h2>Concept Check</h2>
 <ul>
 <li>What criteria do we use to fit a linear regression model? Write down an expression with <span class="math inline">\(\hat{\beta_i}\)</span>’s, <span class="math inline">\(x_{ij}\)</span>’s, and <span class="math inline">\(y_j\)</span>’s in it.</li>
@@ -234,7 +222,7 @@ Eric Friedlander
 <li><span class="math inline">\(\|\cdot\|_1\)</span> is called the <em><span class="math inline">\(L_1\)</span>-norm</em></li>
 </ul>
 </section>
-<section id="concept-check-2" class="slide level2">
+<section id="concept-check-1" class="slide level2">
 <h2>Concept Check</h2>
 <ul>
 <li>What should happen to our coefficients as we <em>increase</em> <span class="math inline">\(\alpha\)</span>?</li>
@@ -269,7 +257,7 @@ Eric Friedlander
 </ul></li>
 </ul>
 </section>
-<section id="concept-check-3" class="slide level2">
+<section id="concept-check-2" class="slide level2">
 <h2>Concept Check</h2>
 <ul>
 <li>We need to center and scale our data before fitting Ridge and LASSO but <strong>not</strong> before regular Linear Regression (although it doesn’t hurt). Why? What would happen if we didn’t?</li>

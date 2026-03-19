@@ -2057,13 +2057,6 @@
     "href": "slides/15-regularization.html#concept-check",
     "title": "MATH 4025: Regularization",
     "section": "Concept Check",
-    "text": "Concept Check\nDo the following:\n\nLoad the data (hint you can use pd.read_csv(\"&lt;URL&gt;\") to load the data directly from the URL)\nInspect the data\nDrop the column competitorname (why do you think we want to drop it?)\nConvert the sugarpercent and pricepercent columns from probabilities to percentages.\nNotice that the columns chocolate, fruity, caramel, peanutyalmondy, nougat, crispedricewafer, hard, bar, and pluribus are all 0/1 boolean variables. Convert them to categorical variables.\nSplit your data using a 75/25 train/test split"
-  },
-  {
-    "objectID": "slides/15-regularization.html#concept-check-1",
-    "href": "slides/15-regularization.html#concept-check-1",
-    "title": "MATH 4025: Regularization",
-    "section": "Concept Check",
     "text": "Concept Check\n\nWhat criteria do we use to fit a linear regression model? Write down an expression with \\(\\hat{\\beta_i}\\)’s, \\(x_{ij}\\)’s, and \\(y_j\\)’s in it."
   },
   {
@@ -2095,8 +2088,8 @@
     "text": "LASSO\n\\[\n\\begin{aligned}\n\\hat{\\beta} &=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}} \\left(SSE(\\hat{\\beta}) + \\alpha\\|\\hat{\\beta}\\|_1\\right) \\\\\n&= \\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\left(\\sum_{j=1}^n(y_j-\\hat{y}_j)^2 + \\alpha\\sum_{i=1}^p |\\hat{\\beta}_i|\\right)\\\\\n&=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\left(\\sum_{j=1}^n(y_j-\\hat{\\beta}_0-\\hat{\\beta}_1x_{1j} - \\cdots - \\hat{\\beta}_px_{pj})^2 + \\alpha\\sum_{i=1}^p |\\hat{\\beta}_i|\\right)\n\\end{aligned}\n\\]\n\nLASSO: Least Absolute Shrinkage and Selection Operator\n\\(\\alpha\\) is a “tuning parameter”\nIdea: penalize large coefficients\nIf we penalize large coefficients, what’s going to happen to to our estimated coefficients THEY SHRINK!\n\\(\\|\\cdot\\|_1\\) is called the \\(L_1\\)-norm"
   },
   {
-    "objectID": "slides/15-regularization.html#concept-check-2",
-    "href": "slides/15-regularization.html#concept-check-2",
+    "objectID": "slides/15-regularization.html#concept-check-1",
+    "href": "slides/15-regularization.html#concept-check-1",
     "title": "MATH 4025: Regularization",
     "section": "Concept Check",
     "text": "Concept Check\n\nWhat should happen to our coefficients as we increase \\(\\alpha\\)?"
@@ -2116,8 +2109,8 @@
     "text": "Sparsity in Applied Math\n\nsparse typically means “most things are zero”\nExample: sparse matrices are matrices where most entries are zero\n\nfor large matrices this can provide HUGE performance gains\n\nLASSO induces sparsity by setting most of the parameter estimates to zero\n\nthis means it fits the model and does feature selection SIMULTANEOUSLY"
   },
   {
-    "objectID": "slides/15-regularization.html#concept-check-3",
-    "href": "slides/15-regularization.html#concept-check-3",
+    "objectID": "slides/15-regularization.html#concept-check-2",
+    "href": "slides/15-regularization.html#concept-check-2",
     "title": "MATH 4025: Regularization",
     "section": "Concept Check",
     "text": "Concept Check\n\nWe need to center and scale our data before fitting Ridge and LASSO but not before regular Linear Regression (although it doesn’t hurt). Why? What would happen if we didn’t?\nThink about why we need to center and scale our data before fitting KNN…\nAs the units of our predictors change, what happens to the coefficients? How does this affect the penalty term in Ridge and LASSO?"
