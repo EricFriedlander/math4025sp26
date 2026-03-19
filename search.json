@@ -989,13 +989,6 @@
     "text": "Recap\n\nData Splitting: Dividing data into training and test sets to estimate out-of-sample error.\nOverfitting: Occurs when a model performs well on training data but poorly on test data.\nValidation Set: Use a third split when comparing many models to avoid information leakage.\nscikit-learn: Use train_test_split from sklearn.model_selection for easy data partitioning.\nModel Selection: Focus on minimizing the test error (e.g., test MSE)."
   },
   {
-    "objectID": "slides/14-feature-selection.html#computational-set-up",
-    "href": "slides/14-feature-selection.html#computational-set-up",
-    "title": "MATH 4025: Feature Selection",
-    "section": "Computational Set-Up",
-    "text": "Computational Set-Up\n\nimport pandas as pd\nimport numpy as np\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.preprocessing import StandardScaler, OneHotEncoder\nfrom sklearn.compose import ColumnTransformer\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.impute import SimpleImputer\nimport warnings\n\nwarnings.filterwarnings('ignore')\nnp.random.seed(4025)"
-  },
-  {
     "objectID": "slides/14-feature-selection.html#what-is-feature-selection",
     "href": "slides/14-feature-selection.html#what-is-feature-selection",
     "title": "MATH 4025: Feature Selection",
