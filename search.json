@@ -2046,46 +2046,25 @@
     "text": "Recap\n\nBias-Variance Trade-off: Total error is composed of variance, (squared) bias, and irreducible error.\nLinear Regression: Assumes a linear relationship between features and target.\nLoss Function: Usually Mean Squared Error (MSE) for regression.\nGradient Descent: An optimization algorithm that iteratively updates parameters to minimize the loss function.\nLearning Rate: Controls the size of the steps taken during gradient descent."
   },
   {
-    "objectID": "slides/15-regularization.html#computational-set-up",
-    "href": "slides/15-regularization.html#computational-set-up",
-    "title": "MATH 4025: Regularization",
-    "section": "Computational Set-Up",
-    "text": "Computational Set-Up\n\nimport pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import LinearRegression, Ridge, Lasso\nfrom sklearn.preprocessing import StandardScaler, OneHotEncoder\nfrom sklearn.compose import ColumnTransformer\nfrom sklearn.pipeline import Pipeline\nfrom plotnine import *\nimport warnings\n\nwarnings.filterwarnings('ignore')\nnp.random.seed(4025)"
-  },
-  {
     "objectID": "slides/15-regularization.html#data-candy",
     "href": "slides/15-regularization.html#data-candy",
     "title": "MATH 4025: Regularization",
     "section": "Data: Candy",
-    "text": "Data: Candy\nThe data for this lecture comes from the article FiveThirtyEight The Ultimate Halloween Candy Power Ranking by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment where people could vote on a series of randomly generated candy match-ups (e.g., Reese’s vs. Skittles).\nThe data set contains characteristics and the win percentage from 85 candies in the experiment.\n\n# Load the data directly from the fivethirtyeight GitHub repository\ncandy_url = \"https://raw.githubusercontent.com/fivethirtyeight/data/master/candy-power-ranking/candy-data.csv\"\ncandy_rankings = pd.read_csv(candy_url)"
+    "text": "Data: Candy\nThe data for this lecture comes from the article FiveThirtyEight The Ultimate Halloween Candy Power Ranking by Walt Hickey. To collect data, Hickey and collaborators at FiveThirtyEight set up an experiment where people could vote on a series of randomly generated candy match-ups (e.g., Reese’s vs. Skittles).\nThe data set contains characteristics and the win percentage from 85 candies in the experiment."
   },
   {
-    "objectID": "slides/15-regularization.html#data-candy-1",
-    "href": "slides/15-regularization.html#data-candy-1",
+    "objectID": "slides/15-regularization.html#concept-check",
+    "href": "slides/15-regularization.html#concept-check",
     "title": "MATH 4025: Regularization",
-    "section": "Data: Candy",
-    "text": "Data: Candy\n\ncandy_rankings.info()\n\n&lt;class 'pandas.DataFrame'&gt;\nRangeIndex: 85 entries, 0 to 84\nData columns (total 13 columns):\n #   Column            Non-Null Count  Dtype  \n---  ------            --------------  -----  \n 0   competitorname    85 non-null     str    \n 1   chocolate         85 non-null     int64  \n 2   fruity            85 non-null     int64  \n 3   caramel           85 non-null     int64  \n 4   peanutyalmondy    85 non-null     int64  \n 5   nougat            85 non-null     int64  \n 6   crispedricewafer  85 non-null     int64  \n 7   hard              85 non-null     int64  \n 8   bar               85 non-null     int64  \n 9   pluribus          85 non-null     int64  \n 10  sugarpercent      85 non-null     float64\n 11  pricepercent      85 non-null     float64\n 12  winpercent        85 non-null     float64\ndtypes: float64(3), int64(9), str(1)\nmemory usage: 9.9 KB"
+    "section": "Concept Check",
+    "text": "Concept Check\nDo the following:\n\nLoad the data (hint you can use pd.read_csv(\"&lt;URL&gt;\") to load the data directly from the URL)\nInspect the data\nDrop the column competitorname (why do you think we want to drop it?)\nConvert the sugarpercent and pricepercent columns from probabilities to percentages.\nNotice that the columns chocolate, fruity, caramel, peanutyalmondy, nougat, crispedricewafer, hard, bar, and pluribus are all 0/1 boolean variables. Convert them to categorical variables.\nSplit your data using a 75/25 train/test split"
   },
   {
-    "objectID": "slides/15-regularization.html#data-cleaning",
-    "href": "slides/15-regularization.html#data-cleaning",
+    "objectID": "slides/15-regularization.html#concept-check-1",
+    "href": "slides/15-regularization.html#concept-check-1",
     "title": "MATH 4025: Regularization",
-    "section": "Data Cleaning",
-    "text": "Data Cleaning\n\ncandy_rankings_clean = candy_rankings.drop(columns=['competitorname']).copy()\n\n# Convert probabilities into percentages\ncandy_rankings_clean['sugarpercent'] = candy_rankings_clean['sugarpercent'] * 100\ncandy_rankings_clean['pricepercent'] = candy_rankings_clean['pricepercent'] * 100\n\n# Convert 0/1 boolean variables to categorical\nbool_cols = ['chocolate', 'fruity', 'caramel', 'peanutyalmondy', 'nougat', \n             'crispedricewafer', 'hard', 'bar', 'pluribus']\ncandy_rankings_clean[bool_cols] = candy_rankings_clean[bool_cols].astype(str)"
-  },
-  {
-    "objectID": "slides/15-regularization.html#data-splitting",
-    "href": "slides/15-regularization.html#data-splitting",
-    "title": "MATH 4025: Regularization",
-    "section": "Data Splitting",
-    "text": "Data Splitting\n\n# Scikit-learn doesn't directly stratify on continuous values implicitly\n# We bucket winpercent to use it as a straticiation parameter\nstratify_bins = pd.qcut(candy_rankings_clean['winpercent'], q=4, labels=False)\ncandy_train, candy_test = train_test_split(\n    candy_rankings_clean, \n    test_size=0.25, \n    stratify=stratify_bins, \n    random_state=4025\n)"
-  },
-  {
-    "objectID": "slides/15-regularization.html#question",
-    "href": "slides/15-regularization.html#question",
-    "title": "MATH 4025: Regularization",
-    "section": "Question",
-    "text": "Question\n\nWhat criteria do we use to fit a linear regression model? Write down an expression with \\(\\hat{\\beta_i}\\)’s, \\(x_{ij}\\)’s, and \\(y_j\\)’s in it."
+    "section": "Concept Check",
+    "text": "Concept Check\n\nWhat criteria do we use to fit a linear regression model? Write down an expression with \\(\\hat{\\beta_i}\\)’s, \\(x_{ij}\\)’s, and \\(y_j\\)’s in it."
   },
   {
     "objectID": "slides/15-regularization.html#ols",
@@ -2099,28 +2078,28 @@
     "href": "slides/15-regularization.html#ridge-regression",
     "title": "MATH 4025: Regularization",
     "section": "Ridge Regression",
-    "text": "Ridge Regression\n\\[\n\\begin{aligned}\n\\hat{\\beta} &=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}} \\left(SSE(\\hat{\\beta}) + \\lambda\\|\\hat{\\beta}\\|_2^2\\right) \\\\\n&= \\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\left(\\sum_{j=1}^n(y_j-\\hat{y}_j)^2 + \\lambda\\sum_{i=1}^p \\hat{\\beta}_i^2\\right)\\\\\n&=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\left(\\sum_{j=1}^n(y_j-\\hat{\\beta}_0-\\hat{\\beta}_1x_{1j} - \\cdots - \\hat{\\beta}_px_{pj})^2 + \\lambda\\sum_{i=1}^p \\hat{\\beta}_i^2\\right)\n\\end{aligned}\n\\]\n\n\\(\\lambda\\) (alpha in scikit-learn) is a “tuning parameter” not estimated from the data\nIdea: penalize large coefficients\nIf we penalize large coefficients, what’s going to happen to our estimated coefficients? THEY SHRINK!\n\\(\\|\\cdot\\|_2\\) is called the \\(L_2\\)-norm"
+    "text": "Ridge Regression\n\\[\n\\begin{aligned}\n\\hat{\\beta} &=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}} \\left(SSE(\\hat{\\beta}) + \\alpha\\|\\hat{\\beta}\\|_2^2\\right) \\\\\n&= \\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\left(\\sum_{j=1}^n(y_j-\\hat{y}_j)^2 + \\alpha\\sum_{i=1}^p \\hat{\\beta}_i^2\\right)\\\\\n&=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\left(\\sum_{j=1}^n(y_j-\\hat{\\beta}_0-\\hat{\\beta}_1x_{1j} - \\cdots - \\hat{\\beta}_px_{pj})^2 + \\alpha\\sum_{i=1}^p \\hat{\\beta}_i^2\\right)\n\\end{aligned}\n\\]\n\n\\(\\alpha\\) is a “tuning parameter” not estimated from the data\nIdea: penalize large coefficients\nIf we penalize large coefficients, what’s going to happen to our estimated coefficients? THEY SHRINK!\n\\(\\|\\cdot\\|_2\\) is called the \\(L_2\\)-norm"
   },
   {
     "objectID": "slides/15-regularization.html#but-but-but-why",
     "href": "slides/15-regularization.html#but-but-but-why",
     "title": "MATH 4025: Regularization",
     "section": "But… but… but why?!?",
-    "text": "But… but… but why?!?\n\n\nRecall the Bias-Variance Trade-Off\nOur reducible error can be partitioned into:\n\nBias: how much \\(\\hat{f}\\) misses \\(f\\) by on average\nVariance: how much \\(\\hat{f}\\) moves around from sample to sample\n\nRidge: increase bias a little bit in exchange for large decrease in variance\nAs we increase \\(\\lambda\\) do we increase or decrease the penalty for large coefficients?\nAs we increase \\(\\lambda\\) do we increase or decrease the flexibility of our model?"
+    "text": "But… but… but why?!?\n\n\nRecall the Bias-Variance Trade-Off\nOur reducible error can be partitioned into:\n\nBias: how much \\(\\hat{f}\\) misses \\(f\\) by on average\nVariance: how much \\(\\hat{f}\\) moves around from sample to sample\n\nRidge: increase bias a little bit in exchange for large decrease in variance\nAs we increase \\(\\alpha\\) do we increase or decrease the penalty for large coefficients?\nAs we increase \\(\\alpha\\) do we increase or decrease the flexibility of our model?"
   },
   {
     "objectID": "slides/15-regularization.html#lasso",
     "href": "slides/15-regularization.html#lasso",
     "title": "MATH 4025: Regularization",
     "section": "LASSO",
-    "text": "LASSO\n\\[\n\\begin{aligned}\n\\hat{\\beta} &=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}} \\left(SSE(\\hat{\\beta}) + \\lambda\\|\\hat{\\beta}\\|_1\\right) \\\\\n&= \\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\left(\\sum_{j=1}^n(y_j-\\hat{y}_j)^2 + \\lambda\\sum_{i=1}^p |\\hat{\\beta}_i|\\right)\\\\\n&=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\left(\\sum_{j=1}^n(y_j-\\hat{\\beta}_0-\\hat{\\beta}_1x_{1j} - \\cdots - \\hat{\\beta}_px_{pj})^2 + \\lambda\\sum_{i=1}^p |\\hat{\\beta}_i|\\right)\n\\end{aligned}\n\\]\n\nLASSO: Least Absolute Shrinkage and Selection Operator\n\\(\\lambda\\) (alpha in scikit-learn) is a “tuning parameter”\nIdea: penalize large coefficients\nIf we penalize large coefficients, what’s going to happen to to our estimated coefficients THEY SHRINK!\n\\(\\|\\cdot\\|_1\\) is called the \\(L_1\\)-norm"
+    "text": "LASSO\n\\[\n\\begin{aligned}\n\\hat{\\beta} &=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}} \\left(SSE(\\hat{\\beta}) + \\alpha\\|\\hat{\\beta}\\|_1\\right) \\\\\n&= \\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\left(\\sum_{j=1}^n(y_j-\\hat{y}_j)^2 + \\alpha\\sum_{i=1}^p |\\hat{\\beta}_i|\\right)\\\\\n&=\\underset{\\hat{\\beta}_0,\\ldots, \\hat{\\beta}_p}{\\operatorname{argmin}}\\left(\\sum_{j=1}^n(y_j-\\hat{\\beta}_0-\\hat{\\beta}_1x_{1j} - \\cdots - \\hat{\\beta}_px_{pj})^2 + \\alpha\\sum_{i=1}^p |\\hat{\\beta}_i|\\right)\n\\end{aligned}\n\\]\n\nLASSO: Least Absolute Shrinkage and Selection Operator\n\\(\\alpha\\) is a “tuning parameter”\nIdea: penalize large coefficients\nIf we penalize large coefficients, what’s going to happen to to our estimated coefficients THEY SHRINK!\n\\(\\|\\cdot\\|_1\\) is called the \\(L_1\\)-norm"
   },
   {
-    "objectID": "slides/15-regularization.html#question-1",
-    "href": "slides/15-regularization.html#question-1",
+    "objectID": "slides/15-regularization.html#concept-check-2",
+    "href": "slides/15-regularization.html#concept-check-2",
     "title": "MATH 4025: Regularization",
-    "section": "Question",
-    "text": "Question\n\nWhat should happen to our coefficients as we increase \\(\\lambda\\)?"
+    "section": "Concept Check",
+    "text": "Concept Check\n\nWhat should happen to our coefficients as we increase \\(\\alpha\\)?"
   },
   {
     "objectID": "slides/15-regularization.html#ridge-vs.-lasso",
@@ -2134,91 +2113,28 @@
     "href": "slides/15-regularization.html#sparsity-in-applied-math",
     "title": "MATH 4025: Regularization",
     "section": "Sparsity in Applied Math",
-    "text": "Sparsity in Applied Math\n\nsparse typically means “most things are zero”\nExample: sparse matrices are matrices where most entries are zero\n\nfor large matrices this can provide HUGE performance gains\n\nLASSO induces sparsity by setting most of the parameter estimates to zero\n\nthis means it fits the model and does feature selection SIMULTANEOUSLY\n\nLet’s do some board work to see why this is…"
+    "text": "Sparsity in Applied Math\n\nsparse typically means “most things are zero”\nExample: sparse matrices are matrices where most entries are zero\n\nfor large matrices this can provide HUGE performance gains\n\nLASSO induces sparsity by setting most of the parameter estimates to zero\n\nthis means it fits the model and does feature selection SIMULTANEOUSLY"
+  },
+  {
+    "objectID": "slides/15-regularization.html#concept-check-3",
+    "href": "slides/15-regularization.html#concept-check-3",
+    "title": "MATH 4025: Regularization",
+    "section": "Concept Check",
+    "text": "Concept Check\n\nWe need to center and scale our data before fitting Ridge and LASSO but not before regular Linear Regression (although it doesn’t hurt). Why? What would happen if we didn’t?\nThink about why we need to center and scale our data before fitting KNN…\nAs the units of our predictors change, what happens to the coefficients? How does this affect the penalty term in Ridge and LASSO?"
   },
   {
     "objectID": "slides/15-regularization.html#lasso-and-ridge-in-python",
     "href": "slides/15-regularization.html#lasso-and-ridge-in-python",
     "title": "MATH 4025: Regularization",
     "section": "LASSO and Ridge in Python",
-    "text": "LASSO and Ridge in Python\n\n# note: in scikit-learn the penalty factor is called `alpha` instead of `lambda`\nols = LinearRegression()\n\nridge_0 = Ridge(alpha=0.0001)  # slightly above 0 to remain stable\nridge_1 = Ridge(alpha=1.0)\nridge_10 = Ridge(alpha=10.0)\n\nlasso_0 = Lasso(alpha=0.0001)\nlasso_1 = Lasso(alpha=1.0)\nlasso_10 = Lasso(alpha=10.0)"
+    "text": "LASSO and Ridge in Python\n\nLasso and Ridge from sklearn.linear_model to fit LASSO and Ridge regression models.\nalpha is the penalty\nRemember to center and scale your data before fitting these models!"
   },
   {
-    "objectID": "slides/15-regularization.html#question-2",
-    "href": "slides/15-regularization.html#question-2",
-    "title": "MATH 4025: Regularization",
-    "section": "Question",
-    "text": "Question\n\nWhy do we need to normalize our data before applying regularization?"
-  },
-  {
-    "objectID": "slides/15-regularization.html#create-recipe-pipeline",
-    "href": "slides/15-regularization.html#create-recipe-pipeline",
-    "title": "MATH 4025: Regularization",
-    "section": "Create Recipe (Pipeline)",
-    "text": "Create Recipe (Pipeline)\n\nX_train = candy_train.drop(columns=['winpercent'])\ny_train = candy_train['winpercent']\n\nnum_vars = X_train.select_dtypes(include=['float64', 'int64']).columns.tolist()\ncat_vars = X_train.select_dtypes(include=['object', 'category']).columns.tolist()\n\npreproc = ColumnTransformer(transformers=[\n    ('num', StandardScaler(), num_vars),\n    ('cat', OneHotEncoder(drop='first', sparse_output=False), cat_vars)\n])"
-  },
-  {
-    "objectID": "slides/15-regularization.html#create-workflows",
-    "href": "slides/15-regularization.html#create-workflows",
-    "title": "MATH 4025: Regularization",
-    "section": "Create workflows",
-    "text": "Create workflows\n\nols_wf = Pipeline([('preproc', preproc), ('model', ols)])\nridge0_wf = Pipeline([('preproc', preproc), ('model', ridge_0)])\nridge1_wf = Pipeline([('preproc', preproc), ('model', ridge_1)])\nridge10_wf = Pipeline([('preproc', preproc), ('model', ridge_10)])\n\nlasso0_wf = Pipeline([('preproc', preproc), ('model', lasso_0)])\nlasso1_wf = Pipeline([('preproc', preproc), ('model', lasso_1)])\nlasso10_wf = Pipeline([('preproc', preproc), ('model', lasso_10)])"
-  },
-  {
-    "objectID": "slides/15-regularization.html#fit-models",
-    "href": "slides/15-regularization.html#fit-models",
-    "title": "MATH 4025: Regularization",
-    "section": "Fit Models",
-    "text": "Fit Models\n\nols_wf.fit(X_train, y_train)\nridge0_wf.fit(X_train, y_train)\nridge1_wf.fit(X_train, y_train)\nridge10_wf.fit(X_train, y_train)\n\n# Ignore convergence warnings for extremely small lasso alphas\nimport warnings\nwith warnings.catch_warnings():\n    warnings.simplefilter(\"ignore\")\n    lasso0_wf.fit(X_train, y_train)\n    lasso1_wf.fit(X_train, y_train)\n    lasso10_wf.fit(X_train, y_train)"
-  },
-  {
-    "objectID": "slides/15-regularization.html#collect-coefficients",
-    "href": "slides/15-regularization.html#collect-coefficients",
-    "title": "MATH 4025: Regularization",
-    "section": "Collect coefficients",
-    "text": "Collect coefficients\n\n# Extract feature names after OneHotEncoding\nfeature_names = num_vars + list(ols_wf.named_steps['preproc'].named_transformers_['cat'].get_feature_names_out(cat_vars))\n\ndef extract_coefs(pipe, model_name):\n    return pd.DataFrame({\n        'term': feature_names,\n        'estimate': pipe.named_steps['model'].coef_,\n        'model': model_name\n    })\n\nall_coefs = pd.concat([\n    extract_coefs(ols_wf, 'ols'),\n    extract_coefs(ridge0_wf, 'ridge0'),\n    extract_coefs(ridge1_wf, 'ridge1'),\n    extract_coefs(ridge10_wf, 'ridge10'),\n    extract_coefs(lasso0_wf, 'lasso0'),\n    extract_coefs(lasso1_wf, 'lasso1'),\n    extract_coefs(lasso10_wf, 'lasso10')\n])"
-  },
-  {
-    "objectID": "slides/15-regularization.html#question-3",
-    "href": "slides/15-regularization.html#question-3",
+    "objectID": "slides/15-regularization.html#question",
+    "href": "slides/15-regularization.html#question",
     "title": "MATH 4025: Regularization",
     "section": "Question",
     "text": "Question\n\n\nWhat should we expect from ols, ridge0, and lasso0?\nThey should be approximately equivalent unpenalized estimates!"
-  },
-  {
-    "objectID": "slides/15-regularization.html#visualize",
-    "href": "slides/15-regularization.html#visualize",
-    "title": "MATH 4025: Regularization",
-    "section": "Visualize",
-    "text": "Visualize\n\n(\n    ggplot(all_coefs[all_coefs['model'].isin(['ols', 'ridge0', 'lasso0'])], \n           aes(y='term', x='estimate', fill='model')) +\n    geom_bar(stat='identity', position='dodge') +\n    theme_minimal()\n)"
-  },
-  {
-    "objectID": "slides/15-regularization.html#visualizing-coefficients-ridge",
-    "href": "slides/15-regularization.html#visualizing-coefficients-ridge",
-    "title": "MATH 4025: Regularization",
-    "section": "Visualizing Coefficients: Ridge",
-    "text": "Visualizing Coefficients: Ridge\n\n(\n    ggplot(all_coefs[all_coefs['model'].isin(['ols', 'ridge1', 'ridge10'])], \n           aes(y='term', x='estimate', fill='model')) +\n    geom_bar(stat='identity', position='dodge') +\n    theme_minimal()\n)"
-  },
-  {
-    "objectID": "slides/15-regularization.html#visualizing-coefficients-lasso",
-    "href": "slides/15-regularization.html#visualizing-coefficients-lasso",
-    "title": "MATH 4025: Regularization",
-    "section": "Visualizing Coefficients: LASSO",
-    "text": "Visualizing Coefficients: LASSO\n\n(\n    ggplot(all_coefs[all_coefs['model'].isin(['ols', 'lasso1', 'lasso10'])], \n           aes(y='term', x='estimate', fill='model')) +\n    geom_bar(stat='identity', position='dodge') +\n    theme_minimal()\n)"
-  },
-  {
-    "objectID": "slides/15-regularization.html#regularization-paths",
-    "href": "slides/15-regularization.html#regularization-paths",
-    "title": "MATH 4025: Regularization",
-    "section": "Regularization Paths",
-    "text": "Regularization Paths\nWe can fit the models over a grid of alphas to visualize the “regularization path”:\n\nalphas = np.logspace(-2, 4, 50)\ncoefs_ridge = []\nfor a in alphas:\n    pipe = Pipeline([('preproc', preproc), ('model', Ridge(alpha=a))])\n    pipe.fit(X_train, y_train)\n    coefs_ridge.append(pipe.named_steps['model'].coef_)\n\nfig, ax = plt.subplots(figsize=(8, 4))\nax.plot(alphas, coefs_ridge)\nax.set_xscale('log')\nax.set_xlabel('Alpha (Penalty)')\nax.set_ylabel('Coefficients')\nax.set_title('Ridge Coefficients vs. Penalty')\nplt.show()"
-  },
-  {
-    "objectID": "slides/15-regularization.html#lasso-regularization-path",
-    "href": "slides/15-regularization.html#lasso-regularization-path",
-    "title": "MATH 4025: Regularization",
-    "section": "LASSO Regularization Path",
-    "text": "LASSO Regularization Path\n\nalphas_lasso = np.logspace(-2, 2, 50)\ncoefs_lasso = []\nfor a in alphas_lasso:\n    pipe = Pipeline([('preproc', preproc), ('model', Lasso(alpha=a))])\n    with warnings.catch_warnings():\n        warnings.simplefilter('ignore')\n        pipe.fit(X_train, y_train)\n    coefs_lasso.append(pipe.named_steps['model'].coef_)\n\nfig, ax = plt.subplots(figsize=(8, 4))\nax.plot(alphas_lasso, coefs_lasso)\nax.set_xscale('log')\nax.set_xlabel('Alpha (Penalty)')\nax.set_ylabel('Coefficients')\nax.set_title('Lasso Coefficients vs. Penalty')\nplt.show()"
   },
   {
     "objectID": "slides/15-regularization.html#why-should-i-learn-math-for-data-science",
@@ -2228,11 +2144,11 @@
     "text": "Why should I learn math for data science?\n\nToday:\n\nOrdinary Least Squares: Linear algebra, Calc 3\nLASSO: Calc 3, Geometry, Numerical Analysis\nRidge: Linear Algebra, Calc 3\nBias-Variance Trade-Off: Probability"
   },
   {
-    "objectID": "slides/15-regularization.html#question-4",
-    "href": "slides/15-regularization.html#question-4",
+    "objectID": "slides/15-regularization.html#question-1",
+    "href": "slides/15-regularization.html#question-1",
     "title": "MATH 4025: Regularization",
     "section": "Question",
-    "text": "Question\n\nHow do you think we should choose \\(\\lambda\\) (alpha)?"
+    "text": "Question\n\nHow do you think we should choose \\(\\alpha\\)?"
   },
   {
     "objectID": "slides/13-missing-data.html#concept-check",
@@ -3135,7 +3051,7 @@
     "href": "index.html",
     "title": "Math 4025: Statistical Machine Learning",
     "section": "",
-    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n\n\n\n\nWEEK\nDUE\nTYPE\nTOPIC\nREADING\nSLIDES\nVIDEO\nASSIGNMENT\nNOTES\n\n\n\n\n1\n\n\nLecture\nWelcome\n\n\n00-welcome\n\n\n\n\n\n\n\n\n1\nThu, Feb 5\nLecture\nThe Big Picture\nChapter 1: ISLP  syllabus\n01-big-picture\n\n\n\n\n\n\n\n\n1\nTue, Feb 10\nLecture\nWhat Is Statistical Learning\nChapter 2: ISLP\n02-statistical-learning\n\n\n\n\n\n\n\n\n2\nTue, Feb 17\nHomework\nHW 1: EDA\n\n\n\n\n\n\n01-hw-eda\n\n\n\n\n3\nTue, Feb 17\nLecture\nSLR & Gradient Descent\nClick here for readings\n03-slr-gradient-descent\n03-video\n\n\n\n\n\n\n3\nTue, Feb 17\nLecture\nLinear Regression\nClick here for readings\n04-MultipleRegression\n04-video\n\n\n\n\n\n\n3\nTue, Feb 17\nLecture\nData Splitting\n\n\n05-data-splitting\n05-video\n\n\n\n\n\n\n4\nTue, Feb 24\nHomework\nHW 2: Linear Regression\n\n\n\n\n\n\n02-hw-mlr\n\n\n\n\n4\nTue, Feb 24\nLecture\nK-Nearest Neighbors\nClick here for readings\n06-knn\n06-video\n\n\n\n\n\n\n4\nTue, Feb 24\nLecture\nPipelines & Preprocessing\nClick here for readings\n07-preprocessing-pipelines\n07-video\n\n\n\n\n\n\n4\nThu, Feb 26\nLecture\nLogistic Regression & Classification\nClick here for readings\n08-classification\n08-video\n\n\n\n\n\n\n5\nTue, Mar 3\nIn-Class\nJim Beck\n\n\n\n\n\n\n\n\n\n\n\n\n5\nThu, Mar 5\nLecture\nClassification Metrics\nClick here for readings\n09-classification-metrics\nvideo-09\n\n\n\n\n\n\n5\nThu, Mar 5\nLecture\nROC and AUC\nClick here for readings\n10-roc-auc\nvideo-10\n\n\n\n\n\n\n5\nThu, Mar 5\nHomework\nHW 3: Classification\n\n\n\n\n\n\n03-hw-knn\n\n\n\n\n6\nThu, Mar 12\nLecture\nCross-Validation\nClick here for readings\n11-cross-validation\nvideo-11\n\n\n\n\n\n\n6\nThu, Mar 12\nLecture\nPreprocessing & Pipelines\nClick here for readings\n12-preprocessing\nvideo-12\n\n\n\n\n\n\n6\nThu, Mar 12\nLecture\nMissing Data\nClick here for readings\n13-missing-data\nvideo-13\n\n\n\n\n\n\n6\nThu, Mar 12\nHomework\nHW 4: Classification\n\n\n\n\n\n\n04-hw-classification\n\n\n\n\n7\nTue, Mar 17\nHomework\nHW 5: Preprocessing & Cross-Validation\n\n\n\n\n\n\n05-hw-preproc-cv\nOn midterm but can turn in before 3/19 without penalty\n\n\n7\nThu, Mar 19\nExam\nMidterm\nStudy Guide\nPractice-Exam\n\n\nSolutions Posted Soon\n\n\n\n\n8\nThu, Mar 19\nExam\nMidterm\nStudy Guide\nPractice-Exam\n\n\nSolutions Posted Soon\n\n\n\n\n\n\n\n\nNA\nSPRING BREAK (3/23-3/37)\n\n\n\n\n\n\n\n\n\n\n\n\n9\nTue, Mar 31\nLecture\nFeature Selection\nClick here for readings\n14-feature-selection\nvideo-14",
+    "text": "This page contains an outline of the topics, content, and assignments for the semester. Note that this schedule will be updated as the semester progresses, with all changes documented here.\n\n\n\n\n\n\n\n\nWEEK\nDUE\nTYPE\nTOPIC\nREADING\nSLIDES\nVIDEO\nASSIGNMENT\nNOTES\n\n\n\n\n1\n\n\nLecture\nWelcome\n\n\n00-welcome\n\n\n\n\n\n\n\n\n1\nThu, Feb 5\nLecture\nThe Big Picture\nChapter 1: ISLP  syllabus\n01-big-picture\n\n\n\n\n\n\n\n\n1\nTue, Feb 10\nLecture\nWhat Is Statistical Learning\nChapter 2: ISLP\n02-statistical-learning\n\n\n\n\n\n\n\n\n2\nTue, Feb 17\nHomework\nHW 1: EDA\n\n\n\n\n\n\n01-hw-eda\n\n\n\n\n3\nTue, Feb 17\nLecture\nSLR & Gradient Descent\nClick here for readings\n03-slr-gradient-descent\n03-video\n\n\n\n\n\n\n3\nTue, Feb 17\nLecture\nLinear Regression\nClick here for readings\n04-MultipleRegression\n04-video\n\n\n\n\n\n\n3\nTue, Feb 17\nLecture\nData Splitting\n\n\n05-data-splitting\n05-video\n\n\n\n\n\n\n4\nTue, Feb 24\nHomework\nHW 2: Linear Regression\n\n\n\n\n\n\n02-hw-mlr\n\n\n\n\n4\nTue, Feb 24\nLecture\nK-Nearest Neighbors\nClick here for readings\n06-knn\n06-video\n\n\n\n\n\n\n4\nTue, Feb 24\nLecture\nPipelines & Preprocessing\nClick here for readings\n07-preprocessing-pipelines\n07-video\n\n\n\n\n\n\n4\nThu, Feb 26\nLecture\nLogistic Regression & Classification\nClick here for readings\n08-classification\n08-video\n\n\n\n\n\n\n5\nTue, Mar 3\nIn-Class\nJim Beck\n\n\n\n\n\n\n\n\n\n\n\n\n5\nThu, Mar 5\nLecture\nClassification Metrics\nClick here for readings\n09-classification-metrics\nvideo-09\n\n\n\n\n\n\n5\nThu, Mar 5\nLecture\nROC and AUC\nClick here for readings\n10-roc-auc\nvideo-10\n\n\n\n\n\n\n5\nThu, Mar 5\nHomework\nHW 3: Classification\n\n\n\n\n\n\n03-hw-knn\n\n\n\n\n6\nThu, Mar 12\nLecture\nCross-Validation\nClick here for readings\n11-cross-validation\nvideo-11\n\n\n\n\n\n\n6\nThu, Mar 12\nLecture\nPreprocessing & Pipelines\nClick here for readings\n12-preprocessing\nvideo-12\n\n\n\n\n\n\n6\nThu, Mar 12\nLecture\nMissing Data\nClick here for readings\n13-missing-data\nvideo-13\n\n\n\n\n\n\n6\nThu, Mar 12\nHomework\nHW 4: Classification\n\n\n\n\n\n\n04-hw-classification\n\n\n\n\n7\nTue, Mar 17\nHomework\nHW 5: Preprocessing & Cross-Validation\n\n\n\n\n\n\n05-hw-preproc-cv\nOn midterm but can turn in before 3/19 without penalty\n\n\n7\nThu, Mar 19\nExam\nMidterm\nStudy Guide\nPractice-Exam\n\n\nSolutions Posted Soon\n\n\n\n\n8\nThu, Mar 19\nExam\nMidterm\nStudy Guide\nPractice-Exam\n\n\nSolutions Posted Soon\n\n\n\n\n\n\n\n\nNA\nSPRING BREAK (3/23-3/37)\n\n\n\n\n\n\n\n\n\n\n\n\n9\nTue, Mar 31\nLecture\nFeature Selection\nClick here for readings\n14-feature-selection\nvideo-14\n\n\n\n\n\n\n9\nTue, Mar 31\nLecture\nRegularization\nClick here for readings\n15-regularization\nvideo-15",
     "crumbs": [
       "Schedule"
     ]
