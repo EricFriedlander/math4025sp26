@@ -1,0 +1,90 @@
+---
+title: "Group Planning Worksheet"
+subtitle: "Math 4025 — Statistical Machine Learning, Spring 2026"
+format: html
+---
+
+> **Your first Quarto exercise.** After filling in each section below, run `quarto render GroupPlanningWorksheet.qmd` from your project directory to produce an HTML file. Commit both the `.qmd` source and the rendered `.html` to your group repo before your first check-in with the instructor.
+
+---
+
+## Team Information
+
+**Group members** (name + preferred email):
+
+-
+-
+-
+-
+
+**Assigned target variable** *(fill in from Canvas)*:
+
+**GitHub repository URL**:
+
+---
+
+## Roles
+
+Roles help divide the non-analysis work so nothing falls through the cracks. With four-person groups, some members will hold two roles — that's expected.
+
+| Role | Responsibilities | Member |
+|---|---|---|
+| **Spokesperson** | Leads presentation delivery | |
+| **Coordinator** | Manages internal deadlines, owns repo setup, submits final deliverables | |
+| **Recorder** | Takes notes at meetings, maintains a brief meeting log (a section in `README.md` works fine) | |
+| **Lead Analyst** | Owns the core modeling pipeline | |
+| **Lead Communicator** | Owns the executive summary and infographic | |
+
+---
+
+## Task Division
+
+Fill in the Owner(s), your group's internal deadline, and the current Status (e.g., *Not started*, *In progress*, *Done*) for each task. Add rows as needed.
+
+| Task | Owner(s) | Internal Deadline | Status |
+|---|---|---|---|
+| Load and join data files | | | |
+| Explore target variable (EDA) | | | |
+| Explore features (EDA) | | | |
+| Handle missing values / quality flags | | | |
+| Feature engineering | | | |
+| Baseline model | | | |
+| Model iteration and comparison | | | |
+| Cross-validation and final evaluation | | | |
+| Presentation slides | | | |
+| Executive summary / infographic | | | |
+| `README.md` and repo cleanup | | | |
+| Team contribution report | | | |
+
+---
+
+## Meeting Plan
+
+**Planned weekly meeting time** (day, time, and location or virtual link):
+
+**Primary communication channel** (e.g., Teams channel name or group chat):
+
+---
+
+## Conflict Resolution
+
+Most disagreements are easy to resolve if you address them early. Here's the process:
+
+1. **Discuss directly.** Raise the issue as a group and try to work it out in conversation first.
+2. **Vote if needed.** If discussion doesn't resolve it, take a majority vote. In the event of a tie, the Coordinator makes the call.
+3. **Escalate serious issues.** If a member is consistently not contributing or communication has broken down, bring it to the instructor — that's what office hours are for.
+
+The **team contribution report** (submitted at the end of the project) is the formal accountability mechanism: each member writes a brief description of their own contributions. Be honest.
+
+---
+
+## Accountability Agreement
+
+By signing below, each team member commits to contributing equitably to the project, communicating proactively when something comes up, and meeting the internal deadlines the group sets together.
+
+**Signatures** (type your full name):
+
+1.
+2.
+3.
+4.

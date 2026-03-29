@@ -1,0 +1,27 @@
+---
+title: "Hack-A-Thon Report Guidelines"
+---
+
+## Sample Analysis Tips
+
+
+-   Your data analysis should do the following
+    +   Tell a coherent story and narrative.
+    +   Include something similar to the following sections:
+        -   Introduction outlining and motivating the problem
+        -   Exploratory data analysis and pre-process/feature engineering
+        -   Modeling or Model Selection
+        -   Performance Analysis
+        -   Conclusion summarizing your results
+    +   Keep in mind that it is not just important that you know HOW to apply different machine learning methods, but understand WHEN apply different techniques to data. Imagine that you're being hired to be a construction worker. If you are asked to hammer in a nail, don't take out a sledgehammer.
+    +   Show that you are able to communicate well. Communicating well involves ensuring that you incorporate the appropriate level of detail (not too much/not too little) and that you are able to interpret the results of your analyses. It goes beyond just having perfect grammar and spelling. 
+        +   Pro-tip: Write up a draft of your report and then go through it once taking out anything that isn't absolutely necessary.
+    +   Be professional and be grammatically correct and devoid of typos.
+-   Things to avoid:
+    +   Walls of code without context. You should be explaining what you do every time you write code. However, don't put too much detail. Assume the reader is familiar with machine learning. For example, say "We now fit the logistic regression model to the training data." instead of "A logistic regression model is a machine learning model that blah, blah, blah".
+    +   There are times when you want to output something for yourself but it shouldn't go in a final document. For example, if you use `glimpse` to make sure the new column you created looks the way you want it to, you may not want to include that in the final report.
+    +   Walls of data without context. Sometimes you may want to print out data for yourself to make sure some analysis step was done correctly. You don't need to include that in your final report. Make sure that anything you display is done **with purpose** and that you're talking about that purpose.
+    +   Talking about functions rather than what code is doing. For example, say "We now fit the logistic regression model to the training data." instead of "We now use the `fit` function to fit the logistic regression model to the training data."
+    +   Ensure all plots have professional axis labels.
+    +   When talking about your variables, mostly refer to them by what they represent rather than their name. For example say "We will be predicting whether a customer will default on their loan." instead of "We will be using `default` as the response variable. There are situation in which it is appropriate to refer to them by their names in R but be careful.
+    +   Including a bunch of unnecessary analysis steps to prove that you can do them. If the project you've chosen does not call of more advanced analysis steps, choose a different one.

@@ -1,0 +1,74 @@
+---
+title: "Job Application 1 Rubric"
+---
+
+# Overall Grade
+
+You overall job application grade will be 15% from the resume, 15% from the cover letter, and 70% from the data analysis.
+
+Tip: When the word "relevant" is used, look at the job advertisement to decide what is relevant.
+
+## Resume Rubric
+
+
+
+| **Criteria**            | **Excellent (4)**                                                                 | **Good (3)**                                                                 | **Average (2)**                                                              | **Needs Improvement (1)**                                                    |
+|-------------------------|-----------------------------------------------------------------------------------|------------------------------------------------------------------------------|------------------------------------------------------------------------------|------------------------------------------------------------------------------|
+| **Contact Information** | Complete, professional, and easy to find.                                         | Complete and professional.                                                   | Complete but not easily found.                                               | Incomplete or unprofessional.                                                |
+| **Skills**              | Comprehensive list of relevant technical skills, including proficiency levels.    | Good list of relevant technical skills.                                      | Adequate list, but missing some key skills.                                  | Limited list of relevant skills.                                             |
+| **Experience and/or Projects** | Detailed descriptions of relevant experience, with quantifiable achievements. Detailed descriptions of relevant projects, with clear outcomes and technologies used.| Good descriptions of relevant experience, with some quantifiable achievements. Adequate descriptions of projects, but lacks detail on outcomes or technologies used. | Adequate descriptions, but lacks quantifiable achievements.                  | Limited descriptions, with few or no quantifiable achievements and few or no relevant projects listed. |
+| **Education**           | Relevant degrees or certifications, with details on coursework or projects.       | Relevant degrees or certifications.                                          | Adequate education listed, but lacks detail.                                 | Limited education listed, with little relevance to the role.                 |
+| **Soft Skills**         | Clear evidence of communication, teamwork, and problem-solving skills.            | Good evidence of soft skills.                                                | Adequate evidence, but lacks detail.                                         | Limited evidence of soft skills.                                             |
+| **Formatting**          | Professional, clean, and easy to read, with consistent formatting.                | Professional and easy to read, with minor formatting inconsistencies.         | Adequate formatting, but some sections are hard to read.                     | Poor formatting, with multiple inconsistencies.                              |
+| **Overall Impression**  | Strong candidate with a well-rounded resume that stands out.                      | Good candidate with a solid resume.                                          | Adequate candidate, but resume lacks some key elements.                      | Weak candidate, with a resume that needs significant improvement.            |
+
+# Cover Letter
+
+| **Criteria**                | **Excellent (4)**                                                                                             | **Good (3)**                                                                                                  | **Fair (2)**                                                                                                  | **Poor (1)**                                                                                               |
+|-----------------------------|----------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| **Opening**                 | Grabs attention effectively, states the purpose clearly and professionally                                     | States the purpose clearly, with a professional tone                                                          | Vaguely states the purpose or lacks a professional tone                                                       | Fails to state the purpose clearly or lacks professionalism                                               |
+| **Customization**           | Tailored specifically to the job and company; demonstrates deep knowledge of the company and role               | Some tailoring to the job and company; shows knowledge of the company and role                                | Limited tailoring; shows minimal knowledge of the company and role                                            | No customization; generic and could be sent to any company                                                |
+| **Experience & Skills**     | Clearly highlights relevant experience and skills; demonstrates strong alignment with job requirements          | Highlights relevant experience and skills; shows alignment with job requirements                              | Mentions experience and skills but lacks clear alignment with job requirements                               | Fails to mention relevant experience and skills; no alignment with job requirements                        |
+| **Language & Tone**         | Professional, engaging, and error-free; uses active voice                                                       | Mostly professional and engaging; minor errors; uses active voice                                             | Some errors; tone may be inconsistent; uses passive voice occasionally                                        | Numerous errors; unprofessional tone; predominantly uses passive voice                                     |
+| **Closing**                 | Strong, confident closing that reiterates enthusiasm for the role and invites further discussion                | Clear closing that reiterates enthusiasm for the role                                                          | Vague closing; enthusiasm for the role is not clearly reiterated                                               | Weak or absent closing; lacks enthusiasm                                                                   |
+| **Overall Presentation**    | Well-organized, visually appealing, easy to read; follows all formatting guidelines                            | Organized, visually acceptable, easy to read; follows most formatting guidelines                              | Some organization; visually cluttered; does not fully follow formatting guidelines                           | Poor organization; difficult to read; does not follow formatting guidelines                                |
+
+## Data Analysis Rubric
+
+Your analysis will be assessed in each of the following four areas on a scale of 0-5. The questions below will be used as a guide to determine the quality of your analysis in each area.
+
+### Writing, Organization, Editing, and Professionalism
+
+-   Is the report well-organized? 
+-   Is the modeling process described in a clear, logical, and engaging manner?
+- 	Are the motivations for different modeling decisions clearly described?
+- 	Is the analysis free of spelling and grammatical errors?
+-   Are there walls of data?
+-   Are there large unbroken walls of code?
+-   Are there warnings and messages that should be suppressed?
+-   Are all plots labeled and displayed professionally?
+-   Are tables displayed neatly?
+-   Is there too much detail and is the report unnecessarily long?
+
+### Data Analysis
+
+-   Are the mathematical and statistical methods used correctly and appropriately?
+-   Are appropriate predictor variables used in the analysis?
+- 	To what extent does the analysis showcase skills described in the job advertisement?
+-   Are the reasons for excluding and/or transforming the data sensible and well-explained?
+-   How was the model chosen and validated?
+-   How were the parameters of the model tuned (if applicable)?
+
+### Curiosity
+
+- 	Is the analysis complex and insightful, showing evidence that the data have been analyzed in multiple different ways?
+-   Is the explanation and presentation creative, going beyond superficial observations and simple graphical summaries?
+-   Are the findings and conclusions supported by sound reasoning and/or additional research?
+-   Are the possible implications of the results discussed in context?
+
+### Skepticism & Interpretation
+
+-   Is the handling of missing data, unusual observations, and outliers described and is there sound rationale for it?
+-   Are multiple explanations given for a particular finding and multiple approaches used to explore surprising results?
+-   Are limitations of the data and of the analysis identified and are the potential impacts on the conclusions discussed?
+-   Are suggestions for future work and additional exploration identified and useful?

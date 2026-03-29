@@ -1,0 +1,151 @@
+---
+title: "Using Quarto with Python"
+---
+
+## Why Quarto Instead of Jupyter Notebooks
+
+Jupyter `.ipynb` files store rendered output (text, images, cell metadata) directly in the file. This means every time you run a cell, the file changes — even if your code didn't. In a shared git repo, this produces massive, unreadable diffs full of base64-encoded image blobs and execution counts. Code review becomes impossible.
+
+`.qmd` files are plain text. Only actual changes to your code or prose show up in diffs. This makes collaboration and peer review clean.
+
+Quarto also renders to HTML, PDF, or Reveal.js slides from the same source file — no extra tooling needed.
+
+## Anatomy of a .qmd File
+
+A `.qmd` file has three parts: YAML front matter, markdown prose, and code chunks.
+
+````markdown
+---
+title: "My Analysis"
+author: "Your Name"
+---
+
+## Introduction
+
+This analysis explores the dataset using Python.
+
+```{{python}}
+import pandas as pd
+import numpy as np
+
+df = pd.read_csv("data/my-data.csv")
+df.head()
+```
+````
+
+The YAML block (between `---` lines) sets document metadata. Prose is standard Markdown. Code chunks open with ` ```{python} ` and close with ` ``` `.
+
+## Rendering
+
+Always activate the conda environment first:
+
+```bash
+conda activate math-4025-sp26
+```
+
+Then render from the terminal:
+
+```bash
+quarto render my-analysis.qmd        # produces my-analysis.html
+quarto preview my-analysis.qmd       # live preview with auto-reload
+```
+
+In VS Code: install the [Quarto extension](https://marketplace.visualstudio.com/items?itemName=quarto.quarto), then use the **Render** button in the top-right of the editor. The preview pane updates on save.
+
+## Common Code Chunk Options
+
+Options go inside the chunk using `#|` at the top of the chunk body:
+
+````markdown
+```{{python}}
+#| echo: false
+#| warning: false
+print("This runs but the code is hidden")
+```
+````
+
+| Option | Effect |
+|---|---|
+| `#| echo: false` | Run code, hide source |
+| `#| eval: false` | Show code, don't run |
+| `#| include: false` | Run code, hide source and output (good for setup) |
+| `#| fig-cap: "..."` | Add figure caption |
+| `#| fig-width: 6` | Figure width in inches |
+| `#| warning: false` | Suppress warnings |
+| `#| message: false` | Suppress messages |
+
+Put your imports and data loading in a single setup chunk at the top of the file:
+
+````markdown
+```{{python}}
+#| include: false
+import pandas as pd
+import numpy as np
+from plotnine import *
+from itables import show
+from pyhere import here
+
+df = pd.read_csv(here("data", "MIRION_meta_all_1.csv"))
+```
+````
+
+This runs silently — no output appears in the rendered document.
+
+## Paths with pyhere
+
+Relative paths like `pd.read_csv("../data/myfile.csv")` break depending on where you run `quarto render` from. Use `pyhere` instead.
+
+`pyhere` anchors paths to the project root by looking for a `.here` file or the git root. Since your project repo is a git repo, it works automatically. The repo also includes a `.here` file in the root as a fallback.
+
+```python
+from pyhere import here
+import pandas as pd
+
+df = pd.read_csv(here("data", "MIRION_meta_all_1.csv"))
+```
+
+`here("data", "MIRION_meta_all_1.csv")` resolves to the correct absolute path regardless of where you call `quarto render` from.
+
+## Plots with plotnine
+
+`plotnine` figures render automatically when the last expression in a chunk is a ggplot object. No `print()` or `.show()` needed.
+
+````markdown
+```{{python}}
+#| fig-cap: "Distribution of stellar masses"
+#| fig-width: 6
+#| fig-height: 4
+from plotnine import *
+
+(
+    ggplot(df, aes(x="mass"))
+    + geom_histogram(bins=30, fill="steelblue", color="white")
+    + labs(x="Mass", y="Count")
+    + theme_minimal()
+)
+```
+````
+
+Set figure dimensions with `#| fig-width` and `#| fig-height` (in inches).
+
+## Tables with itables
+
+`itables` renders interactive sortable/searchable tables in HTML output:
+
+```python
+from itables import show
+show(df.head(20))
+```
+
+For static output (e.g., PDF), skip `show()` and just evaluate the dataframe directly:
+
+```python
+df.head(20)
+```
+
+## Recommended Workflow
+
+- **One setup chunk at the top.** Put all imports and data loading there with `#| include: false`. Don't scatter imports across the file.
+- **Keep files focused.** A few well-organized `.qmd` files (e.g., `eda.qmd`, `modeling.qmd`) are easier to navigate than many small ones.
+- **Commit and push often.** Don't wait until the project is done. Push after every working session. Small, frequent commits are easier to debug and review.
+- **Read the error message.** When rendering fails, the terminal output includes the file name and line number. Start there before asking for help.

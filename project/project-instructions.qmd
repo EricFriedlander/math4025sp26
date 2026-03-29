@@ -1,0 +1,176 @@
+---
+title: "Final Project: Predicting Physical Properties of Yellowballs"
+subtitle: "Math 4025 — Statistical Machine Learning, Spring 2026"
+---
+
+## Introduction
+
+"Yellowballs" are compact, roughly circular infrared emission structures in the Milky Way first identified by citizen scientists participating in the [Milky Way Project](https://www.milkywayproject.org/), an online image classification platform. They appear yellow in three-color Spitzer Space Telescope images because they emit strongly at both 8 and 24 µm. Yellowballs are candidate sites of intermediate- to high-mass star formation — regions where gas and dust are being heated and compressed by newly forming stars.
+
+The **MIRION catalog** (Milky Way Infrared ONset; Wolf-Chase et al. 2025) contains 6,176 Yellowballs, with physical properties derived for 3,945 of them using multi-wavelength photometry from Spitzer and Herschel space telescopes.
+
+**The scientific question:** Can we predict a physical property of a Yellowball from its infrared photometric signature alone? Accurate photometric predictions would allow astronomers to characterize newly discovered objects without the time-intensive follow-up observations needed to derive physical properties directly.
+
+## Your Assignment
+
+Each group is assigned one physical property of Yellowballs to predict. **See Canvas for your group's assigned target variable.**
+
+The table below describes all eight target variables. Note that three of them (DIAM, MASS, L_BOL) require a distance measurement to compute — groups assigned those targets will need to incorporate the distance data file into their analysis.
+
+| Target | Description | Units | Distance-dependent? |
+|--------|-------------|-------|---------------------|
+| `DIAM` | Physical diameter of the Yellowball bubble | pc | Yes |
+| `MASS` | Total gas and dust mass enclosed | M☉ | Yes |
+| `L_BOL` | Bolometric (total) luminosity of the central source | L☉ | Yes |
+| `LM` | Luminosity-to-mass ratio (evolutionary stage indicator) | L☉/M☉ | No |
+| `TEMP` | Dust temperature from a greybody SED fit | K | No |
+| `LRATIO` | Ratio of warm-to-cold luminosity (dimensionless) | — | No |
+| `T_BOL` | Bolometric temperature (SED-weighted mean temperature) | K | No |
+| `SURF_DENS` | Surface mass density | g/cm² | No |
+
+## Recommended Reading
+
+These papers provide scientific context for the data and the astrophysical questions your analysis addresses. You are not expected to understand every technical detail, but reading the introductions and results sections will help you interpret your findings meaningfully.
+
+- **Wolf-Chase et al. (2025)** — The MIRION catalog paper: describes the Yellowball sample, the photometry, and how the physical properties were derived.
+  <https://iopscience.iop.org/article/10.3847/1538-4357/ae31f6>
+
+- **Anderson et al. (2012)** — Background on multi-wavelength infrared methods for characterizing star-forming regions.
+  <https://www.aanda.org/articles/aa/pdf/2012/01/aa17640-11.pdf>
+
+## Data
+
+Your GitHub Classroom repository contains a `data/` folder with eight files. Below is an overview; see the [Data Wrangling Tips](data-wrangling-tips.qmd) guide for detailed loading instructions.
+
+### MRT-phot.txt — Spitzer Photometry *(primary feature table)*
+
+Fixed-width format, 38-line header, 6,176 rows. Key columns:
+
+| Column | Description | Units |
+|--------|-------------|-------|
+| `YB` | Yellowball source ID | — |
+| `GLON`, `GLAT` | Galactic longitude and latitude | deg |
+| `MWPR` | Milky Way Project radius | deg |
+| `F8`, `F12`, `F24`, `F70` | Flux densities at 8, 12, 24, 70 µm | Jy |
+| `e_F8`, `e_F12`, `e_F24`, `e_F70` | Flux uncertainties | Jy |
+| `N8`, `N12`, `N24`, `N70` | Number of photometric measurements per band | — |
+| `f_SAT` | Saturation flag (4-char string, one digit per band) | — |
+| `f_MULTI` | Multiple-source flag | — |
+| `f_NOSRC` | No clear source detected (4-char string, one digit per band) | — |
+| `f_PCONF` | Poor photometric confidence (4-char string, one digit per band) | — |
+| `f_CEXT` | Highly circular extended source flag | — |
+
+**Start here.** This file combined with `MIRION_meta_all_1.csv` gives you everything you need for a baseline model.
+
+### MRT-dist.txt — Distances
+
+Fixed-width format, 6,176 rows. Key columns: `YB`, `DIST` (adopted distance in kpc), `e_DIST`. Required for groups predicting `DIAM`, `MASS`, or `L_BOL`.
+
+### MRT-velo.txt — Radial Velocities
+
+Fixed-width format, 6,176 rows. LSR radial velocities (km/s) from multiple radio surveys. Optional additional feature for groups wanting to go further.
+
+### MRT-xmat.txt — Catalog Cross-Matches
+
+Fixed-width format. Cross-match identifiers and classification types from Hi-GAL, ATLASGAL, CORNISH, RMS, and WISE catalogs. These are categorical identifiers — they require encoding to be used as features.
+
+### MRT-hcsc.txt — Herschel-Derived Properties
+
+Fixed-width format, ~3,945 rows. Herschel-based physical properties with uncertainty columns, overlapping with the MIRION targets below.
+
+### MIRION_meta_all_1.csv — Target Variables *(join this with MRT-phot.txt)*
+
+CSV, 3,945 rows. Contains `YB` and all eight target variables: `DIAM`, `MASS`, `L_BOL`, `LM`, `TEMP`, `LRATIO`, `T_BOL`, `SURF_DENS`.
+
+### MIRION_meta_din_1.csv — Distance-Independent Targets
+
+CSV, 3,945 rows. Subset of `MIRION_meta_all_1.csv` containing only the five distance-independent targets.
+
+### MIRION_spec_1.csv — Long-Wavelength Photometry
+
+CSV in transposed format: rows are wavelength bands (160–1100 µm from Herschel), columns are YB IDs. Provides six additional flux bands (`F160`, `F250`, `F350`, `F500`, `F870`, `F1100`). Available for a subset of YBs. See the Data Wrangling Tips for how to load and reshape this file.
+
+## Deliverables
+
+All deliverables are due **April 29**. Submit via your GitHub Classroom repository (link on Canvas) and the Canvas assignment page.
+
+### 1. Presentation (7 minutes)
+
+A non-technical slide presentation for an audience of **astronomy researchers** — scientists who understand star formation but are not necessarily familiar with machine learning methods. Your goal is to explain what you did, what you found, and what it means for our understanding of Yellowballs.
+
+- Strictly 7 minutes; plan for 2–3 minutes of Q&A afterward
+- All group members must participate in presenting
+- Slides should be visually clear with well-labeled figures
+- Explain your ML methods in plain language — focus on what the model does, not the math
+- Interpret your results in astrophysical terms
+
+### 2. Executive Summary / Infographic (1 page)
+
+A one-page document summarizing your findings for the same astronomy-researcher audience. This is not a technical report.
+
+- State the prediction problem and your approach in 2–3 sentences
+- Highlight your key result (model performance + what drives predictions)
+- Include 1–2 strong data visualizations
+- Fits on a single page
+
+### 3. GitHub Classroom Repository
+
+Your repository must contain all code needed to reproduce your analysis, written as `.qmd` files that render without errors. See the [Quarto + Python Guide](quarto-python-guide.qmd).
+
+- All analysis in `.qmd` files (no Jupyter notebooks)
+- `README.md` completed with group info, target variable, and reproduction instructions
+- `GroupPlanningWorksheet.qmd` rendered to HTML and committed
+- Code is organized and readable
+
+### 4. Team Contribution Report (submitted individually on Canvas)
+
+A short paragraph (3–5 sentences) per team member describing what tasks you personally completed, approximately how many hours you contributed, and any challenges you encountered.
+
+## Getting Started
+
+1. **Accept the GitHub Classroom assignment** (link on Canvas) and clone the repository to your local machine.
+
+2. **Read the [Data Wrangling Tips](data-wrangling-tips.qmd).** Load `MIRION_meta_all_1.csv` and `MRT-phot.txt`, join them on `YB`, and make sure you can access your target variable.
+
+3. **Explore your target variable.** Plot its distribution. What does it look like?
+
+4. **Explore your features.** Plot the flux distributions. Look at scatterplots of each flux band vs. your target. Check for missing values using `missingno`.
+
+5. **Build a baseline model.** Start simple: linear regression using the four Spitzer flux bands (`F8`, `F12`, `F24`, `F70`) as features, evaluated with cross-validation. This gives you a benchmark.
+
+6. **Iterate.** Add features (flux ratios, long-wavelength bands, quality flag indicators), try different models, tune hyperparameters. Each change should be motivated by something you observed in your EDA or in the previous model's behavior.
+
+7. **Evaluate your final model** with cross-validation. Report $R^2$ and RMSE. Interpret what the model does and doesn't predict well in astrophysical terms.
+
+## Evaluation Guide
+
+Your project will be assessed in each of the following areas as either Outstanding (5), Good (4), Acceptable (3), Needs Work (2), Inadequate (1), Incomplete (0).
+
+### Slides and Presentation
+
+- Is the presentation of the appropriate length (roughly 7 minutes)?
+- Is the presentation directed at the appropriate audience (astronomy researchers, not ML experts)?
+- Are results presented in a clear, logical, and engaging manner?
+- Are the slides easy to read with appropriate graphics that support the narrative?
+
+### Content and Analysis
+
+- Is the analysis thorough, with multiple approaches compared, feature engineering attempted, and cross-validation used?
+- Are the methods and results explained in a way the audience can follow?
+- Are findings interpreted in astrophysical terms, not just as model metrics?
+- Are conclusions appropriately qualified, acknowledging limitations?
+
+### Professionalism
+
+- Is the presentation well-prepared with minimal reliance on notes?
+- Is the presentation clear, well-paced, and free of distracting mannerisms?
+- Are all presenters engaged throughout?
+- Is the responsibility for presenting shared among group members?
+- Do all presenters show mastery of the material and answer questions with ease?
+
+### Executive Summary and Infographic
+
+- Does the document clearly summarize the methodology, results, and key takeaway?
+- Is it directed at the appropriate audience (astronomy researchers)?
+- Are results presented in a clear, logical manner?
+- Do appropriate visuals support the narrative?
