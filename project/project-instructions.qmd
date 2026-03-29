@@ -1,5 +1,5 @@
 ---
-title: "Final Project: Predicting Physical Properties of Yellowballs"
+title: "Group Project: Predicting Physical Properties of Yellowballs"
 subtitle: "Math 4025 — Statistical Machine Learning, Spring 2026"
 ---
 
@@ -104,20 +104,20 @@ A non-technical slide presentation for an audience of **astronomy researchers** 
 - Explain your ML methods in plain language — focus on what the model does, not the math
 - Interpret your results in astrophysical terms
 
-### 2. Executive Summary / Infographic (1 page)
+### 2. Executive Summary (1-2 pages)
 
 A one-page document summarizing your findings for the same astronomy-researcher audience. This is not a technical report.
 
 - State the prediction problem and your approach in 2–3 sentences
 - Highlight your key result (model performance + what drives predictions)
 - Include 1–2 strong data visualizations
-- Fits on a single page
+- Is shorter than 2 pages, including figures
 
 ### 3. GitHub Classroom Repository
 
 Your repository must contain all code needed to reproduce your analysis, written as `.qmd` files that render without errors. See the [Quarto + Python Guide](quarto-python-guide.qmd).
 
-- All analysis in `.qmd` files (no Jupyter notebooks)
+- All analysis in `.qmd` or `.py` files (no Jupyter notebooks)
 - `README.md` completed with group info, target variable, and reproduction instructions
 - `GroupPlanningWorksheet.qmd` rendered to HTML and committed
 - Code is organized and readable
@@ -148,7 +148,7 @@ Your project will be assessed in each of the following areas as either Outstandi
 
 ### Slides and Presentation
 
-- Is the presentation of the appropriate length (roughly 7 minutes)?
+- Is the presentation of the appropriate length (less than 7 minutes)? **I am serious about this!** Taking more time than is allotted is disrespectful to your audience and to your peers.
 - Is the presentation directed at the appropriate audience (astronomy researchers, not ML experts)?
 - Are results presented in a clear, logical, and engaging manner?
 - Are the slides easy to read with appropriate graphics that support the narrative?
@@ -168,7 +168,7 @@ Your project will be assessed in each of the following areas as either Outstandi
 - Is the responsibility for presenting shared among group members?
 - Do all presenters show mastery of the material and answer questions with ease?
 
-### Executive Summary and Infographic
+### Executive Summary
 
 - Does the document clearly summarize the methodology, results, and key takeaway?
 - Is it directed at the appropriate audience (astronomy researchers)?
