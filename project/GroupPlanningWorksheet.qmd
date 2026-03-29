@@ -4,7 +4,7 @@ subtitle: "Math 4025 — Statistical Machine Learning, Spring 2026"
 format: html
 ---
 
-> **Your first Quarto exercise.** After filling in each section below, run `quarto render GroupPlanningWorksheet.qmd` from your project directory to produce an HTML file. Commit both the `.qmd` source and the rendered `.html` to your group repo before your first check-in with the instructor.
+> **Your first Quarto exercise.** After filling in each section below, render the document from your project directory to produce an HTML file. Commit both the `.qmd` source and the rendered `.html` to your group repo before your first check-in with the instructor.
 
 ---
 
@@ -19,13 +19,11 @@ format: html
 
 **Assigned target variable** *(fill in from Canvas)*:
 
-**GitHub repository URL**:
-
 ---
 
 ## Roles
 
-Roles help divide the non-analysis work so nothing falls through the cracks. With four-person groups, some members will hold two roles — that's expected.
+Roles help divide the non-analysis work so nothing falls through the cracks.
 
 | Role | Responsibilities | Member |
 |---|---|---|
@@ -52,7 +50,7 @@ Fill in the Owner(s), your group's internal deadline, and the current Status (e.
 | Model iteration and comparison | | | |
 | Cross-validation and final evaluation | | | |
 | Presentation slides | | | |
-| Executive summary / infographic | | | |
+| Executive summary | | | |
 | `README.md` and repo cleanup | | | |
 | Team contribution report | | | |
 
@@ -60,7 +58,7 @@ Fill in the Owner(s), your group's internal deadline, and the current Status (e.
 
 ## Meeting Plan
 
-**Planned weekly meeting time** (day, time, and location or virtual link):
+**Planned weekly meeting time(s)** (day, time, and location or virtual link):
 
 **Primary communication channel** (e.g., Teams channel name or group chat):
 
