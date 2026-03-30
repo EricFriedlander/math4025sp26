@@ -107,6 +107,171 @@
     "text": "The project utilizes the Gemini CLI for assistance. * .gemini/prompts/: Stores reusable prompts for common tasks. * sync-context.md: Analyzes project changes, updates documentation, and handles git operations."
   },
   {
+    "objectID": "project/data-wrangling-tips.html",
+    "href": "project/data-wrangling-tips.html",
+    "title": "Data Wrangling Tips",
+    "section": "",
+    "text": "Your project data spans 8 files. The table below summarizes what each one contains and how it connects to the others.\n\n\n\n\n\n\n\n\n\n\nFile\nFormat\n~Rows\nJoin Key\nContents\n\n\n\n\nMRT-phot.txt\nFixed-width\n6,176\nYB\nSpitzer photometry (8–70 µm), errors, counts, quality flags\n\n\nMRT-dist.txt\nFixed-width\n6,176\nYB\nDistances with uncertainties\n\n\nMRT-velo.txt\nFixed-width\n6,176\nYB\nRadial velocities (km/s)\n\n\nMRT-xmat.txt\nFixed-width\n6,176\nYB\nCross-matches to external catalogs\n\n\nMRT-hcsc.txt\nFixed-width\n3,945\nYB\nHerschel-derived properties (subset)\n\n\nMIRION_meta_all_1.csv\nCSV\n3,945\nYB\nAll 8 target physical properties\n\n\nMIRION_meta_din_1.csv\nCSV\n3,945\nYB\nDistance-independent subset of targets\n\n\nMIRION_spec_1.csv\nCSV (transposed)\n10 wavelengths\nYB columns\nLong-wave photometry (160–1100 µm)\n\n\n\nKey insight: Only ~3,945 YBs have physical property targets (the MIRION subset of the full 6,176). An inner join on YB will give you ~3,945 rows — this is your working modeling dataset.\nRecommended starting point: MRT-phot.txt + MIRION_meta_all_1.csv. The other files add complexity and are worth exploring once you have a baseline model working."
+  },
+  {
+    "objectID": "project/data-wrangling-tips.html#overview-of-the-data",
+    "href": "project/data-wrangling-tips.html#overview-of-the-data",
+    "title": "Data Wrangling Tips",
+    "section": "",
+    "text": "Your project data spans 8 files. The table below summarizes what each one contains and how it connects to the others.\n\n\n\n\n\n\n\n\n\n\nFile\nFormat\n~Rows\nJoin Key\nContents\n\n\n\n\nMRT-phot.txt\nFixed-width\n6,176\nYB\nSpitzer photometry (8–70 µm), errors, counts, quality flags\n\n\nMRT-dist.txt\nFixed-width\n6,176\nYB\nDistances with uncertainties\n\n\nMRT-velo.txt\nFixed-width\n6,176\nYB\nRadial velocities (km/s)\n\n\nMRT-xmat.txt\nFixed-width\n6,176\nYB\nCross-matches to external catalogs\n\n\nMRT-hcsc.txt\nFixed-width\n3,945\nYB\nHerschel-derived properties (subset)\n\n\nMIRION_meta_all_1.csv\nCSV\n3,945\nYB\nAll 8 target physical properties\n\n\nMIRION_meta_din_1.csv\nCSV\n3,945\nYB\nDistance-independent subset of targets\n\n\nMIRION_spec_1.csv\nCSV (transposed)\n10 wavelengths\nYB columns\nLong-wave photometry (160–1100 µm)\n\n\n\nKey insight: Only ~3,945 YBs have physical property targets (the MIRION subset of the full 6,176). An inner join on YB will give you ~3,945 rows — this is your working modeling dataset.\nRecommended starting point: MRT-phot.txt + MIRION_meta_all_1.csv. The other files add complexity and are worth exploring once you have a baseline model working."
+  },
+  {
+    "objectID": "project/data-wrangling-tips.html#loading-mrt-fixed-width-files",
+    "href": "project/data-wrangling-tips.html#loading-mrt-fixed-width-files",
+    "title": "Data Wrangling Tips",
+    "section": "Loading MRT Fixed-Width Files",
+    "text": "Loading MRT Fixed-Width Files\nThe MRT files use a fixed-width format with a 38-line header. Use pd.read_fwf with explicit column specifications derived from the byte-by-byte description in each file’s header.\n\nMRT-phot.txt\nThis is the primary feature table. The column specs below come from the byte-by-byte table in the header (subtract 1 from the start byte for 0-based indexing).\n\nimport pandas as pd\nimport numpy as np\nfrom pyhere import here\n\nphot_colspecs = [\n    (0, 4),    # YB\n    (5, 14),   # GLON\n    (15, 23),  # GLAT\n    (24, 31),  # MWPR\n    (60, 68),  # F8\n    (69, 77),  # e_F8\n    (78, 85),  # F12\n    (86, 94),  # e_F12\n    (95, 102), # F24\n    (103, 110),# e_F24\n    (111, 120),# F70\n    (121, 130),# e_F70\n    (131, 133),# N8\n    (134, 136),# N12\n    (137, 139),# N24\n    (140, 141),# N70\n    (142, 146),# f_SAT\n    (147, 148),# f_MULTI\n    (149, 153),# f_NOSRC\n    (154, 158),# f_PCONF\n    (159, 160),# f_CEXT\n]\nphot_colnames = [\n    \"YB\", \"GLON\", \"GLAT\", \"MWPR\",\n    \"F8\", \"e_F8\", \"F12\", \"e_F12\", \"F24\", \"e_F24\", \"F70\", \"e_F70\",\n    \"N8\", \"N12\", \"N24\", \"N70\",\n    \"f_SAT\", \"f_MULTI\", \"f_NOSRC\", \"f_PCONF\", \"f_CEXT\"\n]\n\nphot = pd.read_fwf(\n    here(\"data\", \"MRT-phot.txt\"),\n    colspecs=phot_colspecs,\n    names=phot_colnames,\n    skiprows=38,\n    encoding='utf-8-sig'\n)\n\n\n\n\n\n\n\nNote\n\n\n\nUse F8, F12, F24, F70 as column names — not bare numbers like 8, 12. Bare numeric column names cause issues in many pandas and scikit-learn operations.\n\n\n\n\nMRT-dist.txt\nThe same pattern applies for the distance file. Groups whose target is distance-dependent (DIAM, MASS, L_BOL) will need this file. Groups with distance-independent targets (LM, TEMP, LRATIO, T_BOL, SURF_DENS) can skip it for their main analysis.\n\ndist_colspecs = [\n    (0, 4),    # YB\n    (5, 11),   # DIST (kpc)\n    (12, 17),  # e_DIST\n    # ... (read the full header for additional columns)\n]\ndist_colnames = [\"YB\", \"DIST\", \"e_DIST\"]\n\ndist = pd.read_fwf(\n    here(\"data\", \"MRT-dist.txt\"),\n    colspecs=dist_colspecs,\n    names=dist_colnames,\n    skiprows=38,\n    encoding='utf-8-sig'\n)"
+  },
+  {
+    "objectID": "project/data-wrangling-tips.html#loading-mirion-csv-files",
+    "href": "project/data-wrangling-tips.html#loading-mirion-csv-files",
+    "title": "Data Wrangling Tips",
+    "section": "Loading MIRION CSV Files",
+    "text": "Loading MIRION CSV Files\n\nmeta = pd.read_csv(here(\"data\", \"MIRION_meta_all_1.csv\"), encoding='utf-8-sig')\nmeta_din = pd.read_csv(here(\"data\", \"MIRION_meta_din_1.csv\"), encoding='utf-8-sig')\n\n\n\n\n\n\n\nNote\n\n\n\nBOM character warning. These CSV files have a UTF-8 BOM marker. Without encoding='utf-8-sig', the first column name will appear as ﻿YB (with an invisible prefix character) instead of YB. This causes silent KeyError failures when you try to use the YB column. Always use encoding='utf-8-sig' when loading these files."
+  },
+  {
+    "objectID": "project/data-wrangling-tips.html#transposing-mirion_spec_1.csv",
+    "href": "project/data-wrangling-tips.html#transposing-mirion_spec_1.csv",
+    "title": "Data Wrangling Tips",
+    "section": "Transposing MIRION_spec_1.csv",
+    "text": "Transposing MIRION_spec_1.csv\nThis file has an unusual layout: the rows are wavelength bands (F8 through F1100) and the columns are YB IDs. You need to transpose it before use.\n\n# Load the raw file — first column is WAVE (wavelength), rest are YB IDs\nspec_raw = pd.read_csv(\n    here(\"data\", \"MIRION_spec_1.csv\"),\n    index_col=0,       # WAVE column becomes the row index\n    encoding='utf-8-sig'\n)\n# spec_raw shape: (10 wavelengths) × (3945 YBs)\n\n# Transpose: rows become YBs, columns become wavelength bands\nspec = spec_raw.T.copy()\nspec.index.name = \"YB\"\nspec.columns = [\"F8\", \"F12\", \"F24\", \"F70\", \"F160\", \"F250\", \"F350\", \"F500\", \"F870\", \"F1100\"]\n\n# CRITICAL: convert the YB index to numeric before joining\nspec.index = pd.to_numeric(spec.index)\n\n\n\n\n\n\n\nNote\n\n\n\nNumeric index conversion is critical. After transposing, the YB values in the index are strings (e.g., \"6.0\", \"7.0\"). The phot and meta tables have numeric YB values. If you join a string index to a numeric index, pandas produces an empty DataFrame with no error — a silent failure. pd.to_numeric() fixes this."
+  },
+  {
+    "objectID": "project/data-wrangling-tips.html#joining-tables-on-yb",
+    "href": "project/data-wrangling-tips.html#joining-tables-on-yb",
+    "title": "Data Wrangling Tips",
+    "section": "Joining Tables on YB",
+    "text": "Joining Tables on YB\n\n# Set YB as the index first\nphot_indexed = phot.set_index(\"YB\")\nmeta_indexed = meta.set_index(\"YB\")\n\n# Inner join: ~3,945 rows (only YBs with both photometry AND target properties)\ndf = phot_indexed.join(meta_indexed, how=\"inner\")\n\nTo add supplementary tables:\n\ndist_indexed = dist.set_index(\"YB\")\ndf = phot_indexed.join(meta_indexed, how=\"inner\").join(dist_indexed, how=\"left\")\n\nUse how=\"left\" for supplementary tables (distance, velocity) so you don’t lose rows where those values are unavailable.\nWhy inner join for the main tables? An outer join would give 6,176 rows, but most would have NaN target values — useless for supervised learning. An inner join gives only the ~3,945 rows where both photometry and a target exist."
+  },
+  {
+    "objectID": "project/data-wrangling-tips.html#handling-quality-flags",
+    "href": "project/data-wrangling-tips.html#handling-quality-flags",
+    "title": "Data Wrangling Tips",
+    "section": "Handling Quality Flags",
+    "text": "Handling Quality Flags\n\nf_PCONF (Poor Photometric Confidence)\nf_PCONF is a 4-character string where each character corresponds to a band (8, 12, 24, 70 µm, left to right). A \"1\" in a position means the photometry in that band has poor confidence and should not be trusted.\n\nbands = [\"F8\", \"F12\", \"F24\", \"F70\"]\npconf = phot[\"f_PCONF\"].fillna(\"0000\").astype(str).str.strip().str.zfill(4)\n\nfor i, band in enumerate(bands):\n    phot.loc[pconf.str[i] == \"1\", band] = np.nan\n\nApply the same approach for f_NOSRC (no source detected — the flux value is effectively noise).\n\n\nMissing Value Sentinel (999)\n\n\n\n\n\n\nNote\n\n\n\nSome numeric columns in the MRT files use 999 or 999.0 as a placeholder for missing values. Replace these with NaN after loading:\n\ndf.replace(999, np.nan, inplace=True)\ndf.replace(999.0, np.nan, inplace=True)"
+  },
+  {
+    "objectID": "project/data-wrangling-tips.html#checking-for-missing-values",
+    "href": "project/data-wrangling-tips.html#checking-for-missing-values",
+    "title": "Data Wrangling Tips",
+    "section": "Checking for Missing Values",
+    "text": "Checking for Missing Values\nBefore modeling, understand your missingness pattern.\n\nimport missingno as msno\nfrom itables import show\n\n# Summary counts\nshow(df.isnull().sum().rename(\"missing\").to_frame())\n\n# Visual matrix — good for spotting patterns\nmsno.matrix(df)\n\nF12 and F24 in particular have substantial missingness. Think carefully about whether to drop those rows or impute.\nKey rule: never impute your target variable. Drop rows where your assigned target is NaN before any modeling.\n\ndf_clean = df.dropna(subset=[\"YOUR_TARGET\"])  # replace with your actual target name\n\nFor feature missingness inside scikit-learn Pipelines, use SimpleImputer:\n\nfrom sklearn.impute import SimpleImputer\nimputer = SimpleImputer(strategy=\"median\")"
+  },
+  {
+    "objectID": "project/data-wrangling-tips.html#log-transforming-targets",
+    "href": "project/data-wrangling-tips.html#log-transforming-targets",
+    "title": "Data Wrangling Tips",
+    "section": "Log-Transforming Targets",
+    "text": "Log-Transforming Targets\nSome target variables span many orders of magnitude. Before modeling, plot a histogram of your assigned target — if it is heavily skewed, a log transformation will usually improve model performance.\nWhen reporting predictions, make sure to reverse any transformation you applied (e.g., np.exp() or 10**pred as appropriate)."
+  },
+  {
+    "objectID": "project/data-wrangling-tips.html#log-ratio-features",
+    "href": "project/data-wrangling-tips.html#log-ratio-features",
+    "title": "Data Wrangling Tips",
+    "section": "Log-Ratio Features",
+    "text": "Log-Ratio Features\nThe shape of an object’s spectral energy distribution (SED) — how bright it is at different wavelengths relative to each other — can be more informative than the raw fluxes. Log-ratios of flux bands capture this shape independently of total brightness.\n\n# Example: log ratio of 70 µm to 24 µm (a warm dust indicator)\ndf[\"log_F70_F24\"] = np.log10(df[\"F70\"] / df[\"F24\"])\n\nIf either flux is NaN or zero, the ratio will be NaN or infinite. Handle these downstream in your imputation step or filter them out beforehand.\nPotential ratios to explore: F70/F24, F24/F12, F12/F8. With the long-wave bands from MIRION_spec_1.csv you can compute many more combinations."
+  },
+  {
+    "objectID": "project/questions.html",
+    "href": "project/questions.html",
+    "title": "Math 4025 - Spring 2026",
+    "section": "",
+    "text": "Are the unit correct? If so, what do they mean?\nSpectral Energy distribution correct?"
+  },
+  {
+    "objectID": "project/project-instructions.html",
+    "href": "project/project-instructions.html",
+    "title": "Group Project: Predicting Physical Properties of Yellowballs",
+    "section": "",
+    "text": "“Yellowballs” are compact, roughly circular structures in the Milky Way first identified by citizen scientists participating in the Milky Way Project, an online image classification platform where citizen scientists classify images from the Spitzer Space Telescope. The telescopse uses something called photometry to measure their brightness at different wavelengths. Yellowballs are candidate sites of intermediate- to high-mass star formation — regions where gas and dust are being heated and compressed by newly forming stars and appear “yellow” in color due to the wavelengths they emit most strongly at.\nWhat is photometry? Photometry is the measurement of how bright an astronomical object appears at specific wavelengths of light. For this project, you should think of different wave lengths of light as your features, where the value associated with each wavelength is called a flux density. These measurements are obtained from a telescope equipped with different filters (or detector channels) and record a flux density at each wavelength specified by the filter, producing a set of brightness measurements across the electromagnetic spectrum. Together, these measurements form a spectral energy distribution (SED), a kind of fingerprint that (hopefully) encodes information about the object’s physical properties (e.g., temperature, mass, luminosity, and physical size). Rather than observing each object individually with expensive follow-up instruments, photometry gives astronomers a fast, large-scale way to characterize thousands of objects simultaneously.\nThe MIRION catalog (Milky Way Infrared ONset; Wolf-Chase et al. 2025) contains 6,176 Yellowballs, with physical properties derived for 3,945 of them using multi-wavelength photometry from Spitzer and Herschel space telescopes.\nThe scientific question: Estimating the physical properties from the photometric signature alone is both a time-intensive process and relies on a wider range of photometric measurements than is available in the MIRION catalog. So our research questions are:\n\nCan we predict a physical property of a Yellowball from its infrared photometric signature in the MIRION catalog? If so, which wavelengths are most important for making accurate predictions, and what does that tell us about the underlying physics of these objects?\n\nAccurate photometric predictions would allow astronomers to characterize newly discovered objects without the time-intensive follow-up observations needed to derive physical properties directly.",
+    "crumbs": [
+      "Project",
+      "Group Project: Predicting Physical Properties of Yellowballs"
+    ]
+  },
+  {
+    "objectID": "project/project-instructions.html#introduction",
+    "href": "project/project-instructions.html#introduction",
+    "title": "Group Project: Predicting Physical Properties of Yellowballs",
+    "section": "",
+    "text": "“Yellowballs” are compact, roughly circular structures in the Milky Way first identified by citizen scientists participating in the Milky Way Project, an online image classification platform where citizen scientists classify images from the Spitzer Space Telescope. The telescopse uses something called photometry to measure their brightness at different wavelengths. Yellowballs are candidate sites of intermediate- to high-mass star formation — regions where gas and dust are being heated and compressed by newly forming stars and appear “yellow” in color due to the wavelengths they emit most strongly at.\nWhat is photometry? Photometry is the measurement of how bright an astronomical object appears at specific wavelengths of light. For this project, you should think of different wave lengths of light as your features, where the value associated with each wavelength is called a flux density. These measurements are obtained from a telescope equipped with different filters (or detector channels) and record a flux density at each wavelength specified by the filter, producing a set of brightness measurements across the electromagnetic spectrum. Together, these measurements form a spectral energy distribution (SED), a kind of fingerprint that (hopefully) encodes information about the object’s physical properties (e.g., temperature, mass, luminosity, and physical size). Rather than observing each object individually with expensive follow-up instruments, photometry gives astronomers a fast, large-scale way to characterize thousands of objects simultaneously.\nThe MIRION catalog (Milky Way Infrared ONset; Wolf-Chase et al. 2025) contains 6,176 Yellowballs, with physical properties derived for 3,945 of them using multi-wavelength photometry from Spitzer and Herschel space telescopes.\nThe scientific question: Estimating the physical properties from the photometric signature alone is both a time-intensive process and relies on a wider range of photometric measurements than is available in the MIRION catalog. So our research questions are:\n\nCan we predict a physical property of a Yellowball from its infrared photometric signature in the MIRION catalog? If so, which wavelengths are most important for making accurate predictions, and what does that tell us about the underlying physics of these objects?\n\nAccurate photometric predictions would allow astronomers to characterize newly discovered objects without the time-intensive follow-up observations needed to derive physical properties directly.",
+    "crumbs": [
+      "Project",
+      "Group Project: Predicting Physical Properties of Yellowballs"
+    ]
+  },
+  {
+    "objectID": "project/project-instructions.html#your-assignment",
+    "href": "project/project-instructions.html#your-assignment",
+    "title": "Group Project: Predicting Physical Properties of Yellowballs",
+    "section": "Your Assignment",
+    "text": "Your Assignment\nEach group is assigned one physical property of Yellowballs to predict. See Canvas for your group’s assigned target variable.\nThe table below describes all eight target variables. Each of these variables represents a physical property of the Yellowballs in our data. Three of these variables (DIAM, MASS, L_BOL) are what we call distance-dependent and will be much harder to predict because measurement of their physical properties rely on the distance to the Yellowball. groups assigned those targets will need to incorporate the distance data file into their analysis.\n\n\n\n\n\n\n\n\n\nTarget\nDescription\nUnits\nDistance-dependent?\n\n\n\n\nDIAM\nPhysical diameter of the Yellowball bubble\npc\nYes\n\n\nMASS\nTotal gas and dust mass enclosed\n\\(M_\\odot\\)\nYes\n\n\nL_BOL\nBolometric (total) luminosity of the central source\n\\(L_\\odot\\)\nYes\n\n\nLM\nLuminosity-to-mass ratio (evolutionary stage indicator)\n\\(L_\\odot/M_\\odot\\)\nNo\n\n\nTEMP\nDust temperature from a greybody SED fit\nK\nNo\n\n\nLRATIO\nRatio of warm-to-cold luminosity (dimensionless)\n\nNo\n\n\nT_BOL\nBolometric temperature (SED-weighted mean temperature)\nK\nNo\n\n\nSURF_DENS\nSurface mass density\ng/cm²\nNo",
+    "crumbs": [
+      "Project",
+      "Group Project: Predicting Physical Properties of Yellowballs"
+    ]
+  },
+  {
+    "objectID": "project/project-instructions.html#recommended-reading",
+    "href": "project/project-instructions.html#recommended-reading",
+    "title": "Group Project: Predicting Physical Properties of Yellowballs",
+    "section": "Recommended Reading",
+    "text": "Recommended Reading\nThese papers provide scientific context for the data and the astrophysical questions your analysis addresses. You are not expected to understand every technical detail, but reading the introductions and results sections will help you interpret your findings meaningfully.\n\nWolf-Chase et al. (2025) — The MIRION catalog paper: describes the Yellowball sample, the photometry, and how the physical properties were derived. https://iopscience.iop.org/article/10.3847/1538-4357/ae31f6\nAnderson et al. (2012) — Background on multi-wavelength infrared methods for characterizing star-forming regions. https://www.aanda.org/articles/aa/pdf/2012/01/aa17640-11.pdf\nElia et al. (2017) —The Hi-GAL compact source catalogue – describes process for extracting physical properties from Herschel photometry, which is relevant for understanding the target variables. https://academic.oup.com/mnras/article-pdf/doi/10.1093/mnras/stx1357/19343235/stx1357.pdf",
+    "crumbs": [
+      "Project",
+      "Group Project: Predicting Physical Properties of Yellowballs"
+    ]
+  },
+  {
+    "objectID": "project/project-instructions.html#data",
+    "href": "project/project-instructions.html#data",
+    "title": "Group Project: Predicting Physical Properties of Yellowballs",
+    "section": "Data",
+    "text": "Data\nYour GitHub Classroom repository contains a data/ folder with eight files. Start with MIRION_meta_all_1.csv to locate your target variable, then join it with MIRION_spec_1.csv to get the photometric features. See the Data Wrangling Tips guide for detailed loading instructions.\nThe following provides a summary of each of the data sets provided to you. Note that you are not required (and not expected) to use all of them.\n\nMIRION_meta_all_1.csv — Target Variables\n\nFormat: CSV,\nRows: 3,945\nColumns: YB (you can use this to join it to other datasets) and all eight target variables: DIAM, MASS, L_BOL, LM, TEMP, LRATIO, T_BOL, SURF_DENS.\n\n\n\nMIRION_spec_1.csv — Long-Wavelength Photometry\n\nFormat: CSV (in transposed format)\nRows: Provides four wavelength bands (8, 12, 24, 70 \\(\\mu\\)m) originally from Spitzer Telescope (see MRT-phot.txt for original), six additional flux bands (160, 250, 350, 500, 870, 1100) from the Herschel, and YB IDs that you can use to match this to other datasets. Note that the four wavelengths from the Spitzer telescope are considered more important. See the Data Wrangling Tips for how to load and reshape this file.\n\n\n\nMRT-phot.txt — Spitzer Photometry (primary feature table)\nThis dataset contains the original Spitzer photometry for all 6,176 Yellowballs, along with quality flags and other metadata. You may find it useful to use the uncertainties and source flags in your analysis.\n\nFormat: Fixed-width format\n38-line header\nRows: 6,176\nKey columns:\n\n\n\n\n\n\n\n\n\nColumn\nDescription\nUnits\n\n\n\n\nYB\nYellowball source ID\n\n\n\nGLON, GLAT\nGalactic longitude and latitude\ndeg\n\n\nMWPR\nMilky Way Project radius\ndeg\n\n\nF8, F12, F24, F70\nFlux densities at 8, 12, 24, 70 µm\nJy\n\n\ne_F8, e_F12, e_F24, e_F70\nFlux uncertainties\nJy\n\n\nN8, N12, N24, N70\nNumber of photometric measurements per band\n\n\n\nf_SAT\nSaturation flag (4-char string, one digit per band)\n\n\n\nf_MULTI\nMultiple-source flag\n\n\n\nf_NOSRC\nNo clear source detected (4-char string, one digit per band)\n\n\n\nf_PCONF\nPoor photometric confidence (4-char string, one digit per band)\n\n\n\nf_CEXT\nHighly circular extended source flag\n\n\n\n\n\n\nOther datasets\nThe following are additional datasets that you may find useful. Note that more details explanations of their variables are provided in the files themselves, near the top.\n\n\nMRT-dist.txt — Distances\n\nFormat: Fixed-width format\nRows: 6,176\nKey columns: YB, DIST (adopted distance in kpc), e_DIST. Required for groups predicting DIAM, MASS, or L_BOL.\n\n\n\nMRT-velo.txt — Radial Velocities\n\nFormat: Fixed-width format\nRows: 6,176\nKey columns: YB, VEL (LSR radial velocity in km/s), e_VEL. Optional additional feature for groups wanting to go further.\n\n\n\nMRT-xmat.txt — Catalog Cross-Matches\n\nFormat: Fixed-width format\nRows: 6,176\nKey columns: YB, ID_HIGAL, ID_ATLASGAL, ID_CORNISH, ID_RMS, ID_WISE. Cross-match identifiers and classification types from Hi-GAL, ATLASGAL, CORNISH, RMS, and WISE catalogs. These are categorical identifiers; they require encoding to be used as features.\n\n\n\nMRT-hcsc.txt — Herschel-Derived Properties\n\nFormat: Fixed-width format\nRows: ~3,945\nKey columns: YB, L_HERS, e_L_HERS, T_HERS, e_T_HERS. Herschel-based physical properties with uncertainty columns, overlapping with the MIRION targets below.",
+    "crumbs": [
+      "Project",
+      "Group Project: Predicting Physical Properties of Yellowballs"
+    ]
+  },
+  {
+    "objectID": "project/project-instructions.html#deliverables",
+    "href": "project/project-instructions.html#deliverables",
+    "title": "Group Project: Predicting Physical Properties of Yellowballs",
+    "section": "Deliverables",
+    "text": "Deliverables\nAll deliverables are due April 30. Submit via your GitHub Classroom repository (link on Canvas) and the Canvas assignment page.\n\n1. Presentation (7 minutes)\nA non-technical slide presentation for an audience of astronomy researchers — scientists who understand star formation but are not necessarily familiar with machine learning methods. Your goal is to explain what you did, what you found, and what it means for our understanding of Yellowballs.\n\nStrictly 7 minutes; plan for 2-3 minutes of Q&A afterward\nAll group members must participate in presenting\nSlides should be visually clear with well-labeled figures\nExplain your ML methods in plain language; focus on what the model does, not the math\nInterpret your results in astrophysical terms\n\n\n\n2. Executive Summary (1-2 pages)\nA one-page document summarizing your findings for the same astronomy-researcher audience. This is not a technical report.\n\nState the prediction problem and your approach in 2-3 sentences\nHighlight your key result (model performance + what drives predictions)\nInclude 1-2 strong data visualizations\nIs shorter than 2 pages, including figures\n\n\n\n3. GitHub Classroom Repository\nYour repository must contain all code needed to reproduce your analysis, written as .qmd files that render without errors. See the Quarto + Python Guide.\n\nAll analysis in .qmd or .py files (no Jupyter notebooks)\nREADME.md completed with group info, target variable, and reproduction instructions\nGroupPlanningWorksheet.qmd rendered to HTML and committed\nCode is organized and readable\n\n\n\n4. Team Contribution Report (submitted individually on Canvas)\nA short paragraph (3-5 sentences) per team member describing what tasks you personally completed, approximately how many hours you contributed, and any challenges you encountered.",
+    "crumbs": [
+      "Project",
+      "Group Project: Predicting Physical Properties of Yellowballs"
+    ]
+  },
+  {
+    "objectID": "project/project-instructions.html#getting-started",
+    "href": "project/project-instructions.html#getting-started",
+    "title": "Group Project: Predicting Physical Properties of Yellowballs",
+    "section": "Getting Started",
+    "text": "Getting Started\n\nAccept the GitHub Classroom assignment (link on Canvas) and clone the repository to your local machine.\nRead the Data Wrangling Tips. Load MIRION_meta_all_1.csv and MIRION_spec_1.csv, join them on YB, and make sure you can access your target variable.\nExplore your target variable. Plot its distribution. What does it look like?\nExplore your features. Plot the flux distributions. Look at scatterplots of each flux band vs. your target. Check for missing values using missingno.\nBuild a baseline model. Start simple: linear regression using the four Spitzer flux bands (F8, F12, F24, F70) as features, evaluated with cross-validation. This gives you a benchmark.\nIterate. Add features (flux ratios, long-wavelength bands, quality flag indicators), try different models, tune hyperparameters. Each change should be motivated by something you observed in your EDA or in the previous model’s behavior.\nEvaluate your final model with cross-validation. Report \\(R^2\\) and RMSE. Interpret what the model does and doesn’t predict well in astrophysical terms.",
+    "crumbs": [
+      "Project",
+      "Group Project: Predicting Physical Properties of Yellowballs"
+    ]
+  },
+  {
+    "objectID": "project/project-instructions.html#evaluation-guide",
+    "href": "project/project-instructions.html#evaluation-guide",
+    "title": "Group Project: Predicting Physical Properties of Yellowballs",
+    "section": "Evaluation Guide",
+    "text": "Evaluation Guide\nYour project will be assessed in each of the following areas as either Outstanding (5), Good (4), Acceptable (3), Needs Work (2), Inadequate (1), Incomplete (0).\n\nSlides and Presentation\n\nIs the presentation of the appropriate length (less than 7 minutes)? I am serious about this! Taking more time than is allotted is disrespectful to your audience and to your peers.\nIs the presentation directed at the appropriate audience (astronomy researchers, not ML experts)?\nAre results presented in a clear, logical, and engaging manner?\nAre the slides easy to read with appropriate graphics that support the narrative?\n\n\n\nContent and Analysis\n\nIs the analysis thorough, with multiple approaches compared, feature engineering attempted, and cross-validation used?\nAre the methods and results explained in a way the audience can follow?\nAre findings interpreted in astrophysical terms, not just as model metrics?\nAre conclusions appropriately qualified, acknowledging limitations?\n\n\n\nProfessionalism\n\nIs the presentation well-prepared with minimal reliance on notes?\nIs the presentation clear, well-paced, and free of distracting mannerisms?\nAre all presenters engaged throughout?\nIs the responsibility for presenting shared among group members?\nDo all presenters show mastery of the material and answer questions with ease?\n\n\n\nExecutive Summary\n\nDoes the document clearly summarize the methodology, results, and key takeaway?\nIs it directed at the appropriate audience (astronomy researchers)?\nAre results presented in a clear, logical manner?\nDo appropriate visuals support the narrative?",
+    "crumbs": [
+      "Project",
+      "Group Project: Predicting Physical Properties of Yellowballs"
+    ]
+  },
+  {
     "objectID": "prepare/prepare-15.html",
     "href": "prepare/prepare-15.html",
     "title": "Preparation for Regularization and Feature Selection",
@@ -1437,11 +1602,102 @@
     "text": "12. Missing Data (Slide 13)\nKey vocabulary:\n\nMCAR (Missing Completely At Random): probability of missingness is unrelated to any variable — the data are a random subsample of the complete data. Easiest to handle.\nMAR (Missing At Random): probability of missingness depends on observed variables, not on the missing value itself.\nMNAR (Missing Not At Random): probability of missingness depends on the unobserved (missing) value itself. Hardest to handle.\nStructurally Missing: missing by design (e.g., a follow-up question that doesn’t apply).\nImputation strategies: mean/median/mode imputation; KNN imputation; model-based imputation; multiple imputation\n\nThings to watch for:\n\nMNAR is the hardest case — the missing data itself is informative\nImputation must occur inside a Pipeline to prevent leakage\nMedian imputation is more robust to outliers than mean imputation\nCreating a missingness indicator column can help models learn that a value was missing"
   },
   {
+    "objectID": "jobs/job-interview-resources.html",
+    "href": "jobs/job-interview-resources.html",
+    "title": "Job Interview Resources",
+    "section": "",
+    "text": "As discussed at the beginning of the course, you will complete a job interview during Finals Week, worth 20% of your overall course grade. This document will guide you through preparing for it."
+  },
+  {
+    "objectID": "jobs/job-interview-resources.html#interview-preparation",
+    "href": "jobs/job-interview-resources.html#interview-preparation",
+    "title": "Job Interview Resources",
+    "section": "Interview Preparation",
+    "text": "Interview Preparation\n\n\n\n\n\n\nImportant\n\n\n\nKey Deadline: Your interview must be completed during Finals Week. A scheduling link will be provided closer to the end of the semester. It is your responsibility to schedule your interview in a timely manner.\n\n\nYour interview will mimic a technical interview with a hiring manager. It will last about one hour and have the following format:\n\n(5 minutes) Your interview will begin with the following two prompts:\n\nTell me about yourself.\nWhy are you interested in this role?\n\n(10 minutes) You will be asked questions about your resume, asking you describe the details of some of the projects or jobs you have listed. If you don’t have any projects or job’s that are relevant you will be asked questions about your previous coursework. In real life, it is unlikely that you’d make it to this interview without anything relevant listed on your resume.\n(10 minutes) You will be asked questions about the sample data analysis you turned in. For example, “Why do you choose method X instead of method Y?”\n(35 minutes) You will be asked general technical questions related to the role. Each of these questions will fall into one of the following categories:\n\nQuestions asking you to explain something you did on your homework.\nQuestions similar in style to those asked in Chapter 5-8 of this book. Please note that only content that has been covered in this class, a pre-requisite for this class, or is listed on your resume will be included with a heavy focus on content from this class.\nPseudo-coding questions: E.g. “Write pseudo-code to perform gradient-descent”.\nTheory questions: E.g. “Why do we do cross-validation?”\nClosed Case-Study Questions: E.g. “Suppose you are trying to build an model that classifies pictures of food as either a hot dog or not a hot dog. What metrics would you use to evaluate performance?\nOpen-Ended Case-Study Questions: E.g. “Suppose you are tasked with building a model to predict whether an employee will leave the company within a year. How would you approach this problem?”\n\n\n\nGrading\n\nAttire and Professionalism (5% of total grade)\nYour attire and professionalism will account for 5% of your interview grade. The following criteria will be used to determine your grade:\n\nDid the student arrive on time?\nDid the student wear business casual attire (including dress shoes)?\n\nIf you do not have business casual attire or are unclear what business casual attire is, please notify Dr. Friedlander ASAP.\n\nDid the student bring a notepad and writing implement?\nWas the student respectful?\n\n\n\nMeta-cognition (5% of total grade)\nThe next 5% of your interview grade will be based on your meta-cognition. That is, whether you are able to self-assess what you know and what you don’t know. The following criteria will be used to determine your grade:\n\nDid the student seem to understand where the gaps in their knowledge were?\nDid the student seem to know if their answers were complete?\nDid the student think that answers that were wrong were actually right?\nHas the student actually mastered the skills on their resume?\n\n\n\nPreparation and Enthusiasm (30% of total grade)\nThe next 30% of your interview grade will be based on your preparation and enthusiasm. The following criteria will be used to determine your grade:\n\nDid the student seem prepared to discuss their resume?\nDid the student speak knowledgeably about their portfolio/sample analysis?\nDid the student demonstrate knowledge of the company and role they are applying to?\nDid the student demonstrate enthusiasm for the company and role?\nDid the student have good questions at the end of the interview?\n\n\n\nCommunication (20% of total grade)\nThe next 20% of your interview grade will be based on your communication skills. The following criteria will be used to determine your grade:\n\nDid student speak at an appropriate pace (i.e. not too fast or too slow)?\nDid student use professional language, avoiding any slang?\nDid student stay focused on the question being asked?\nWere the student’s answers too long or too short?\nWere the student’s answers clear?\nWas the student good and talking through their thought process?\n\n\n\nContent (40% of total grade)\nThe remaining 40% of your interview grade will be determined based on whether the answers to the questions asked of you are correct and complete. The following criteria will be used to determine your grade:\n\nWere the student’s answers correct?\nWere the student’s answers complete?\nFor open-ended questions, did the student ask for any good questions and request necessary information?\nFor open-ended questions, did the student state any assumptions they were making?\n\n\n\n\nSome General Tips\n\nIf you are asked a question you don’t know the answer to, be honest. It is OK to say something like “I’m honestly not sure.” However, unless you absolutely know NOTHING about it I think the best way to answer is to state that you don’t really know but say what you do know. For example, suppose the interviewer asks “What are some strategies for dealing with imbalanced data?” You may not know the answer to this question, but it’s not like you know nothing about it! You could say something like, “Hmm… I’m not familiar with techniques for dealing with imbalanced data, but I do know that when you’re data is extremely imbalanced, accuracy isn’t super useful. You might want to focus more on metrics which are a bit more robust to imbalanced data like F-measure, AUC, or precision.”\nDon’t be afraid to ask for more information, especially when you are being asked an open-ended question! Remember, they are trying to evaluate whether you’ll be good at your job. An important part of any job is asking good questions and obtaining the appropriate information necessary to solve a problem. In fact, some questions are purposely vague to see if you can properly scope a problem and obtain the information you need to solve it.\nPractice thinking through problems out loud. Employers are really interested in seeing how you think through problems. Even if you don’t know the answer, talk through your thoughts as you grappling with it.\nThat said, don’t be afraid of a little silence. It is OK to take some time to think things through."
+  },
+  {
+    "objectID": "jobs/job-app-1-resources.html",
+    "href": "jobs/job-app-1-resources.html",
+    "title": "Job Application 1 Resources",
+    "section": "",
+    "text": "Using Quarto & Netlify\nUsing Quarto, Netlify, & GitHub\nUsing Quarto & GitHub Pages"
+  },
+  {
+    "objectID": "jobs/job-app-1-resources.html#building-a-website",
+    "href": "jobs/job-app-1-resources.html#building-a-website",
+    "title": "Job Application 1 Resources",
+    "section": "",
+    "text": "Using Quarto & Netlify\nUsing Quarto, Netlify, & GitHub\nUsing Quarto & GitHub Pages"
+  },
+  {
+    "objectID": "jobs/job-app-1-resources.html#job-advertisement",
+    "href": "jobs/job-app-1-resources.html#job-advertisement",
+    "title": "Job Application 1 Resources",
+    "section": "Job Advertisement",
+    "text": "Job Advertisement\nBefore preparing your application materials, you must identify the job you are applying for.\nFinding Your Job Ad: Search for a real job posting relevant to your career goals and submit it along with your application materials on Canvas. Any job reasonably related to your career is acceptable. As a rule of thumb: if your chosen job requires little to no data analysis, statistical modeling, or machine learning, it is likely too far from the course learning objectives — when in doubt, ask Dr. Friedlander.\nSubmit a PDF: Many job postings expire before the grading deadline. Please upload a PDF screenshot or saved copy of the posting (not just a URL) so it can be reviewed.\nIf your job is too far from the course learning objectives: Your application materials must still reflect the technical skills covered in this course. If Dr. Friedlander determines that your chosen ad doesn’t align closely enough with the course content, your sample analysis should reflect a position with the following profile:\nKey Responsibilities:\n\nCollect, clean, and analyze data from various sources.\nDevelop and maintain dashboards and reports to track key performance indicators (KPIs).\nIdentify trends, patterns, and anomalies in datasets.\nCollaborate with cross-functional teams to understand business requirements and provide data-driven solutions.\nPresent findings and recommendations to stakeholders in a clear and concise manner.\nEnsure data accuracy and integrity.\n\nQualifications:\n\nBachelor’s degree in Data Science, Statistics, Computer Science, or a related field.\nProficiency in data manipulation and visualization using R.\nExpertise in statistical inference and basic statistical models.\nFamiliarity with machine learning techniques including regression and classification, pre-processing and feature engineering, model building, and model evaluation.\nExcellent communication, presentation, and teamwork skills.\nAbility to work independently and collaboratively using Git.\n\nPreferred Qualifications:\n\nProficiency in Python, pandas, and scikit-learn.\nExperience with SQL, R, and/or Excel for data analysis.\nFamiliarity with big data technologies (e.g., Hadoop, Spark).\nExperience in finance or accounting."
+  },
+  {
+    "objectID": "jobs/job-app-1-resources.html#cover-letter-resume",
+    "href": "jobs/job-app-1-resources.html#cover-letter-resume",
+    "title": "Job Application 1 Resources",
+    "section": "Cover Letter & Resume",
+    "text": "Cover Letter & Resume\n\nCofI Career Prep Resources\nGeneral Tips from Eric:\n\nAlways customize your application materials to the job you’re applying to.\nThe first people who read your application may be HR recruiters with no expertise in the job you’re applying for so write your application accordingly. Alternatively, it could be an AI filtering software so make sure to include any important keywords.\nThe first people who read your application may be HR recruiters who are grumpy baby boomers who care deeply about “professionalism”. Make sure there is nothing on your job application that is unprofessional. This includes, but is not limited to, typos & grammar and GitHub handles or usernames that are anything other than a variation on your name (note you don’t need to change your GitHub handle for this class). Furthermore, make sure there is nothing on your social media that could be disqualifying, like pictures or videos of you partying/drinking.\nBe prepared to discuss anything on your resume in a job interview.\nJobs care A LOT about communication and teamwork skills. Anything you can do emphasize your skills in this area is worth including in your application. Make sure that all of your application materials have ZERO typos and grammatical errors.\n\n\n\nResume\n\nStart with Resume Template\nAdditional tips from Eric\n\nDON’T GO MORE THAN 1 PAGE. You should only ever go more than 1 page if you have done a lot of stuff. As college students, you haven’t… It may feel like you have… but you haven’t. Going over 1 page is a good way to get your application thrown out without being read.\nCUSTOMIZE YOUR RESUME TO THE JOB AD!\nRename “Skills” as “Technical Skills” and indicate level of proficiency next to each. You can include programming languages (e.g. R (Proficient)) and major packages (e.g. tidyverse (proficient)). It is OK to be a A LITTLE BIT optimistic about your skills. However, DO NOT LIE. If you claim you’re proficient they may put you through a coding interview. A good rule of thumb is to ask yourself “What level of proficiency could I reach with one weekend of HARD studying?”\nAdd a link to your personal website and GitHub to your resume.\nDon’t list relevant coursework near the top but if you have experience with certain content that you think is important (e.g. Linear Regression, K-Nearest Neighbors, Cross-Validation, etc.) include it in your Skills section.\nYour resume may first go through an AI filter or be reviewed by an HR hiring manager without expertise in the field you’re applying for. Make sure you include important key words in your resume that match what’s in the job description. For example, if the job ad says they want expertise in tidymodels, say tidymodels in your resume. Make sure that all of your application materials have ZERO typos and grammatical errors. Pat from HR may not know what cross-validation is, but they sure know what a period is.\nThink of the “preferred qualifications” as a wishlist rather than a list of necessary skills. Remember… you miss 100% of the shots you don’t take.\nWhen possible, quantify your achievements. An example from my old resume (emphasis added): “Devised cache replacement policy for Video-on-Demand settings which takes advantage of”chunked” files and achieves a 32% improvement install duration compared to the LRU policy; work published in peer-reviewed article.”\nIf you don’t have a lot of Experience, include a Projects section. Upload your project to GitHub or your website and link to them from your resume.\nAlways save your resume as a PDF. (1) You never know what software they will be using to view your resume and you want it to ALWAYS looks the same. (2) You don’t want anyone to accidentally edit it.\n\nA nice article\n\n\n\nCover Letter\n\nStart with Cover Letter Template\nAdditional tips from Eric\n\nRemember that people may not be carefully be reading your cover letter from top to bottom. Design your cover letter so that it still makes sense if someone skims it.\nYou can use bold, italicized, or underlined text to highlight or emphasize important skills. Don’t overdo it though. If you feel like you’ve done too much, you probably have.\n\n\n\n\nSample Analysis\n\nHosting Your Analysis\nYour sample analysis must be published as a public GitHub Pages website. Use the Using Quarto & GitHub Pages guide linked in the Building a Website section above to set this up.\nOnce published:\n\nAdd Dr. Friedlander (EricFriedlander) as a collaborator on your GitHub repository.\nSubmit both the GitHub Pages site URL and the repository URL on Canvas.\n\n\n\nTips\n\nWhile not required, I recommend you start with something you’ve been working on\n\nIf you have a side project, use may use that.\nIf not, I recommend starting with one of your homeworks.\n\nYour data analysis should do the following\n\nTell a coherent story and narrative. If you start with a homework, make sure you take out all of my narrative and the exercise headings.\nInclude something similar to the following sections:\n\nIntroduction outlining and motivating the problem\nExploratory data analysis and pre-process/feature engineering\nModeling or Model Selection\nPerformance Analysis\nConclusion summarizing your results\n\nStrike a balance between addressing all of the relevant technical qualifications listed in the job ad without feeling like you’re just doing a bunch of unnecessary a non-relevant work. Keep in mind that it is not just important that you know HOW to apply different machine learning methods, but understand WHEN apply different techniques to data. Imagine that you’re being hired to be a construction worker. If you are asked to hammer in a nail, don’t take out a sledgehammer.\nShow that you are able to communicate well. Communicating well involves ensuring that you incorporate the appropriate level of detail (not too much/not too little) and that you are able to interpret the results of your analyses. It goes beyond just having perfect grammar and spelling.\n\nPro-tip: Write up a draft of your report and then go through it once taking out anything that isn’t absolutely necessary.\n\nBe professional and be grammatically correct and devoid of typos.\n\nThings to avoid:\n\nWalls of code without context. You should be explaining what you do every time you write code. However, don’t put too much detail. Assume the reader is familiar with machine learning. For example, say “We now fit the logistic regression model to the training data.” instead of “A logistic regression model is a machine learning model that blah, blah, blah”.\nWalls of data without context. Sometimes you may want to print out data for yourself to make sure some analysis step was done correctly. You don’t need to include that in your final report. Make sure that anything you display is done with purpose and that you’re talking about that purpose.\nTalking about functions rather than what code is doing. For example, say “We now fit the logistic regression model to the training data.” instead of “We not use the fit function to fit the logistic regression model to the training data.”\nEnsure all plots have professional axis labels.\nWhen talking about your variables, mostly refer to them by what they represent rather than their name. For example say “We will be predicting whether a customer will default on their loan.” instead of “We will be using default as the response variable. There are situation in which it is appropriate to refer to them by their names in R but be careful.\nIncluding a bunch of unnecessary analysis steps to prove that you can do them. If the project you’ve chosen does not call of more advanced analysis steps, choose a different one."
+  },
+  {
+    "objectID": "jobs/job-app-1-resources.html#submission-checklist",
+    "href": "jobs/job-app-1-resources.html#submission-checklist",
+    "title": "Job Application 1 Resources",
+    "section": "Submission Checklist",
+    "text": "Submission Checklist\nBefore submitting, verify:\n\nJob advertisement submitted as a PDF on Canvas\nResume saved and submitted as a PDF (≤ 1 page)\nCover letter saved and submitted as a PDF\nSample analysis is published on a GitHub Pages website\nEricFriedlander is added as a collaborator on your GitHub repository\nGitHub Pages site URL submitted on Canvas\nGitHub repository URL submitted on Canvas\nAll materials are tailored to your chosen job ad\nAll materials are free of typos and grammatical errors"
+  },
+  {
     "objectID": "test_quarto.html",
     "href": "test_quarto.html",
     "title": "Test Quarto Plotnine Grid",
     "section": "",
     "text": "import pandas as pd\nimport numpy as np\nfrom plotnine import *\nfrom sklearn.metrics import roc_auc_score, roc_curve\n\nnp.random.seed(4025)\nprobs = np.concatenate([np.random.uniform(0, 0.1, 100), np.random.uniform(0.9, 1, 100)])\nclasses = np.array(['Negative'] * 100 + ['Positive'] * 100)\nexample1 = pd.DataFrame({'prob': probs, 'class': classes})\ny_true_binary = np.where(example1['class'] == 'Positive', 1, 0)\nauc_val = roc_auc_score(y_true_binary, example1['prob'])\nfpr, tpr, _ = roc_curve(y_true_binary, example1['prob'])\nroc_df = pd.DataFrame({'fpr': fpr, 'tpr': tpr})\n\np1 = (ggplot(example1, aes(x='class', y='prob'))\n    + geom_jitter(alpha=0.6, width=0.2, height=0)\n    + labs(y=\"Predicted Probability of Positive\", x=\"\")\n)\n\np2 = (ggplot(roc_df, aes(x='fpr', y='tpr'))\n    + geom_line(color=\"blue\")\n    + annotate('text', x=0.5, y=0.2, label=f\"AUC: {auc_val*100:.0f}%\", size=12)\n    + labs(x=\"False Positive Rate\", y=\"True Positive Rate\")\n)\n\n(p1 | p2)"
+  },
+  {
+    "objectID": "jobs/job-app-1-rubric.html",
+    "href": "jobs/job-app-1-rubric.html",
+    "title": "Job Application 1 Rubric",
+    "section": "",
+    "text": "You overall job application grade will be 15% from the resume, 15% from the cover letter, and 70% from the data analysis.\nTip: When the word “relevant” is used, look at the job advertisement you submitted to decide what is relevant.\n\n\n\n\n\n\n\n\n\n\n\n\nCriteria\nExcellent (4)\nGood (3)\nAverage (2)\nNeeds Improvement (1)\n\n\n\n\nContact Information\nComplete, professional, and easy to find.\nComplete and professional.\nComplete but not easily found.\nIncomplete or unprofessional.\n\n\nSkills\nComprehensive list of relevant technical skills, including proficiency levels.\nGood list of relevant technical skills.\nAdequate list, but missing some key skills.\nLimited list of relevant skills.\n\n\nExperience and/or Projects\nDetailed descriptions of relevant experience, with quantifiable achievements. Detailed descriptions of relevant projects, with clear outcomes and technologies used.\nGood descriptions of relevant experience, with some quantifiable achievements. Adequate descriptions of projects, but lacks detail on outcomes or technologies used.\nAdequate descriptions, but lacks quantifiable achievements.\nLimited descriptions, with few or no quantifiable achievements and few or no relevant projects listed.\n\n\nEducation\nRelevant degrees or certifications, with details on coursework or projects.\nRelevant degrees or certifications.\nAdequate education listed, but lacks detail.\nLimited education listed, with little relevance to the role.\n\n\nSoft Skills\nClear evidence of communication, teamwork, and problem-solving skills.\nGood evidence of soft skills.\nAdequate evidence, but lacks detail.\nLimited evidence of soft skills.\n\n\nFormatting\nProfessional, clean, and easy to read, with consistent formatting.\nProfessional and easy to read, with minor formatting inconsistencies.\nAdequate formatting, but some sections are hard to read.\nPoor formatting, with multiple inconsistencies.\n\n\nOverall Impression\nStrong candidate with a well-rounded resume that stands out.\nGood candidate with a solid resume.\nAdequate candidate, but resume lacks some key elements.\nWeak candidate, with a resume that needs significant improvement."
+  },
+  {
+    "objectID": "jobs/job-app-1-rubric.html#resume-rubric",
+    "href": "jobs/job-app-1-rubric.html#resume-rubric",
+    "title": "Job Application 1 Rubric",
+    "section": "",
+    "text": "Criteria\nExcellent (4)\nGood (3)\nAverage (2)\nNeeds Improvement (1)\n\n\n\n\nContact Information\nComplete, professional, and easy to find.\nComplete and professional.\nComplete but not easily found.\nIncomplete or unprofessional.\n\n\nSkills\nComprehensive list of relevant technical skills, including proficiency levels.\nGood list of relevant technical skills.\nAdequate list, but missing some key skills.\nLimited list of relevant skills.\n\n\nExperience and/or Projects\nDetailed descriptions of relevant experience, with quantifiable achievements. Detailed descriptions of relevant projects, with clear outcomes and technologies used.\nGood descriptions of relevant experience, with some quantifiable achievements. Adequate descriptions of projects, but lacks detail on outcomes or technologies used.\nAdequate descriptions, but lacks quantifiable achievements.\nLimited descriptions, with few or no quantifiable achievements and few or no relevant projects listed.\n\n\nEducation\nRelevant degrees or certifications, with details on coursework or projects.\nRelevant degrees or certifications.\nAdequate education listed, but lacks detail.\nLimited education listed, with little relevance to the role.\n\n\nSoft Skills\nClear evidence of communication, teamwork, and problem-solving skills.\nGood evidence of soft skills.\nAdequate evidence, but lacks detail.\nLimited evidence of soft skills.\n\n\nFormatting\nProfessional, clean, and easy to read, with consistent formatting.\nProfessional and easy to read, with minor formatting inconsistencies.\nAdequate formatting, but some sections are hard to read.\nPoor formatting, with multiple inconsistencies.\n\n\nOverall Impression\nStrong candidate with a well-rounded resume that stands out.\nGood candidate with a solid resume.\nAdequate candidate, but resume lacks some key elements.\nWeak candidate, with a resume that needs significant improvement."
+  },
+  {
+    "objectID": "jobs/job-app-1-rubric.html#data-analysis-rubric",
+    "href": "jobs/job-app-1-rubric.html#data-analysis-rubric",
+    "title": "Job Application 1 Rubric",
+    "section": "Data Analysis Rubric",
+    "text": "Data Analysis Rubric\nYour analysis will be assessed in each of the following four areas on a scale of 0-5. The questions below will be used as a guide to determine the quality of your analysis in each area.\n\nWriting, Organization, Editing, and Professionalism\n\nIs the report well-organized?\nIs the modeling process described in a clear, logical, and engaging manner?\nAre the motivations for different modeling decisions clearly described?\nIs the analysis free of spelling and grammatical errors?\nAre there walls of data?\nAre there large unbroken walls of code?\nAre there warnings and messages that should be suppressed?\nAre all plots labeled and displayed professionally?\nAre tables displayed neatly?\nIs there too much detail and is the report unnecessarily long?\n\n\n\nData Analysis\n\nAre the mathematical and statistical methods used correctly and appropriately?\nAre appropriate predictor variables used in the analysis?\nTo what extent does the analysis showcase skills described in the job advertisement?\nAre the reasons for excluding and/or transforming the data sensible and well-explained?\nHow was the model chosen and validated?\nHow were the parameters of the model tuned (if applicable)?\n\n\n\nCuriosity\n\nIs the analysis complex and insightful, showing evidence that the data have been analyzed in multiple different ways?\nIs the explanation and presentation creative, going beyond superficial observations and simple graphical summaries?\nAre the findings and conclusions supported by sound reasoning and/or additional research?\nAre the possible implications of the results discussed in context?\n\n\n\nSkepticism & Interpretation\n\nIs the handling of missing data, unusual observations, and outliers described and is there sound rationale for it?\nAre multiple explanations given for a particular finding and multiple approaches used to explore surprising results?\nAre limitations of the data and of the analysis identified and are the potential impacts on the conclusions discussed?\nAre suggestions for future work and additional exploration identified and useful?"
+  },
+  {
+    "objectID": "jobs/job-app-prompt.html",
+    "href": "jobs/job-app-prompt.html",
+    "title": "Math 4025 - Spring 2026",
+    "section": "",
+    "text": "Your job is to update the job application for the new semester. Review all of hte documents in this folder and update them as necessary. The following information is important:\n\nWe will no longer being doing a first round interview so you can remove that and only include the technical interview to be completed during finals week\nInstead of giving students a job advertisement, ask them to find their own and upload it. Tell them that anything relevant to their careers is ok, but if it’s too far from the learning objectives of this class the project itself should reflect a job with the following: Key Responsibilities: Collect, clean, and analyze data from various sources. Develop and maintain dashboards and reports to track key performance indicators (KPIs). Identify trends, patterns, and anomalies in data sets. Collaborate with cross-functional teams to understand business requirements and provide data-driven solutions. Present findings and recommendations to stakeholders in a clear and concise manner. Ensure data accuracy and integrity. Qualifications: Bachelor’s degree in Data Science, Statistics, Computer Science, or a related field. Well-versed in data manipulation and visualization using R. Expertise in statistical inference and basic statistical models. Familiarity and experience with basic machine learning techniques and terminology including regression & classification problems, pre-processing and feature engineering, modeling building, and model evaluation. Excellent communication, presentation, and teamwork skills. Ability to work independently and as part of a team using Git. Preferred Qualifications: Expertise in using the Python, pandas, and scikit-learn. Proficiency in a variety of data analysis tools and software (e.g. SQL, R, Excel). Familiarity with big data technologies (e.g., Hadoop, Spark). Experience with finance and accounting.\n\nThoroughly interrogate this plan and suggest improvements."
+  },
+  {
+    "objectID": "jobs/job-app-2-resources.html",
+    "href": "jobs/job-app-2-resources.html",
+    "title": "Hack-A-Thon Report Guidelines",
+    "section": "",
+    "text": "Your data analysis should do the following\n\nTell a coherent story and narrative.\nInclude something similar to the following sections:\n\nIntroduction outlining and motivating the problem\nExploratory data analysis and pre-process/feature engineering\nModeling or Model Selection\nPerformance Analysis\nConclusion summarizing your results\n\nKeep in mind that it is not just important that you know HOW to apply different machine learning methods, but understand WHEN apply different techniques to data. Imagine that you’re being hired to be a construction worker. If you are asked to hammer in a nail, don’t take out a sledgehammer.\nShow that you are able to communicate well. Communicating well involves ensuring that you incorporate the appropriate level of detail (not too much/not too little) and that you are able to interpret the results of your analyses. It goes beyond just having perfect grammar and spelling.\n\nPro-tip: Write up a draft of your report and then go through it once taking out anything that isn’t absolutely necessary.\n\nBe professional and be grammatically correct and devoid of typos.\n\nThings to avoid:\n\nWalls of code without context. You should be explaining what you do every time you write code. However, don’t put too much detail. Assume the reader is familiar with machine learning. For example, say “We now fit the logistic regression model to the training data.” instead of “A logistic regression model is a machine learning model that blah, blah, blah”.\nThere are times when you want to output something for yourself but it shouldn’t go in a final document. For example, if you use glimpse to make sure the new column you created looks the way you want it to, you may not want to include that in the final report.\nWalls of data without context. Sometimes you may want to print out data for yourself to make sure some analysis step was done correctly. You don’t need to include that in your final report. Make sure that anything you display is done with purpose and that you’re talking about that purpose.\nTalking about functions rather than what code is doing. For example, say “We now fit the logistic regression model to the training data.” instead of “We now use the fit function to fit the logistic regression model to the training data.”\nEnsure all plots have professional axis labels.\nWhen talking about your variables, mostly refer to them by what they represent rather than their name. For example say “We will be predicting whether a customer will default on their loan.” instead of “We will be using default as the response variable. There are situation in which it is appropriate to refer to them by their names in R but be careful.\nIncluding a bunch of unnecessary analysis steps to prove that you can do them. If the project you’ve chosen does not call of more advanced analysis steps, choose a different one."
+  },
+  {
+    "objectID": "jobs/job-app-2-resources.html#sample-analysis-tips",
+    "href": "jobs/job-app-2-resources.html#sample-analysis-tips",
+    "title": "Hack-A-Thon Report Guidelines",
+    "section": "",
+    "text": "Your data analysis should do the following\n\nTell a coherent story and narrative.\nInclude something similar to the following sections:\n\nIntroduction outlining and motivating the problem\nExploratory data analysis and pre-process/feature engineering\nModeling or Model Selection\nPerformance Analysis\nConclusion summarizing your results\n\nKeep in mind that it is not just important that you know HOW to apply different machine learning methods, but understand WHEN apply different techniques to data. Imagine that you’re being hired to be a construction worker. If you are asked to hammer in a nail, don’t take out a sledgehammer.\nShow that you are able to communicate well. Communicating well involves ensuring that you incorporate the appropriate level of detail (not too much/not too little) and that you are able to interpret the results of your analyses. It goes beyond just having perfect grammar and spelling.\n\nPro-tip: Write up a draft of your report and then go through it once taking out anything that isn’t absolutely necessary.\n\nBe professional and be grammatically correct and devoid of typos.\n\nThings to avoid:\n\nWalls of code without context. You should be explaining what you do every time you write code. However, don’t put too much detail. Assume the reader is familiar with machine learning. For example, say “We now fit the logistic regression model to the training data.” instead of “A logistic regression model is a machine learning model that blah, blah, blah”.\nThere are times when you want to output something for yourself but it shouldn’t go in a final document. For example, if you use glimpse to make sure the new column you created looks the way you want it to, you may not want to include that in the final report.\nWalls of data without context. Sometimes you may want to print out data for yourself to make sure some analysis step was done correctly. You don’t need to include that in your final report. Make sure that anything you display is done with purpose and that you’re talking about that purpose.\nTalking about functions rather than what code is doing. For example, say “We now fit the logistic regression model to the training data.” instead of “We now use the fit function to fit the logistic regression model to the training data.”\nEnsure all plots have professional axis labels.\nWhen talking about your variables, mostly refer to them by what they represent rather than their name. For example say “We will be predicting whether a customer will default on their loan.” instead of “We will be using default as the response variable. There are situation in which it is appropriate to refer to them by their names in R but be careful.\nIncluding a bunch of unnecessary analysis steps to prove that you can do them. If the project you’ve chosen does not call of more advanced analysis steps, choose a different one."
   },
   {
     "objectID": "slides/12-preprocessing.html#concept-check",
@@ -3040,6 +3296,167 @@
     "text": "Read Chapter 3.5"
   },
   {
+    "objectID": "project/template/GroupPlanningWorksheet.html",
+    "href": "project/template/GroupPlanningWorksheet.html",
+    "title": "Group Planning Worksheet",
+    "section": "",
+    "text": "Your first Quarto exercise. After filling in each section below, run quarto render GroupPlanningWorksheet.qmd from your project directory to produce an HTML file. Commit both the .qmd source and the rendered .html to your group repo before your first check-in with the instructor."
+  },
+  {
+    "objectID": "project/template/GroupPlanningWorksheet.html#team-information",
+    "href": "project/template/GroupPlanningWorksheet.html#team-information",
+    "title": "Group Planning Worksheet",
+    "section": "Team Information",
+    "text": "Team Information\nGroup members (name + preferred email):\n\n\n\n\n\n\nAssigned target variable (fill in from Canvas):\nGitHub repository URL:"
+  },
+  {
+    "objectID": "project/template/GroupPlanningWorksheet.html#roles",
+    "href": "project/template/GroupPlanningWorksheet.html#roles",
+    "title": "Group Planning Worksheet",
+    "section": "Roles",
+    "text": "Roles\nRoles help divide the non-analysis work so nothing falls through the cracks. With four-person groups, some members will hold two roles — that’s expected.\n\n\n\n\n\n\n\n\nRole\nResponsibilities\nMember\n\n\n\n\nSpokesperson\nLeads presentation delivery\n\n\n\nCoordinator\nManages internal deadlines, owns repo setup, submits final deliverables\n\n\n\nRecorder\nTakes notes at meetings, maintains a brief meeting log (a section in README.md works fine)\n\n\n\nLead Analyst\nOwns the core modeling pipeline\n\n\n\nLead Communicator\nOwns the executive summary and infographic"
+  },
+  {
+    "objectID": "project/template/GroupPlanningWorksheet.html#task-division",
+    "href": "project/template/GroupPlanningWorksheet.html#task-division",
+    "title": "Group Planning Worksheet",
+    "section": "Task Division",
+    "text": "Task Division\nFill in the Owner(s), your group’s internal deadline, and the current Status (e.g., Not started, In progress, Done) for each task. Add rows as needed.\n\n\n\nTask\nOwner(s)\nInternal Deadline\nStatus\n\n\n\n\nLoad and join data files\n\n\n\n\n\nExplore target variable (EDA)\n\n\n\n\n\nExplore features (EDA)\n\n\n\n\n\nHandle missing values / quality flags\n\n\n\n\n\nFeature engineering\n\n\n\n\n\nBaseline model\n\n\n\n\n\nModel iteration and comparison\n\n\n\n\n\nCross-validation and final evaluation\n\n\n\n\n\nPresentation slides\n\n\n\n\n\nExecutive summary / infographic\n\n\n\n\n\nREADME.md and repo cleanup\n\n\n\n\n\nTeam contribution report"
+  },
+  {
+    "objectID": "project/template/GroupPlanningWorksheet.html#meeting-plan",
+    "href": "project/template/GroupPlanningWorksheet.html#meeting-plan",
+    "title": "Group Planning Worksheet",
+    "section": "Meeting Plan",
+    "text": "Meeting Plan\nPlanned weekly meeting time (day, time, and location or virtual link):\nPrimary communication channel (e.g., Teams channel name or group chat):"
+  },
+  {
+    "objectID": "project/template/GroupPlanningWorksheet.html#conflict-resolution",
+    "href": "project/template/GroupPlanningWorksheet.html#conflict-resolution",
+    "title": "Group Planning Worksheet",
+    "section": "Conflict Resolution",
+    "text": "Conflict Resolution\nMost disagreements are easy to resolve if you address them early. Here’s the process:\n\nDiscuss directly. Raise the issue as a group and try to work it out in conversation first.\nVote if needed. If discussion doesn’t resolve it, take a majority vote. In the event of a tie, the Coordinator makes the call.\nEscalate serious issues. If a member is consistently not contributing or communication has broken down, bring it to the instructor — that’s what office hours are for.\n\nThe team contribution report (submitted at the end of the project) is the formal accountability mechanism: each member writes a brief description of their own contributions. Be honest."
+  },
+  {
+    "objectID": "project/template/GroupPlanningWorksheet.html#accountability-agreement",
+    "href": "project/template/GroupPlanningWorksheet.html#accountability-agreement",
+    "title": "Group Planning Worksheet",
+    "section": "Accountability Agreement",
+    "text": "Accountability Agreement\nBy signing below, each team member commits to contributing equitably to the project, communicating proactively when something comes up, and meeting the internal deadlines the group sets together.\nSignatures (type your full name):"
+  },
+  {
+    "objectID": "project/GroupPlanningWorksheet.html",
+    "href": "project/GroupPlanningWorksheet.html",
+    "title": "Group Planning Worksheet",
+    "section": "",
+    "text": "Your first Quarto exercise. After filling in each section below, render the document from your project directory to produce an HTML file. Commit both the .qmd source and the rendered .html to your group repo before your first check-in with the instructor."
+  },
+  {
+    "objectID": "project/GroupPlanningWorksheet.html#team-information",
+    "href": "project/GroupPlanningWorksheet.html#team-information",
+    "title": "Group Planning Worksheet",
+    "section": "Team Information",
+    "text": "Team Information\nGroup members (name + preferred email):\n\n\n\n\n\n\nAssigned target variable (fill in from Canvas):"
+  },
+  {
+    "objectID": "project/GroupPlanningWorksheet.html#roles",
+    "href": "project/GroupPlanningWorksheet.html#roles",
+    "title": "Group Planning Worksheet",
+    "section": "Roles",
+    "text": "Roles\nRoles help divide the non-analysis work so nothing falls through the cracks.\n\n\n\n\n\n\n\n\nRole\nResponsibilities\nMember\n\n\n\n\nSpokesperson\nLeads presentation delivery\n\n\n\nCoordinator\nManages internal deadlines, owns repo setup, submits final deliverables\n\n\n\nRecorder\nTakes notes at meetings, maintains a brief meeting log (a section in README.md works fine)\n\n\n\nLead Analyst\nOwns the core modeling pipeline\n\n\n\nLead Communicator\nOwns the executive summary and infographic"
+  },
+  {
+    "objectID": "project/GroupPlanningWorksheet.html#task-division",
+    "href": "project/GroupPlanningWorksheet.html#task-division",
+    "title": "Group Planning Worksheet",
+    "section": "Task Division",
+    "text": "Task Division\nFill in the Owner(s), your group’s internal deadline, and the current Status (e.g., Not started, In progress, Done) for each task. Add rows as needed.\n\n\n\nTask\nOwner(s)\nInternal Deadline\nStatus\n\n\n\n\nLoad and join data files\n\n\n\n\n\nExplore target variable (EDA)\n\n\n\n\n\nExplore features (EDA)\n\n\n\n\n\nHandle missing values / quality flags\n\n\n\n\n\nFeature engineering\n\n\n\n\n\nBaseline model\n\n\n\n\n\nModel iteration and comparison\n\n\n\n\n\nCross-validation and final evaluation\n\n\n\n\n\nPresentation slides\n\n\n\n\n\nExecutive summary\n\n\n\n\n\nREADME.md and repo cleanup\n\n\n\n\n\nTeam contribution report"
+  },
+  {
+    "objectID": "project/GroupPlanningWorksheet.html#meeting-communication-plan",
+    "href": "project/GroupPlanningWorksheet.html#meeting-communication-plan",
+    "title": "Group Planning Worksheet",
+    "section": "Meeting & Communication Plan",
+    "text": "Meeting & Communication Plan\nGroup communication policy (e.g., expected response time, how to handle scheduling conflicts, etc.):\nPlanned weekly meeting time(s) (day, time, and location or virtual link):\nPrimary communication channel (e.g., Teams channel name or group chat):"
+  },
+  {
+    "objectID": "project/GroupPlanningWorksheet.html#conflict-resolution",
+    "href": "project/GroupPlanningWorksheet.html#conflict-resolution",
+    "title": "Group Planning Worksheet",
+    "section": "Conflict Resolution",
+    "text": "Conflict Resolution\nMost disagreements are easy to resolve if you address them early. Here’s the process:\n\nDiscuss directly. Raise the issue as a group and try to work it out in conversation first.\nVote if needed. If discussion doesn’t resolve it, take a majority vote. In the event of a tie, the Coordinator makes the call.\nEscalate serious issues. If a member is consistently not contributing or communication has broken down, bring it to the instructor — that’s what office hours are for.\n\nThe team contribution report (submitted at the end of the project) is the formal accountability mechanism: each member writes a brief description of their own contributions. Be honest."
+  },
+  {
+    "objectID": "project/GroupPlanningWorksheet.html#accountability-agreement",
+    "href": "project/GroupPlanningWorksheet.html#accountability-agreement",
+    "title": "Group Planning Worksheet",
+    "section": "Accountability Agreement",
+    "text": "Accountability Agreement\nBy signing below, each team member commits to contributing equitably to the project, communicating proactively when something comes up, and meeting the internal deadlines the group sets together.\nSignatures (type your full name):"
+  },
+  {
+    "objectID": "project/quarto-python-guide.html",
+    "href": "project/quarto-python-guide.html",
+    "title": "Using Quarto with Python",
+    "section": "",
+    "text": "Jupyter .ipynb files store rendered output (text, images, cell metadata) directly in the file. This means every time you run a cell, the file changes — even if your code didn’t. In a shared git repo, this produces massive, unreadable diffs full of base64-encoded image blobs and execution counts. Code review becomes impossible.\n.qmd files are plain text. Only actual changes to your code or prose show up in diffs. This makes collaboration and peer review clean.\nQuarto also renders to HTML, PDF, or Reveal.js slides from the same source file — no extra tooling needed."
+  },
+  {
+    "objectID": "project/quarto-python-guide.html#why-quarto-instead-of-jupyter-notebooks",
+    "href": "project/quarto-python-guide.html#why-quarto-instead-of-jupyter-notebooks",
+    "title": "Using Quarto with Python",
+    "section": "",
+    "text": "Jupyter .ipynb files store rendered output (text, images, cell metadata) directly in the file. This means every time you run a cell, the file changes — even if your code didn’t. In a shared git repo, this produces massive, unreadable diffs full of base64-encoded image blobs and execution counts. Code review becomes impossible.\n.qmd files are plain text. Only actual changes to your code or prose show up in diffs. This makes collaboration and peer review clean.\nQuarto also renders to HTML, PDF, or Reveal.js slides from the same source file — no extra tooling needed."
+  },
+  {
+    "objectID": "project/quarto-python-guide.html#anatomy-of-a-.qmd-file",
+    "href": "project/quarto-python-guide.html#anatomy-of-a-.qmd-file",
+    "title": "Using Quarto with Python",
+    "section": "Anatomy of a .qmd File",
+    "text": "Anatomy of a .qmd File\nA .qmd file has three parts: YAML front matter, markdown prose, and code chunks.\n---\ntitle: \"My Analysis\"\nauthor: \"Your Name\"\n---\n\n## Introduction\n\nThis analysis explores the dataset using Python.\n\n```{python}\nimport pandas as pd\nimport numpy as np\n\ndf = pd.read_csv(\"data/my-data.csv\")\ndf.head()\n```\nThe YAML block (between --- lines) sets document metadata. Prose is standard Markdown. Code chunks open with ```{python} and close with ```."
+  },
+  {
+    "objectID": "project/quarto-python-guide.html#rendering",
+    "href": "project/quarto-python-guide.html#rendering",
+    "title": "Using Quarto with Python",
+    "section": "Rendering",
+    "text": "Rendering\nAlways activate the conda environment first:\nconda activate math-4025-sp26\nThen render from the terminal:\nquarto render my-analysis.qmd        # produces my-analysis.html\nquarto preview my-analysis.qmd       # live preview with auto-reload\nIn VS Code: install the Quarto extension, then use the Render button in the top-right of the editor. The preview pane updates on save."
+  },
+  {
+    "objectID": "project/quarto-python-guide.html#common-code-chunk-options",
+    "href": "project/quarto-python-guide.html#common-code-chunk-options",
+    "title": "Using Quarto with Python",
+    "section": "Common Code Chunk Options",
+    "text": "Common Code Chunk Options\nOptions go inside the chunk using #| at the top of the chunk body:\n```{python}\n#| echo: false\n#| warning: false\nprint(\"This runs but the code is hidden\")\n```\n\n\n\n\n\n\n\nOption\nEffect\n\n\n\n\n#| echo: false\nRun code, hide source\n\n\n#| eval: false\nShow code, don’t run\n\n\n#| include: false\nRun code, hide source and output (good for setup)\n\n\n#| fig-cap: \"...\"\nAdd figure caption\n\n\n#| fig-width: 6\nFigure width in inches\n\n\n#| warning: false\nSuppress warnings\n\n\n#| message: false\nSuppress messages\n\n\n\nPut your imports and data loading in a single setup chunk at the top of the file:\n```{python}\n#| include: false\nimport pandas as pd\nimport numpy as np\nfrom plotnine import *\nfrom itables import show\nfrom pyhere import here\n\ndf = pd.read_csv(here(\"data\", \"MIRION_meta_all_1.csv\"))\n```\nThis runs silently — no output appears in the rendered document."
+  },
+  {
+    "objectID": "project/quarto-python-guide.html#paths-with-pyhere",
+    "href": "project/quarto-python-guide.html#paths-with-pyhere",
+    "title": "Using Quarto with Python",
+    "section": "Paths with pyhere",
+    "text": "Paths with pyhere\nRelative paths like pd.read_csv(\"../data/myfile.csv\") break depending on where you run quarto render from. Use pyhere instead.\npyhere anchors paths to the project root by looking for a .here file or the git root. Since your project repo is a git repo, it works automatically. The repo also includes a .here file in the root as a fallback.\nfrom pyhere import here\nimport pandas as pd\n\ndf = pd.read_csv(here(\"data\", \"MIRION_meta_all_1.csv\"))\nhere(\"data\", \"MIRION_meta_all_1.csv\") resolves to the correct absolute path regardless of where you call quarto render from."
+  },
+  {
+    "objectID": "project/quarto-python-guide.html#plots-with-plotnine",
+    "href": "project/quarto-python-guide.html#plots-with-plotnine",
+    "title": "Using Quarto with Python",
+    "section": "Plots with plotnine",
+    "text": "Plots with plotnine\nplotnine figures render automatically when the last expression in a chunk is a ggplot object. No print() or .show() needed.\n```{python}\n#| fig-cap: \"Distribution of stellar masses\"\n#| fig-width: 6\n#| fig-height: 4\nfrom plotnine import *\n\n(\n    ggplot(df, aes(x=\"mass\"))\n    + geom_histogram(bins=30, fill=\"steelblue\", color=\"white\")\n    + labs(x=\"Mass\", y=\"Count\")\n    + theme_minimal()\n)\n```\nSet figure dimensions with #| fig-width and #| fig-height (in inches)."
+  },
+  {
+    "objectID": "project/quarto-python-guide.html#tables-with-itables",
+    "href": "project/quarto-python-guide.html#tables-with-itables",
+    "title": "Using Quarto with Python",
+    "section": "Tables with itables",
+    "text": "Tables with itables\nitables renders interactive sortable/searchable tables in HTML output:\nfrom itables import show\nshow(df.head(20))\nFor static output (e.g., PDF), skip show() and just evaluate the dataframe directly:\ndf.head(20)"
+  },
+  {
+    "objectID": "project/quarto-python-guide.html#recommended-workflow",
+    "href": "project/quarto-python-guide.html#recommended-workflow",
+    "title": "Using Quarto with Python",
+    "section": "Recommended Workflow",
+    "text": "Recommended Workflow\n\nOne setup chunk at the top. Put all imports and data loading there with #| include: false. Don’t scatter imports across the file.\nKeep files focused. A few well-organized .qmd files (e.g., eda.qmd, modeling.qmd) are easier to navigate than many small ones.\nCommit and push often. Don’t wait until the project is done. Push after every working session. Small, frequent commits are easier to debug and review.\nRead the error message. When rendering fails, the terminal output includes the file name and line number. Start there before asking for help."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Math 4025: Statistical Machine Learning",
@@ -3134,7 +3551,7 @@
     "href": "course-info/syllabus.html#assignments",
     "title": "Syllabus",
     "section": "Assignments",
-    "text": "Assignments\nYou will be assessed based on six components: homework, quizzes, a job application, a job interview, a midterm exam, a hack-a-thon, and a project.\n\nQuizzes\nVideos will be posted on the course website that you are expected to watch before class. There will be a short quiz at the beginning of class every Tuesday to ensure you are keeping up with the material.\n\n\nHomework\nHomework will be graded on a pass/fail basis and will be assessed via presentation. Assignments will be due at the beginning of class on Thursday. Students will be randomly chosen to present their solutions. Each solution will be followed by a discussion by the class on what did and didn’t go well.\n\nHonesty Policy: If you did not complete the homework and are honest about it, you will receive 50%. If you demonstrate no understanding of the homework during presentation, you will receive a 0%.\n\n\n\nJob Application & Job Interview\nDuring this course you will apply to one “job”. I will generate the job advertisement including a real company and base the job description on the course content and similar job advertisements. The job application will have three components:\n\nA cover letter.\nA resume.\nA portfolio.\n\nAll three of these should be tailored to the job description and the company to which you are applying. Your portfolio will consist of self-contained data analyses of your choosing. To create your portfolio, you will be required to create a website.\nAfter you submit your job application, you will be invited to schedule a one-hour long job interview. It is your job to schedule your job interview with Dr. Friedlander. The interview will include general interview questions, questions about your portfolio, and a “case interview” portion.\n\n\nMidterm Exam\nThere will be one midterm exam to assess your understanding of the core concepts covered in the first half of the course.\n\n\nHack-a-thon\nAt some point in the semester we will participate in a “Hack-a-thon” as a class. Namely, you will be given a short period of time (1-3 days) to build a model and make a set of predictions. After the competition is over, you will be required to present on your model. Part of your score will be determine by how well your model performs and extra credit will be given to the top scoring individuals.\n\n\nProject\nDuring the latter portion of the course, you will complete a final project that involves a deep exploration of a problem. More details for the final project will be provided later in the course.",
+    "text": "Assignments\nYou will be assessed based on six components: homework, quizzes, a job application, a job interview, a midterm exam, a hack-a-thon, and a project.\n\nQuizzes\nVideos will be posted on the course website that you are expected to watch before class. There will be a short quiz at the beginning of class every Tuesday to ensure you are keeping up with the material.\n\n\nHomework\nHomework will be graded on a pass/fail basis and will be assessed via presentation. Assignments will be due at the beginning of class on Thursday. Students will be randomly chosen to present their solutions. Each solution will be followed by a discussion by the class on what did and didn’t go well.\n\nHonesty Policy: If you did not complete the homework and are honest about it, you will receive 50%. If you demonstrate no understanding of the homework during presentation, you will receive a 0%.\n\n\n\nJob Application & Job Interview\nDuring this course you will apply to one “job”. You will find and submit your own job advertisement — any posting reasonably related to your career goals is acceptable. The job application will have three components:\n\nA cover letter.\nA resume.\nA sample analysis.\n\nAll three of these should be tailored to the job description and the company to which you are applying. Your sample analysis must be published as a public GitHub Pages website; you will submit the site URL and your GitHub repository URL on Canvas.\nAfter you submit your job application, you will be invited to schedule a one-hour long job interview. It is your job to schedule your job interview with Dr. Friedlander. The interview will include general interview questions, questions about your portfolio, and a “case interview” portion.\n\n\nMidterm Exam\nThere will be one midterm exam to assess your understanding of the core concepts covered in the first half of the course.\n\n\nHack-a-thon\nAt some point in the semester we will participate in a “Hack-a-thon” as a class. Namely, you will be given a short period of time (1-3 days) to build a model and make a set of predictions. After the competition is over, you will be required to present on your model. Part of your score will be determine by how well your model performs and extra credit will be given to the top scoring individuals.\n\n\nProject\nDuring the latter portion of the course, you will complete a final project that involves a deep exploration of a problem. More details for the final project will be provided later in the course.",
     "crumbs": [
       "Syllabus"
     ]

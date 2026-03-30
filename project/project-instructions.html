@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Group Project: Predicting Physical Properties of Yellowballs – Math 4025 - Spring 2026</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../course-info/computing-python-resources.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a468f417d409e5b90f43decb280e538f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../project/project-instructions.html">Project</a></li><li class="breadcrumb-item"><a href="../project/project-instructions.html">Group Project: Predicting Physical Properties of Yellowballs</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      <div class="sidebar-tools-main">
+    <a href="https://classroom.github.com/classrooms/256856191-math4025sp26-classroom" title="GitHub" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
+    <a href="https://cofi.instructure.com/courses/18105" title="Canvas" class="quarto-navigation-tool px-1" aria-label="Canvas"><i class="bi bi-person"></i></a>
+</div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../course-info/overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../course-info/syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Schedule</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../course-info/computing-python-resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python resources</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Job Applications &amp; Interviews</span></span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Project</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../project/project-instructions.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Group Project: Predicting Physical Properties of Yellowballs</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Hack-A-Thon</span></span>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#your-assignment" id="toc-your-assignment" class="nav-link" data-scroll-target="#your-assignment">Your Assignment</a></li>
+  <li><a href="#recommended-reading" id="toc-recommended-reading" class="nav-link" data-scroll-target="#recommended-reading">Recommended Reading</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a>
+  <ul class="collapse">
+  <li><a href="#mirion_meta_all_1.csv-target-variables" id="toc-mirion_meta_all_1.csv-target-variables" class="nav-link" data-scroll-target="#mirion_meta_all_1.csv-target-variables">MIRION_meta_all_1.csv — Target Variables</a></li>
+  <li><a href="#mirion_spec_1.csv-long-wavelength-photometry" id="toc-mirion_spec_1.csv-long-wavelength-photometry" class="nav-link" data-scroll-target="#mirion_spec_1.csv-long-wavelength-photometry">MIRION_spec_1.csv — Long-Wavelength Photometry</a></li>
+  <li><a href="#mrt-phot.txt-spitzer-photometry-primary-feature-table" id="toc-mrt-phot.txt-spitzer-photometry-primary-feature-table" class="nav-link" data-scroll-target="#mrt-phot.txt-spitzer-photometry-primary-feature-table">MRT-phot.txt — Spitzer Photometry <em>(primary feature table)</em></a></li>
+  <li><a href="#other-datasets" id="toc-other-datasets" class="nav-link" data-scroll-target="#other-datasets">Other datasets</a></li>
+  <li><a href="#mrt-dist.txt-distances" id="toc-mrt-dist.txt-distances" class="nav-link" data-scroll-target="#mrt-dist.txt-distances">MRT-dist.txt — Distances</a></li>
+  <li><a href="#mrt-velo.txt-radial-velocities" id="toc-mrt-velo.txt-radial-velocities" class="nav-link" data-scroll-target="#mrt-velo.txt-radial-velocities">MRT-velo.txt — Radial Velocities</a></li>
+  <li><a href="#mrt-xmat.txt-catalog-cross-matches" id="toc-mrt-xmat.txt-catalog-cross-matches" class="nav-link" data-scroll-target="#mrt-xmat.txt-catalog-cross-matches">MRT-xmat.txt — Catalog Cross-Matches</a></li>
+  <li><a href="#mrt-hcsc.txt-herschel-derived-properties" id="toc-mrt-hcsc.txt-herschel-derived-properties" class="nav-link" data-scroll-target="#mrt-hcsc.txt-herschel-derived-properties">MRT-hcsc.txt — Herschel-Derived Properties</a></li>
+  </ul></li>
+  <li><a href="#deliverables" id="toc-deliverables" class="nav-link" data-scroll-target="#deliverables">Deliverables</a>
+  <ul class="collapse">
+  <li><a href="#presentation-7-minutes" id="toc-presentation-7-minutes" class="nav-link" data-scroll-target="#presentation-7-minutes">1. Presentation (7 minutes)</a></li>
+  <li><a href="#executive-summary-1-2-pages" id="toc-executive-summary-1-2-pages" class="nav-link" data-scroll-target="#executive-summary-1-2-pages">2. Executive Summary (1-2 pages)</a></li>
+  <li><a href="#github-classroom-repository" id="toc-github-classroom-repository" class="nav-link" data-scroll-target="#github-classroom-repository">3. GitHub Classroom Repository</a></li>
+  <li><a href="#team-contribution-report-submitted-individually-on-canvas" id="toc-team-contribution-report-submitted-individually-on-canvas" class="nav-link" data-scroll-target="#team-contribution-report-submitted-individually-on-canvas">4. Team Contribution Report (submitted individually on Canvas)</a></li>
+  </ul></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting Started</a></li>
+  <li><a href="#evaluation-guide" id="toc-evaluation-guide" class="nav-link" data-scroll-target="#evaluation-guide">Evaluation Guide</a>
+  <ul class="collapse">
+  <li><a href="#slides-and-presentation" id="toc-slides-and-presentation" class="nav-link" data-scroll-target="#slides-and-presentation">Slides and Presentation</a></li>
+  <li><a href="#content-and-analysis" id="toc-content-and-analysis" class="nav-link" data-scroll-target="#content-and-analysis">Content and Analysis</a></li>
+  <li><a href="#professionalism" id="toc-professionalism" class="nav-link" data-scroll-target="#professionalism">Professionalism</a></li>
+  <li><a href="#executive-summary" id="toc-executive-summary" class="nav-link" data-scroll-target="#executive-summary">Executive Summary</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/project/project-instructions.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../project/project-instructions.html">Project</a></li><li class="breadcrumb-item"><a href="../project/project-instructions.html">Group Project: Predicting Physical Properties of Yellowballs</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Group Project: Predicting Physical Properties of Yellowballs</h1>
+<p class="subtitle lead">Math 4025 — Statistical Machine Learning, Spring 2026</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>“Yellowballs” are compact, roughly circular structures in the Milky Way first identified by citizen scientists participating in the <a href="https://www.milkywayproject.org/">Milky Way Project</a>, an online image classification platform where citizen scientists classify images from the Spitzer Space Telescope. The telescopse uses something called photometry to measure their brightness at different wavelengths. Yellowballs are candidate sites of intermediate- to high-mass star formation — regions where gas and dust are being heated and compressed by newly forming stars and appear “yellow” in color due to the wavelengths they emit most strongly at.</p>
+<p><strong>What is photometry?</strong> Photometry is the measurement of how bright an astronomical object appears at specific wavelengths of light. For this project, you should think of different wave lengths of light as your features, where the value associated with each wavelength is called a <em>flux density</em>. These measurements are obtained from a telescope equipped with different filters (or detector channels) and record a flux density at each wavelength specified by the filter, producing a set of brightness measurements across the electromagnetic spectrum. Together, these measurements form a <em>spectral energy distribution (SED)</em>, a kind of fingerprint that (hopefully) encodes information about the object’s physical properties (e.g., temperature, mass, luminosity, and physical size). Rather than observing each object individually with expensive follow-up instruments, photometry gives astronomers a fast, large-scale way to characterize thousands of objects simultaneously.</p>
+<p>The <strong>MIRION catalog</strong> (Milky Way Infrared ONset; Wolf-Chase et al.&nbsp;2025) contains 6,176 Yellowballs, with physical properties derived for 3,945 of them using multi-wavelength photometry from Spitzer and Herschel space telescopes.</p>
+<p><strong>The scientific question:</strong> Estimating the physical properties from the photometric signature alone is both a time-intensive process and relies on a wider range of photometric measurements than is available in the MIRION catalog. So our research questions are:</p>
+<blockquote class="blockquote">
+<p>Can we predict a physical property of a Yellowball from its infrared photometric signature in the MIRION catalog? If so, which wavelengths are most important for making accurate predictions, and what does that tell us about the underlying physics of these objects?</p>
+</blockquote>
+<p>Accurate photometric predictions would allow astronomers to characterize newly discovered objects without the time-intensive follow-up observations needed to derive physical properties directly.</p>
+</section>
+<section id="your-assignment" class="level2">
+<h2 class="anchored" data-anchor-id="your-assignment">Your Assignment</h2>
+<p>Each group is assigned one physical property of Yellowballs to predict. <strong>See Canvas for your group’s assigned target variable.</strong></p>
+<p>The table below describes all eight target variables. Each of these variables represents a physical property of the Yellowballs in our data. Three of these variables (DIAM, MASS, L_BOL) are what we call <strong>distance-dependent</strong> and will be much harder to predict because measurement of their physical properties rely on the distance to the Yellowball. groups assigned those targets will need to incorporate the distance data file into their analysis.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 26%">
+<col style="width: 14%">
+<col style="width: 42%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Target</th>
+<th>Description</th>
+<th>Units</th>
+<th>Distance-dependent?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>DIAM</code></td>
+<td>Physical diameter of the Yellowball bubble</td>
+<td>pc</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td><code>MASS</code></td>
+<td>Total gas and dust mass enclosed</td>
+<td><span class="math inline">\(M_\odot\)</span></td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td><code>L_BOL</code></td>
+<td>Bolometric (total) luminosity of the central source</td>
+<td><span class="math inline">\(L_\odot\)</span></td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td><code>LM</code></td>
+<td>Luminosity-to-mass ratio (evolutionary stage indicator)</td>
+<td><span class="math inline">\(L_\odot/M_\odot\)</span></td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td><code>TEMP</code></td>
+<td>Dust temperature from a greybody SED fit</td>
+<td>K</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td><code>LRATIO</code></td>
+<td>Ratio of warm-to-cold luminosity (dimensionless)</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td><code>T_BOL</code></td>
+<td>Bolometric temperature (SED-weighted mean temperature)</td>
+<td>K</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td><code>SURF_DENS</code></td>
+<td>Surface mass density</td>
+<td>g/cm²</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="recommended-reading" class="level2">
+<h2 class="anchored" data-anchor-id="recommended-reading">Recommended Reading</h2>
+<p>These papers provide scientific context for the data and the astrophysical questions your analysis addresses. You are not expected to understand every technical detail, but reading the introductions and results sections will help you interpret your findings meaningfully.</p>
+<ul>
+<li><p><strong>Wolf-Chase et al.&nbsp;(2025)</strong> — The MIRION catalog paper: describes the Yellowball sample, the photometry, and how the physical properties were derived. <a href="https://iopscience.iop.org/article/10.3847/1538-4357/ae31f6" class="uri">https://iopscience.iop.org/article/10.3847/1538-4357/ae31f6</a></p></li>
+<li><p><strong>Anderson et al.&nbsp;(2012)</strong> — Background on multi-wavelength infrared methods for characterizing star-forming regions. <a href="https://www.aanda.org/articles/aa/pdf/2012/01/aa17640-11.pdf" class="uri">https://www.aanda.org/articles/aa/pdf/2012/01/aa17640-11.pdf</a></p></li>
+<li><p><strong>Elia et al.&nbsp;(2017)</strong> —The Hi-GAL compact source catalogue – describes process for extracting physical properties from Herschel photometry, which is relevant for understanding the target variables. <a href="https://academic.oup.com/mnras/article-pdf/doi/10.1093/mnras/stx1357/19343235/stx1357.pdf" class="uri">https://academic.oup.com/mnras/article-pdf/doi/10.1093/mnras/stx1357/19343235/stx1357.pdf</a></p></li>
+</ul>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>Your GitHub Classroom repository contains a <code>data/</code> folder with eight files. <strong>Start with <code>MIRION_meta_all_1.csv</code> to locate your target variable, then join it with <code>MIRION_spec_1.csv</code> to get the photometric features.</strong> See the <a href="../project/data-wrangling-tips.html">Data Wrangling Tips</a> guide for detailed loading instructions.</p>
+<p>The following provides a summary of each of the data sets provided to you. Note that you are not required (and not expected) to use all of them.</p>
+<section id="mirion_meta_all_1.csv-target-variables" class="level3">
+<h3 class="anchored" data-anchor-id="mirion_meta_all_1.csv-target-variables">MIRION_meta_all_1.csv — Target Variables</h3>
+<ul>
+<li>Format: CSV,</li>
+<li>Rows: 3,945</li>
+<li>Columns: <code>YB</code> (you can use this to join it to other datasets) and all eight target variables: <code>DIAM</code>, <code>MASS</code>, <code>L_BOL</code>, <code>LM</code>, <code>TEMP</code>, <code>LRATIO</code>, <code>T_BOL</code>, <code>SURF_DENS</code>.</li>
+</ul>
+</section>
+<section id="mirion_spec_1.csv-long-wavelength-photometry" class="level3">
+<h3 class="anchored" data-anchor-id="mirion_spec_1.csv-long-wavelength-photometry">MIRION_spec_1.csv — Long-Wavelength Photometry</h3>
+<ul>
+<li>Format: CSV (in transposed format)</li>
+<li>Rows: Provides four wavelength bands (8, 12, 24, 70 <span class="math inline">\(\mu\)</span>m) originally from Spitzer Telescope (see <code>MRT-phot.txt</code> for original), six additional flux bands (<code>160</code>, <code>250</code>, <code>350</code>, <code>500</code>, <code>870</code>, <code>1100</code>) from the Herschel, and YB IDs that you can use to match this to other datasets. Note that the four wavelengths from the Spitzer telescope are considered more important. See the <a href="../project/data-wrangling-tips.html">Data Wrangling Tips</a> for how to load and reshape this file.</li>
+</ul>
+</section>
+<section id="mrt-phot.txt-spitzer-photometry-primary-feature-table" class="level3">
+<h3 class="anchored" data-anchor-id="mrt-phot.txt-spitzer-photometry-primary-feature-table">MRT-phot.txt — Spitzer Photometry <em>(primary feature table)</em></h3>
+<p>This dataset contains the original Spitzer photometry for all 6,176 Yellowballs, along with quality flags and other metadata. You may find it useful to use the uncertainties and source flags in your analysis.</p>
+<ul>
+<li>Format: Fixed-width format</li>
+<li>38-line header</li>
+<li>Rows: 6,176</li>
+<li>Key columns:</li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 46%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Description</th>
+<th>Units</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>YB</code></td>
+<td>Yellowball source ID</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>GLON</code>, <code>GLAT</code></td>
+<td>Galactic longitude and latitude</td>
+<td>deg</td>
+</tr>
+<tr class="odd">
+<td><code>MWPR</code></td>
+<td>Milky Way Project radius</td>
+<td>deg</td>
+</tr>
+<tr class="even">
+<td><code>F8</code>, <code>F12</code>, <code>F24</code>, <code>F70</code></td>
+<td>Flux densities at 8, 12, 24, 70 µm</td>
+<td>Jy</td>
+</tr>
+<tr class="odd">
+<td><code>e_F8</code>, <code>e_F12</code>, <code>e_F24</code>, <code>e_F70</code></td>
+<td>Flux uncertainties</td>
+<td>Jy</td>
+</tr>
+<tr class="even">
+<td><code>N8</code>, <code>N12</code>, <code>N24</code>, <code>N70</code></td>
+<td>Number of photometric measurements per band</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>f_SAT</code></td>
+<td>Saturation flag (4-char string, one digit per band)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>f_MULTI</code></td>
+<td>Multiple-source flag</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>f_NOSRC</code></td>
+<td>No clear source detected (4-char string, one digit per band)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>f_PCONF</code></td>
+<td>Poor photometric confidence (4-char string, one digit per band)</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>f_CEXT</code></td>
+<td>Highly circular extended source flag</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="other-datasets" class="level3">
+<h3 class="anchored" data-anchor-id="other-datasets">Other datasets</h3>
+<p>The following are additional datasets that you may find useful. Note that more details explanations of their variables are provided in the files themselves, near the top.</p>
+</section>
+<section id="mrt-dist.txt-distances" class="level3">
+<h3 class="anchored" data-anchor-id="mrt-dist.txt-distances">MRT-dist.txt — Distances</h3>
+<ul>
+<li>Format: Fixed-width format</li>
+<li>Rows: 6,176</li>
+<li>Key columns: <code>YB</code>, <code>DIST</code> (adopted distance in kpc), <code>e_DIST</code>. Required for groups predicting <code>DIAM</code>, <code>MASS</code>, or <code>L_BOL</code>.</li>
+</ul>
+</section>
+<section id="mrt-velo.txt-radial-velocities" class="level3">
+<h3 class="anchored" data-anchor-id="mrt-velo.txt-radial-velocities">MRT-velo.txt — Radial Velocities</h3>
+<ul>
+<li>Format: Fixed-width format</li>
+<li>Rows: 6,176</li>
+<li>Key columns: <code>YB</code>, <code>VEL</code> (LSR radial velocity in km/s), <code>e_VEL</code>. Optional additional feature for groups wanting to go further.</li>
+</ul>
+</section>
+<section id="mrt-xmat.txt-catalog-cross-matches" class="level3">
+<h3 class="anchored" data-anchor-id="mrt-xmat.txt-catalog-cross-matches">MRT-xmat.txt — Catalog Cross-Matches</h3>
+<ul>
+<li>Format: Fixed-width format</li>
+<li>Rows: 6,176</li>
+<li>Key columns: <code>YB</code>, <code>ID_HIGAL</code>, <code>ID_ATLASGAL</code>, <code>ID_CORNISH</code>, <code>ID_RMS</code>, <code>ID_WISE</code>. Cross-match identifiers and classification types from Hi-GAL, ATLASGAL, CORNISH, RMS, and WISE catalogs. These are categorical identifiers; they require encoding to be used as features.</li>
+</ul>
+</section>
+<section id="mrt-hcsc.txt-herschel-derived-properties" class="level3">
+<h3 class="anchored" data-anchor-id="mrt-hcsc.txt-herschel-derived-properties">MRT-hcsc.txt — Herschel-Derived Properties</h3>
+<ul>
+<li>Format: Fixed-width format</li>
+<li>Rows: ~3,945</li>
+<li>Key columns: <code>YB</code>, <code>L_HERS</code>, <code>e_L_HERS</code>, <code>T_HERS</code>, <code>e_T_HERS</code>. Herschel-based physical properties with uncertainty columns, overlapping with the MIRION targets below.</li>
+</ul>
+</section>
+</section>
+<section id="deliverables" class="level2">
+<h2 class="anchored" data-anchor-id="deliverables">Deliverables</h2>
+<p>All deliverables are due <strong>April 30</strong>. Submit via your GitHub Classroom repository (link on Canvas) and the Canvas assignment page.</p>
+<section id="presentation-7-minutes" class="level3">
+<h3 class="anchored" data-anchor-id="presentation-7-minutes">1. Presentation (7 minutes)</h3>
+<p>A non-technical slide presentation for an audience of <strong>astronomy researchers</strong> — scientists who understand star formation but are not necessarily familiar with machine learning methods. Your goal is to explain what you did, what you found, and what it means for our understanding of Yellowballs.</p>
+<ul>
+<li>Strictly 7 minutes; plan for 2-3 minutes of Q&amp;A afterward</li>
+<li>All group members must participate in presenting</li>
+<li>Slides should be visually clear with well-labeled figures</li>
+<li>Explain your ML methods in plain language; focus on what the model does, not the math</li>
+<li>Interpret your results in astrophysical terms</li>
+</ul>
+</section>
+<section id="executive-summary-1-2-pages" class="level3">
+<h3 class="anchored" data-anchor-id="executive-summary-1-2-pages">2. Executive Summary (1-2 pages)</h3>
+<p>A one-page document summarizing your findings for the same astronomy-researcher audience. This is not a technical report.</p>
+<ul>
+<li>State the prediction problem and your approach in 2-3 sentences</li>
+<li>Highlight your key result (model performance + what drives predictions)</li>
+<li>Include 1-2 strong data visualizations</li>
+<li>Is shorter than 2 pages, including figures</li>
+</ul>
+</section>
+<section id="github-classroom-repository" class="level3">
+<h3 class="anchored" data-anchor-id="github-classroom-repository">3. GitHub Classroom Repository</h3>
+<p>Your repository must contain all code needed to reproduce your analysis, written as <code>.qmd</code> files that render without errors. See the <a href="../project/quarto-python-guide.html">Quarto + Python Guide</a>.</p>
+<ul>
+<li>All analysis in <code>.qmd</code> or <code>.py</code> files (no Jupyter notebooks)</li>
+<li><code>README.md</code> completed with group info, target variable, and reproduction instructions</li>
+<li><code>GroupPlanningWorksheet.qmd</code> rendered to HTML and committed</li>
+<li>Code is organized and readable</li>
+</ul>
+</section>
+<section id="team-contribution-report-submitted-individually-on-canvas" class="level3">
+<h3 class="anchored" data-anchor-id="team-contribution-report-submitted-individually-on-canvas">4. Team Contribution Report (submitted individually on Canvas)</h3>
+<p>A short paragraph (3-5 sentences) per team member describing what tasks you personally completed, approximately how many hours you contributed, and any challenges you encountered.</p>
+</section>
+</section>
+<section id="getting-started" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started">Getting Started</h2>
+<ol type="1">
+<li><p><strong>Accept the GitHub Classroom assignment</strong> (link on Canvas) and clone the repository to your local machine.</p></li>
+<li><p><strong>Read the <a href="../project/data-wrangling-tips.html">Data Wrangling Tips</a>.</strong> Load <code>MIRION_meta_all_1.csv</code> and <code>MIRION_spec_1.csv</code>, join them on <code>YB</code>, and make sure you can access your target variable.</p></li>
+<li><p><strong>Explore your target variable.</strong> Plot its distribution. What does it look like?</p></li>
+<li><p><strong>Explore your features.</strong> Plot the flux distributions. Look at scatterplots of each flux band vs.&nbsp;your target. Check for missing values using <code>missingno</code>.</p></li>
+<li><p><strong>Build a baseline model.</strong> Start simple: linear regression using the four Spitzer flux bands (<code>F8</code>, <code>F12</code>, <code>F24</code>, <code>F70</code>) as features, evaluated with cross-validation. This gives you a benchmark.</p></li>
+<li><p><strong>Iterate.</strong> Add features (flux ratios, long-wavelength bands, quality flag indicators), try different models, tune hyperparameters. Each change should be motivated by something you observed in your EDA or in the previous model’s behavior.</p></li>
+<li><p><strong>Evaluate your final model</strong> with cross-validation. Report <span class="math inline">\(R^2\)</span> and RMSE. Interpret what the model does and doesn’t predict well in astrophysical terms.</p></li>
+</ol>
+</section>
+<section id="evaluation-guide" class="level2">
+<h2 class="anchored" data-anchor-id="evaluation-guide">Evaluation Guide</h2>
+<p>Your project will be assessed in each of the following areas as either Outstanding (5), Good (4), Acceptable (3), Needs Work (2), Inadequate (1), Incomplete (0).</p>
+<section id="slides-and-presentation" class="level3">
+<h3 class="anchored" data-anchor-id="slides-and-presentation">Slides and Presentation</h3>
+<ul>
+<li>Is the presentation of the appropriate length (less than 7 minutes)? <strong>I am serious about this!</strong> Taking more time than is allotted is disrespectful to your audience and to your peers.</li>
+<li>Is the presentation directed at the appropriate audience (astronomy researchers, not ML experts)?</li>
+<li>Are results presented in a clear, logical, and engaging manner?</li>
+<li>Are the slides easy to read with appropriate graphics that support the narrative?</li>
+</ul>
+</section>
+<section id="content-and-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="content-and-analysis">Content and Analysis</h3>
+<ul>
+<li>Is the analysis thorough, with multiple approaches compared, feature engineering attempted, and cross-validation used?</li>
+<li>Are the methods and results explained in a way the audience can follow?</li>
+<li>Are findings interpreted in astrophysical terms, not just as model metrics?</li>
+<li>Are conclusions appropriately qualified, acknowledging limitations?</li>
+</ul>
+</section>
+<section id="professionalism" class="level3">
+<h3 class="anchored" data-anchor-id="professionalism">Professionalism</h3>
+<ul>
+<li>Is the presentation well-prepared with minimal reliance on notes?</li>
+<li>Is the presentation clear, well-paced, and free of distracting mannerisms?</li>
+<li>Are all presenters engaged throughout?</li>
+<li>Is the responsibility for presenting shared among group members?</li>
+<li>Do all presenters show mastery of the material and answer questions with ease?</li>
+</ul>
+</section>
+<section id="executive-summary" class="level3">
+<h3 class="anchored" data-anchor-id="executive-summary">Executive Summary</h3>
+<ul>
+<li>Does the document clearly summarize the methodology, results, and key takeaway?</li>
+<li>Is it directed at the appropriate audience (astronomy researchers)?</li>
+<li>Are results presented in a clear, logical manner?</li>
+<li>Do appropriate visuals support the narrative?</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/EricFriedlander\.github\.io\/math4025sp26\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../course-info/computing-python-resources.html" class="pagination-link" aria-label="Python resources">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Python resources</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Copyright 2026, Eric Friedlander</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/project/project-instructions.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This site is built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
