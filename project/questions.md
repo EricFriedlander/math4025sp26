@@ -1,0 +1,3 @@
+- Are the unit correct? If so, what do they mean?
+- Spectral Energy distribution correct?
+- WISE_T important maybe

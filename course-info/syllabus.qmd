@@ -100,13 +100,13 @@ Homework will be graded on a pass/fail basis and will be assessed via presentati
 
 ### Job Application & Job Interview
 
-During this course you will apply to one "job". I will generate the job advertisement including a real company and base the job description on the course content and similar job advertisements. The job application will have three components:
+During this course you will apply to one "job". You will find and submit your own job advertisement — any posting reasonably related to your career goals is acceptable. The job application will have three components:
 
 1. A cover letter.
 2. A resume.
-3. A portfolio.
+3. A sample analysis.
 
-All three of these should be tailored to the job description and the company to which you are applying. Your portfolio will consist of self-contained data analyses of your choosing. To create your portfolio, you will be required to create a website.
+All three of these should be tailored to the job description and the company to which you are applying. Your sample analysis must be published as a public GitHub Pages website; you will submit the site URL and your GitHub repository URL on Canvas.
 
 After you submit your job application, you will be invited to schedule a one-hour long job interview. **It is your job to schedule your job interview with Dr. Friedlander.** The interview will include general interview questions, questions about your portfolio, and a "case interview" portion.
 

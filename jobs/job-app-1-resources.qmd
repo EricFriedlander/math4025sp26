@@ -8,6 +8,41 @@ title: "Job Application 1 Resources"
 -   [Using Quarto, Netlify, & GitHub](https://jadeyryan.com/blog/2023-11-19_publish-quarto-website/)
 -   [Using Quarto & GitHub Pages](https://quarto.org/docs/publishing/github-pages.html)
 
+## Job Advertisement
+
+Before preparing your application materials, you must identify the job you are applying for.
+
+**Finding Your Job Ad:** Search for a real job posting relevant to your career goals and submit it along with your application materials on Canvas. Any job reasonably related to your career is acceptable. As a rule of thumb: if your chosen job requires little to no data analysis, statistical modeling, or machine learning, it is likely too far from the course learning objectives — when in doubt, ask Dr. Friedlander.
+
+**Submit a PDF:** Many job postings expire before the grading deadline. Please upload a PDF screenshot or saved copy of the posting (not just a URL) so it can be reviewed.
+
+**If your job is too far from the course learning objectives:** Your application materials must still reflect the technical skills covered in this course. If Dr. Friedlander determines that your chosen ad doesn't align closely enough with the course content, your sample analysis should reflect a position with the following profile:
+
+**Key Responsibilities:**
+
+-   Collect, clean, and analyze data from various sources.
+-   Develop and maintain dashboards and reports to track key performance indicators (KPIs).
+-   Identify trends, patterns, and anomalies in datasets.
+-   Collaborate with cross-functional teams to understand business requirements and provide data-driven solutions.
+-   Present findings and recommendations to stakeholders in a clear and concise manner.
+-   Ensure data accuracy and integrity.
+
+**Qualifications:**
+
+-   Bachelor's degree in Data Science, Statistics, Computer Science, or a related field.
+-   Proficiency in data manipulation and visualization using R.
+-   Expertise in statistical inference and basic statistical models.
+-   Familiarity with machine learning techniques including regression and classification, pre-processing and feature engineering, model building, and model evaluation.
+-   Excellent communication, presentation, and teamwork skills.
+-   Ability to work independently and collaboratively using Git.
+
+**Preferred Qualifications:**
+
+-   Proficiency in Python, pandas, and scikit-learn.
+-   Experience with SQL, R, and/or Excel for data analysis.
+-   Familiarity with big data technologies (e.g., Hadoop, Spark).
+-   Experience in finance or accounting.
+
 ## Cover Letter & Resume
 
 -   [CofI Career Prep Resources](https://cofi.instructure.com/courses/14763/pages/career-prep-resources)
@@ -44,6 +79,17 @@ title: "Job Application 1 Resources"
     
 ### Sample Analysis
 
+#### Hosting Your Analysis
+
+Your sample analysis must be published as a public **GitHub Pages website**. Use the [Using Quarto & GitHub Pages](https://quarto.org/docs/publishing/github-pages.html) guide linked in the [Building a Website](#building-a-website) section above to set this up.
+
+Once published:
+
+-   Add Dr. Friedlander (`EricFriedlander`) as a collaborator on your GitHub repository.
+-   Submit both the GitHub Pages site URL and the repository URL on Canvas.
+
+#### Tips
+
 -   While not required, I recommend you start with something you've been working on
     +   If you have a side project, use may use that.
     +   If not, I recommend starting with one of your homeworks.
@@ -66,3 +112,17 @@ title: "Job Application 1 Resources"
     +   Ensure all plots have professional axis labels.
     +   When talking about your variables, mostly refer to them by what they represent rather than their name. For example say "We will be predicting whether a customer will default on their loan." instead of "We will be using `default` as the response variable. There are situation in which it is appropriate to refer to them by their names in R but be careful.
     +   Including a bunch of unnecessary analysis steps to prove that you can do them. If the project you've chosen does not call of more advanced analysis steps, choose a different one.
+
+## Submission Checklist
+
+Before submitting, verify:
+
+-   [ ] Job advertisement submitted as a PDF on Canvas
+-   [ ] Resume saved and submitted as a PDF (≤ 1 page)
+-   [ ] Cover letter saved and submitted as a PDF
+-   [ ] Sample analysis is published on a GitHub Pages website
+-   [ ] `EricFriedlander` is added as a collaborator on your GitHub repository
+-   [ ] GitHub Pages site URL submitted on Canvas
+-   [ ] GitHub repository URL submitted on Canvas
+-   [ ] All materials are tailored to your chosen job ad
+-   [ ] All materials are free of typos and grammatical errors

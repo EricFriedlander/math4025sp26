@@ -1,6 +1,12 @@
 ---
 title: "Group Planning Worksheet"
 subtitle: "Math 4025 - Statistical Machine Learning, Spring 2026"
+format: html
+jupyter: 
+  kernelspec:
+    name: "<kernel-name-here>"
+    language: "python"
+    display_name: "<kernel-name-here>"
 ---
 
 # Your first quarto exercise: Group Planning!

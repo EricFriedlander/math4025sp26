@@ -1,6 +1,6 @@
 ---
 title: "Data Wrangling Tips"
-subtitle: "StarFormation Project — Math 4025"
+subtitle: "Star Formation Project - Math 4025"
 ---
 
 ```{python}
@@ -10,40 +10,130 @@ import numpy as np
 from pyhere import here
 ```
 
+# Introduction
+
 ## Overview of the Data
 
-Your project data spans 8 files. The table below summarizes what each one contains and how it connects to the others.
+Your project data spans up to 8 files. The table below summarizes what each one contains and how it connects to the others.
 
-| File | Format | ~Rows | Join Key | Contents |
+| File | Format | Rows | Join Key | Contents |
 |------|--------|-------|----------|----------|
-| `MRT-phot.txt` | Fixed-width | 6,176 | YB | Spitzer photometry (8–70 µm), errors, counts, quality flags |
+| `MRT-phot.txt` | Fixed-width | 6,176 | YB | Spitzer photometry (8, 12, 24 µm) + Herschel 70 µm, errors, counts, quality flags |
 | `MRT-dist.txt` | Fixed-width | 6,176 | YB | Distances with uncertainties |
-| `MRT-velo.txt` | Fixed-width | 6,176 | YB | Radial velocities (km/s) |
 | `MRT-xmat.txt` | Fixed-width | 6,176 | YB | Cross-matches to external catalogs |
 | `MRT-hcsc.txt` | Fixed-width | 3,945 | YB | Herschel-derived properties (subset) |
 | `MIRION_meta_all_1.csv` | CSV | 3,945 | YB | All 8 target physical properties |
-| `MIRION_meta_din_1.csv` | CSV | 3,945 | YB | Distance-independent subset of targets |
 | `MIRION_spec_1.csv` | CSV (transposed) | 10 wavelengths | YB columns | Long-wave photometry (160–1100 µm) |
 
-**Key insight:** Only ~3,945 YBs have physical property targets (the MIRION subset of the full 6,176). An inner join on `YB` will give you ~3,945 rows — this is your working modeling dataset.
+:::{.callout-note}
+**Recommended starting point:** `MIRION_spec_1.csv` + `MIRION_meta_all_1.csv`. These two files together give you flux features across all wavelengths and all 8 candidate targets in a single join. The MRT files add complexity (quality flags, errors, spatial coordinates) and are worth exploring once you have a baseline model working.
+:::
 
-**Recommended starting point:** `MRT-phot.txt` + `MIRION_meta_all_1.csv`. The other files add complexity and are worth exploring once you have a baseline model working.
+:::{.callout-warning}
+**Sanity Checks:** Whenever you are manipulating data, you should perform *sanity checks*. That is, make sure that dataset you get after your manipulation "makes sense". For example:
 
----
+- You will likely need to join several datasets together for this project. Any time you join to datasets, you should make sure the resulting dataset has the correct number of rows and columns. You should also verify that the column names are what you want them to be. Other sanity checks might be:
+- If you transform a variable, first take a glance at the values and make sure they don't seems wrong (e.g. are suddenly `NA` or really small or really large) and then plot them to make.
+- When you fit a model, plot the predicted values vs the true values and make sure there's nothing... "weird"... (you'll know "weird" when you see it).
+:::
 
-## Loading MRT Fixed-Width Files
 
-The MRT files use a fixed-width format with a 38-line header. Use `pd.read_fwf` with explicit column specifications derived from the byte-by-byte description in each file's header.
 
-### MRT-phot.txt
+## File Paths with pyhere
 
-This is the primary feature table. The column specs below come from the byte-by-byte table in the header (subtract 1 from the start byte for 0-based indexing).
+You may notice that when you are working with Quarto files, your file paths get a bit wonky. That is, when you click the `Run Cell` button at the top of each cell and and the `Preview` or `Render` button at the top of the document, it uses different types of file paths. So something that works one time may not work another time.
+For this reason, all code in this guide uses the `pyhere` package to construct file paths. `pyhere` locates your project root (the folder containing `pyproject.toml` or `.here`) and builds paths relative to it, so code works regardless of where you run it from. 
+
+```{python}
+#| eval: false
+from pyhere import here
+
+# Resolves to <project-root>/data/MIRION_spec_1.csv
+path = here("data", "MIRION_spec_1.csv")
+```
+
+::: {.callout-tip}
+If `here()` resolves to the wrong directory, create an empty `.here` file at your project root:
+
+```bash
+touch .here
+```
+:::
+
+# Specific Transformations You'll Likely Need to Make
+
+## Transposing MIRION_spec_1.csv
+
+This file has an unusual layout: the **rows are wavelength bands** (F8 through F1100) and the **columns are YB IDs**. You need to transpose it before use.
 
 ```{python}
 #| eval: false
 import pandas as pd
 import numpy as np
 from pyhere import here
+
+
+# Load the raw file — first column is WAVE (wavelength), rest are YB IDs
+spec_raw = pd.read_csv(
+    here("data", "MIRION_spec_1.csv"),
+    index_col=0,       # WAVE column becomes the row index
+    encoding='utf-8-sig'
+)
+# spec_raw shape: (10 wavelengths) × (3945 YBs)
+
+# Transpose: rows become YBs, columns become wavelength bands
+spec = spec_raw.T.copy()
+spec.index.name = "YB"
+spec.columns = ["F8", "F12", "F24", "F70", "F160", "F250", "F350", "F500", "F870", "F1100"]
+
+# CRITICAL: convert the YB index to numeric before joining
+spec.index = pd.to_numeric(spec.index)
+```
+
+::: {.callout-note}
+**Numeric index conversion is critical.** After transposing, the YB values in the index are strings (e.g., `"6.0"`, `"7.0"`). The `meta` table has numeric YB values. If you join a string index to a numeric index, pandas produces an empty DataFrame with no error — a silent failure. `pd.to_numeric()` fixes this.
+:::
+
+
+
+## Loading MIRION_meta_all_1.csv
+
+```{python}
+#| eval: false
+meta = pd.read_csv(here("data", "MIRION_meta_all_1.csv"), encoding='utf-8-sig')
+```
+
+::: {.callout-note}
+**BOM character warning.** These CSV files have a UTF-8 BOM marker. Without `encoding='utf-8-sig'`, the first column name will appear as `﻿YB` (with an invisible prefix character) instead of `YB`. This causes silent `KeyError` failures when you try to use the `YB` column. Always use `encoding='utf-8-sig'` when loading these files.
+:::
+
+
+
+## Joining spec + meta
+
+If you're not familiar with joining data (e.g. inner and left joins) it's probably worth taking 10 minutes to read about it. [Here](https://medium.com/@benson21/inner-join-vs-left-join-explained-with-simple-cases-cf5c695358ce) seems to be a good introduction.
+
+```{python}
+#| eval: false
+# Set YB as the index for meta, then inner join onto spec
+meta_indexed = meta.set_index("YB")
+
+# Inner join: ~3,945 rows (only YBs present in both files)
+df = spec.join(meta_indexed, how="inner")
+```
+
+This is your baseline working dataset. `spec` already has the index set to `YB` from the transpose step above.
+
+
+
+## Enriching with MRT-phot.txt
+
+`MRT-phot.txt` contains the **8, 12, and 24 µm fluxes** from the Spitzer telescope, plus the **70 µm flux** from the Herschel telescope (incorporated into the MIRION catalog because the researchers performed their own 70 µm photometry using Herschel data). They **SHOULD** already be in your `spec` dataframe, but you should probably check if they match exactly. However, it also provides flux **errors** (`e_F8`, `e_F12`, etc.), **source counts** (`N8`, `N12`, `N24`, `N70`), spatial coordinates (`GLON`, `GLAT`), and quality flags (`f_PCONF`, `f_NOSRC`, `f_SAT`, etc.) that are not available from the MIRION files. This should likely be the next dataset (after `MRT-dist.txt` if you're working with a target that isn't distance independent) you turn to if you'd like to improve your model. Load it when you want those additional columns.
+
+The MRT files use a fixed-width format with a 38-line header. Use `pd.read_fwf` with explicit column specifications derived from the byte-by-byte description in each file's header.
+
+```{python}
+#| eval: false
 
 phot_colspecs = [
     (0, 4),    # YB
@@ -85,135 +175,100 @@ phot = pd.read_fwf(
 ```
 
 ::: {.callout-note}
-Use `F8`, `F12`, `F24`, `F70` as column names — not bare numbers like `8`, `12`. Bare numeric column names cause issues in many pandas and scikit-learn operations.
+Use `F8`, `F12`, `F24`, `F70` as column names, not bare numbers like `8`, `12`. Bare numeric column names cause issues in many pandas and scikit-learn operations.
 :::
 
-### MRT-dist.txt
-
-The same pattern applies for the distance file. Groups whose target is distance-dependent (`DIAM`, `MASS`, `L_BOL`) will need this file. Groups with distance-independent targets (`LM`, `TEMP`, `LRATIO`, `T_BOL`, `SURF_DENS`) can skip it for their main analysis.
-
-```{python}
-#| eval: false
-dist_colspecs = [
-    (0, 4),    # YB
-    (5, 11),   # DIST (kpc)
-    (12, 17),  # e_DIST
-    # ... (read the full header for additional columns)
-]
-dist_colnames = ["YB", "DIST", "e_DIST"]
-
-dist = pd.read_fwf(
-    here("data", "MRT-dist.txt"),
-    colspecs=dist_colspecs,
-    names=dist_colnames,
-    skiprows=38,
-    encoding='utf-8-sig'
-)
-```
-
----
-
-## Loading MIRION CSV Files
-
-```{python}
-#| eval: false
-meta = pd.read_csv(here("data", "MIRION_meta_all_1.csv"), encoding='utf-8-sig')
-meta_din = pd.read_csv(here("data", "MIRION_meta_din_1.csv"), encoding='utf-8-sig')
-```
-
-::: {.callout-note}
-**BOM character warning.** These CSV files have a UTF-8 BOM marker. Without `encoding='utf-8-sig'`, the first column name will appear as `﻿YB` (with an invisible prefix character) instead of `YB`. This causes silent `KeyError` failures when you try to use the `YB` column. Always use `encoding='utf-8-sig'` when loading these files.
+::: {.callout-warning}
+When you join this data, you should decide whether you want to keep both sets of wavelengths (i.e. have two copies each of `F8` through `F70` or if you want to overwrite).
 :::
 
----
+### Joining MRT-phot with your working dataset
 
-## Transposing MIRION_spec_1.csv
-
-This file has an unusual layout: the **rows are wavelength bands** (F8 through F1100) and the **columns are YB IDs**. You need to transpose it before use.
+Since `spec` already contains `F8`, `F12`, `F24`, `F70`, you should drop those duplicate columns from `phot` before joining, keeping only the new information (errors, counts, coordinates, flags):
 
 ```{python}
 #| eval: false
-# Load the raw file — first column is WAVE (wavelength), rest are YB IDs
-spec_raw = pd.read_csv(
-    here("data", "MIRION_spec_1.csv"),
-    index_col=0,       # WAVE column becomes the row index
-    encoding='utf-8-sig'
-)
-# spec_raw shape: (10 wavelengths) × (3945 YBs)
-
-# Transpose: rows become YBs, columns become wavelength bands
-spec = spec_raw.T.copy()
-spec.index.name = "YB"
-spec.columns = ["F8", "F12", "F24", "F70", "F160", "F250", "F350", "F500", "F870", "F1100"]
-
-# CRITICAL: convert the YB index to numeric before joining
-spec.index = pd.to_numeric(spec.index)
-```
-
-::: {.callout-note}
-**Numeric index conversion is critical.** After transposing, the YB values in the index are strings (e.g., `"6.0"`, `"7.0"`). The `phot` and `meta` tables have numeric YB values. If you join a string index to a numeric index, pandas produces an empty DataFrame with no error — a silent failure. `pd.to_numeric()` fixes this.
-:::
-
----
-
-## Joining Tables on YB
-
-```{python}
-#| eval: false
-# Set YB as the index first
 phot_indexed = phot.set_index("YB")
-meta_indexed = meta.set_index("YB")
 
-# Inner join: ~3,945 rows (only YBs with both photometry AND target properties)
-df = phot_indexed.join(meta_indexed, how="inner")
+# Drop flux columns already present in df from spec
+phot_extra = phot_indexed.drop(columns=["F8", "F12", "F24", "F70"])
+
+# Left join: keeps all ~3,945 rows, adds phot columns where available
+df = df.join(phot_extra, how="left")
 ```
 
-To add supplementary tables:
+**The other MRT datasets (`MRT-dist.txt`, `MRT-xmat.txt`, `MRT-hcsc.txt`) can be joined in the same fashion.** Refer to each file's byte-by-byte header to construct the appropriate `colspecs` and `colnames`, then left-join onto `df`.
+
+# Other Transformation to Consider
+
+In order to obtain the best model possible, you will almost certainly have to apply transformations to your data before the modeling process. Remember that these transformations should be considered part of your modeling process so you can use performance metrics (e.g. $R^2$, RMSE, etc.) along with cross-validation to figure out which transformations are best.
+Here are some things that you can try, and may or may not be helpful.
+
+## Taking Ratio's of Wavelength Features
+
+The shape of an object's spectral energy distribution (SED), how bright it is at different wavelengths relative to each other, can be more informative than the raw fluxes. This is, in part, due to how distance impacts the SED measurements. When you take ratios of the wavelengths, the different impact of distance tends to cancel out, which can improve model performance.
+
+Two approaches worth considering:
+
+**Approach 1: Wavelength ratios** capture the relative brightness between bands, independently of total flux (and thus independently of distance). For example:
 
 ```{python}
 #| eval: false
-dist_indexed = dist.set_index("YB")
-df = phot_indexed.join(meta_indexed, how="inner").join(dist_indexed, how="left")
+# Ratio of 70 µm to 24 µm
+df["F70_F24"] = df["F70"] / df["F24"]
 ```
 
-Use `how="left"` for supplementary tables (distance, velocity) so you don't lose rows where those values are unavailable.
+You will likely want to consider all possible ratios and, with all 10 wavelength bands from `MIRION_spec_1.csv` this amounts to $\binom{10}{2} = 45$ features. Some questions you'll want to think about:
 
-**Why inner join for the main tables?** An outer join would give 6,176 rows, but most would have NaN target values — useless for supervised learning. An inner join gives only the ~3,945 rows where both photometry and a target exist.
+- If either flux is `NaN` or zero, the ratio may be `NaN` or infinite, how are you going to handle these cases?
+- If you compute the ratio's, are you going to keep the original non-ratio features?
+- How will you determine which wavelengths are "most important" if you are taking ratios and the different wavelengths appear in several different variables?
 
----
+**Apprach 2: Row normalization** is another approach to consider. That is, divide each row's flux values by the row sum so each source's SED sums to 1. This emphasizes the shape of the spectrum rather than its overall brightness.
 
-## Handling Quality Flags
+```{python}
+#| eval: false
+flux_cols = ["F8", "F12", "F24", "F70", "F160", "F250", "F350", "F500", "F870", "F1100"]
+row_sums = df[flux_cols].sum(axis=1)
+df_norm = df[flux_cols].div(row_sums, axis=0)
+```
+
+## Handling Quality Flags and Missing Values
 
 ### f_PCONF (Poor Photometric Confidence)
 
-`f_PCONF` is a 4-character string where each character corresponds to a band (8, 12, 24, 70 µm, left to right). A `"1"` in a position means the photometry in that band has poor confidence and should not be trusted.
+`f_SAT`, `f_NOSRC`, and`f_PCONF` are 4-character strings where each character corresponds to a band (8, 12, 24, 70 µm, left to right). A `"1"` in a position means the photometry in that band has been flagged. For example suppose :
+
+- `f_PCONF` = `0010`: this means band 24 has poor confidence while the other bands are fine
+- `f_SAT` - `0101`: this mean that the images from bands 12 and 70 were saturated
 
 ```{python}
 #| eval: false
 bands = ["F8", "F12", "F24", "F70"]
-pconf = phot["f_PCONF"].fillna("0000").astype(str).str.strip().str.zfill(4)
+pconf = df["f_PCONF"].fillna("0000").astype(str).str.strip().str.zfill(4)
 
 for i, band in enumerate(bands):
-    phot.loc[pconf.str[i] == "1", band] = np.nan
+    df.loc[pconf.str[i] == "1", band] = np.nan
 ```
 
-Apply the same approach for `f_NOSRC` (no source detected — the flux value is effectively noise).
+`f_MULTI` and `f_CEXT` apply to the entire `Yellowball` instead of the wavelength so there is only one flag per row.
+
+:::{.callout-warning}
+Note that the quality flags only apply to the 8, 12, 24, and 70 $\mu$m bands.
+:::
 
 ### Missing Value Sentinel (999)
 
-::: {.callout-note}
-Some numeric columns in the MRT files use `999` or `999.0` as a placeholder for missing values. Replace these with `NaN` after loading:
+Some numeric columns in the MRT files use `999` or `999.0` as a placeholder for missing values. Note that the values in the MIRION data should already have the missing values replaced by `NaN`. When leading the MRT data, you can replace these with `NaN` after loading:
 
 ```{python}
 #| eval: false
 df.replace(999, np.nan, inplace=True)
 df.replace(999.0, np.nan, inplace=True)
 ```
-:::
 
----
 
-## Checking for Missing Values
+### Checking for Missing Values
 
 Before modeling, understand your missingness pattern.
 
@@ -229,43 +284,15 @@ show(df.isnull().sum().rename("missing").to_frame())
 msno.matrix(df)
 ```
 
-F12 and F24 in particular have substantial missingness. Think carefully about whether to drop those rows or impute.
-
-**Key rule: never impute your target variable.** Drop rows where your assigned target is NaN before any modeling.
+:::{.callout-warning}
+**Key rule: never impute your target variable.** Drop rows where your assigned target is `NaN` before any modeling.
 
 ```{python}
 #| eval: false
 df_clean = df.dropna(subset=["YOUR_TARGET"])  # replace with your actual target name
 ```
+:::
 
-For feature missingness inside scikit-learn Pipelines, use `SimpleImputer`:
+## Transforming Individual Variables
 
-```{python}
-#| eval: false
-from sklearn.impute import SimpleImputer
-imputer = SimpleImputer(strategy="median")
-```
-
----
-
-## Log-Transforming Targets
-
-Some target variables span many orders of magnitude. Before modeling, plot a histogram of your assigned target — if it is heavily skewed, a log transformation will usually improve model performance.
-
-When reporting predictions, make sure to reverse any transformation you applied (e.g., `np.exp()` or `10**pred` as appropriate).
-
----
-
-## Log-Ratio Features
-
-The shape of an object's spectral energy distribution (SED) — how bright it is at different wavelengths relative to each other — can be more informative than the raw fluxes. Log-ratios of flux bands capture this shape independently of total brightness.
-
-```{python}
-#| eval: false
-# Example: log ratio of 70 µm to 24 µm (a warm dust indicator)
-df["log_F70_F24"] = np.log10(df["F70"] / df["F24"])
-```
-
-If either flux is NaN or zero, the ratio will be NaN or infinite. Handle these downstream in your imputation step or filter them out beforehand.
-
-Potential ratios to explore: F70/F24, F24/F12, F12/F8. With the long-wave bands from `MIRION_spec_1.csv` you can compute many more combinations.
+Some target variables span many orders of magnitude or are heavily right-skewed. For methods sensitive to scale and distribution (e.g., linear regression, kNN), applying a log, Yeo-Johnson, or Box-Cox transformation before modeling and inverting it on predictions can improve performance. Plot a histogram of your assigned target first to see if a transformation is warranted and carefully think about which model you're using and whether a transformation will even make a difference. The same idea applies to your features.

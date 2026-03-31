@@ -4,11 +4,11 @@ title: "Using Quarto with Python"
 
 ## Why Quarto Instead of Jupyter Notebooks
 
-Jupyter `.ipynb` files store rendered output (text, images, cell metadata) directly in the file. This means every time you run a cell, the file changes — even if your code didn't. In a shared git repo, this produces massive, unreadable diffs full of base64-encoded image blobs and execution counts. Code review becomes impossible.
+Jupyter `.ipynb` files store rendered output (text, images, cell metadata) directly in the file. This means every time you run a cell, the file changes, even if your code didn't. In a shared git repo, this produces massive, unreadable diffs full of base64-encoded image blobs and execution counts. Code review becomes impossible.
 
 `.qmd` files are plain text. Only actual changes to your code or prose show up in diffs. This makes collaboration and peer review clean.
 
-Quarto also renders to HTML, PDF, or Reveal.js slides from the same source file — no extra tooling needed.
+Quarto also renders to HTML, PDF, or Reveal.js slides from the same source file, no extra tooling needed. The [Quarto Website](https://quarto.org/) has a TON of tools that are helpful for working on Quarto.
 
 ## Anatomy of a .qmd File
 
@@ -18,8 +18,14 @@ A `.qmd` file has three parts: YAML front matter, markdown prose, and code chunk
 ---
 title: "My Analysis"
 author: "Your Name"
+format: html
+jupyter: 
+  kernelspec:
+    name: "<kernel-name-here>"
+    language: "python"
+    display_name: "<kernel-name-here>"
 ---
-
+uart
 ## Introduction
 
 This analysis explores the dataset using Python.
@@ -33,9 +39,20 @@ df.head()
 ```
 ````
 
-The YAML block (between `---` lines) sets document metadata. Prose is standard Markdown. Code chunks open with ` ```{python} ` and close with ` ``` `.
+- The YAML block (between `---` lines) sets document metadata. 
+- Prose is standard Markdown. 
+- Code chunks open with ` ```{python} ` and close with ` ``` `.
 
 ## Rendering
+
+In VS Code: you will need to install the [Quarto extension](https://marketplace.visualstudio.com/items?itemName=quarto.quarto) and [Quarto Command Line Interface](https://quarto.org/docs/get-started/). You can then use the following directions.
+
+
+### Rendering from the GUI
+
+Click Preview button in the top left (Positron) or top right (VSCode) of the window with your code.
+
+### Rendering from the Terminal
 
 Always activate the conda environment first:
 
@@ -50,7 +67,6 @@ quarto render my-analysis.qmd        # produces my-analysis.html
 quarto preview my-analysis.qmd       # live preview with auto-reload
 ```
 
-In VS Code: install the [Quarto extension](https://marketplace.visualstudio.com/items?itemName=quarto.quarto), then use the **Render** button in the top-right of the editor. The preview pane updates on save.
 
 ## Common Code Chunk Options
 
@@ -89,7 +105,7 @@ df = pd.read_csv(here("data", "MIRION_meta_all_1.csv"))
 ```
 ````
 
-This runs silently — no output appears in the rendered document.
+This runs silently, no output appears in the rendered document.
 
 ## Paths with pyhere
 

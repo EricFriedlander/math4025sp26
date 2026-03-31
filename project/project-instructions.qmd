@@ -5,26 +5,43 @@ subtitle: "Math 4025 — Statistical Machine Learning, Spring 2026"
 
 ## Introduction
 
-"Yellowballs" are compact, roughly circular infrared emission structures in the Milky Way first identified by citizen scientists participating in the [Milky Way Project](https://www.milkywayproject.org/), an online image classification platform. They appear yellow in three-color Spitzer Space Telescope images because they emit strongly at both 8 and 24 µm. Yellowballs are candidate sites of intermediate- to high-mass star formation — regions where gas and dust are being heated and compressed by newly forming stars.
+"Yellowballs" are compact, roughly circular structures in the Milky Way first identified by citizen scientists participating in the [Milky Way Project](https://www.milkywayproject.org/), an online image classification platform where citizen scientists classify images from the Spitzer Space Telescope. Astronomers use something called photometry to measure the brightness of astronomical objects at different wavelengths. Yellowballs are candidate sites of intermediate- to high-mass star formation. That is, regions where gas and dust are being heated and compressed by newly forming stars and appear "yellow" in color due to the wavelengths they emit most strongly at.
+
+**What is photometry?** Photometry is the measurement of how bright an astronomical object appears at specific wavelengths of light. For this project, you should think of different wave lengths of light as your features, where the value associated with each wavelength is called a *flux density*. These measurements are obtained from a telescope equipped with different filters (or detector channels) and record a flux density at each wavelength specified by the filter, producing a set of brightness measurements across the electromagnetic spectrum. Together, these measurements form a *spectral energy distribution (SED)*, a kind of fingerprint that (hopefully) encodes information about the object's physical properties (e.g., temperature, mass, luminosity, and physical size). Rather than observing each object individually with expensive follow-up instruments, photometry gives astronomers a fast, large-scale way to characterize thousands of objects simultaneously.
+Once SEDs (or "many observations") have been used to characterize large numbers of different objects,
+other objects can sometimes be classified by a more limited set of observations (e.g., by a few combinations of wavelengths,
+rather than many individual ones.)
+
 
 The **MIRION catalog** (Milky Way Infrared ONset; Wolf-Chase et al. 2025) contains 6,176 Yellowballs, with physical properties derived for 3,945 of them using multi-wavelength photometry from Spitzer and Herschel space telescopes.
 
-**The scientific question:** Can we predict a physical property of a Yellowball from its infrared photometric signature alone? Accurate photometric predictions would allow astronomers to characterize newly discovered objects without the time-intensive follow-up observations needed to derive physical properties directly.
+**The scientific question:** Estimating the physical properties of objects is a time-intensive process that typically 
+relies on a wide range of observations and measurements. Accurate photometric predictions would allow astronomers to characterize newly discovered objects without the time-intensive follow-up observations needed to derive physical properties directly. Moreover, understanding which features are driving these predictions is also important. So our research questions are:
+
+> Can we predict a physical property of a Yellowball from its infrared photometric signature in the MIRION catalog? 
+
+> If so, which wavelengths are most important for making accurate predictions, and what does that tell us about the underlying physics of these objects?
+
+> Can we make accurate predictions using only the 2-70 $\mu$m wavelengths?
+
+> Are there any other features that seem particularly important?
+
+
 
 ## Your Assignment
 
 Each group is assigned one physical property of Yellowballs to predict. **See Canvas for your group's assigned target variable.**
 
-The table below describes all eight target variables. Note that three of them (DIAM, MASS, L_BOL) require a distance measurement to compute — groups assigned those targets will need to incorporate the distance data file into their analysis.
+The table below describes all eight target variables. Each of these variables represents a physical property of the Yellowballs in our data. These properties were estimated from the Herschel Space Observatory/Telescope and pulled from the Herschel InfraRed Galactic Plane Survey (Hi-GAL). Three of these variables (DIAM, MASS, L_BOL) are what we call **distance-dependent** and will be much harder to predict because measurement of their physical properties rely on the distance to the Yellowball. Groups assigned those targets will need to incorporate the distance data file into their analysis.
 
 | Target | Description | Units | Distance-dependent? |
 |--------|-------------|-------|---------------------|
 | `DIAM` | Physical diameter of the Yellowball bubble | pc | Yes |
-| `MASS` | Total gas and dust mass enclosed | M☉ | Yes |
-| `L_BOL` | Bolometric (total) luminosity of the central source | L☉ | Yes |
-| `LM` | Luminosity-to-mass ratio (evolutionary stage indicator) | L☉/M☉ | No |
+| `MASS` | Total gas and dust mass enclosed | $M_\odot$ | Yes |
+| `L_BOL` | Bolometric (total) luminosity of the central source | $L_\odot$ | Yes |
+| `LM` | Luminosity-to-mass ratio (evolutionary stage indicator) | $L_\odot/M_\odot$ | No |
 | `TEMP` | Dust temperature from a greybody SED fit | K | No |
-| `LRATIO` | Ratio of warm-to-cold luminosity (dimensionless) | — | No |
+| `LRATIO` | Ratio of warm-to-cold luminosity (dimensionless) | | No |
 | `T_BOL` | Bolometric temperature (SED-weighted mean temperature) | K | No |
 | `SURF_DENS` | Surface mass density | g/cm² | No |
 
@@ -32,85 +49,112 @@ The table below describes all eight target variables. Note that three of them (D
 
 These papers provide scientific context for the data and the astrophysical questions your analysis addresses. You are not expected to understand every technical detail, but reading the introductions and results sections will help you interpret your findings meaningfully.
 
-- **Wolf-Chase et al. (2025)** — The MIRION catalog paper: describes the Yellowball sample, the photometry, and how the physical properties were derived.
+- **Devine et al. (2026)** — The MIRION catalog paper: describes the Yellowball sample, the photometry, and how the physical properties were derived.
   <https://iopscience.iop.org/article/10.3847/1538-4357/ae31f6>
 
 - **Anderson et al. (2012)** — Background on multi-wavelength infrared methods for characterizing star-forming regions.
   <https://www.aanda.org/articles/aa/pdf/2012/01/aa17640-11.pdf>
+  
+- **Elia et al. (2017)** —The Hi-GAL compact source catalogue – describes process for extracting physical properties from Herschel photometry, which is relevant for understanding the target variables.
+  <https://academic.oup.com/mnras/article-pdf/doi/10.1093/mnras/stx1357/19343235/stx1357.pdf>
+
+## Getting Started
+
+1. Get in your groups.
+2. Choose a target variable.
+3. Get your repo from the [GitHub Classroom](https://classroom.github.com/a/x4nCjJIh) and make your teamname your target variable.
+4. Pull the repository to your computer, but **DO NOT MAKE ANY CHANGES TO IT YET!**
 
 ## Data
 
-Your GitHub Classroom repository contains a `data/` folder with eight files. Below is an overview; see the [Data Wrangling Tips](data-wrangling-tips.qmd) guide for detailed loading instructions.
+Your repository contains a `data/` folder with eight files. **Start with `MIRION_meta_all_1.csv` to locate your target variable, then join it with `MIRION_spec_1.csv` to get the photometric features.** See the [Data Wrangling Tips](data-wrangling-tips.qmd) guide for detailed loading instructions.
 
-### MRT-phot.txt — Spitzer Photometry *(primary feature table)*
+The following provides a summary of each of the data sets provided to you. Note that you are not required (and not expected) to use all of them.
 
-Fixed-width format, 38-line header, 6,176 rows. Key columns:
+### MIRION_meta_all_1.csv — Target Variables
 
-| Column | Description | Units |
-|--------|-------------|-------|
-| `YB` | Yellowball source ID | — |
-| `GLON`, `GLAT` | Galactic longitude and latitude | deg |
-| `MWPR` | Milky Way Project radius | deg |
-| `F8`, `F12`, `F24`, `F70` | Flux densities at 8, 12, 24, 70 µm | Jy |
-| `e_F8`, `e_F12`, `e_F24`, `e_F70` | Flux uncertainties | Jy |
-| `N8`, `N12`, `N24`, `N70` | Number of photometric measurements per band | — |
-| `f_SAT` | Saturation flag (4-char string, one digit per band) | — |
-| `f_MULTI` | Multiple-source flag | — |
-| `f_NOSRC` | No clear source detected (4-char string, one digit per band) | — |
-| `f_PCONF` | Poor photometric confidence (4-char string, one digit per band) | — |
-| `f_CEXT` | Highly circular extended source flag | — |
+- Format: CSV, 
+- Rows: 3,945 
+- Columns: `YB` (you can use this to join it to other datasets) and all eight target variables: `DIAM`, `MASS`, `L_BOL`, `LM`, `TEMP`, `LRATIO`, `T_BOL`, `SURF_DENS`.
 
-**Start here.** This file combined with `MIRION_meta_all_1.csv` gives you everything you need for a baseline model.
-
-### MRT-dist.txt — Distances
-
-Fixed-width format, 6,176 rows. Key columns: `YB`, `DIST` (adopted distance in kpc), `e_DIST`. Required for groups predicting `DIAM`, `MASS`, or `L_BOL`.
-
-### MRT-velo.txt — Radial Velocities
-
-Fixed-width format, 6,176 rows. LSR radial velocities (km/s) from multiple radio surveys. Optional additional feature for groups wanting to go further.
-
-### MRT-xmat.txt — Catalog Cross-Matches
-
-Fixed-width format. Cross-match identifiers and classification types from Hi-GAL, ATLASGAL, CORNISH, RMS, and WISE catalogs. These are categorical identifiers — they require encoding to be used as features.
-
-### MRT-hcsc.txt — Herschel-Derived Properties
-
-Fixed-width format, ~3,945 rows. Herschel-based physical properties with uncertainty columns, overlapping with the MIRION targets below.
-
-### MIRION_meta_all_1.csv — Target Variables *(join this with MRT-phot.txt)*
-
-CSV, 3,945 rows. Contains `YB` and all eight target variables: `DIAM`, `MASS`, `L_BOL`, `LM`, `TEMP`, `LRATIO`, `T_BOL`, `SURF_DENS`.
-
-### MIRION_meta_din_1.csv — Distance-Independent Targets
-
-CSV, 3,945 rows. Subset of `MIRION_meta_all_1.csv` containing only the five distance-independent targets.
 
 ### MIRION_spec_1.csv — Long-Wavelength Photometry
 
-CSV in transposed format: rows are wavelength bands (160–1100 µm from Herschel), columns are YB IDs. Provides six additional flux bands (`F160`, `F250`, `F350`, `F500`, `F870`, `F1100`). Available for a subset of YBs. See the Data Wrangling Tips for how to load and reshape this file.
+- Format: CSV (in transposed format)
+- Rows: Provides ten wavelength bands and YB IDs. Three bands (8, 12, 24 $\mu$m) are from the Spitzer telescope and six (160, 250, 350, 500, 870, 1100 $\mu$m) are from Herschel. The 70 $\mu$m band is special: although it comes from the Herschel telescope, the researchers performed their own 70 $\mu$m photometry and incorporated it directly into the MIRION catalog alongside the Spitzer bands. The shorter-wavelength Spitzer bands (and 70 $\mu$m) are generally considered more important features. See the [Data Wrangling Tips](data-wrangling-tips.qmd) for how to load and reshape this file.
+
+
+### MRT-phot.txt — Spitzer Photometry *(primary feature table)*
+
+This dataset contains the original Spitzer photometry for all 6,176 Yellowballs, along with quality flags and other metadata. You may find it useful to use the uncertainties and source flags in your analysis.
+
+- Format: Fixed-width format
+- 38-line header
+- Rows: 6,176
+- Key columns:
+
+| Column | Description | Units |
+|--------|-------------|-------|
+| `YB` | Yellowball source ID | |
+| `GLON`, `GLAT` | Galactic longitude and latitude | deg |
+| `MWPR` | Milky Way Project radius | deg |
+| `F8`, `F12`, `F24` | Flux densities at 8, 12, 24 µm (Spitzer) | Jy |
+| `F70` | Flux density at 70 µm (Herschel, incorporated by the researchers into the MIRION catalog) | Jy |
+| `e_F8`, `e_F12`, `e_F24`, `e_F70` | Flux uncertainties | Jy |
+| `N8`, `N12`, `N24`, `N70` | Number of photometric measurements per band | |
+| `f_SAT` | Saturation flag (4-char string, one digit per band) | |
+| `f_MULTI` | Multiple-source flag | |
+| `f_NOSRC` | No clear source detected (4-char string, one digit per band) | |
+| `f_PCONF` | Poor photometric confidence (4-char string, one digit per band) | |
+| `f_CEXT` | Highly circular extended source flag | |
+
+### Other datasets 
+
+The following are additional datasets that you may find useful. Note that more details explanations of their variables are provided in the files themselves, near the top.
+
+### MRT-dist.txt — Distances
+
+- Format: Fixed-width format
+- Rows: 6,176
+- Key columns: `YB`, `DIST` (adopted distance in kpc), `e_DIST`.
+
+### MRT-xmat.txt — Catalog Cross-Matches
+
+- Format: Fixed-width format
+- Rows: 6,176
+- Column Information: This dataset contains cross-match identifiers and classification types from Hi-GAL, ATLASGAL, CORNISH, RMS, and WISE catalogs. There are two types of things that may be useful here:
+
+1. In which other catalogs is the Yellowball present? Different catalogs measure different things and so their presence in a particular catalog may give you useful information. You'll likley not want to use the catalog IDs directly, simply an indicator of their presence. 
+2. Some of the catalogs provide a "type" (e.g. `WISE_T`). These may be helpful features.
+
+### MRT-hcsc.txt — Herschel-Derived Properties
+
+- Format: Fixed-width format
+- Rows: ~3,945
+- Column information: Contains all of the Herschel-based physical properties but with uncertainty columns.
+
 
 ## Deliverables
 
-All deliverables are due **April 29**. Submit via your GitHub Classroom repository (link on Canvas) and the Canvas assignment page.
+All deliverables are due **April 30**. Submit via your GitHub Classroom repository (link on Canvas) and the Canvas assignment page.
 
 ### 1. Presentation (7 minutes)
 
 A non-technical slide presentation for an audience of **astronomy researchers** — scientists who understand star formation but are not necessarily familiar with machine learning methods. Your goal is to explain what you did, what you found, and what it means for our understanding of Yellowballs.
 
-- Strictly 7 minutes; plan for 2–3 minutes of Q&A afterward
+- Strictly 7 minutes; plan for 2-3 minutes of Q&A afterward
 - All group members must participate in presenting
 - Slides should be visually clear with well-labeled figures
-- Explain your ML methods in plain language — focus on what the model does, not the math
+- Explain your ML methods in plain language; focus on what the model does, not the math
 - Interpret your results in astrophysical terms
 
 ### 2. Executive Summary (1-2 pages)
 
 A one-page document summarizing your findings for the same astronomy-researcher audience. This is not a technical report.
 
-- State the prediction problem and your approach in 2–3 sentences
+- State the prediction problem and your approach in 2-3 sentences
 - Highlight your key result (model performance + what drives predictions)
-- Include 1–2 strong data visualizations
+- Include 1-2 strong data visualizations
 - Is shorter than 2 pages, including figures
 
 ### 3. GitHub Classroom Repository
@@ -124,13 +168,13 @@ Your repository must contain all code needed to reproduce your analysis, written
 
 ### 4. Team Contribution Report (submitted individually on Canvas)
 
-A short paragraph (3–5 sentences) per team member describing what tasks you personally completed, approximately how many hours you contributed, and any challenges you encountered.
+A short paragraph (3-5 sentences) per team member describing what tasks you personally completed, approximately how many hours you contributed, and any challenges you encountered.
 
 ## Getting Started
 
 1. **Accept the GitHub Classroom assignment** (link on Canvas) and clone the repository to your local machine.
 
-2. **Read the [Data Wrangling Tips](data-wrangling-tips.qmd).** Load `MIRION_meta_all_1.csv` and `MRT-phot.txt`, join them on `YB`, and make sure you can access your target variable.
+2. **Read the [Data Wrangling Tips](data-wrangling-tips.qmd).** Load `MIRION_meta_all_1.csv` and `MIRION_spec_1.csv`, join them on `YB`, and make sure you can access your target variable.
 
 3. **Explore your target variable.** Plot its distribution. What does it look like?
 

@@ -51,8 +51,12 @@ website:
         # - jobs/job-app-2-resources.qmd
       - section: Project
         contents:
-        # - href: project/project-instructions.qmd
-        #   text: "Instructions"
+        - href: project/project-instructions.qmd
+          text: "Instructions"
+        - href: project/data-wrangling-tips.qmd
+          text: "Data Wrangling Tips"
+        - href: project/quarto-python-guide.qmd
+          text: "Quarto Python Guide"
       - section: Hack-A-Thon
         contents:
         # - href: hack-a-thon/hack-a-thon-instruction.qmd
