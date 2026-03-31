@@ -151,6 +151,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Instructions</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../project/data-wrangling-tips.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Wrangling Tips</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -167,12 +173,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#team-information" id="toc-team-information" class="nav-link active" data-scroll-target="#team-information">Team Information</a></li>
-  <li><a href="#roles" id="toc-roles" class="nav-link" data-scroll-target="#roles">Roles</a></li>
-  <li><a href="#task-division" id="toc-task-division" class="nav-link" data-scroll-target="#task-division">Task Division</a></li>
-  <li><a href="#meeting-plan" id="toc-meeting-plan" class="nav-link" data-scroll-target="#meeting-plan">Meeting Plan</a></li>
-  <li><a href="#conflict-resolution" id="toc-conflict-resolution" class="nav-link" data-scroll-target="#conflict-resolution">Conflict Resolution</a></li>
-  <li><a href="#accountability-agreement" id="toc-accountability-agreement" class="nav-link" data-scroll-target="#accountability-agreement">Accountability Agreement</a></li>
+  <li><a href="#your-first-quarto-exercise-group-planning" id="toc-your-first-quarto-exercise-group-planning" class="nav-link active" data-scroll-target="#your-first-quarto-exercise-group-planning">Your first quarto exercise: Group Planning!</a>
+  <ul class="collapse">
+  <li><a href="#team-information" id="toc-team-information" class="nav-link" data-scroll-target="#team-information">Team Information</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/project/template/GroupPlanningWorksheet.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -182,7 +186,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Group Planning Worksheet</h1>
-<p class="subtitle lead">Math 4025 — Statistical Machine Learning, Spring 2026</p>
+<p class="subtitle lead">Math 4025 - Statistical Machine Learning, Spring 2026</p>
 </div>
 
 
@@ -199,73 +203,43 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<blockquote class="blockquote">
-<p><strong>Your first Quarto exercise.</strong> After filling in each section below, run <code>quarto render GroupPlanningWorksheet.qmd</code> from your project directory to produce an HTML file. Commit both the <code>.qmd</code> source and the rendered <code>.html</code> to your group repo before your first check-in with the instructor.</p>
-</blockquote>
-<hr>
+<section id="your-first-quarto-exercise-group-planning" class="level1">
+<h1>Your first quarto exercise: Group Planning!</h1>
 <section id="team-information" class="level2">
 <h2 class="anchored" data-anchor-id="team-information">Team Information</h2>
-<p><strong>Group members</strong> (name + preferred email):</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Have one member of your group:</p>
+<ol type="1">
+<li>Complete the Team Information Section</li>
+<li>Render the document.</li>
+<li>Add -&gt; Commit -&gt; Push the results to GitHub.</li>
+</ol>
+<p><strong>Group members</strong>:</p>
 <ul>
 <li></li>
 <li></li>
 <li></li>
-<li></li>
 </ul>
-<p><strong>Assigned target variable</strong> <em>(fill in from Canvas)</em>:</p>
-<p><strong>GitHub repository URL</strong>:</p>
-<hr>
-</section>
-<section id="roles" class="level2">
-<h2 class="anchored" data-anchor-id="roles">Roles</h2>
-<p>Roles help divide the non-analysis work so nothing falls through the cracks. With four-person groups, some members will hold two roles — that’s expected.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Role</th>
-<th>Responsibilities</th>
-<th>Member</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Spokesperson</strong></td>
-<td>Leads presentation delivery</td>
-<td></td>
-</tr>
-<tr class="even">
-<td><strong>Coordinator</strong></td>
-<td>Manages internal deadlines, owns repo setup, submits final deliverables</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><strong>Recorder</strong></td>
-<td>Takes notes at meetings, maintains a brief meeting log (a section in <code>README.md</code> works fine)</td>
-<td></td>
-</tr>
-<tr class="even">
-<td><strong>Lead Analyst</strong></td>
-<td>Owns the core modeling pipeline</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><strong>Lead Communicator</strong></td>
-<td>Owns the executive summary and infographic</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<hr>
-</section>
+<p><strong>Assigned target variable</strong>:</p>
 <section id="task-division" class="level2">
 <h2 class="anchored" data-anchor-id="task-division">Task Division</h2>
-<p>Fill in the Owner(s), your group’s internal deadline, and the current Status (e.g., <em>Not started</em>, <em>In progress</em>, <em>Done</em>) for each task. Add rows as needed.</p>
+<p>Below you will find a Markdown table (look at how it renders) that gives a list of tentative list of tasks that need to be completed. Decide if this is how you want to divide up and order the tasks (feel free to make them larger or smaller or reorder them). As a group decide on an Owner and your group’s internal deadline (this will likely change over time). As you progress through the project change the current Status (e.g., <em>Not started</em>, <em>In progress</em>, <em>Done</em>) for each task, adjust deadlines, and add rows as needed.</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 47%">
+<col style="width: 11%">
+<col style="width: 22%">
+<col style="width: 17%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Task</th>
@@ -279,83 +253,76 @@ ul.task-list li input[type="checkbox"] {
 <td>Load and join data files</td>
 <td></td>
 <td></td>
-<td></td>
+<td><em>Not Started</em></td>
 </tr>
 <tr class="even">
 <td>Explore target variable (EDA)</td>
 <td></td>
 <td></td>
-<td></td>
+<td><em>Not Started</em></td>
 </tr>
 <tr class="odd">
 <td>Explore features (EDA)</td>
 <td></td>
 <td></td>
-<td></td>
+<td><em>Not Started</em></td>
 </tr>
 <tr class="even">
 <td>Handle missing values / quality flags</td>
 <td></td>
 <td></td>
-<td></td>
+<td><em>Not Started</em></td>
 </tr>
 <tr class="odd">
 <td>Feature engineering</td>
 <td></td>
 <td></td>
-<td></td>
+<td><em>Not Started</em></td>
 </tr>
 <tr class="even">
 <td>Baseline model</td>
 <td></td>
 <td></td>
-<td></td>
+<td><em>Not Started</em></td>
 </tr>
 <tr class="odd">
 <td>Model iteration and comparison</td>
 <td></td>
 <td></td>
-<td></td>
+<td><em>Not Started</em></td>
 </tr>
 <tr class="even">
 <td>Cross-validation and final evaluation</td>
 <td></td>
 <td></td>
-<td></td>
+<td><em>Not Started</em></td>
 </tr>
 <tr class="odd">
 <td>Presentation slides</td>
 <td></td>
 <td></td>
-<td></td>
+<td><em>Not Started</em></td>
 </tr>
 <tr class="even">
-<td>Executive summary / infographic</td>
+<td>Executive summary</td>
 <td></td>
 <td></td>
-<td></td>
+<td><em>Not Started</em></td>
 </tr>
 <tr class="odd">
 <td><code>README.md</code> and repo cleanup</td>
 <td></td>
 <td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Team contribution report</td>
-<td></td>
-<td></td>
-<td></td>
+<td><em>Not Started</em></td>
 </tr>
 </tbody>
 </table>
-<hr>
 </section>
-<section id="meeting-plan" class="level2">
-<h2 class="anchored" data-anchor-id="meeting-plan">Meeting Plan</h2>
-<p><strong>Planned weekly meeting time</strong> (day, time, and location or virtual link):</p>
+<section id="meeting-plan-communication" class="level2">
+<h2 class="anchored" data-anchor-id="meeting-plan-communication">Meeting Plan &amp; Communication</h2>
+<p><strong>Planned weekly meeting time(s)</strong> (day, time, and location or state “virtual” and list software):</p>
 <p><strong>Primary communication channel</strong> (e.g., Teams channel name or group chat):</p>
-<hr>
+<p><strong>Communication Timeliness</strong> If someone asks a question, what is a reasonable amount of time before a response should be considered late?</p>
 </section>
 <section id="conflict-resolution" class="level2">
 <h2 class="anchored" data-anchor-id="conflict-resolution">Conflict Resolution</h2>
@@ -366,7 +333,6 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Escalate serious issues.</strong> If a member is consistently not contributing or communication has broken down, bring it to the instructor — that’s what office hours are for.</li>
 </ol>
 <p>The <strong>team contribution report</strong> (submitted at the end of the project) is the formal accountability mechanism: each member writes a brief description of their own contributions. Be honest.</p>
-<hr>
 </section>
 <section id="accountability-agreement" class="level2">
 <h2 class="anchored" data-anchor-id="accountability-agreement">Accountability Agreement</h2>
@@ -380,6 +346,10 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 
 
+</section>
+</div>
+</div>
+</section>
 </section>
 
 </main> <!-- /main -->

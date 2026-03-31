@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../project/project-instructions.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -101,6 +102,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -113,7 +143,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Data Wrangling Tips</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../project/project-instructions.html">Project</a></li><li class="breadcrumb-item"><a href="../project/data-wrangling-tips.html">Data Wrangling Tips</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -172,17 +202,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Project</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../project/project-instructions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Instructions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../project/data-wrangling-tips.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Data Wrangling Tips</span></a>
   </div>
 </li>
       </ul>
@@ -201,33 +237,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview-of-the-data" id="toc-overview-of-the-data" class="nav-link active" data-scroll-target="#overview-of-the-data">Overview of the Data</a></li>
-  <li><a href="#loading-mrt-fixed-width-files" id="toc-loading-mrt-fixed-width-files" class="nav-link" data-scroll-target="#loading-mrt-fixed-width-files">Loading MRT Fixed-Width Files</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
   <ul class="collapse">
-  <li><a href="#mrt-phot.txt" id="toc-mrt-phot.txt" class="nav-link" data-scroll-target="#mrt-phot.txt">MRT-phot.txt</a></li>
-  <li><a href="#mrt-dist.txt" id="toc-mrt-dist.txt" class="nav-link" data-scroll-target="#mrt-dist.txt">MRT-dist.txt</a></li>
+  <li><a href="#overview-of-the-data" id="toc-overview-of-the-data" class="nav-link" data-scroll-target="#overview-of-the-data">Overview of the Data</a></li>
+  <li><a href="#file-paths-with-pyhere" id="toc-file-paths-with-pyhere" class="nav-link" data-scroll-target="#file-paths-with-pyhere">File Paths with pyhere</a></li>
   </ul></li>
-  <li><a href="#loading-mirion-csv-files" id="toc-loading-mirion-csv-files" class="nav-link" data-scroll-target="#loading-mirion-csv-files">Loading MIRION CSV Files</a></li>
+  <li><a href="#specific-transformations-youll-likely-need-to-make" id="toc-specific-transformations-youll-likely-need-to-make" class="nav-link" data-scroll-target="#specific-transformations-youll-likely-need-to-make">Specific Transformations You’ll Likely Need to Make</a>
+  <ul class="collapse">
   <li><a href="#transposing-mirion_spec_1.csv" id="toc-transposing-mirion_spec_1.csv" class="nav-link" data-scroll-target="#transposing-mirion_spec_1.csv">Transposing MIRION_spec_1.csv</a></li>
-  <li><a href="#joining-tables-on-yb" id="toc-joining-tables-on-yb" class="nav-link" data-scroll-target="#joining-tables-on-yb">Joining Tables on YB</a></li>
-  <li><a href="#handling-quality-flags" id="toc-handling-quality-flags" class="nav-link" data-scroll-target="#handling-quality-flags">Handling Quality Flags</a>
+  <li><a href="#loading-mirion_meta_all_1.csv" id="toc-loading-mirion_meta_all_1.csv" class="nav-link" data-scroll-target="#loading-mirion_meta_all_1.csv">Loading MIRION_meta_all_1.csv</a></li>
+  <li><a href="#joining-spec-meta" id="toc-joining-spec-meta" class="nav-link" data-scroll-target="#joining-spec-meta">Joining spec + meta</a></li>
+  <li><a href="#enriching-with-mrt-phot.txt" id="toc-enriching-with-mrt-phot.txt" class="nav-link" data-scroll-target="#enriching-with-mrt-phot.txt">Enriching with MRT-phot.txt</a>
+  <ul class="collapse">
+  <li><a href="#joining-mrt-phot-with-your-working-dataset" id="toc-joining-mrt-phot-with-your-working-dataset" class="nav-link" data-scroll-target="#joining-mrt-phot-with-your-working-dataset">Joining MRT-phot with your working dataset</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#other-transformation-to-consider" id="toc-other-transformation-to-consider" class="nav-link" data-scroll-target="#other-transformation-to-consider">Other Transformation to Consider</a>
+  <ul class="collapse">
+  <li><a href="#taking-ratios-of-wavelength-features" id="toc-taking-ratios-of-wavelength-features" class="nav-link" data-scroll-target="#taking-ratios-of-wavelength-features">Taking Ratio’s of Wavelength Features</a></li>
+  <li><a href="#handling-quality-flags-and-missing-values" id="toc-handling-quality-flags-and-missing-values" class="nav-link" data-scroll-target="#handling-quality-flags-and-missing-values">Handling Quality Flags and Missing Values</a>
   <ul class="collapse">
   <li><a href="#f_pconf-poor-photometric-confidence" id="toc-f_pconf-poor-photometric-confidence" class="nav-link" data-scroll-target="#f_pconf-poor-photometric-confidence">f_PCONF (Poor Photometric Confidence)</a></li>
   <li><a href="#missing-value-sentinel-999" id="toc-missing-value-sentinel-999" class="nav-link" data-scroll-target="#missing-value-sentinel-999">Missing Value Sentinel (999)</a></li>
-  </ul></li>
   <li><a href="#checking-for-missing-values" id="toc-checking-for-missing-values" class="nav-link" data-scroll-target="#checking-for-missing-values">Checking for Missing Values</a></li>
-  <li><a href="#log-transforming-targets" id="toc-log-transforming-targets" class="nav-link" data-scroll-target="#log-transforming-targets">Log-Transforming Targets</a></li>
-  <li><a href="#log-ratio-features" id="toc-log-ratio-features" class="nav-link" data-scroll-target="#log-ratio-features">Log-Ratio Features</a></li>
+  </ul></li>
+  <li><a href="#transforming-individual-variables" id="toc-transforming-individual-variables" class="nav-link" data-scroll-target="#transforming-individual-variables">Transforming Individual Variables</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/project/data-wrangling-tips.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../project/project-instructions.html">Project</a></li><li class="breadcrumb-item"><a href="../project/data-wrangling-tips.html">Data Wrangling Tips</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Data Wrangling Tips</h1>
-<p class="subtitle lead">StarFormation Project — Math 4025</p>
+<p class="subtitle lead">Star Formation Project - Math 4025</p>
 </div>
 
 
@@ -244,9 +289,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
 <section id="overview-of-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="overview-of-the-data">Overview of the Data</h2>
-<p>Your project data spans 8 files. The table below summarizes what each one contains and how it connects to the others.</p>
+<p>Your project data spans up to 8 files. The table below summarizes what each one contains and how it connects to the others.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 14%">
@@ -259,7 +306,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="header">
 <th>File</th>
 <th>Format</th>
-<th>~Rows</th>
+<th>Rows</th>
 <th>Join Key</th>
 <th>Contents</th>
 </tr>
@@ -308,13 +355,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>All 8 target physical properties</td>
 </tr>
 <tr class="odd">
-<td><code>MIRION_meta_din_1.csv</code></td>
-<td>CSV</td>
-<td>3,945</td>
-<td>YB</td>
-<td>Distance-independent subset of targets</td>
-</tr>
-<tr class="even">
 <td><code>MIRION_spec_1.csv</code></td>
 <td>CSV (transposed)</td>
 <td>10 wavelengths</td>
@@ -323,58 +363,89 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p><strong>Key insight:</strong> Only ~3,945 YBs have physical property targets (the MIRION subset of the full 6,176). An inner join on <code>YB</code> will give you ~3,945 rows — this is your working modeling dataset.</p>
-<p><strong>Recommended starting point:</strong> <code>MRT-phot.txt</code> + <code>MIRION_meta_all_1.csv</code>. The other files add complexity and are worth exploring once you have a baseline model working.</p>
-<hr>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Recommended starting point:</strong> <code>MIRION_spec_1.csv</code> + <code>MIRION_meta_all_1.csv</code>. These two files together give you flux features across all wavelengths and all 8 candidate targets in a single join. The MRT files add complexity (quality flags, errors, spatial coordinates) and are worth exploring once you have a baseline model working.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Sanity Checks:</strong> Whenever you are manipulating data, you should perform <em>sanity checks</em>. That is, make sure that dataset you get after your manipulation “makes sense”. For example:</p>
+<ul>
+<li>You will likely need to join several datasets together for this project. Any time you join to datasets, you should make sure the resulting dataset has the correct number of rows and columns. You should also verify that the column names are what you want them to be. Other sanity checks might be:</li>
+<li>If you transform a variable, first take a glance at the values and make sure they don’t seems wrong (e.g.&nbsp;are suddenly <code>NA</code> or really small or really large) and then plot them to make.</li>
+<li>When you fit a model, plot the predicted values vs the true values and make sure there’s nothing… “weird”… (you’ll know “weird” when you see it).</li>
+</ul>
+</div>
+</div>
 </section>
-<section id="loading-mrt-fixed-width-files" class="level2">
-<h2 class="anchored" data-anchor-id="loading-mrt-fixed-width-files">Loading MRT Fixed-Width Files</h2>
-<p>The MRT files use a fixed-width format with a 38-line header. Use <code>pd.read_fwf</code> with explicit column specifications derived from the byte-by-byte description in each file’s header.</p>
-<section id="mrt-phot.txt" class="level3">
-<h3 class="anchored" data-anchor-id="mrt-phot.txt">MRT-phot.txt</h3>
-<p>This is the primary feature table. The column specs below come from the byte-by-byte table in the header (subtract 1 from the start byte for 0-based indexing).</p>
-<div id="d3648314" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyhere <span class="im">import</span> here</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>phot_colspecs <span class="op">=</span> [</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">0</span>, <span class="dv">4</span>),    <span class="co"># YB</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">5</span>, <span class="dv">14</span>),   <span class="co"># GLON</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">15</span>, <span class="dv">23</span>),  <span class="co"># GLAT</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">24</span>, <span class="dv">31</span>),  <span class="co"># MWPR</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">60</span>, <span class="dv">68</span>),  <span class="co"># F8</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">69</span>, <span class="dv">77</span>),  <span class="co"># e_F8</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">78</span>, <span class="dv">85</span>),  <span class="co"># F12</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">86</span>, <span class="dv">94</span>),  <span class="co"># e_F12</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">95</span>, <span class="dv">102</span>), <span class="co"># F24</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">103</span>, <span class="dv">110</span>),<span class="co"># e_F24</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">111</span>, <span class="dv">120</span>),<span class="co"># F70</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">121</span>, <span class="dv">130</span>),<span class="co"># e_F70</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">131</span>, <span class="dv">133</span>),<span class="co"># N8</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">134</span>, <span class="dv">136</span>),<span class="co"># N12</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">137</span>, <span class="dv">139</span>),<span class="co"># N24</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">140</span>, <span class="dv">141</span>),<span class="co"># N70</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">142</span>, <span class="dv">146</span>),<span class="co"># f_SAT</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">147</span>, <span class="dv">148</span>),<span class="co"># f_MULTI</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">149</span>, <span class="dv">153</span>),<span class="co"># f_NOSRC</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">154</span>, <span class="dv">158</span>),<span class="co"># f_PCONF</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">159</span>, <span class="dv">160</span>),<span class="co"># f_CEXT</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>phot_colnames <span class="op">=</span> [</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">"YB"</span>, <span class="st">"GLON"</span>, <span class="st">"GLAT"</span>, <span class="st">"MWPR"</span>,</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">"F8"</span>, <span class="st">"e_F8"</span>, <span class="st">"F12"</span>, <span class="st">"e_F12"</span>, <span class="st">"F24"</span>, <span class="st">"e_F24"</span>, <span class="st">"F70"</span>, <span class="st">"e_F70"</span>,</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">"N8"</span>, <span class="st">"N12"</span>, <span class="st">"N24"</span>, <span class="st">"N70"</span>,</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">"f_SAT"</span>, <span class="st">"f_MULTI"</span>, <span class="st">"f_NOSRC"</span>, <span class="st">"f_PCONF"</span>, <span class="st">"f_CEXT"</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>phot <span class="op">=</span> pd.read_fwf(</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    here(<span class="st">"data"</span>, <span class="st">"MRT-phot.txt"</span>),</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    colspecs<span class="op">=</span>phot_colspecs,</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    names<span class="op">=</span>phot_colnames,</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    skiprows<span class="op">=</span><span class="dv">38</span>,</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    encoding<span class="op">=</span><span class="st">'utf-8-sig'</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="file-paths-with-pyhere" class="level2">
+<h2 class="anchored" data-anchor-id="file-paths-with-pyhere">File Paths with pyhere</h2>
+<p>You may notice that when you are working with Quarto files, your file paths get a bit wonky. That is, when you click the <code>Run Cell</code> button at the top of each cell and and the <code>Preview</code> or <code>Render</code> button at the top of the document, it uses different types of file paths. So something that works one time may not work another time. For this reason, all code in this guide uses the <code>pyhere</code> package to construct file paths. <code>pyhere</code> locates your project root (the folder containing <code>pyproject.toml</code> or <code>.here</code>) and builds paths relative to it, so code works regardless of where you run it from.</p>
+<div id="fca636a9" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyhere <span class="im">import</span> here</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Resolves to &lt;project-root&gt;/data/MIRION_spec_1.csv</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> here(<span class="st">"data"</span>, <span class="st">"MIRION_spec_1.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If <code>here()</code> resolves to the wrong directory, create an empty <code>.here</code> file at your project root:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> .here</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="specific-transformations-youll-likely-need-to-make" class="level1">
+<h1>Specific Transformations You’ll Likely Need to Make</h1>
+<section id="transposing-mirion_spec_1.csv" class="level2">
+<h2 class="anchored" data-anchor-id="transposing-mirion_spec_1.csv">Transposing MIRION_spec_1.csv</h2>
+<p>This file has an unusual layout: the <strong>rows are wavelength bands</strong> (F8 through F1100) and the <strong>columns are YB IDs</strong>. You need to transpose it before use.</p>
+<div id="6b5e63ff" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyhere <span class="im">import</span> here</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the raw file — first column is WAVE (wavelength), rest are YB IDs</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>spec_raw <span class="op">=</span> pd.read_csv(</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    here(<span class="st">"data"</span>, <span class="st">"MIRION_spec_1.csv"</span>),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    index_col<span class="op">=</span><span class="dv">0</span>,       <span class="co"># WAVE column becomes the row index</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    encoding<span class="op">=</span><span class="st">'utf-8-sig'</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># spec_raw shape: (10 wavelengths) × (3945 YBs)</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Transpose: rows become YBs, columns become wavelength bands</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>spec <span class="op">=</span> spec_raw.T.copy()</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>spec.index.name <span class="op">=</span> <span class="st">"YB"</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>spec.columns <span class="op">=</span> [<span class="st">"F8"</span>, <span class="st">"F12"</span>, <span class="st">"F24"</span>, <span class="st">"F70"</span>, <span class="st">"F160"</span>, <span class="st">"F250"</span>, <span class="st">"F350"</span>, <span class="st">"F500"</span>, <span class="st">"F870"</span>, <span class="st">"F1100"</span>]</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># CRITICAL: convert the YB index to numeric before joining</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>spec.index <span class="op">=</span> pd.to_numeric(spec.index)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -386,38 +457,14 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Use <code>F8</code>, <code>F12</code>, <code>F24</code>, <code>F70</code> as column names — not bare numbers like <code>8</code>, <code>12</code>. Bare numeric column names cause issues in many pandas and scikit-learn operations.</p>
+<p><strong>Numeric index conversion is critical.</strong> After transposing, the YB values in the index are strings (e.g., <code>"6.0"</code>, <code>"7.0"</code>). The <code>meta</code> table has numeric YB values. If you join a string index to a numeric index, pandas produces an empty DataFrame with no error — a silent failure. <code>pd.to_numeric()</code> fixes this.</p>
 </div>
 </div>
 </section>
-<section id="mrt-dist.txt" class="level3">
-<h3 class="anchored" data-anchor-id="mrt-dist.txt">MRT-dist.txt</h3>
-<p>The same pattern applies for the distance file. Groups whose target is distance-dependent (<code>DIAM</code>, <code>MASS</code>, <code>L_BOL</code>) will need this file. Groups with distance-independent targets (<code>LM</code>, <code>TEMP</code>, <code>LRATIO</code>, <code>T_BOL</code>, <code>SURF_DENS</code>) can skip it for their main analysis.</p>
-<div id="e5fc794f" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dist_colspecs <span class="op">=</span> [</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">0</span>, <span class="dv">4</span>),    <span class="co"># YB</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">5</span>, <span class="dv">11</span>),   <span class="co"># DIST (kpc)</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">12</span>, <span class="dv">17</span>),  <span class="co"># e_DIST</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... (read the full header for additional columns)</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>dist_colnames <span class="op">=</span> [<span class="st">"YB"</span>, <span class="st">"DIST"</span>, <span class="st">"e_DIST"</span>]</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>dist <span class="op">=</span> pd.read_fwf(</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    here(<span class="st">"data"</span>, <span class="st">"MRT-dist.txt"</span>),</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    colspecs<span class="op">=</span>dist_colspecs,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    names<span class="op">=</span>dist_colnames,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    skiprows<span class="op">=</span><span class="dv">38</span>,</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    encoding<span class="op">=</span><span class="st">'utf-8-sig'</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<hr>
-</section>
-</section>
-<section id="loading-mirion-csv-files" class="level2">
-<h2 class="anchored" data-anchor-id="loading-mirion-csv-files">Loading MIRION CSV Files</h2>
-<div id="57b6ff38" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>meta <span class="op">=</span> pd.read_csv(here(<span class="st">"data"</span>, <span class="st">"MIRION_meta_all_1.csv"</span>), encoding<span class="op">=</span><span class="st">'utf-8-sig'</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>meta_din <span class="op">=</span> pd.read_csv(here(<span class="st">"data"</span>, <span class="st">"MIRION_meta_din_1.csv"</span>), encoding<span class="op">=</span><span class="st">'utf-8-sig'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="loading-mirion_meta_all_1.csv" class="level2">
+<h2 class="anchored" data-anchor-id="loading-mirion_meta_all_1.csv">Loading MIRION_meta_all_1.csv</h2>
+<div id="4f975d6b" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>meta <span class="op">=</span> pd.read_csv(here(<span class="st">"data"</span>, <span class="st">"MIRION_meta_all_1.csv"</span>), encoding<span class="op">=</span><span class="st">'utf-8-sig'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -432,27 +479,61 @@ Note
 <p><strong>BOM character warning.</strong> These CSV files have a UTF-8 BOM marker. Without <code>encoding='utf-8-sig'</code>, the first column name will appear as <code>﻿YB</code> (with an invisible prefix character) instead of <code>YB</code>. This causes silent <code>KeyError</code> failures when you try to use the <code>YB</code> column. Always use <code>encoding='utf-8-sig'</code> when loading these files.</p>
 </div>
 </div>
-<hr>
 </section>
-<section id="transposing-mirion_spec_1.csv" class="level2">
-<h2 class="anchored" data-anchor-id="transposing-mirion_spec_1.csv">Transposing MIRION_spec_1.csv</h2>
-<p>This file has an unusual layout: the <strong>rows are wavelength bands</strong> (F8 through F1100) and the <strong>columns are YB IDs</strong>. You need to transpose it before use.</p>
-<div id="bb0adb0a" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the raw file — first column is WAVE (wavelength), rest are YB IDs</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>spec_raw <span class="op">=</span> pd.read_csv(</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    here(<span class="st">"data"</span>, <span class="st">"MIRION_spec_1.csv"</span>),</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    index_col<span class="op">=</span><span class="dv">0</span>,       <span class="co"># WAVE column becomes the row index</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    encoding<span class="op">=</span><span class="st">'utf-8-sig'</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># spec_raw shape: (10 wavelengths) × (3945 YBs)</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Transpose: rows become YBs, columns become wavelength bands</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>spec <span class="op">=</span> spec_raw.T.copy()</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>spec.index.name <span class="op">=</span> <span class="st">"YB"</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>spec.columns <span class="op">=</span> [<span class="st">"F8"</span>, <span class="st">"F12"</span>, <span class="st">"F24"</span>, <span class="st">"F70"</span>, <span class="st">"F160"</span>, <span class="st">"F250"</span>, <span class="st">"F350"</span>, <span class="st">"F500"</span>, <span class="st">"F870"</span>, <span class="st">"F1100"</span>]</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># CRITICAL: convert the YB index to numeric before joining</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>spec.index <span class="op">=</span> pd.to_numeric(spec.index)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="joining-spec-meta" class="level2">
+<h2 class="anchored" data-anchor-id="joining-spec-meta">Joining spec + meta</h2>
+<p>If you’re not familiar with joining data (e.g.&nbsp;inner and left joins) it’s probably worth taking 10 minutes to read about it. <a href="https://medium.com/@benson21/inner-join-vs-left-join-explained-with-simple-cases-cf5c695358ce">Here</a> seems to be a good introduction.</p>
+<div id="bf725035" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set YB as the index for meta, then inner join onto spec</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>meta_indexed <span class="op">=</span> meta.set_index(<span class="st">"YB"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Inner join: ~3,945 rows (only YBs present in both files)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spec.join(meta_indexed, how<span class="op">=</span><span class="st">"inner"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This is your baseline working dataset. <code>spec</code> already has the index set to <code>YB</code> from the transpose step above.</p>
+</section>
+<section id="enriching-with-mrt-phot.txt" class="level2">
+<h2 class="anchored" data-anchor-id="enriching-with-mrt-phot.txt">Enriching with MRT-phot.txt</h2>
+<p><code>MRT-phot.txt</code> contains the <strong>8, 12, 24, and 70 µm fluxes</strong> from the Spitzer telescope. They <strong>SHOULD</strong> already in your <code>spec</code> dataframe, but you should probably check if they match exactly. However, it also provides flux <strong>errors</strong> (<code>e_F8</code>, <code>e_F12</code>, etc.), <strong>source counts</strong> (<code>N8</code>, <code>N12</code>, <code>N24</code>, <code>N70</code>), spatial coordinates (<code>GLON</code>, <code>GLAT</code>), and quality flags (<code>f_PCONF</code>, <code>f_NOSRC</code>, <code>f_SAT</code>, etc.) that are not available from the MIRION files. This should likely be the next dataset (after <code>MRT-dist.txt</code> if you’re working with a target that isn’t distance independent) you turn to if you’d like to improve your model. Load it when you want those additional columns.</p>
+<p>The MRT files use a fixed-width format with a 38-line header. Use <code>pd.read_fwf</code> with explicit column specifications derived from the byte-by-byte description in each file’s header.</p>
+<div id="b2d5a4ae" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>phot_colspecs <span class="op">=</span> [</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">0</span>, <span class="dv">4</span>),    <span class="co"># YB</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">5</span>, <span class="dv">14</span>),   <span class="co"># GLON</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">15</span>, <span class="dv">23</span>),  <span class="co"># GLAT</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">24</span>, <span class="dv">31</span>),  <span class="co"># MWPR</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">60</span>, <span class="dv">68</span>),  <span class="co"># F8</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">69</span>, <span class="dv">77</span>),  <span class="co"># e_F8</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">78</span>, <span class="dv">85</span>),  <span class="co"># F12</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">86</span>, <span class="dv">94</span>),  <span class="co"># e_F12</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">95</span>, <span class="dv">102</span>), <span class="co"># F24</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">103</span>, <span class="dv">110</span>),<span class="co"># e_F24</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">111</span>, <span class="dv">120</span>),<span class="co"># F70</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">121</span>, <span class="dv">130</span>),<span class="co"># e_F70</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">131</span>, <span class="dv">133</span>),<span class="co"># N8</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">134</span>, <span class="dv">136</span>),<span class="co"># N12</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">137</span>, <span class="dv">139</span>),<span class="co"># N24</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">140</span>, <span class="dv">141</span>),<span class="co"># N70</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">142</span>, <span class="dv">146</span>),<span class="co"># f_SAT</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">147</span>, <span class="dv">148</span>),<span class="co"># f_MULTI</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">149</span>, <span class="dv">153</span>),<span class="co"># f_NOSRC</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">154</span>, <span class="dv">158</span>),<span class="co"># f_PCONF</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">159</span>, <span class="dv">160</span>),<span class="co"># f_CEXT</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>phot_colnames <span class="op">=</span> [</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"YB"</span>, <span class="st">"GLON"</span>, <span class="st">"GLAT"</span>, <span class="st">"MWPR"</span>,</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"F8"</span>, <span class="st">"e_F8"</span>, <span class="st">"F12"</span>, <span class="st">"e_F12"</span>, <span class="st">"F24"</span>, <span class="st">"e_F24"</span>, <span class="st">"F70"</span>, <span class="st">"e_F70"</span>,</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"N8"</span>, <span class="st">"N12"</span>, <span class="st">"N24"</span>, <span class="st">"N70"</span>,</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">"f_SAT"</span>, <span class="st">"f_MULTI"</span>, <span class="st">"f_NOSRC"</span>, <span class="st">"f_PCONF"</span>, <span class="st">"f_CEXT"</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>phot <span class="op">=</span> pd.read_fwf(</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    here(<span class="st">"data"</span>, <span class="st">"MRT-phot.txt"</span>),</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    colspecs<span class="op">=</span>phot_colspecs,</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    names<span class="op">=</span>phot_colnames,</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    skiprows<span class="op">=</span><span class="dv">38</span>,</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    encoding<span class="op">=</span><span class="st">'utf-8-sig'</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -464,108 +545,139 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Numeric index conversion is critical.</strong> After transposing, the YB values in the index are strings (e.g., <code>"6.0"</code>, <code>"7.0"</code>). The <code>phot</code> and <code>meta</code> tables have numeric YB values. If you join a string index to a numeric index, pandas produces an empty DataFrame with no error — a silent failure. <code>pd.to_numeric()</code> fixes this.</p>
+<p>Use <code>F8</code>, <code>F12</code>, <code>F24</code>, <code>F70</code> as column names, not bare numbers like <code>8</code>, <code>12</code>. Bare numeric column names cause issues in many pandas and scikit-learn operations.</p>
 </div>
 </div>
-<hr>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When you join this data, you should decide whether you want to keep both sets of wavelengths (i.e.&nbsp;have two copies each of <code>F8</code> through <code>F70</code> or if you want to overwrite).</p>
+</div>
+</div>
+<section id="joining-mrt-phot-with-your-working-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="joining-mrt-phot-with-your-working-dataset">Joining MRT-phot with your working dataset</h3>
+<p>Since <code>spec</code> already contains <code>F8</code>, <code>F12</code>, <code>F24</code>, <code>F70</code>, you should drop those duplicate columns from <code>phot</code> before joining, keeping only the new information (errors, counts, coordinates, flags):</p>
+<div id="fff1426b" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>phot_indexed <span class="op">=</span> phot.set_index(<span class="st">"YB"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop flux columns already present in df from spec</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>phot_extra <span class="op">=</span> phot_indexed.drop(columns<span class="op">=</span>[<span class="st">"F8"</span>, <span class="st">"F12"</span>, <span class="st">"F24"</span>, <span class="st">"F70"</span>])</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Left join: keeps all ~3,945 rows, adds phot columns where available</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.join(phot_extra, how<span class="op">=</span><span class="st">"left"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>The other MRT datasets (<code>MRT-dist.txt</code>, <code>MRT-velo.txt</code>, <code>MRT-xmat.txt</code>, <code>MRT-hcsc.txt</code>) can be joined in the same fashion.</strong> Refer to each file’s byte-by-byte header to construct the appropriate <code>colspecs</code> and <code>colnames</code>, then left-join onto <code>df</code>.</p>
 </section>
-<section id="joining-tables-on-yb" class="level2">
-<h2 class="anchored" data-anchor-id="joining-tables-on-yb">Joining Tables on YB</h2>
-<div id="22df8f87" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set YB as the index first</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>phot_indexed <span class="op">=</span> phot.set_index(<span class="st">"YB"</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>meta_indexed <span class="op">=</span> meta.set_index(<span class="st">"YB"</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Inner join: ~3,945 rows (only YBs with both photometry AND target properties)</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> phot_indexed.join(meta_indexed, how<span class="op">=</span><span class="st">"inner"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>To add supplementary tables:</p>
-<div id="81f4bc27" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dist_indexed <span class="op">=</span> dist.set_index(<span class="st">"YB"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> phot_indexed.join(meta_indexed, how<span class="op">=</span><span class="st">"inner"</span>).join(dist_indexed, how<span class="op">=</span><span class="st">"left"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Use <code>how="left"</code> for supplementary tables (distance, velocity) so you don’t lose rows where those values are unavailable.</p>
-<p><strong>Why inner join for the main tables?</strong> An outer join would give 6,176 rows, but most would have NaN target values — useless for supervised learning. An inner join gives only the ~3,945 rows where both photometry and a target exist.</p>
-<hr>
 </section>
-<section id="handling-quality-flags" class="level2">
-<h2 class="anchored" data-anchor-id="handling-quality-flags">Handling Quality Flags</h2>
+</section>
+<section id="other-transformation-to-consider" class="level1">
+<h1>Other Transformation to Consider</h1>
+<p>In order to obtain the best model possible, you will almost certainly have to apply transformations to your data before the modeling process. Remember that these transformations should be considered part of your modeling process so you can use performance metrics (e.g.&nbsp;<span class="math inline">\(R^2\)</span>, RMSE, etc.) along with cross-validation to figure out which transformations are best. Here are some things that you can try, and may or may not be helpful.</p>
+<section id="taking-ratios-of-wavelength-features" class="level2">
+<h2 class="anchored" data-anchor-id="taking-ratios-of-wavelength-features">Taking Ratio’s of Wavelength Features</h2>
+<p>The shape of an object’s spectral energy distribution (SED), how bright it is at different wavelengths relative to each other, can be more informative than the raw fluxes. This is, in part, due to how distance impacts the SED measurements. When you take ratios of the wavelengths, the different impact of distance tends to cancel out, which can improve model performance.</p>
+<p>Two approaches worth considering:</p>
+<p><strong>Approach 1: Wavelength ratios</strong> capture the relative brightness between bands, independently of total flux (and thus independently of distance). For example:</p>
+<div id="e5b0d88f" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ratio of 70 µm to 24 µm</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"F70_F24"</span>] <span class="op">=</span> df[<span class="st">"F70"</span>] <span class="op">/</span> df[<span class="st">"F24"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You will likely want to consider all possible ratios and, with all 10 wavelength bands from <code>MIRION_spec_1.csv</code> this amounts to <span class="math inline">\(\binom{10}{2} = 45\)</span> features. Some questions you’ll want to think about:</p>
+<ul>
+<li>If either flux is <code>NaN</code> or zero, the ratio may be <code>NaN</code> or infinite, how are you going to handle these cases?</li>
+<li>If you compute the ratio’s, are you going to keep the original non-ratio features?</li>
+<li>How will you determine which wavelengths are “most important” if you are taking ratios and the different wavelengths appear in several different variables?</li>
+</ul>
+<p><strong>Apprach 2: Row normalization</strong> is another approach to consider. That is, divide each row’s flux values by the row sum so each source’s SED sums to 1. This emphasizes the shape of the spectrum rather than its overall brightness.</p>
+<div id="6f335cc7" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>flux_cols <span class="op">=</span> [<span class="st">"F8"</span>, <span class="st">"F12"</span>, <span class="st">"F24"</span>, <span class="st">"F70"</span>, <span class="st">"F160"</span>, <span class="st">"F250"</span>, <span class="st">"F350"</span>, <span class="st">"F500"</span>, <span class="st">"F870"</span>, <span class="st">"F1100"</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>row_sums <span class="op">=</span> df[flux_cols].<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>df_norm <span class="op">=</span> df[flux_cols].div(row_sums, axis<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="handling-quality-flags-and-missing-values" class="level2">
+<h2 class="anchored" data-anchor-id="handling-quality-flags-and-missing-values">Handling Quality Flags and Missing Values</h2>
 <section id="f_pconf-poor-photometric-confidence" class="level3">
 <h3 class="anchored" data-anchor-id="f_pconf-poor-photometric-confidence">f_PCONF (Poor Photometric Confidence)</h3>
-<p><code>f_PCONF</code> is a 4-character string where each character corresponds to a band (8, 12, 24, 70 µm, left to right). A <code>"1"</code> in a position means the photometry in that band has poor confidence and should not be trusted.</p>
-<div id="40d1890a" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>bands <span class="op">=</span> [<span class="st">"F8"</span>, <span class="st">"F12"</span>, <span class="st">"F24"</span>, <span class="st">"F70"</span>]</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pconf <span class="op">=</span> phot[<span class="st">"f_PCONF"</span>].fillna(<span class="st">"0000"</span>).astype(<span class="bu">str</span>).<span class="bu">str</span>.strip().<span class="bu">str</span>.zfill(<span class="dv">4</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, band <span class="kw">in</span> <span class="bu">enumerate</span>(bands):</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    phot.loc[pconf.<span class="bu">str</span>[i] <span class="op">==</span> <span class="st">"1"</span>, band] <span class="op">=</span> np.nan</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>f_SAT</code>, <code>f_NOSRC</code>, and<code>f_PCONF</code> are 4-character strings where each character corresponds to a band (8, 12, 24, 70 µm, left to right). A <code>"1"</code> in a position means the photometry in that band has been flagged. For example suppose :</p>
+<ul>
+<li><code>f_PCONF</code> = <code>0010</code>: this means band 24 has poor confidence while the other bands are fine</li>
+<li><code>f_SAT</code> - <code>0101</code>: this mean that the images from bands 12 and 70 were saturated</li>
+</ul>
+<div id="d98d9e05" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>bands <span class="op">=</span> [<span class="st">"F8"</span>, <span class="st">"F12"</span>, <span class="st">"F24"</span>, <span class="st">"F70"</span>]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>pconf <span class="op">=</span> df[<span class="st">"f_PCONF"</span>].fillna(<span class="st">"0000"</span>).astype(<span class="bu">str</span>).<span class="bu">str</span>.strip().<span class="bu">str</span>.zfill(<span class="dv">4</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, band <span class="kw">in</span> <span class="bu">enumerate</span>(bands):</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    df.loc[pconf.<span class="bu">str</span>[i] <span class="op">==</span> <span class="st">"1"</span>, band] <span class="op">=</span> np.nan</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Apply the same approach for <code>f_NOSRC</code> (no source detected — the flux value is effectively noise).</p>
+<p><code>f_MULTI</code> and <code>f_CEXT</code> apply to the entire <code>Yellowball</code> instead of the wavelength so there is only one flag per row.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that the quality flags only apply to the 8, 12, 24, and 17 <span class="math inline">\(\mu\)</span>m bands.</p>
+</div>
+</div>
 </section>
 <section id="missing-value-sentinel-999" class="level3">
 <h3 class="anchored" data-anchor-id="missing-value-sentinel-999">Missing Value Sentinel (999)</h3>
-<div class="callout callout-style-default callout-note callout-titled">
+<p>Some numeric columns in the MRT files use <code>999</code> or <code>999.0</code> as a placeholder for missing values. Note that the values in the MIRION data should already have the missing values replaced by <code>NaN</code>. When leading the MRT data, you can replace these with <code>NaN</code> after loading:</p>
+<div id="bb0b48fc" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df.replace(<span class="dv">999</span>, np.nan, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df.replace(<span class="fl">999.0</span>, np.nan, inplace<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="checking-for-missing-values" class="level3">
+<h3 class="anchored" data-anchor-id="checking-for-missing-values">Checking for Missing Values</h3>
+<p>Before modeling, understand your missingness pattern.</p>
+<div id="7c7eeb58" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> missingno <span class="im">as</span> msno</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itables <span class="im">import</span> show</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary counts</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>show(df.isnull().<span class="bu">sum</span>().rename(<span class="st">"missing"</span>).to_frame())</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Visual matrix — good for spotting patterns</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>msno.matrix(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Some numeric columns in the MRT files use <code>999</code> or <code>999.0</code> as a placeholder for missing values. Replace these with <code>NaN</code> after loading:</p>
-<div id="a27df8aa" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df.replace(<span class="dv">999</span>, np.nan, inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df.replace(<span class="fl">999.0</span>, np.nan, inplace<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Key rule: never impute your target variable.</strong> Drop rows where your assigned target is <code>NaN</code> before any modeling.</p>
+<div id="10e8144d" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df_clean <span class="op">=</span> df.dropna(subset<span class="op">=</span>[<span class="st">"YOUR_TARGET"</span>])  <span class="co"># replace with your actual target name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
-<hr>
 </section>
 </section>
-<section id="checking-for-missing-values" class="level2">
-<h2 class="anchored" data-anchor-id="checking-for-missing-values">Checking for Missing Values</h2>
-<p>Before modeling, understand your missingness pattern.</p>
-<div id="5c7bff6f" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> missingno <span class="im">as</span> msno</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itables <span class="im">import</span> show</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary counts</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>show(df.isnull().<span class="bu">sum</span>().rename(<span class="st">"missing"</span>).to_frame())</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Visual matrix — good for spotting patterns</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>msno.matrix(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>F12 and F24 in particular have substantial missingness. Think carefully about whether to drop those rows or impute.</p>
-<p><strong>Key rule: never impute your target variable.</strong> Drop rows where your assigned target is NaN before any modeling.</p>
-<div id="7eb7bd7d" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_clean <span class="op">=</span> df.dropna(subset<span class="op">=</span>[<span class="st">"YOUR_TARGET"</span>])  <span class="co"># replace with your actual target name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>For feature missingness inside scikit-learn Pipelines, use <code>SimpleImputer</code>:</p>
-<div id="c35295dd" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.impute <span class="im">import</span> SimpleImputer</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>imputer <span class="op">=</span> SimpleImputer(strategy<span class="op">=</span><span class="st">"median"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<hr>
-</section>
-<section id="log-transforming-targets" class="level2">
-<h2 class="anchored" data-anchor-id="log-transforming-targets">Log-Transforming Targets</h2>
-<p>Some target variables span many orders of magnitude. Before modeling, plot a histogram of your assigned target — if it is heavily skewed, a log transformation will usually improve model performance.</p>
-<p>When reporting predictions, make sure to reverse any transformation you applied (e.g., <code>np.exp()</code> or <code>10**pred</code> as appropriate).</p>
-<hr>
-</section>
-<section id="log-ratio-features" class="level2">
-<h2 class="anchored" data-anchor-id="log-ratio-features">Log-Ratio Features</h2>
-<p>The shape of an object’s spectral energy distribution (SED) — how bright it is at different wavelengths relative to each other — can be more informative than the raw fluxes. Log-ratios of flux bands capture this shape independently of total brightness.</p>
-<div id="cc97286d" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: log ratio of 70 µm to 24 µm (a warm dust indicator)</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"log_F70_F24"</span>] <span class="op">=</span> np.log10(df[<span class="st">"F70"</span>] <span class="op">/</span> df[<span class="st">"F24"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>If either flux is NaN or zero, the ratio will be NaN or infinite. Handle these downstream in your imputation step or filter them out beforehand.</p>
-<p>Potential ratios to explore: F70/F24, F24/F12, F12/F8. With the long-wave bands from <code>MIRION_spec_1.csv</code> you can compute many more combinations.</p>
+<section id="transforming-individual-variables" class="level2">
+<h2 class="anchored" data-anchor-id="transforming-individual-variables">Transforming Individual Variables</h2>
+<p>Some target variables span many orders of magnitude or are heavily right-skewed. For methods sensitive to scale and distribution (e.g., linear regression, kNN), applying a log, Yeo-Johnson, or Box-Cox transformation before modeling and inverting it on predictions can improve performance. Plot a histogram of your assigned target first to see if a transformation is warranted and carefully think about which model you’re using and whether a transformation will even make a difference. The same idea applies to your features.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -986,6 +1098,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../project/project-instructions.html" class="pagination-link" aria-label="Instructions">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Instructions</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">

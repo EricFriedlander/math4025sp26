@@ -30,6 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../project/data-wrangling-tips.html" rel="next">
 <link href="../course-info/computing-python-resources.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -181,6 +182,12 @@ window.Quarto = {
  <span class="menu-text">Instructions</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../project/data-wrangling-tips.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Wrangling Tips</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -254,10 +261,10 @@ window.Quarto = {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>“Yellowballs” are compact, roughly circular structures in the Milky Way first identified by citizen scientists participating in the <a href="https://www.milkywayproject.org/">Milky Way Project</a>, an online image classification platform where citizen scientists classify images from the Spitzer Space Telescope. The telescopse uses something called photometry to measure their brightness at different wavelengths. Yellowballs are candidate sites of intermediate- to high-mass star formation — regions where gas and dust are being heated and compressed by newly forming stars and appear “yellow” in color due to the wavelengths they emit most strongly at.</p>
-<p><strong>What is photometry?</strong> Photometry is the measurement of how bright an astronomical object appears at specific wavelengths of light. For this project, you should think of different wave lengths of light as your features, where the value associated with each wavelength is called a <em>flux density</em>. These measurements are obtained from a telescope equipped with different filters (or detector channels) and record a flux density at each wavelength specified by the filter, producing a set of brightness measurements across the electromagnetic spectrum. Together, these measurements form a <em>spectral energy distribution (SED)</em>, a kind of fingerprint that (hopefully) encodes information about the object’s physical properties (e.g., temperature, mass, luminosity, and physical size). Rather than observing each object individually with expensive follow-up instruments, photometry gives astronomers a fast, large-scale way to characterize thousands of objects simultaneously.</p>
+<p>“Yellowballs” are compact, roughly circular structures in the Milky Way first identified by citizen scientists participating in the <a href="https://www.milkywayproject.org/">Milky Way Project</a>, an online image classification platform where citizen scientists classify images from the Spitzer Space Telescope. Astronomers use something called photometry to measure the brightness of astronomical objects at different wavelengths. Yellowballs are candidate sites of intermediate- to high-mass star formation. That is, regions where gas and dust are being heated and compressed by newly forming stars and appear “yellow” in color due to the wavelengths they emit most strongly at.</p>
+<p><strong>What is photometry?</strong> Photometry is the measurement of how bright an astronomical object appears at specific wavelengths of light. For this project, you should think of different wave lengths of light as your features, where the value associated with each wavelength is called a <em>flux density</em>. These measurements are obtained from a telescope equipped with different filters (or detector channels) and record a flux density at each wavelength specified by the filter, producing a set of brightness measurements across the electromagnetic spectrum. Together, these measurements form a <em>spectral energy distribution (SED)</em>, a kind of fingerprint that (hopefully) encodes information about the object’s physical properties (e.g., temperature, mass, luminosity, and physical size). Rather than observing each object individually with expensive follow-up instruments, photometry gives astronomers a fast, large-scale way to characterize thousands of objects simultaneously. Once SEDs (or “many observations”) have been used to characterize large numbers of different objects, other objects can sometimes be classified by a more limited set of observations (e.g., by a few combinations of wavelengths, rather than many individual ones.)</p>
 <p>The <strong>MIRION catalog</strong> (Milky Way Infrared ONset; Wolf-Chase et al.&nbsp;2025) contains 6,176 Yellowballs, with physical properties derived for 3,945 of them using multi-wavelength photometry from Spitzer and Herschel space telescopes.</p>
-<p><strong>The scientific question:</strong> Estimating the physical properties from the photometric signature alone is both a time-intensive process and relies on a wider range of photometric measurements than is available in the MIRION catalog. So our research questions are:</p>
+<p><strong>The scientific question:</strong> Estimating the physical properties of objects is a time-intensive process that typically relies on a wide range of observations and measurements. So our research questions are:</p>
 <blockquote class="blockquote">
 <p>Can we predict a physical property of a Yellowball from its infrared photometric signature in the MIRION catalog? If so, which wavelengths are most important for making accurate predictions, and what does that tell us about the underlying physics of these objects?</p>
 </blockquote>
@@ -266,7 +273,7 @@ window.Quarto = {
 <section id="your-assignment" class="level2">
 <h2 class="anchored" data-anchor-id="your-assignment">Your Assignment</h2>
 <p>Each group is assigned one physical property of Yellowballs to predict. <strong>See Canvas for your group’s assigned target variable.</strong></p>
-<p>The table below describes all eight target variables. Each of these variables represents a physical property of the Yellowballs in our data. Three of these variables (DIAM, MASS, L_BOL) are what we call <strong>distance-dependent</strong> and will be much harder to predict because measurement of their physical properties rely on the distance to the Yellowball. groups assigned those targets will need to incorporate the distance data file into their analysis.</p>
+<p>The table below describes all eight target variables. Each of these variables represents a physical property of the Yellowballs in our data. These properties were estimated from the Herschel Space Observatory/Telescope and pulled from the Herschel InfraRed Galactic Plane Survey (Hi-GAL). Three of these variables (DIAM, MASS, L_BOL) are what we call <strong>distance-dependent</strong> and will be much harder to predict because measurement of their physical properties rely on the distance to the Yellowball. Groups assigned those targets will need to incorporate the distance data file into their analysis.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 16%">
@@ -338,7 +345,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="recommended-reading">Recommended Reading</h2>
 <p>These papers provide scientific context for the data and the astrophysical questions your analysis addresses. You are not expected to understand every technical detail, but reading the introductions and results sections will help you interpret your findings meaningfully.</p>
 <ul>
-<li><p><strong>Wolf-Chase et al.&nbsp;(2025)</strong> — The MIRION catalog paper: describes the Yellowball sample, the photometry, and how the physical properties were derived. <a href="https://iopscience.iop.org/article/10.3847/1538-4357/ae31f6" class="uri">https://iopscience.iop.org/article/10.3847/1538-4357/ae31f6</a></p></li>
+<li><p><strong>Devine et al.&nbsp;2026 et al.&nbsp;(2025)</strong> — The MIRION catalog paper: describes the Yellowball sample, the photometry, and how the physical properties were derived. <a href="https://iopscience.iop.org/article/10.3847/1538-4357/ae31f6" class="uri">https://iopscience.iop.org/article/10.3847/1538-4357/ae31f6</a></p></li>
 <li><p><strong>Anderson et al.&nbsp;(2012)</strong> — Background on multi-wavelength infrared methods for characterizing star-forming regions. <a href="https://www.aanda.org/articles/aa/pdf/2012/01/aa17640-11.pdf" class="uri">https://www.aanda.org/articles/aa/pdf/2012/01/aa17640-11.pdf</a></p></li>
 <li><p><strong>Elia et al.&nbsp;(2017)</strong> —The Hi-GAL compact source catalogue – describes process for extracting physical properties from Herschel photometry, which is relevant for understanding the target variables. <a href="https://academic.oup.com/mnras/article-pdf/doi/10.1093/mnras/stx1357/19343235/stx1357.pdf" class="uri">https://academic.oup.com/mnras/article-pdf/doi/10.1093/mnras/stx1357/19343235/stx1357.pdf</a></p></li>
 </ul>
@@ -1000,6 +1007,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../project/data-wrangling-tips.html" class="pagination-link" aria-label="Data Wrangling Tips">
+        <span class="nav-page-text">Data Wrangling Tips</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
