@@ -188,6 +188,12 @@ window.Quarto = {
  <span class="menu-text">Data Wrangling Tips</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../project/quarto-python-guide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quarto Python Guide</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -214,7 +220,6 @@ window.Quarto = {
   <li><a href="#mrt-phot.txt-spitzer-photometry-primary-feature-table" id="toc-mrt-phot.txt-spitzer-photometry-primary-feature-table" class="nav-link" data-scroll-target="#mrt-phot.txt-spitzer-photometry-primary-feature-table">MRT-phot.txt — Spitzer Photometry <em>(primary feature table)</em></a></li>
   <li><a href="#other-datasets" id="toc-other-datasets" class="nav-link" data-scroll-target="#other-datasets">Other datasets</a></li>
   <li><a href="#mrt-dist.txt-distances" id="toc-mrt-dist.txt-distances" class="nav-link" data-scroll-target="#mrt-dist.txt-distances">MRT-dist.txt — Distances</a></li>
-  <li><a href="#mrt-velo.txt-radial-velocities" id="toc-mrt-velo.txt-radial-velocities" class="nav-link" data-scroll-target="#mrt-velo.txt-radial-velocities">MRT-velo.txt — Radial Velocities</a></li>
   <li><a href="#mrt-xmat.txt-catalog-cross-matches" id="toc-mrt-xmat.txt-catalog-cross-matches" class="nav-link" data-scroll-target="#mrt-xmat.txt-catalog-cross-matches">MRT-xmat.txt — Catalog Cross-Matches</a></li>
   <li><a href="#mrt-hcsc.txt-herschel-derived-properties" id="toc-mrt-hcsc.txt-herschel-derived-properties" class="nav-link" data-scroll-target="#mrt-hcsc.txt-herschel-derived-properties">MRT-hcsc.txt — Herschel-Derived Properties</a></li>
   </ul></li>
@@ -264,11 +269,19 @@ window.Quarto = {
 <p>“Yellowballs” are compact, roughly circular structures in the Milky Way first identified by citizen scientists participating in the <a href="https://www.milkywayproject.org/">Milky Way Project</a>, an online image classification platform where citizen scientists classify images from the Spitzer Space Telescope. Astronomers use something called photometry to measure the brightness of astronomical objects at different wavelengths. Yellowballs are candidate sites of intermediate- to high-mass star formation. That is, regions where gas and dust are being heated and compressed by newly forming stars and appear “yellow” in color due to the wavelengths they emit most strongly at.</p>
 <p><strong>What is photometry?</strong> Photometry is the measurement of how bright an astronomical object appears at specific wavelengths of light. For this project, you should think of different wave lengths of light as your features, where the value associated with each wavelength is called a <em>flux density</em>. These measurements are obtained from a telescope equipped with different filters (or detector channels) and record a flux density at each wavelength specified by the filter, producing a set of brightness measurements across the electromagnetic spectrum. Together, these measurements form a <em>spectral energy distribution (SED)</em>, a kind of fingerprint that (hopefully) encodes information about the object’s physical properties (e.g., temperature, mass, luminosity, and physical size). Rather than observing each object individually with expensive follow-up instruments, photometry gives astronomers a fast, large-scale way to characterize thousands of objects simultaneously. Once SEDs (or “many observations”) have been used to characterize large numbers of different objects, other objects can sometimes be classified by a more limited set of observations (e.g., by a few combinations of wavelengths, rather than many individual ones.)</p>
 <p>The <strong>MIRION catalog</strong> (Milky Way Infrared ONset; Wolf-Chase et al.&nbsp;2025) contains 6,176 Yellowballs, with physical properties derived for 3,945 of them using multi-wavelength photometry from Spitzer and Herschel space telescopes.</p>
-<p><strong>The scientific question:</strong> Estimating the physical properties of objects is a time-intensive process that typically relies on a wide range of observations and measurements. So our research questions are:</p>
+<p><strong>The scientific question:</strong> Estimating the physical properties of objects is a time-intensive process that typically relies on a wide range of observations and measurements. Accurate photometric predictions would allow astronomers to characterize newly discovered objects without the time-intensive follow-up observations needed to derive physical properties directly. Moreover, understanding which features are driving these predictions is also important. So our research questions are:</p>
 <blockquote class="blockquote">
-<p>Can we predict a physical property of a Yellowball from its infrared photometric signature in the MIRION catalog? If so, which wavelengths are most important for making accurate predictions, and what does that tell us about the underlying physics of these objects?</p>
+<p>Can we predict a physical property of a Yellowball from its infrared photometric signature in the MIRION catalog?</p>
 </blockquote>
-<p>Accurate photometric predictions would allow astronomers to characterize newly discovered objects without the time-intensive follow-up observations needed to derive physical properties directly.</p>
+<blockquote class="blockquote">
+<p>If so, which wavelengths are most important for making accurate predictions, and what does that tell us about the underlying physics of these objects?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Can we make accurate predictions using only the 2-70 <span class="math inline">\(\mu\)</span>m wavelengths?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Are there any other features that seem particularly important?</p>
+</blockquote>
 </section>
 <section id="your-assignment" class="level2">
 <h2 class="anchored" data-anchor-id="your-assignment">Your Assignment</h2>
@@ -345,7 +358,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="recommended-reading">Recommended Reading</h2>
 <p>These papers provide scientific context for the data and the astrophysical questions your analysis addresses. You are not expected to understand every technical detail, but reading the introductions and results sections will help you interpret your findings meaningfully.</p>
 <ul>
-<li><p><strong>Devine et al.&nbsp;2026 et al.&nbsp;(2025)</strong> — The MIRION catalog paper: describes the Yellowball sample, the photometry, and how the physical properties were derived. <a href="https://iopscience.iop.org/article/10.3847/1538-4357/ae31f6" class="uri">https://iopscience.iop.org/article/10.3847/1538-4357/ae31f6</a></p></li>
+<li><p><strong>Devine et al.&nbsp;(2026)</strong> — The MIRION catalog paper: describes the Yellowball sample, the photometry, and how the physical properties were derived. <a href="https://iopscience.iop.org/article/10.3847/1538-4357/ae31f6" class="uri">https://iopscience.iop.org/article/10.3847/1538-4357/ae31f6</a></p></li>
 <li><p><strong>Anderson et al.&nbsp;(2012)</strong> — Background on multi-wavelength infrared methods for characterizing star-forming regions. <a href="https://www.aanda.org/articles/aa/pdf/2012/01/aa17640-11.pdf" class="uri">https://www.aanda.org/articles/aa/pdf/2012/01/aa17640-11.pdf</a></p></li>
 <li><p><strong>Elia et al.&nbsp;(2017)</strong> —The Hi-GAL compact source catalogue – describes process for extracting physical properties from Herschel photometry, which is relevant for understanding the target variables. <a href="https://academic.oup.com/mnras/article-pdf/doi/10.1093/mnras/stx1357/19343235/stx1357.pdf" class="uri">https://academic.oup.com/mnras/article-pdf/doi/10.1093/mnras/stx1357/19343235/stx1357.pdf</a></p></li>
 </ul>
@@ -366,7 +379,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="mirion_spec_1.csv-long-wavelength-photometry">MIRION_spec_1.csv — Long-Wavelength Photometry</h3>
 <ul>
 <li>Format: CSV (in transposed format)</li>
-<li>Rows: Provides four wavelength bands (8, 12, 24, 70 <span class="math inline">\(\mu\)</span>m) originally from Spitzer Telescope (see <code>MRT-phot.txt</code> for original), six additional flux bands (<code>160</code>, <code>250</code>, <code>350</code>, <code>500</code>, <code>870</code>, <code>1100</code>) from the Herschel, and YB IDs that you can use to match this to other datasets. Note that the four wavelengths from the Spitzer telescope are considered more important. See the <a href="../project/data-wrangling-tips.html">Data Wrangling Tips</a> for how to load and reshape this file.</li>
+<li>Rows: Provides ten wavelength bands and YB IDs. Three bands (8, 12, 24 <span class="math inline">\(\mu\)</span>m) are from the Spitzer telescope and six (160, 250, 350, 500, 870, 1100 <span class="math inline">\(\mu\)</span>m) are from Herschel. The 70 <span class="math inline">\(\mu\)</span>m band is special: although it comes from the Herschel telescope, the researchers performed their own 70 <span class="math inline">\(\mu\)</span>m photometry and incorporated it directly into the MIRION catalog alongside the Spitzer bands. The shorter-wavelength Spitzer bands (and 70 <span class="math inline">\(\mu\)</span>m) are generally considered more important features. See the <a href="../project/data-wrangling-tips.html">Data Wrangling Tips</a> for how to load and reshape this file.</li>
 </ul>
 </section>
 <section id="mrt-phot.txt-spitzer-photometry-primary-feature-table" class="level3">
@@ -408,41 +421,46 @@ window.Quarto = {
 <td>deg</td>
 </tr>
 <tr class="even">
-<td><code>F8</code>, <code>F12</code>, <code>F24</code>, <code>F70</code></td>
-<td>Flux densities at 8, 12, 24, 70 µm</td>
+<td><code>F8</code>, <code>F12</code>, <code>F24</code></td>
+<td>Flux densities at 8, 12, 24 µm (Spitzer)</td>
 <td>Jy</td>
 </tr>
 <tr class="odd">
+<td><code>F70</code></td>
+<td>Flux density at 70 µm (Herschel, incorporated by the researchers into the MIRION catalog)</td>
+<td>Jy</td>
+</tr>
+<tr class="even">
 <td><code>e_F8</code>, <code>e_F12</code>, <code>e_F24</code>, <code>e_F70</code></td>
 <td>Flux uncertainties</td>
 <td>Jy</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>N8</code>, <code>N12</code>, <code>N24</code>, <code>N70</code></td>
 <td>Number of photometric measurements per band</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>f_SAT</code></td>
 <td>Saturation flag (4-char string, one digit per band)</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>f_MULTI</code></td>
 <td>Multiple-source flag</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>f_NOSRC</code></td>
 <td>No clear source detected (4-char string, one digit per band)</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>f_PCONF</code></td>
 <td>Poor photometric confidence (4-char string, one digit per band)</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>f_CEXT</code></td>
 <td>Highly circular extended source flag</td>
 <td></td>
@@ -459,15 +477,7 @@ window.Quarto = {
 <ul>
 <li>Format: Fixed-width format</li>
 <li>Rows: 6,176</li>
-<li>Key columns: <code>YB</code>, <code>DIST</code> (adopted distance in kpc), <code>e_DIST</code>. Required for groups predicting <code>DIAM</code>, <code>MASS</code>, or <code>L_BOL</code>.</li>
-</ul>
-</section>
-<section id="mrt-velo.txt-radial-velocities" class="level3">
-<h3 class="anchored" data-anchor-id="mrt-velo.txt-radial-velocities">MRT-velo.txt — Radial Velocities</h3>
-<ul>
-<li>Format: Fixed-width format</li>
-<li>Rows: 6,176</li>
-<li>Key columns: <code>YB</code>, <code>VEL</code> (LSR radial velocity in km/s), <code>e_VEL</code>. Optional additional feature for groups wanting to go further.</li>
+<li>Key columns: <code>YB</code>, <code>DIST</code> (adopted distance in kpc), <code>e_DIST</code>.</li>
 </ul>
 </section>
 <section id="mrt-xmat.txt-catalog-cross-matches" class="level3">
@@ -475,15 +485,19 @@ window.Quarto = {
 <ul>
 <li>Format: Fixed-width format</li>
 <li>Rows: 6,176</li>
-<li>Key columns: <code>YB</code>, <code>ID_HIGAL</code>, <code>ID_ATLASGAL</code>, <code>ID_CORNISH</code>, <code>ID_RMS</code>, <code>ID_WISE</code>. Cross-match identifiers and classification types from Hi-GAL, ATLASGAL, CORNISH, RMS, and WISE catalogs. These are categorical identifiers; they require encoding to be used as features.</li>
+<li>Column Information: This dataset contains cross-match identifiers and classification types from Hi-GAL, ATLASGAL, CORNISH, RMS, and WISE catalogs. There are two types of things that may be useful here:</li>
 </ul>
+<ol type="1">
+<li>In which other catalogs is the Yellowball present? Different catalogs measure different things and so their presence in a particular catalog may give you useful information. You’ll likley not want to use the catalog IDs directly, simply an indicator of their presence.</li>
+<li>Some of the catalogs provide a “type” (e.g.&nbsp;<code>WISE_T</code>). These may be helpful features.</li>
+</ol>
 </section>
 <section id="mrt-hcsc.txt-herschel-derived-properties" class="level3">
 <h3 class="anchored" data-anchor-id="mrt-hcsc.txt-herschel-derived-properties">MRT-hcsc.txt — Herschel-Derived Properties</h3>
 <ul>
 <li>Format: Fixed-width format</li>
 <li>Rows: ~3,945</li>
-<li>Key columns: <code>YB</code>, <code>L_HERS</code>, <code>e_L_HERS</code>, <code>T_HERS</code>, <code>e_T_HERS</code>. Herschel-based physical properties with uncertainty columns, overlapping with the MIRION targets below.</li>
+<li>Column information: Contains all of the Herschel-based physical properties but with uncertainty columns.</li>
 </ul>
 </section>
 </section>

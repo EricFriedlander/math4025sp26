@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../project/quarto-python-guide.html" rel="next">
 <link href="../project/project-instructions.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -221,6 +222,12 @@ window.Quarto = {
  <span class="menu-text">Data Wrangling Tips</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../project/quarto-python-guide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quarto Python Guide</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -317,7 +324,7 @@ window.Quarto = {
 <td>Fixed-width</td>
 <td>6,176</td>
 <td>YB</td>
-<td>Spitzer photometry (8–70 µm), errors, counts, quality flags</td>
+<td>Spitzer photometry (8, 12, 24 µm) + Herschel 70 µm, errors, counts, quality flags</td>
 </tr>
 <tr class="even">
 <td><code>MRT-dist.txt</code></td>
@@ -327,34 +334,27 @@ window.Quarto = {
 <td>Distances with uncertainties</td>
 </tr>
 <tr class="odd">
-<td><code>MRT-velo.txt</code></td>
-<td>Fixed-width</td>
-<td>6,176</td>
-<td>YB</td>
-<td>Radial velocities (km/s)</td>
-</tr>
-<tr class="even">
 <td><code>MRT-xmat.txt</code></td>
 <td>Fixed-width</td>
 <td>6,176</td>
 <td>YB</td>
 <td>Cross-matches to external catalogs</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>MRT-hcsc.txt</code></td>
 <td>Fixed-width</td>
 <td>3,945</td>
 <td>YB</td>
 <td>Herschel-derived properties (subset)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>MIRION_meta_all_1.csv</code></td>
 <td>CSV</td>
 <td>3,945</td>
 <td>YB</td>
 <td>All 8 target physical properties</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>MIRION_spec_1.csv</code></td>
 <td>CSV (transposed)</td>
 <td>10 wavelengths</td>
@@ -398,7 +398,7 @@ Warning
 <section id="file-paths-with-pyhere" class="level2">
 <h2 class="anchored" data-anchor-id="file-paths-with-pyhere">File Paths with pyhere</h2>
 <p>You may notice that when you are working with Quarto files, your file paths get a bit wonky. That is, when you click the <code>Run Cell</code> button at the top of each cell and and the <code>Preview</code> or <code>Render</code> button at the top of the document, it uses different types of file paths. So something that works one time may not work another time. For this reason, all code in this guide uses the <code>pyhere</code> package to construct file paths. <code>pyhere</code> locates your project root (the folder containing <code>pyproject.toml</code> or <code>.here</code>) and builds paths relative to it, so code works regardless of where you run it from.</p>
-<div id="fca636a9" class="cell" data-execution_count="2">
+<div id="47925810" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyhere <span class="im">import</span> here</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Resolves to &lt;project-root&gt;/data/MIRION_spec_1.csv</span></span>
@@ -425,7 +425,7 @@ Tip
 <section id="transposing-mirion_spec_1.csv" class="level2">
 <h2 class="anchored" data-anchor-id="transposing-mirion_spec_1.csv">Transposing MIRION_spec_1.csv</h2>
 <p>This file has an unusual layout: the <strong>rows are wavelength bands</strong> (F8 through F1100) and the <strong>columns are YB IDs</strong>. You need to transpose it before use.</p>
-<div id="6b5e63ff" class="cell" data-execution_count="3">
+<div id="175bc58d" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyhere <span class="im">import</span> here</span>
@@ -463,7 +463,7 @@ Note
 </section>
 <section id="loading-mirion_meta_all_1.csv" class="level2">
 <h2 class="anchored" data-anchor-id="loading-mirion_meta_all_1.csv">Loading MIRION_meta_all_1.csv</h2>
-<div id="4f975d6b" class="cell" data-execution_count="4">
+<div id="c9d6d374" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>meta <span class="op">=</span> pd.read_csv(here(<span class="st">"data"</span>, <span class="st">"MIRION_meta_all_1.csv"</span>), encoding<span class="op">=</span><span class="st">'utf-8-sig'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -483,7 +483,7 @@ Note
 <section id="joining-spec-meta" class="level2">
 <h2 class="anchored" data-anchor-id="joining-spec-meta">Joining spec + meta</h2>
 <p>If you’re not familiar with joining data (e.g.&nbsp;inner and left joins) it’s probably worth taking 10 minutes to read about it. <a href="https://medium.com/@benson21/inner-join-vs-left-join-explained-with-simple-cases-cf5c695358ce">Here</a> seems to be a good introduction.</p>
-<div id="bf725035" class="cell" data-execution_count="5">
+<div id="bc7328e8" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set YB as the index for meta, then inner join onto spec</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>meta_indexed <span class="op">=</span> meta.set_index(<span class="st">"YB"</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -494,9 +494,9 @@ Note
 </section>
 <section id="enriching-with-mrt-phot.txt" class="level2">
 <h2 class="anchored" data-anchor-id="enriching-with-mrt-phot.txt">Enriching with MRT-phot.txt</h2>
-<p><code>MRT-phot.txt</code> contains the <strong>8, 12, 24, and 70 µm fluxes</strong> from the Spitzer telescope. They <strong>SHOULD</strong> already in your <code>spec</code> dataframe, but you should probably check if they match exactly. However, it also provides flux <strong>errors</strong> (<code>e_F8</code>, <code>e_F12</code>, etc.), <strong>source counts</strong> (<code>N8</code>, <code>N12</code>, <code>N24</code>, <code>N70</code>), spatial coordinates (<code>GLON</code>, <code>GLAT</code>), and quality flags (<code>f_PCONF</code>, <code>f_NOSRC</code>, <code>f_SAT</code>, etc.) that are not available from the MIRION files. This should likely be the next dataset (after <code>MRT-dist.txt</code> if you’re working with a target that isn’t distance independent) you turn to if you’d like to improve your model. Load it when you want those additional columns.</p>
+<p><code>MRT-phot.txt</code> contains the <strong>8, 12, and 24 µm fluxes</strong> from the Spitzer telescope, plus the <strong>70 µm flux</strong> from the Herschel telescope (incorporated into the MIRION catalog because the researchers performed their own 70 µm photometry using Herschel data). They <strong>SHOULD</strong> already be in your <code>spec</code> dataframe, but you should probably check if they match exactly. However, it also provides flux <strong>errors</strong> (<code>e_F8</code>, <code>e_F12</code>, etc.), <strong>source counts</strong> (<code>N8</code>, <code>N12</code>, <code>N24</code>, <code>N70</code>), spatial coordinates (<code>GLON</code>, <code>GLAT</code>), and quality flags (<code>f_PCONF</code>, <code>f_NOSRC</code>, <code>f_SAT</code>, etc.) that are not available from the MIRION files. This should likely be the next dataset (after <code>MRT-dist.txt</code> if you’re working with a target that isn’t distance independent) you turn to if you’d like to improve your model. Load it when you want those additional columns.</p>
 <p>The MRT files use a fixed-width format with a 38-line header. Use <code>pd.read_fwf</code> with explicit column specifications derived from the byte-by-byte description in each file’s header.</p>
-<div id="b2d5a4ae" class="cell" data-execution_count="6">
+<div id="c5c9225b" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>phot_colspecs <span class="op">=</span> [</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">0</span>, <span class="dv">4</span>),    <span class="co"># YB</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">5</span>, <span class="dv">14</span>),   <span class="co"># GLON</span></span>
@@ -564,7 +564,7 @@ Warning
 <section id="joining-mrt-phot-with-your-working-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="joining-mrt-phot-with-your-working-dataset">Joining MRT-phot with your working dataset</h3>
 <p>Since <code>spec</code> already contains <code>F8</code>, <code>F12</code>, <code>F24</code>, <code>F70</code>, you should drop those duplicate columns from <code>phot</code> before joining, keeping only the new information (errors, counts, coordinates, flags):</p>
-<div id="fff1426b" class="cell" data-execution_count="7">
+<div id="d8c9a08a" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>phot_indexed <span class="op">=</span> phot.set_index(<span class="st">"YB"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop flux columns already present in df from spec</span></span>
@@ -573,7 +573,7 @@ Warning
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Left join: keeps all ~3,945 rows, adds phot columns where available</span></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.join(phot_extra, how<span class="op">=</span><span class="st">"left"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>The other MRT datasets (<code>MRT-dist.txt</code>, <code>MRT-velo.txt</code>, <code>MRT-xmat.txt</code>, <code>MRT-hcsc.txt</code>) can be joined in the same fashion.</strong> Refer to each file’s byte-by-byte header to construct the appropriate <code>colspecs</code> and <code>colnames</code>, then left-join onto <code>df</code>.</p>
+<p><strong>The other MRT datasets (<code>MRT-dist.txt</code>, <code>MRT-xmat.txt</code>, <code>MRT-hcsc.txt</code>) can be joined in the same fashion.</strong> Refer to each file’s byte-by-byte header to construct the appropriate <code>colspecs</code> and <code>colnames</code>, then left-join onto <code>df</code>.</p>
 </section>
 </section>
 </section>
@@ -585,7 +585,7 @@ Warning
 <p>The shape of an object’s spectral energy distribution (SED), how bright it is at different wavelengths relative to each other, can be more informative than the raw fluxes. This is, in part, due to how distance impacts the SED measurements. When you take ratios of the wavelengths, the different impact of distance tends to cancel out, which can improve model performance.</p>
 <p>Two approaches worth considering:</p>
 <p><strong>Approach 1: Wavelength ratios</strong> capture the relative brightness between bands, independently of total flux (and thus independently of distance). For example:</p>
-<div id="e5b0d88f" class="cell" data-execution_count="8">
+<div id="f4343ff3" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ratio of 70 µm to 24 µm</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"F70_F24"</span>] <span class="op">=</span> df[<span class="st">"F70"</span>] <span class="op">/</span> df[<span class="st">"F24"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -596,7 +596,7 @@ Warning
 <li>How will you determine which wavelengths are “most important” if you are taking ratios and the different wavelengths appear in several different variables?</li>
 </ul>
 <p><strong>Apprach 2: Row normalization</strong> is another approach to consider. That is, divide each row’s flux values by the row sum so each source’s SED sums to 1. This emphasizes the shape of the spectrum rather than its overall brightness.</p>
-<div id="6f335cc7" class="cell" data-execution_count="9">
+<div id="5a0a187a" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>flux_cols <span class="op">=</span> [<span class="st">"F8"</span>, <span class="st">"F12"</span>, <span class="st">"F24"</span>, <span class="st">"F70"</span>, <span class="st">"F160"</span>, <span class="st">"F250"</span>, <span class="st">"F350"</span>, <span class="st">"F500"</span>, <span class="st">"F870"</span>, <span class="st">"F1100"</span>]</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>row_sums <span class="op">=</span> df[flux_cols].<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>df_norm <span class="op">=</span> df[flux_cols].div(row_sums, axis<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -611,7 +611,7 @@ Warning
 <li><code>f_PCONF</code> = <code>0010</code>: this means band 24 has poor confidence while the other bands are fine</li>
 <li><code>f_SAT</code> - <code>0101</code>: this mean that the images from bands 12 and 70 were saturated</li>
 </ul>
-<div id="d98d9e05" class="cell" data-execution_count="10">
+<div id="2fd11017" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>bands <span class="op">=</span> [<span class="st">"F8"</span>, <span class="st">"F12"</span>, <span class="st">"F24"</span>, <span class="st">"F70"</span>]</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>pconf <span class="op">=</span> df[<span class="st">"f_PCONF"</span>].fillna(<span class="st">"0000"</span>).astype(<span class="bu">str</span>).<span class="bu">str</span>.strip().<span class="bu">str</span>.zfill(<span class="dv">4</span>)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -629,14 +629,14 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Note that the quality flags only apply to the 8, 12, 24, and 17 <span class="math inline">\(\mu\)</span>m bands.</p>
+<p>Note that the quality flags only apply to the 8, 12, 24, and 70 <span class="math inline">\(\mu\)</span>m bands.</p>
 </div>
 </div>
 </section>
 <section id="missing-value-sentinel-999" class="level3">
 <h3 class="anchored" data-anchor-id="missing-value-sentinel-999">Missing Value Sentinel (999)</h3>
 <p>Some numeric columns in the MRT files use <code>999</code> or <code>999.0</code> as a placeholder for missing values. Note that the values in the MIRION data should already have the missing values replaced by <code>NaN</code>. When leading the MRT data, you can replace these with <code>NaN</code> after loading:</p>
-<div id="bb0b48fc" class="cell" data-execution_count="11">
+<div id="840125a9" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df.replace(<span class="dv">999</span>, np.nan, inplace<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df.replace(<span class="fl">999.0</span>, np.nan, inplace<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -644,7 +644,7 @@ Warning
 <section id="checking-for-missing-values" class="level3">
 <h3 class="anchored" data-anchor-id="checking-for-missing-values">Checking for Missing Values</h3>
 <p>Before modeling, understand your missingness pattern.</p>
-<div id="7c7eeb58" class="cell" data-execution_count="12">
+<div id="83abe0e3" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> missingno <span class="im">as</span> msno</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itables <span class="im">import</span> show</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -665,7 +665,7 @@ Warning
 </div>
 <div class="callout-body-container callout-body">
 <p><strong>Key rule: never impute your target variable.</strong> Drop rows where your assigned target is <code>NaN</code> before any modeling.</p>
-<div id="10e8144d" class="cell" data-execution_count="13">
+<div id="a6bfbe5a" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df_clean <span class="op">=</span> df.dropna(subset<span class="op">=</span>[<span class="st">"YOUR_TARGET"</span>])  <span class="co"># replace with your actual target name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
@@ -1105,6 +1105,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../project/quarto-python-guide.html" class="pagination-link" aria-label="Quarto Python Guide">
+        <span class="nav-page-text">Quarto Python Guide</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

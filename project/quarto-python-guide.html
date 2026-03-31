@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../project/data-wrangling-tips.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -113,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Using Quarto with Python</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../project/project-instructions.html">Project</a></li><li class="breadcrumb-item"><a href="../project/quarto-python-guide.html">Quarto Python Guide</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -172,13 +173,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Project</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../project/project-instructions.html" class="sidebar-item-text sidebar-link">
@@ -189,6 +190,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../project/data-wrangling-tips.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Wrangling Tips</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../project/quarto-python-guide.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Quarto Python Guide</span></a>
   </div>
 </li>
       </ul>
@@ -209,13 +216,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#why-quarto-instead-of-jupyter-notebooks" id="toc-why-quarto-instead-of-jupyter-notebooks" class="nav-link active" data-scroll-target="#why-quarto-instead-of-jupyter-notebooks">Why Quarto Instead of Jupyter Notebooks</a></li>
   <li><a href="#anatomy-of-a-.qmd-file" id="toc-anatomy-of-a-.qmd-file" class="nav-link" data-scroll-target="#anatomy-of-a-.qmd-file">Anatomy of a .qmd File</a></li>
-  <li><a href="#rendering" id="toc-rendering" class="nav-link" data-scroll-target="#rendering">Rendering</a></li>
-  <li><a href="#using-the-preview-button-vs-code-positron" id="toc-using-the-preview-button-vs-code-positron" class="nav-link" data-scroll-target="#using-the-preview-button-vs-code-positron">Using the Preview Button (VS Code / Positron)</a>
+  <li><a href="#rendering" id="toc-rendering" class="nav-link" data-scroll-target="#rendering">Rendering</a>
   <ul class="collapse">
-  <li><a href="#step-1-check-that-quarto-cli-is-installed" id="toc-step-1-check-that-quarto-cli-is-installed" class="nav-link" data-scroll-target="#step-1-check-that-quarto-cli-is-installed">Step 1: Check that Quarto CLI is installed</a></li>
-  <li><a href="#step-2-register-the-conda-environment-as-a-jupyter-kernel-one-time-setup" id="toc-step-2-register-the-conda-environment-as-a-jupyter-kernel-one-time-setup" class="nav-link" data-scroll-target="#step-2-register-the-conda-environment-as-a-jupyter-kernel-one-time-setup">Step 2: Register the conda environment as a Jupyter kernel (one-time setup)</a></li>
-  <li><a href="#step-3-click-preview" id="toc-step-3-click-preview" class="nav-link" data-scroll-target="#step-3-click-preview">Step 3: Click Preview</a></li>
-  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a></li>
+  <li><a href="#rendering-from-the-gui" id="toc-rendering-from-the-gui" class="nav-link" data-scroll-target="#rendering-from-the-gui">Rendering from the GUI</a></li>
+  <li><a href="#rendering-from-the-terminal" id="toc-rendering-from-the-terminal" class="nav-link" data-scroll-target="#rendering-from-the-terminal">Rendering from the Terminal</a></li>
   </ul></li>
   <li><a href="#common-code-chunk-options" id="toc-common-code-chunk-options" class="nav-link" data-scroll-target="#common-code-chunk-options">Common Code Chunk Options</a></li>
   <li><a href="#paths-with-pyhere" id="toc-paths-with-pyhere" class="nav-link" data-scroll-target="#paths-with-pyhere">Paths with pyhere</a></li>
@@ -228,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../project/project-instructions.html">Project</a></li><li class="breadcrumb-item"><a href="../project/quarto-python-guide.html">Quarto Python Guide</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Using Quarto with Python</h1>
 </div>
@@ -259,19 +263,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "My Analysis"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Your Name"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>This analysis explores the dataset using Python.</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="in">import pandas as pd</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="in">import numpy as np</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">jupyter:</span><span class="co"> </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">  kernelspec:</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">    name: "&lt;kernel-name-here&gt;"</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">    language: "python"</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">    display_name: "&lt;kernel-name-here&gt;"</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>uart</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="in">df = pd.read_csv("data/my-data.csv")</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="in">df.head()</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>This analysis explores the dataset using Python.</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="in">import pandas as pd</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="in">import numpy as np</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="in">df = pd.read_csv("data/my-data.csv")</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="in">df.head()</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>The YAML block (between <code>---</code> lines) sets document metadata.</li>
 <li>Prose is standard Markdown.</li>
@@ -280,86 +290,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="rendering" class="level2">
 <h2 class="anchored" data-anchor-id="rendering">Rendering</h2>
+<p>In VS Code: you will need to install the <a href="https://marketplace.visualstudio.com/items?itemName=quarto.quarto">Quarto extension</a> and <a href="https://quarto.org/docs/get-started/">Quarto Command Line Interface</a>. You can then use the following directions.</p>
+<section id="rendering-from-the-gui" class="level3">
+<h3 class="anchored" data-anchor-id="rendering-from-the-gui">Rendering from the GUI</h3>
+<p>Click Preview button in the top left (Positron) or top right (VSCode) of the window with your code.</p>
+</section>
+<section id="rendering-from-the-terminal" class="level3">
+<h3 class="anchored" data-anchor-id="rendering-from-the-terminal">Rendering from the Terminal</h3>
 <p>Always activate the conda environment first:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate math-4025-sp26</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then render from the terminal:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render my-analysis.qmd        <span class="co"># produces my-analysis.html</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview my-analysis.qmd       <span class="co"># live preview with auto-reload</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="using-the-preview-button-vs-code-positron" class="level2">
-<h2 class="anchored" data-anchor-id="using-the-preview-button-vs-code-positron">Using the Preview Button (VS Code / Positron)</h2>
-<section id="step-1-check-that-quarto-cli-is-installed" class="level3">
-<h3 class="anchored" data-anchor-id="step-1-check-that-quarto-cli-is-installed">Step 1: Check that Quarto CLI is installed</h3>
-<p><strong>Positron</strong> bundles both the Quarto extension and Quarto CLI — nothing extra to install.</p>
-<p><strong>VS Code</strong> users need two things:</p>
-<ul>
-<li><p><a href="https://marketplace.visualstudio.com/items?itemName=quarto.quarto">Quarto extension</a> (install from the Extensions panel)</p></li>
-<li><p>Quarto CLI — verify it’s installed by opening a terminal and running:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Platform</th>
-<th>How to open a terminal</th>
-<th>Command</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Windows</td>
-<td><code>Win+R</code> → type <code>cmd</code> or <code>powershell</code></td>
-<td><code>quarto --version</code></td>
-</tr>
-<tr class="even">
-<td>macOS</td>
-<td>Spotlight (<code>Cmd+Space</code>) → Terminal</td>
-<td><code>quarto --version</code></td>
-</tr>
-<tr class="odd">
-<td>Linux</td>
-<td>Any terminal emulator</td>
-<td><code>quarto --version</code></td>
-</tr>
-</tbody>
-</table>
-<p>If the command is not found, download the installer from <a href="https://quarto.org/docs/get-started/">quarto.org/docs/get-started</a>.</p></li>
-</ul>
-</section>
-<section id="step-2-register-the-conda-environment-as-a-jupyter-kernel-one-time-setup" class="level3">
-<h3 class="anchored" data-anchor-id="step-2-register-the-conda-environment-as-a-jupyter-kernel-one-time-setup">Step 2: Register the conda environment as a Jupyter kernel (one-time setup)</h3>
-<p>The <code>.qmd</code> files in your project specify <code>name: "math-4025-sp26"</code> in their YAML. Quarto looks for a Jupyter kernel by that name at render time — you need to register it once on each machine you work on.</p>
-<p><strong>GUI method (no terminal required):</strong></p>
-<ol type="1">
-<li>Open any <code>.qmd</code> file in VS Code or Positron.</li>
-<li>Click the kernel/interpreter selector — bottom status bar in Positron; top-right corner of the editor in VS Code.</li>
-<li>Select <code>math-4025-sp26</code> from the list.</li>
-<li>If VS Code says <code>ipykernel</code> is missing, click <strong>Install</strong> when prompted.</li>
-</ol>
-<p>If <code>math-4025-sp26</code> doesn’t appear in the list, use the command-line method below.</p>
-<p><strong>Command-line method (fallback, works on all platforms):</strong></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate math-4025-sp26</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span> math-4025-sp26 <span class="at">--display-name</span> <span class="st">"math-4025-sp26"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Then reload the window (<code>Ctrl+Shift+P</code> → <strong>Developer: Reload Window</strong>).</p>
-</section>
-<section id="step-3-click-preview" class="level3">
-<h3 class="anchored" data-anchor-id="step-3-click-preview">Step 3: Click Preview</h3>
-<ul>
-<li>Click the <strong>Preview</strong> button — top-right in VS Code, top-left in Positron.</li>
-<li>The preview pane updates automatically on every save.</li>
-</ul>
-</section>
-<section id="troubleshooting" class="level3">
-<h3 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h3>
-<p>If the render fails with a kernel-not-found error, or the wrong Python environment is used (e.g., missing packages), re-run the <code>ipykernel install</code> command above and reload the window.</p>
-</section>
 </section>
 <section id="common-code-chunk-options" class="level2">
 <h2 class="anchored" data-anchor-id="common-code-chunk-options">Common Code Chunk Options</h2>
 <p>Options go inside the chunk using <code>#|</code> at the top of the chunk body:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="in">print("This runs but the code is hidden")</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="in">print("This runs but the code is hidden")</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -403,53 +355,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p>Put your imports and data loading in a single setup chunk at the top of the file:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| include: false</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="in">import pandas as pd</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="in">import numpy as np</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="in">from plotnine import *</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="in">from itables import show</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="in">from pyhere import here</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="in">df = pd.read_csv(here("data", "MIRION_meta_all_1.csv"))</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| include: false</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="in">import pandas as pd</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="in">import numpy as np</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="in">from plotnine import *</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="in">from itables import show</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="in">from pyhere import here</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="in">df = pd.read_csv(here("data", "MIRION_meta_all_1.csv"))</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This runs silently, no output appears in the rendered document.</p>
 </section>
 <section id="paths-with-pyhere" class="level2">
 <h2 class="anchored" data-anchor-id="paths-with-pyhere">Paths with pyhere</h2>
 <p>Relative paths like <code>pd.read_csv("../data/myfile.csv")</code> break depending on where you run <code>quarto render</code> from. Use <code>pyhere</code> instead.</p>
 <p><code>pyhere</code> anchors paths to the project root by looking for a <code>.here</code> file or the git root. Since your project repo is a git repo, it works automatically. The repo also includes a <code>.here</code> file in the root as a fallback.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyhere <span class="im">import</span> here</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(here(<span class="st">"data"</span>, <span class="st">"MIRION_meta_all_1.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyhere <span class="im">import</span> here</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(here(<span class="st">"data"</span>, <span class="st">"MIRION_meta_all_1.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>here("data", "MIRION_meta_all_1.csv")</code> resolves to the correct absolute path regardless of where you call <code>quarto render</code> from.</p>
 </section>
 <section id="plots-with-plotnine" class="level2">
 <h2 class="anchored" data-anchor-id="plots-with-plotnine">Plots with plotnine</h2>
 <p><code>plotnine</code> figures render automatically when the last expression in a chunk is a ggplot object. No <code>print()</code> or <code>.show()</code> needed.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Distribution of stellar masses"</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 6</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 4</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="in">from plotnine import *</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="in">(</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="in">    ggplot(df, aes(x="mass"))</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="in">    + geom_histogram(bins=30, fill="steelblue", color="white")</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="in">    + labs(x="Mass", y="Count")</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="in">    + theme_minimal()</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Distribution of stellar masses"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 6</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 4</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="in">from plotnine import *</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="in">(</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="in">    ggplot(df, aes(x="mass"))</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="in">    + geom_histogram(bins=30, fill="steelblue", color="white")</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="in">    + labs(x="Mass", y="Count")</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="in">    + theme_minimal()</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Set figure dimensions with <code>#| fig-width</code> and <code>#| fig-height</code> (in inches).</p>
 </section>
 <section id="tables-with-itables" class="level2">
 <h2 class="anchored" data-anchor-id="tables-with-itables">Tables with itables</h2>
 <p><code>itables</code> renders interactive sortable/searchable tables in HTML output:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itables <span class="im">import</span> show</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>show(df.head(<span class="dv">20</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itables <span class="im">import</span> show</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>show(df.head(<span class="dv">20</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>For static output (e.g., PDF), skip <code>show()</code> and just evaluate the dataframe directly:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="recommended-workflow" class="level2">
 <h2 class="anchored" data-anchor-id="recommended-workflow">Recommended Workflow</h2>
@@ -881,6 +833,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../project/data-wrangling-tips.html" class="pagination-link" aria-label="Data Wrangling Tips">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Data Wrangling Tips</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
