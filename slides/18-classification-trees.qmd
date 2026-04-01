@@ -1,0 +1,464 @@
+---
+title: 'MATH 4025: Classification Trees'
+---
+
+```{python}
+#| include: false
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.model_selection import train_test_split, StratifiedKFold, GridSearchCV
+from sklearn.preprocessing import OrdinalEncoder, OneHotEncoder
+from sklearn.impute import SimpleImputer
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import accuracy_score, ConfusionMatrixDisplay
+from plotnine import *
+from itables import show
+import warnings
+import math
+
+warnings.filterwarnings('ignore')
+np.random.seed(4025)
+
+# ── Load raw data ──────────────────────────────────────────────────────────────
+voter_url = 'https://raw.githubusercontent.com/fivethirtyeight/data/master/non-voters/nonvoters_data.csv'
+voter_raw = pd.read_csv(voter_url)
+
+# ── Cleaning ───────────────────────────────────────────────────────────────────
+voter_clean = voter_raw.drop(columns=['RespId', 'weight', 'Q1']).copy()
+
+# Ordered categoricals
+voter_clean['educ'] = pd.Categorical(voter_clean['educ'],
+    categories=['High school or less', 'Some college', 'College'], ordered=True)
+voter_clean['income_cat'] = pd.Categorical(voter_clean['income_cat'],
+    categories=['Less than $40k', '$40-75k ', '$75-125k', '$125k or more'], ordered=True)
+voter_clean['voter_category'] = pd.Categorical(voter_clean['voter_category'],
+    categories=['rarely/never', 'sporadic', 'always'], ordered=False)
+
+# Q22: filter skip-logic (5 = did not register AND did not vote), fill NA as "Not Asked"
+voter_clean = voter_clean[voter_clean['Q22'] != 5].copy()
+voter_clean['Q22'] = voter_clean['Q22'].fillna('Not Asked').astype(str)
+
+# Q28: -1 = not selected (→ 0), NA = never asked (→ "Not Asked")
+q28_cols = [f'Q28_{i}' for i in range(1, 9)]
+for c in q28_cols:
+    voter_clean[c] = voter_clean[c].replace(-1.0, 0).fillna('Not Asked').astype(str)
+
+# Q29: same pattern
+q29_cols = [f'Q29_{i}' for i in range(1, 11)]
+for c in q29_cols:
+    voter_clean[c] = voter_clean[c].replace(-1.0, 0).fillna('Not Asked').astype(str)
+
+# Party_ID from Q31/Q32/Q33
+def _party_id(row):
+    q31, q32, q33 = row['Q31'], row['Q32'], row['Q33']
+    if   q31 == 1: return 'Strong Republican'
+    elif q31 == 2: return 'Republican'
+    elif q32 == 1: return 'Strong Democrat'
+    elif q32 == 2: return 'Democrat'
+    elif q33 == 1: return 'Lean Republican'
+    elif q33 == 2: return 'Lean Democrat'
+    else:          return 'Other'
+
+voter_clean['Party_ID'] = voter_clean.apply(_party_id, axis=1)
+party_order = ['Strong Republican', 'Republican', 'Lean Republican',
+               'Other', 'Lean Democrat', 'Democrat', 'Strong Democrat']
+voter_clean['Party_ID'] = pd.Categorical(voter_clean['Party_ID'],
+                                         categories=party_order, ordered=True)
+voter_clean = voter_clean.drop(columns=['Q31', 'Q32', 'Q33'])
+
+# Replace remaining -1s with NaN (except ppage which is continuous)
+for c in voter_clean.columns:
+    if c != 'ppage' and voter_clean[c].dtype in ['float64', 'int64']:
+        voter_clean[c] = voter_clean[c].replace(-1, np.nan)
+
+# ── Train/test split ───────────────────────────────────────────────────────────
+X_voter = voter_clean.drop(columns=['voter_category'])
+y_voter = voter_clean['voter_category']
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X_voter, y_voter,
+    test_size=0.3,
+    stratify=y_voter,
+    random_state=4025
+)
+
+# ── Preprocessing pipeline ─────────────────────────────────────────────────────
+# Column groups (determined after split to avoid leakage)
+ordered_cat_cols = ['educ', 'income_cat', 'Party_ID']
+num_cols = X_train.select_dtypes(include=['int64', 'float64']).columns.tolist()
+nom_cols = [c for c in X_train.columns
+            if c not in ordered_cat_cols and c not in num_cols]
+
+preproc_voter = ColumnTransformer([
+    ('num', Pipeline([
+        ('impute', SimpleImputer(strategy='median'))
+    ]), num_cols),
+    ('ord', Pipeline([
+        ('impute', SimpleImputer(strategy='most_frequent')),
+        ('encode', OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=-1))
+    ]), ordered_cat_cols),
+    ('nom', Pipeline([
+        ('impute', SimpleImputer(strategy='most_frequent')),
+        ('encode', OneHotEncoder(drop='first', sparse_output=False, handle_unknown='ignore'))
+    ]), nom_cols),
+], remainder='drop')
+```
+
+# Decision Trees for Classification
+
+## Classification Tree Predictions
+
+-   **Same tree structure** as regression trees — root node, internal nodes, terminal nodes, branches
+-   What changes is what we predict at each terminal node:
+    +   **Class label**: most common class among training observations in that node
+    +   **Probability**: proportion of each class at that terminal node
+-   And what we optimize when splitting...
+
+## Fitting Classification Trees {.smaller}
+
+-   Still use **recursive binary splitting** to grow a classification tree
+-   $\hat{p}_{mk}$: proportion of training observations in the $m^{th}$ region from the $k^{th}$ class
+-   Can replace SSE with **classification error rate**:
+$$E = 1 - \max_k \left(\hat{p}_{mk}\right)$$
+-   Fraction of training observations that do not belong to the most common class
+
+## Gini Index {.smaller}
+
+$$G = \displaystyle \sum_{k=1}^{K} \hat{p}_{mk}\left(1-\hat{p}_{mk}\right)$$
+
+-   Measure of **node purity** — small values indicate a node is predominantly a single class
+-   $G \approx 0$: node contains mostly one class (pure)
+-   $G$ is maximized when classes are equally mixed
+
+## Entropy {.smaller}
+
+$$H = \displaystyle -\sum_{k=1}^{K} \hat{p}_{mk}\log\left(\hat{p}_{mk}\right)$$
+
+-   Also a measure of **node purity** — same interpretation as Gini
+-   Small values indicate a node is predominantly a single class
+
+## In Practice
+
+-   ISLR2 recommendation:
+    +   Use **Gini** or **entropy** to decide where to split
+    +   Use **classification error rate** to prune
+-   `sklearn` default: `criterion='gini'`
+    +   Also supports `'entropy'` and `'log_loss'` (equivalent to entropy)
+-   Many implementations — always check the documentation!
+
+## Exploring Decision Trees with App {.smaller}
+
+-   Dr. F will split you into four groups
+-   On one of your computers connect to a TV and [open this app](https://efriedlander.shinyapps.io/ClassificationMetrics/)
+-   Do the following based on your group number:
+    +   1: Choose **plane** on the first screen
+    +   2: Choose **circle** on the first screen
+    +   3: Choose **parabola** on the first screen
+    +   4: Choose **sine curve** on the first screen
+-   We will generate data from this population... do you think KNN, logistic regression, or a decision tree will yield a better classifier? Why?
+
+## Exploring Decision Trees with App {.smaller}
+
+-   Choose one of the populations
+-   Generate some data
+-   Fit a decision tree to the data and see how the different hyperparameters impact the resulting model:
+    +   **Complexity parameter (cp)**: the larger the number, the more pruning
+    +   **Minimum leaf size**: minimum number of training observations that must be in a leaf
+    +   **Max depth**: maximum number of splits before a terminal node
+-   Write down any interesting observations
+
+# Data Cleaning Side-Quest
+
+## Data: Voter Frequency {.smaller}
+
+-   [Info about data](https://github.com/fivethirtyeight/data/tree/master/non-voters)
+-   **Goal**: Identify individuals who are unlikely to vote to help an organization target "get out the vote" efforts
+
+```{python}
+show(voter_raw.head())
+```
+
+## Checking for Missing Data
+
+```{python}
+na_summary = (voter_raw.isna().sum()
+              .reset_index()
+              .rename(columns={'index': 'column', 0: 'n_missing'})
+              .query('n_missing > 0'))
+show(na_summary)
+```
+
+## Checking for -1 Values
+
+```{python}
+neg1_counts = (voter_raw.drop(columns=['RespId', 'weight', 'Q1'])
+               .select_dtypes(include='number')
+               .apply(lambda col: (col == -1).sum())
+               .reset_index()
+               .rename(columns={'index': 'column', 0: 'n_neg1'})
+               .query('n_neg1 > 0'))
+show(neg1_counts)
+```
+
+## How Should We Handle -1s? {.smaller}
+
+::: incremental
+-   Seems like **-1** means: question was asked but not answered / answer not selected
+-   Seems like **`NA`** means: question was never asked (skip logic)
+-   What should we do?
+-   A few options:
+    +   Replace -1 with `"Not Answered"` (treat as a category)
+    +   Replace -1 with `NaN`
+    +   Replace -1 with `NaN` **and** add indicator columns (e.g., `Q6_was_missing`)
+        +   Can do this with `sklearn.impute.MissingIndicator`
+        +   More sophisticated but adds many columns
+:::
+
+## Cleaning: Straight-Forward Stuff
+
+```{python}
+voter_clean = voter_raw.drop(columns=['RespId', 'weight', 'Q1']).copy()
+
+# Set ordered categoricals
+voter_clean['educ'] = pd.Categorical(voter_clean['educ'],
+    categories=['High school or less', 'Some college', 'College'], ordered=True)
+voter_clean['income_cat'] = pd.Categorical(voter_clean['income_cat'],
+    categories=['Less than $40k', '$40-75k ', '$75-125k', '$125k or more'], ordered=True)
+voter_clean['voter_category'] = pd.Categorical(voter_clean['voter_category'],
+    categories=['rarely/never', 'sporadic', 'always'], ordered=False)
+```
+
+## Cleaning Q22
+
+```{python}
+voter_clean['Q22'].value_counts(dropna=False).head(10)
+```
+
+```{python}
+# Q22 == 5 is skip logic (person neither registered nor voted)
+voter_clean = voter_clean[voter_clean['Q22'] != 5].copy()
+
+# NaN means the question was never asked
+voter_clean['Q22'] = voter_clean['Q22'].fillna('Not Asked').astype(str)
+```
+
+## Cleaning Q28 {.smaller}
+
+```{python}
+voter_clean['Q28_1'].value_counts(dropna=False)
+```
+
+-   -1 = not selected → treat as 0
+-   `NaN` = question never asked
+
+```{python}
+q28_cols = [f'Q28_{i}' for i in range(1, 9)]
+for c in q28_cols:
+    voter_clean[c] = voter_clean[c].replace(-1.0, 0).fillna('Not Asked').astype(str)
+```
+
+## Cleaning Q29 {.smaller}
+
+Same pattern as Q28:
+
+```{python}
+q29_cols = [f'Q29_{i}' for i in range(1, 11)]
+for c in q29_cols:
+    voter_clean[c] = voter_clean[c].replace(-1.0, 0).fillna('Not Asked').astype(str)
+```
+
+## Cleaning Q31-Q33: Party ID {.smaller}
+
+```{python}
+def _party_id(row):
+    q31, q32, q33 = row['Q31'], row['Q32'], row['Q33']
+    if   q31 == 1: return 'Strong Republican'
+    elif q31 == 2: return 'Republican'
+    elif q32 == 1: return 'Strong Democrat'
+    elif q32 == 2: return 'Democrat'
+    elif q33 == 1: return 'Lean Republican'
+    elif q33 == 2: return 'Lean Democrat'
+    else:          return 'Other'
+
+voter_clean['Party_ID'] = voter_clean.apply(_party_id, axis=1)
+party_order = ['Strong Republican', 'Republican', 'Lean Republican',
+               'Other', 'Lean Democrat', 'Democrat', 'Strong Democrat']
+voter_clean['Party_ID'] = pd.Categorical(voter_clean['Party_ID'],
+                                         categories=party_order, ordered=True)
+voter_clean = voter_clean.drop(columns=['Q31', 'Q32', 'Q33'])
+```
+
+## Final -1 Cleanup
+
+```{python}
+# Replace all remaining -1s with NaN (except ppage which is continuous age)
+for c in voter_clean.columns:
+    if c != 'ppage' and voter_clean[c].dtype in ['float64', 'int64']:
+        voter_clean[c] = voter_clean[c].replace(-1, np.nan)
+
+voter_clean.shape
+```
+
+# Classification Trees in Python
+
+## Split Data
+
+```{python}
+X_voter = voter_clean.drop(columns=['voter_category'])
+y_voter = voter_clean['voter_category']
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X_voter, y_voter,
+    test_size=0.3,
+    stratify=y_voter,   # maintain class proportions in each split
+    random_state=4025
+)
+
+print(f"Training: {X_train.shape[0]} obs  |  Test: {X_test.shape[0]} obs")
+```
+
+## Response Distribution
+
+```{python}
+train_df = X_train.assign(voter_category=y_train.values)
+
+(
+    ggplot(train_df, aes(x='voter_category')) +
+    geom_bar(fill='steelblue') +
+    labs(x='Voter Category', y='Count',
+         title='Distribution of voter_category (Training Set)') +
+    theme_classic()
+)
+```
+
+## Preprocessing Strategy {.smaller}
+
+Three groups of columns require different treatment:
+
+| Group | Columns | Strategy |
+|-------|---------|----------|
+| Numeric | `ppage`, `Q6`, numeric Qs | Median imputation |
+| Ordered categorical | `educ`, `income_cat`, `Party_ID` | Mode imputation + `OrdinalEncoder` |
+| Nominal categorical | `race`, `gender`, Q22, Q28\_\*, Q29\_\*, etc. | Mode imputation + `OneHotEncoder` |
+
+-   Note: the R recipe also used `step_indicate_na` to add missing-value indicator columns
+-   Here we use simple imputation for clarity — `sklearn.impute.MissingIndicator` can achieve the same effect
+
+## Building the Preprocessing Pipeline {.smaller}
+
+```{python}
+ordered_cat_cols = ['educ', 'income_cat', 'Party_ID']
+num_cols = X_train.select_dtypes(include=['int64', 'float64']).columns.tolist()
+nom_cols = [c for c in X_train.columns
+            if c not in ordered_cat_cols and c not in num_cols]
+
+preproc_voter = ColumnTransformer([
+    ('num', Pipeline([
+        ('impute', SimpleImputer(strategy='median'))
+    ]), num_cols),
+    ('ord', Pipeline([
+        ('impute', SimpleImputer(strategy='most_frequent')),
+        ('encode', OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=-1))
+    ]), ordered_cat_cols),
+    ('nom', Pipeline([
+        ('impute', SimpleImputer(strategy='most_frequent')),
+        ('encode', OneHotEncoder(drop='first', sparse_output=False, handle_unknown='ignore'))
+    ]), nom_cols),
+], remainder='drop')
+```
+
+## Define and Tune the Model
+
+```{python}
+voter_folds = StratifiedKFold(n_splits=5, shuffle=True, random_state=4025)
+
+param_grid_voter = {
+    'tree__ccp_alpha': np.logspace(-4, -1, 15),
+}
+
+voter_pipe = Pipeline([
+    ('preproc', preproc_voter),
+    ('tree', DecisionTreeClassifier(random_state=4025))
+])
+
+voter_grid = GridSearchCV(
+    estimator=voter_pipe,
+    param_grid=param_grid_voter,
+    cv=voter_folds,
+    scoring='accuracy',
+    return_train_score=True
+)
+voter_grid.fit(X_train, y_train)
+```
+
+## CV Results
+
+```{python}
+voter_results = pd.DataFrame(voter_grid.cv_results_)
+
+fig, ax = plt.subplots(figsize=(7, 4))
+ax.errorbar(voter_results['param_tree__ccp_alpha'],
+            voter_results['mean_test_score'],
+            yerr=voter_results['std_test_score'],
+            marker='o', capsize=3)
+ax.set_xscale('log')
+ax.set_xlabel('ccp_alpha')
+ax.set_ylabel('CV Accuracy')
+ax.set_title('Classification Tree CV Tuning (Voter Data)')
+plt.tight_layout()
+plt.show()
+```
+
+## Select Best Model
+
+```{python}
+print("Best params:", voter_grid.best_params_)
+print(f"Best CV Accuracy: {voter_grid.best_score_:.3f}")
+```
+
+## Fit and Visualize Best Tree
+
+```{python}
+best_voter_pipe = Pipeline([
+    ('preproc', preproc_voter),
+    ('tree', DecisionTreeClassifier(
+        ccp_alpha=voter_grid.best_params_['tree__ccp_alpha'],
+        random_state=4025
+    ))
+])
+best_voter_pipe.fit(X_train, y_train)
+
+fig, ax = plt.subplots(figsize=(20, 8))
+plot_tree(best_voter_pipe.named_steps['tree'],
+          class_names=list(y_voter.cat.categories),
+          filled=True, max_depth=3, fontsize=7, ax=ax)
+plt.tight_layout()
+plt.show()
+```
+
+## Interpreting the Tree
+
+-   Which features appear near the root?
+-   What does that tell us about predictors of voting behavior?
+-   Does this align with what you'd expect from domain knowledge?
+
+## Test Set Evaluation {.smaller}
+
+```{python}
+voter_preds = voter_grid.predict(X_test)
+print(f"Test Accuracy: {accuracy_score(y_test, voter_preds):.3f}")
+
+fig, ax = plt.subplots(figsize=(6, 5))
+ConfusionMatrixDisplay.from_predictions(
+    y_test, voter_preds,
+    display_labels=list(y_voter.cat.categories),
+    ax=ax, colorbar=False
+)
+plt.title('Confusion Matrix: Voter Category')
+plt.tight_layout()
+plt.show()
+```
