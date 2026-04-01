@@ -358,6 +358,30 @@ Eric Friedlander
 </ul></li>
 <li><code>scikit-learn</code> <em>does</em> provide <code>HalvingGridSearchCV</code>, an iterative method that randomly samples configurations, evaluates them on small amounts of data, and “halves” the candidates repeatedly until only the best remains!</li>
 </ul>
+</section></section>
+<section>
+<section id="recap" class="title-slide slide level1 center">
+<h1>Recap</h1>
+
+</section>
+<section id="recap-1" class="slide level2">
+<h2>Recap</h2>
+<ul>
+<li><strong>Tuning parameters</strong> (hyperparameters) control model complexity and cannot be estimated from training data alone</li>
+<li>Use <strong>cross-validation</strong> to evaluate candidate tuning parameter values</li>
+<li><strong>Grid Search</strong> (<code>GridSearchCV</code>): exhaustively evaluate a predefined grid of values
+<ul>
+<li><strong>Regular grid</strong>: deterministic spacing (linear or log scale)</li>
+<li><strong>Random search</strong> (<code>RandomizedSearchCV</code>): sample randomly — preferred with many parameters</li>
+</ul></li>
+<li><strong>Selecting the best model:</strong>
+<ul>
+<li><strong>One-Standard Error Rule</strong>: choose the most parsimonious model within one SE of the best CV score</li>
+<li>Use the <strong>test set</strong> sparingly as a final tie-breaker between model classes (not for many comparisons)</li>
+</ul></li>
+<li><strong>Good practice</strong>: start with a coarse grid to find the right region, then refine</li>
+<li><strong>Iterative methods</strong> (Bonus): Bayesian search, simulated annealing, and successive halving intelligently guide the search rather than blindly enumerating points</li>
+</ul>
 
 
 </section></section>

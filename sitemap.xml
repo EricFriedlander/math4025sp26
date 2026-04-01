@@ -33,20 +33,24 @@
     <lastmod>2026-03-06T15:01:14.388Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-04.html</loc>
-    <lastmod>2026-03-06T15:01:01.397Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-14.html</loc>
+    <lastmod>2026-03-18T22:54:03.312Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-12.html</loc>
-    <lastmod>2026-03-06T15:02:07.602Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-10.html</loc>
+    <lastmod>2026-03-06T15:01:08.718Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-13.html</loc>
-    <lastmod>2026-03-08T18:48:27.954Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-03.html</loc>
+    <lastmod>2026-03-06T15:00:59.905Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-09.html</loc>
-    <lastmod>2026-03-06T15:01:04.508Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-08.html</loc>
+    <lastmod>2026-03-06T15:01:03.598Z</lastmod>
+  </url>
+  <url>
+    <loc>https://EricFriedlander.github.io/math4025sp26/hw/01-hw-eda.html</loc>
+    <lastmod>2026-02-10T21:22:17.498Z</lastmod>
   </url>
   <url>
     <loc>https://EricFriedlander.github.io/math4025sp26/hw/05-hw-preproc-cv.html</loc>
@@ -57,12 +61,12 @@
     <lastmod>2026-02-23T15:11:04.947Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/16-regularization-tuning.html</loc>
-    <lastmod>2026-03-18T22:15:23.843Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/11-cross-validation.html</loc>
+    <lastmod>2026-03-05T16:27:34.166Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/06-knn.html</loc>
-    <lastmod>2026-02-18T22:59:35.896Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/08-classification-logistic.html</loc>
+    <lastmod>2026-02-23T19:56:14.884Z</lastmod>
   </url>
   <url>
     <loc>https://EricFriedlander.github.io/math4025sp26/slides/10-roc-auc.html</loc>
@@ -81,8 +85,12 @@
     <lastmod>2026-02-10T14:14:33.091Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/04-MultipleRegression.html</loc>
-    <lastmod>2026-02-12T14:24:22.173Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/18-classification-trees.html</loc>
+    <lastmod>2026-04-01T22:34:28.602Z</lastmod>
+  </url>
+  <url>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/02-StatisticalLearning.html</loc>
+    <lastmod>2026-02-05T19:45:30.881Z</lastmod>
   </url>
   <url>
     <loc>https://EricFriedlander.github.io/math4025sp26/slides/01-big-picture.html</loc>
@@ -125,8 +133,12 @@
     <lastmod>2026-02-23T14:50:56.728Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/02-StatisticalLearning.html</loc>
-    <lastmod>2026-02-05T19:45:30.881Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/17-decision-trees.html</loc>
+    <lastmod>2026-04-01T22:33:16.477Z</lastmod>
+  </url>
+  <url>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/04-MultipleRegression.html</loc>
+    <lastmod>2026-02-12T14:24:22.173Z</lastmod>
   </url>
   <url>
     <loc>https://EricFriedlander.github.io/math4025sp26/slides/09-classification-metrics.html</loc>
@@ -145,12 +157,12 @@
     <lastmod>2026-02-03T17:49:39.874Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/08-classification-logistic.html</loc>
-    <lastmod>2026-02-23T19:56:14.884Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/16-model-tuning.html</loc>
+    <lastmod>2026-04-01T23:21:03.870Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/11-cross-validation.html</loc>
-    <lastmod>2026-03-05T16:27:34.166Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/06-knn.html</loc>
+    <lastmod>2026-02-18T22:59:35.896Z</lastmod>
   </url>
   <url>
     <loc>https://EricFriedlander.github.io/math4025sp26/hw/02-hw-mlr.html</loc>
@@ -161,24 +173,28 @@
     <lastmod>2026-03-04T23:46:33.120Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/hw/01-hw-eda.html</loc>
-    <lastmod>2026-02-10T21:22:17.498Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/hw/06-hw-regularization.html</loc>
+    <lastmod>2026-04-01T22:40:12.165Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-08.html</loc>
-    <lastmod>2026-03-06T15:01:03.598Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-09.html</loc>
+    <lastmod>2026-03-06T15:01:04.508Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-03.html</loc>
-    <lastmod>2026-03-06T15:00:59.905Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-13.html</loc>
+    <lastmod>2026-03-08T18:48:27.954Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-10.html</loc>
-    <lastmod>2026-03-06T15:01:08.718Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-12.html</loc>
+    <lastmod>2026-03-06T15:02:07.602Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-14.html</loc>
-    <lastmod>2026-03-18T22:54:03.312Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-04.html</loc>
+    <lastmod>2026-03-06T15:01:01.397Z</lastmod>
+  </url>
+  <url>
+    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-16.html</loc>
+    <lastmod>2026-04-01T22:46:09.330Z</lastmod>
   </url>
   <url>
     <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-07.html</loc>
