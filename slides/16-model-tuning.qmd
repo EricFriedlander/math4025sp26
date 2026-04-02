@@ -1,0 +1,182 @@
+---
+title: 'MATH 4025: Regularization & Model Tuning'
+author: Eric Friedlander
+logo: "../images/logo.png"
+format: 
+  revealjs:
+    theme: slides.scss
+    multiplex: false
+    transition: fade
+    slide-number: false
+    incremental: false 
+    chalkboard: true
+execute:
+  freeze: auto
+  echo: true
+---
+
+## Data: Candy {.smaller}
+
+The data for this lecture comes from the article FiveThirtyEight [*The Ultimate Halloween Candy Power Ranking*](https://fivethirtyeight.com/features/the-ultimate-halloween-candy-power-ranking). 
+
+# Model Tuning
+
+## Tuning Parameters
+
+-   **Tuning Parameters** or **Hyperparameters** are parameters that cannot (or should not) be estimated when a model is being trained
+-   These parameters control something about the learning process and changing them will result in a different model when fit to the full training data (i.e. after cross-validation)
+-   Frequently: tuning parameters control model complexity
+-   Example: $\lambda$ (or $\alpha$ in Python) in LASSO and Ridge regression
+-   Today: How to choose our tuning parameters?
+
+## Concept Check
+
+-   Which of the following are tuning parameters:
+    +   $\beta_0$: the intercept of linear regression
+    +   $k$ in KNN
+    +   step size in gradient descent
+    +   The number of folds in cross-validation
+    +   Type of distance to use in KNN (i.e. rectangular vs. Gower's vs. weighted etc)
+
+## Basic Idea
+
+-   Use CV to try out a bunch of different tuning parameters and choose the "best" one
+-   How do we choose which tuning parameters to try?
+-   Two general approaches:
+    +   Grid Search
+    +   Iterative Search
+    
+# Grid Search
+    
+## Grid Search
+
+-   Create a grid of tuning parameters and try out each combination
+-   Types of grids:
+    +   Regular Grid: tuning parameter values are spaced *deterministically* using a linear or logarithmic scale and all combinations of parameters are used (mostly what you want to use in this class)
+    +   Irregular Grids: tuning parameter values are chosen *stochastically*
+        -   Use when you have A LOT of parameters
+    
+## Regular Grid Search in Python {.smaller}
+
+-   Take advantage of [`GridSearchCV`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) inside `sklearn.model_selection`.
+-   You provide:
+    1.  Your pipeline
+    2.  A dictionary of parameters ending with a list of values to search (e.g. `{'model__alpha': [0.1, 1.0, 10.0]}`)
+    3.  A cross-validation strategy (e.g. `KFold`)
+    4. Pass estimator, parameter grid, cv folds, and scoring metric into `GridSearchCV` and it will do the rest!
+
+## Inspecting Results
+
+The `cv_results_` attribute returns a dictionary of information that we can put right into a DataFrame.
+
+Let's practice by:
+
+- Using `GridSearchCV` to tune our a Ridge and LASSO regression model
+- Visualizing the results
+- Selecting the best model from LASSO and Ridge use (`.best_params_` and `.best_score_`)
+- Refit the best model (using `refit=True`) on the entire training data and evaluate on the test set
+
+## Random Grid Search
+
+-   If you have a lot of tuning parameters, you can use `RandomizedSearchCV` instead of `GridSearchCV`
+-   You specify the number of random combinations to try instead of trying all combinations
+-   This is a good option when you have a lot of tuning parameters and/or a large range of values to try for each parameter
+-   In practice, this is often the best option when you have more than 2-3 tuning parameters or a large range of values to try for each parameter
+-   Can specify distributions to sample from instead of a list of values (e.g. `scipy.stats.uniform` or `scipy.stats.loguniform`)
+
+## Using Parsimony as a Tie-Breaker
+
+-   Good heuristic: **One-Standard Error Rule**
+    +   Use resampling to estimate error metrics
+    +   Compute standard error for error metrics
+    +   Select most parsimonious model that is within one standard error of the best performance metric
+    
+
+## Using the Test Set as a Tie Breaker
+
+-   Once you've found you "best" candidate from several different classes of model (e.g. KNN, LASSO, Ridge), it's ok to compare on test set
+-   In this case, we have our best ridge and our best lasso model
+-   Main thing to avoid... LOTS of comparisons on your test set
+
+
+## Good strategies
+
+-   First use coarse grid with large range to find general area
+    +   Then use fine grid with small range to fine tune
+    +   Use iterative method to fine tune
+    
+# Iterative Methods (Bonus Content)
+
+## Brief Overview
+
+-   Basic Idea: iteratively select parameter values to choose based on how previous ones have done.
+-   Instead of blindly guessing every point (Grid Search), algorithm learns which parameters look most promising.
+-   Common Frameworks:
+    +   Bayesian Search (using Gaussian Processes)
+    +   Simulated Annealing
+    +   Successive Halving
+
+## Bayesian Search: GP {.smaller}
+
+::: incremental
+-   Assume performance metrics follow a Gaussian process
+-   Consider two sets of tuning parameters: $x_1 = (\alpha_1, k_1)$ and $x_2 = (\alpha_2, k_2)$
+-   Let $Y_1$ and $Y_2$ be random variables representing the performance metric at these $x$'s
+-   Assume $\text{Cov}(Y_1, Y_2)$ depends on how far apart $x_1$ and $x_2$
+    +   Covariance should decrease the further apart $x_1$ and $x_2$ are
+:::
+
+## Bayesian Search: Acquisition Function {.smaller}
+
+::: incremental
+-   GP process gives us predicted mean and variance of performance metrics
+-   Imagine two scenario's:
+    +   1: Predicted mean is slightly better than current parameter choice and variance is low
+        -   Low-Risk, Low-Reward
+    +   2: Predicted mean is slightly worst than current parameter choice but variance is high
+        -   High-Risk, High-Reward
+-   How do we balance?
+-   Two competing goals: *Exploration* (go toward high variance) and *Exploitation* (go toward best mean)
+-   Acquisition function: balances these two goals
+:::
+
+## Simulated Annealing {.smaller}
+
+::: incremental
+-   Does anyone know what annealing is in Physics/Material Science?
+-   Start with initial parameter combination $x_0$(think gradient descent)
+-   Embark on random walk... in each step $i$
+    +   Consider small perturbation from $x_{i-1}$... let's call it $x_{i-1}^{\epsilon}$
+    +   Get performance for $x_{i-1}^\epsilon$
+    +   If performance is better set $x_i = x_{i-1}^\epsilon$
+    +   If performance is worse set $x_i = x_{i-1}^\epsilon$ with probability $\exp(-c\times D_i\times i)$
+        -   $c$ is user specified constant called cooling coefficient
+        -   $D_i$ percent difference between old and new
+    +   Otherwise $x_i = x_{i-1}$
+-   Idea: 
+    +   start hot: likely to accept suboptimal parameter combinations and move around
+    +   cools over time: decrease number sub-optimal acceptances
+:::
+
+## Iterative Methods in Python {.smaller}
+
+- Standard `scikit-learn` does not natively include simulated annealing or bayesian search out of the box.
+- You must use widely adopted extensions:
+    + `scikit-optimize` for `BayesSearchCV` (Bayesian optimization)
+    + `Optuna` or `Hyperopt` for advanced Bayesian / Annealing workflows.
+- `scikit-learn` *does* provide `HalvingGridSearchCV`, an iterative method that randomly samples configurations, evaluates them on small amounts of data, and "halves" the candidates repeatedly until only the best remains!
+
+# Recap
+
+## Recap
+
+-   **Tuning parameters** (hyperparameters) control model complexity and cannot be estimated from training data alone
+-   Use **cross-validation** to evaluate candidate tuning parameter values
+-   **Grid Search** (`GridSearchCV`): exhaustively evaluate a predefined grid of values
+    +   **Regular grid**: deterministic spacing (linear or log scale)
+    +   **Random search** (`RandomizedSearchCV`): sample randomly — preferred with many parameters
+-   **Selecting the best model:**
+    +   **One-Standard Error Rule**: choose the most parsimonious model within one SE of the best CV score
+    +   Use the **test set** sparingly as a final tie-breaker between model classes (not for many comparisons)
+-   **Good practice**: start with a coarse grid to find the right region, then refine
+-   **Iterative methods** (Bonus): Bayesian search, simulated annealing, and successive halving intelligently guide the search rather than blindly enumerating points

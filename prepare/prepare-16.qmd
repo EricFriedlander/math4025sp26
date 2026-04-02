@@ -1,0 +1,7 @@
+---
+title: "Preparation for Model Tuning"
+---
+
+## Assigned readings & videos
+
+- Read [3.2 Hyperparameter Tuning](https://scikit-learn.org/stable/modules/grid_search) from scikit-learn documentation
