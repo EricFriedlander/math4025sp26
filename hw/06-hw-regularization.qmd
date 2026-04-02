@@ -3,27 +3,6 @@ title: "Homework 6: Feature/Model Selection and Regularization"
 author: "Your Name"
 ---
 
-```{python setup}
-#| include: false
-
-import pandas as pd
-import numpy as np
-from sklearn.model_selection import train_test_split, GridSearchCV, RepeatedKFold, RepeatedStratifiedKFold
-from sklearn.linear_model import Ridge, Lasso, LogisticRegression
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.pipeline import Pipeline
-from sklearn.compose import ColumnTransformer
-from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.metrics import root_mean_squared_error, accuracy_score
-import matplotlib.pyplot as plt
-import seaborn as sns
-import missingno as msno
-from pyhere import here
-
-# load other packages here if necessary
-```
-
 # Introduction
 
 In this homework you will practice using regularization and model tuning to select models and features.
@@ -141,7 +120,7 @@ You may present from slides (try [`revealjs` in Quarto](https://quarto.org/docs/
 
 # Part 2: NFL Field Goals
 
-The GitHub assignment for this portion of the project can be found [here](https://classroom.github.com/a/PLACEHOLDER). You should complete this part of the assignment in a jupyter notebook in this repository and submit it by committing and pushing to GitHub.
+The GitHub assignment for this portion of the project can be found [here](https://classroom.github.com/a/_-PMzqAA). You should complete this part of the assignment in a jupyter notebook in this repository and submit it by committing and pushing to GitHub.
 
 In the second part of this homework, you will practice working with a classification problem. The dataset describes NFL field goal attempts. For those of you unfamiliar with American football, this is when the kicker tries to kick the ball through the uprights to score three points, as in
 [this video](https://www.youtube.com/watch?v=U3L10PoEXvI).

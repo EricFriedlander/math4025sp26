@@ -1,0 +1,181 @@
+---
+title: 'MATH 4025: Decision Trees'
+---
+
+## Tree-Based Methods {.smaller}
+
+-   Idea: **stratify** or **segment** the predictor space into simple regions
+-   Splitting rules used to segment the predictor space form a tree
+-   Can be used for both **classification** and **regression**
+-   Single tree called **decision tree**
+    +   Simple and useful for interpretation
+    +   Not the best in terms of prediction accuracy
+-   Much more powerful: grow multiple trees and combine results
+    +   **Bagging** and **boosting**
+-   Most powerful methods for tabular data are typically tree-based methods
+
+## Terminology for Trees
+
+-   Every split is considered to be a **node**
+-   First node at the top of the tree: **root node** (contains all the training data)
+-   Final nodes at the bottom of tree called **leaves** or **terminal nodes**
+-   Decision trees typically drawn with root at top and leaves at bottom
+-   Nodes in middle of tree called **internal nodes**
+-   The segments of the trees that connect nodes are known as **branches**
+
+## Terminology for Trees
+
+::: {#fig-tree1 layout-ncol=2}
+
+![](images/19/depth-3-decision-tree-1.png)
+
+![](images/19/depth-3-decision-tree-2.png)
+
+From Hands-On Machine Learning, Boehmke & Greenwell
+:::
+
+## Building a Tree {.smaller}
+
+-   Select predictor $X_j$ and cut point $s$ such that splitting the predictor space into the regions
+$\{X|X_j < s\}$ and $\{X|X_j \geq s\}$ leads to the greatest possible reduction in SSE
+-   For any $j$ and $s$, define
+$$R_1 = \{X|X_j < s\} \quad \text{and} \quad R_2 = \{X|X_j \geq s\}$$
+-   Find $j$ and $s$ that minimize
+$$SSE = \displaystyle \sum_{i \in R_1}\left(y_i - \hat{y}_{R_1}\right)^2 + \sum_{i \in R_2}\left(y_i - \hat{y}_{R_2}\right)^2$$
+-   For a new observation in region $R_j$: predict the **mean** of training observations in $R_j$
+-   Repeat process on each new region; continue until stopping criterion is reached
+
+## Building a Tree and Prediction
+
+::: {#fig-tree2 layout-ncol=2}
+
+![](images/19/decision-stump-1.png)
+
+![](images/19/decision-stump-2.png)
+
+From Hands-On Machine Learning, Boehmke & Greenwell
+:::
+
+## Building a Tree and Prediction
+
+::: {#fig-tree3 layout-ncol=2}
+
+![](images/19/depth-3-decision-tree-1.png)
+
+![](images/19/depth-3-decision-tree-2.png)
+
+From Hands-On Machine Learning, Boehmke & Greenwell
+:::
+
+## Building a Tree and Prediction
+
+![From ISLR](images/19/ISLR-tree-1.png)
+
+## Building a Tree: The Greedy Algorithm {.smaller}
+
+-   Anyone know what a **greedy algorithm** is?
+
+. . .
+
+-   Computationally infeasible to consider every possible partition
+-   Idea: **top-down, greedy** approach known as **recursive binary splitting**
+    +   **Top-down**: begins at the top of the tree (root contains all data)
+    +   **Greedy**: at each step, make the best split *right now* rather than looking ahead
+        +   Important consequence: ordinal vs. one-hot encoding of categorical predictors can change the tree!
+    +   Stop when each terminal node has fewer than some minimum number of observations
+
+## Overfitting
+
+-   The process described above is likely to **overfit** the data
+-   One (bad) solution: require each split to improve performance by some amount
+    +   Bad idea: sometimes seemingly meaningless cuts early on enable really good cuts later on
+-   Good solution: **pruning**
+    +   Grow a big tree and then prune off branches that are unnecessary
+
+## Tree Pruning
+
+![From Hands-On Machine Learning, Boehmke & Greenwell](images/19/pruned-tree-1.png)
+
+## Bias-Variance Trade-Off
+
+-   How does tree size relate to the bias-variance trade-off?
+    +   Would larger trees have higher or lower **bias**?
+    +   What about **variance**?
+
+. . .
+
+-   Larger tree → lower bias, higher variance
+-   Smaller (pruned) tree → higher bias, lower variance
+
+## Cost-Complexity Pruning {.smaller}
+
+-   Grow a very large tree $T_0$, then **prune** it back to obtain a **subtree**
+-   Also called **weakest link pruning**
+-   Select subtree $T \subset T_0$ which minimizes
+$$SSE(T) + \alpha \times |T| = SSE(T) + \alpha \times (\text{# of terminal nodes of } T)$$
+-   What should happen to the tree as we increase $\alpha$?
+
+. . .
+
+-   Larger $\alpha$ → more penalization for complexity → fewer leaves → simpler tree
+-   What should happen to bias and variance as we increase $\alpha$?
+
+. . .
+
+-   Larger $\alpha$ → higher bias, lower variance
+-   How should we choose $\alpha$? [**Cross Validation**]{.fragment}
+
+# Regression Trees in Python
+
+## Data: Bikeshare {.smaller}
+
+Bike sharing systems are a new generation of traditional bike rentals where the whole process from membership, rental, and return has become automatic. Through these systems, users can easily rent a bike from a particular position and return it at another position. [Documentation](https://www.kaggle.com/datasets/marklvl/bike-sharing-dataset). Let's:
+
+- Cleaning the Data
+- Split the data
+- Generate a pre-processor
+
+## Tree's in Python
+
+Use `sklearn.tree.DecisionTreeRegressor` for regression trees. Key parameters:
+
+-   `max_depth`: maximum depth of the tree
+-   `min_samples_split`: minimum number of samples required to split an internal node
+-   `min_samples_leaf`: minimum number of samples required to be at a leaf node
+-   `ccp_alpha`: complexity parameter for pruning (cost-complexity pruning)
+
+## Visualizing Trees in Python
+
+- Use `sklearn.tree.plot_tree` to visualize the tree structure
+- Note: large trees can be difficult to interpret $\Rightarrow$ helpful to limit the depth of the tree when visualizing.
+- Each node shows: split condition, squared error, number of samples, predicted value.
+
+## Practice
+
+Let's practice:
+
+- Fit a simply decision tree to the training data with a `max_depth` of 4
+- Visualize the tree and interpret the splits
+- Experiment with different values of `ccp_alpha` to see how it affects the tree structure and performance
+- Use cross-validation to select the optimal `ccp_alpha` and visualize the results
+- Discuss the advantages and disadvantages of decision trees based on our findings
+
+
+## Conceptual Questions
+
+-   Why might ordinal encoding (instead of one-hot encoding) of `mnth` matter for a decision tree?
+-   Why might we **not** want to use ordinal encoding for `mnth` when fitting a linear regression model (as opposited to a tree-based model)?
+-   Look at the best tree: which features appear near the root? Does that make sense?
+
+## Decision Trees {.smaller}
+
+-   **Advantages**
+    +   Easy to explain and interpret
+    +   Closely mirror human decision-making
+    +   Can be displayed graphically and interpreted by non-experts
+    +   Does **not** require standardization of predictors
+    +   Can handle missing data directly
+    +   Can easily capture non-linear patterns
+-   **Disadvantages**
+    +   Generally lower prediction accuracy than other methods
+    +   Not very robust — small changes in data can produce very different trees (high variance)

@@ -43,10 +43,10 @@ website:
         text: Python resources
       - section: Job Applications & Interviews
         contents:
-        # - jobs/job-app-1-resources.qmd
-        # - href: https://cofi.instructure.com/courses/17021/assignments/210575
-        #   text: "Job Advertisement 1"
-        # - jobs/job-app-1-rubric.qmd
+        - href: jobs/job-app-1-resources.qmd
+          text: "Job Application Instructions"
+        - href: jobs/job-app-1-rubric.qmd
+          text: "Job Application Rubric"
         # - jobs/job-interview-resources.qmd
         # - jobs/job-app-2-resources.qmd
       - section: Project

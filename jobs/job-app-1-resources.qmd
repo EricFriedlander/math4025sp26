@@ -1,47 +1,50 @@
 ---
-title: "Job Application 1 Resources"
+title: "Job Application Guide"
 ---
 
 ## Building a Website
 
+-   [Using Quarto & GitHub Pages (Recommended)](https://quarto.org/docs/publishing/github-pages.html)
 -   [Using Quarto & Netlify](https://jadeyryan.com/blog/2024-02-19_beginner-quarto-netlify/)
 -   [Using Quarto, Netlify, & GitHub](https://jadeyryan.com/blog/2023-11-19_publish-quarto-website/)
--   [Using Quarto & GitHub Pages](https://quarto.org/docs/publishing/github-pages.html)
 
 ## Job Advertisement
 
 Before preparing your application materials, you must identify the job you are applying for.
 
-**Finding Your Job Ad:** Search for a real job posting relevant to your career goals and submit it along with your application materials on Canvas. Any job reasonably related to your career is acceptable. As a rule of thumb: if your chosen job requires little to no data analysis, statistical modeling, or machine learning, it is likely too far from the course learning objectives — when in doubt, ask Dr. Friedlander.
+**Finding Your Job Ad:** Search for a real job posting relevant to your career goals and submit it along with your application materials on Canvas. Any job reasonably related to your career is acceptable. If your chosen job requires little to no data analysis, statistical modeling, or machine learning, it's ok for you to use it, but make sure you tailor your application materials to the technical skills covered in this course. If you have trouble finding a job ad.
 
 **Submit a PDF:** Many job postings expire before the grading deadline. Please upload a PDF screenshot or saved copy of the posting (not just a URL) so it can be reviewed.
 
-**If your job is too far from the course learning objectives:** Your application materials must still reflect the technical skills covered in this course. If Dr. Friedlander determines that your chosen ad doesn't align closely enough with the course content, your sample analysis should reflect a position with the following profile:
+**If your job is too far from the course learning objectives:** Your application materials must still reflect the technical skills covered in this course. Your sample analysis should reflect a position with the following profile.
+
+### Sample Job Description
 
 **Key Responsibilities:**
 
--   Collect, clean, and analyze data from various sources.
--   Develop and maintain dashboards and reports to track key performance indicators (KPIs).
--   Identify trends, patterns, and anomalies in datasets.
--   Collaborate with cross-functional teams to understand business requirements and provide data-driven solutions.
--   Present findings and recommendations to stakeholders in a clear and concise manner.
--   Ensure data accuracy and integrity.
+-   Conduct exploratory data analysis (EDA) to uncover patterns, relationships, and anomalies in datasets and inform modeling decisions.
+-   Build, evaluate, and deploy supervised machine learning models (regression and classification) to support data-driven decision-making.
+-   Design and implement preprocessing and feature engineering pipelines to prepare raw data for modeling.
+-   Apply model selection techniques (cross-validation, hyperparameter tuning) to optimize predictive performance.
+-   Interpret model outputs and communicate findings — including uncertainty and limitations — to both technical and non-technical stakeholders.
+-   Collaborate with cross-functional teams to translate business problems into well-defined machine learning tasks.
+-   Maintain reproducible, version-controlled analysis workflows.
 
 **Qualifications:**
 
 -   Bachelor's degree in Data Science, Statistics, Computer Science, or a related field.
--   Proficiency in data manipulation and visualization using R.
--   Expertise in statistical inference and basic statistical models.
--   Familiarity with machine learning techniques including regression and classification, pre-processing and feature engineering, model building, and model evaluation.
--   Excellent communication, presentation, and teamwork skills.
+-   Proficiency in Python, including `pandas`, `numpy`, and `scikit-learn`.
+-   Experience building and evaluating machine learning models, including regression (linear, ridge, lasso, elastic net) and classification (logistic regression, decision trees, k-nearest neighbors).
+-   Familiarity with model evaluation metrics (RMSE, accuracy, precision/recall, ROC-AUC) and techniques such as cross-validation and train/test splitting.
+-   Strong communication and teamwork skills; ability to present analytical results clearly.
 -   Ability to work independently and collaboratively using Git.
 
 **Preferred Qualifications:**
 
--   Proficiency in Python, pandas, and scikit-learn.
--   Experience with SQL, R, and/or Excel for data analysis.
--   Familiarity with big data technologies (e.g., Hadoop, Spark).
--   Experience in finance or accounting.
+-   Experience with ensemble methods such as random forests or gradient boosting.
+-   Familiarity with preprocessing techniques including imputation, scaling, encoding, and handling class imbalance.
+-   Experience with R and/or SQL for data analysis.
+-   Exposure to unsupervised learning methods (clustering, dimensionality reduction).
 
 ## Cover Letter & Resume
 
@@ -54,18 +57,18 @@ Before preparing your application materials, you must identify the job you are a
     +   Jobs care A LOT about communication and teamwork skills. Anything you can do emphasize your skills in this area is worth including in your application. **Make sure that all of your application materials have ZERO typos and grammatical errors.**
 
     
-### Resume
+### Resume Tips
 
--   Start with [Resume Template](https://cofi.instructure.com/courses/14763/files/1316826?verifier=et2few6bBRyK8o76gjpqmqVcimxqKVCB3ePQdxP0&wrap=1)
+-   Find a nice template online, start with [Resume Template](https://cofi.instructure.com/courses/14763/files/1316826?verifier=et2few6bBRyK8o76gjpqmqVcimxqKVCB3ePQdxP0&wrap=1), or ask your favorite AI Chatbot to generate one for you
 -   Additional tips from Eric
     +  **DON'T GO MORE THAN 1 PAGE.** You should only ever go more than 1 page if you have done a lot of stuff. As college students, you haven't... It may feel like you have... but you haven't. Going over 1 page is a good way to get your application thrown out without being read.
     +   CUSTOMIZE YOUR RESUME TO THE JOB AD!
     +   Rename "Skills" as "Technical Skills" and indicate level of proficiency next to each. You can include programming languages (e.g. R (Proficient)) and major packages (e.g. `tidyverse` (proficient)). It is OK to be a A LITTLE BIT optimistic about your skills. However, DO NOT LIE. If you claim you're proficient they may put you through a coding interview. A good rule of thumb is to ask yourself "What level of proficiency could I reach with one weekend of HARD studying?"
     +   Add a link to your personal website and GitHub to your resume.
-    +   Don't list relevant coursework near the top but if you have experience with certain content that you think is important (e.g. Linear Regression, K-Nearest Neighbors, Cross-Validation, etc.) include it in your Skills section.
-    +   Your resume may first go through an AI filter or be reviewed by an HR hiring manager without expertise in the field you're applying for. Make sure you include important key words in your resume that match what's in the job description. For example, if the job ad says they want expertise in `tidymodels`, say `tidymodels` in your resume. **Make sure that all of your application materials have ZERO typos and grammatical errors.** Pat from HR may not know what cross-validation is, but they sure know what a period is.
+    +   Don't list relevant coursework near the top but if you have experience with certain content that you think is important (e.g. Linear Regression, K-Nearest Neighbors, Cross-Validation, etc.) include it in your Skills section. Your Skills section shouldn't be a laundry list of every single thing you've ever done but it should include the most important things that are relevant to the job you're applying for.
+    +   Your resume may first go through an AI filter or be reviewed by an HR hiring manager without expertise in the field you're applying for. Make sure you include important key words in your resume that match what's in the job description. For example, if the job ad says they want expertise in `scikit-learn`, say `scikit-learn` in your resume. **Make sure that all of your application materials have ZERO typos and grammatical errors.** Gary from HR may not know what cross-validation is, but he sure knows what a period is.
     +   Think of the "preferred qualifications" as a wishlist rather than a list of necessary skills. Remember... you miss 100% of the shots you don't take.
-    +   When possible, quantify your achievements. An example from my old resume (emphasis added): "Devised cache replacement policy for Video-on-Demand settings which takes advantage of "chunked" files and achieves a **32% improvement** install duration compared to the LRU policy; **work published in peer-reviewed article**."
+    +   When possible, quantify your achievements. An example from my old resume (emphasis added): "Devised cache replacement policy for Video-on-Demand settings which takes advantage of "chunked" files and achieves a **32% improvement** install duration compared to the LRU policy; **work published in peer-reviewed article**." Addendum: Don't make up numbers. If you don't have any quantifiable achievements, that's ok. See if you can emphasize your impact in other ways (e.g. presented at a conference, published a paper). If you do, add them.
     +   If you don't have a lot of Experience, include a Projects section. Upload your project to GitHub or your website and link to them from your resume.
     +   **Always save your resume as a PDF.** (1) You never know what software they will be using to view your resume and you want it to ALWAYS looks the same. (2) You don't want anyone to accidentally edit it.
 -   [A nice article](https://www.dataquest.io/blog/how-data-science-resume-cv/)
@@ -74,8 +77,8 @@ Before preparing your application materials, you must identify the job you are a
 
 -   Start with [Cover Letter Template](https://cofi.instructure.com/courses/14763/files/1316820?verifier=A7l5P4axxJRpXFIRQLojylqCjEWcfFgSbSlSXdEi&wrap=1)
 -   Additional tips from Eric
-    +   Remember that people may not be carefully be reading your cover letter from top to bottom. Design your cover letter so that it still makes sense if someone skims it.
-    +   You can use **bold**, *italicized*, or [underlined]{.underline} text to highlight or emphasize important skills. Don't overdo it though. If you feel like you've done too much, you probably have.
+    +   Remember that people may not be carefully reading your cover letter from top to bottom. Design your cover letter so that it still makes sense if someone skims it.
+    +   You can use **bold**, *italicized*, or [underlined]{.underline} text to highlight or emphasize important skills. Don't overdo it though. If you feel like you've done too much, you probably have. New addendum: sometimes bolding words and use of em-dashes can signal to the reader that you used AI to make your cover letter and that's probably not good.
     
 ### Sample Analysis
 
@@ -92,9 +95,9 @@ Once published:
 
 -   While not required, I recommend you start with something you've been working on
     +   If you have a side project, use may use that.
-    +   If not, I recommend starting with one of your homeworks.
+    +   If not, I recommend starting with one of your homeworks or something from a previous class.
 -   Your data analysis should do the following
-    +   Tell a coherent story and narrative. If you start with a homework, make sure you take out all of my narrative and the exercise headings.
+    +   Tell a coherent story and narrative. If you start with a homework, make sure you smooth it into something that reads well.
     +   Include something similar to the following sections:
         -   Introduction outlining and motivating the problem
         -   Exploratory data analysis and pre-process/feature engineering
@@ -112,17 +115,3 @@ Once published:
     +   Ensure all plots have professional axis labels.
     +   When talking about your variables, mostly refer to them by what they represent rather than their name. For example say "We will be predicting whether a customer will default on their loan." instead of "We will be using `default` as the response variable. There are situation in which it is appropriate to refer to them by their names in R but be careful.
     +   Including a bunch of unnecessary analysis steps to prove that you can do them. If the project you've chosen does not call of more advanced analysis steps, choose a different one.
-
-## Submission Checklist
-
-Before submitting, verify:
-
--   [ ] Job advertisement submitted as a PDF on Canvas
--   [ ] Resume saved and submitted as a PDF (≤ 1 page)
--   [ ] Cover letter saved and submitted as a PDF
--   [ ] Sample analysis is published on a GitHub Pages website
--   [ ] `EricFriedlander` is added as a collaborator on your GitHub repository
--   [ ] GitHub Pages site URL submitted on Canvas
--   [ ] GitHub repository URL submitted on Canvas
--   [ ] All materials are tailored to your chosen job ad
--   [ ] All materials are free of typos and grammatical errors
