@@ -1520,127 +1520,127 @@
     "text": "Recap\n\nBias-Variance Trade-off: As flexibility increases, variance increases and bias decreases.\nscikit-learn Workflow:\n\nImport model class.\nInstantiate with hyperparameters.\nFit to training data (.fit(X, y)).\nPredict or inspect coefficients (.predict(), .coef_, .intercept_).\n\nMultiple Linear Regression: Extends simple linear regression to multiple predictors.\nInterpreting Coefficients: \\(\\hat{\\beta}_j\\) is the expected change in \\(Y\\) for a one-unit increase in \\(X_j\\), holding all other predictors constant.\nSimpson’s Paradox: Relationships can change or reverse when accounting for confounders."
   },
   {
-    "objectID": "slides/17-decision-trees.html#tree-based-methods",
-    "href": "slides/17-decision-trees.html#tree-based-methods",
+    "objectID": "slides/17-regression-trees.html#tree-based-methods",
+    "href": "slides/17-regression-trees.html#tree-based-methods",
     "title": "MATH 4025: Decision Trees",
     "section": "Tree-Based Methods",
     "text": "Tree-Based Methods\n\nIdea: stratify or segment the predictor space into simple regions\nSplitting rules used to segment the predictor space form a tree\nCan be used for both classification and regression\nSingle tree called decision tree\n\nSimple and useful for interpretation\nNot the best in terms of prediction accuracy\n\nMuch more powerful: grow multiple trees and combine results\n\nBagging and boosting\n\nMost powerful methods for tabular data are typically tree-based methods"
   },
   {
-    "objectID": "slides/17-decision-trees.html#terminology-for-trees",
-    "href": "slides/17-decision-trees.html#terminology-for-trees",
+    "objectID": "slides/17-regression-trees.html#terminology-for-trees",
+    "href": "slides/17-regression-trees.html#terminology-for-trees",
     "title": "MATH 4025: Decision Trees",
     "section": "Terminology for Trees",
     "text": "Terminology for Trees\n\nEvery split is considered to be a node\nFirst node at the top of the tree: root node (contains all the training data)\nFinal nodes at the bottom of tree called leaves or terminal nodes\nDecision trees typically drawn with root at top and leaves at bottom\nNodes in middle of tree called internal nodes\nThe segments of the trees that connect nodes are known as branches"
   },
   {
-    "objectID": "slides/17-decision-trees.html#terminology-for-trees-1",
-    "href": "slides/17-decision-trees.html#terminology-for-trees-1",
+    "objectID": "slides/17-regression-trees.html#terminology-for-trees-1",
+    "href": "slides/17-regression-trees.html#terminology-for-trees-1",
     "title": "MATH 4025: Decision Trees",
     "section": "Terminology for Trees",
     "text": "Terminology for Trees\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1: From Hands-On Machine Learning, Boehmke & Greenwell"
   },
   {
-    "objectID": "slides/17-decision-trees.html#building-a-tree",
-    "href": "slides/17-decision-trees.html#building-a-tree",
+    "objectID": "slides/17-regression-trees.html#building-a-tree",
+    "href": "slides/17-regression-trees.html#building-a-tree",
     "title": "MATH 4025: Decision Trees",
     "section": "Building a Tree",
     "text": "Building a Tree\n\nSelect predictor \\(X_j\\) and cut point \\(s\\) such that splitting the predictor space into the regions \\(\\{X|X_j &lt; s\\}\\) and \\(\\{X|X_j \\geq s\\}\\) leads to the greatest possible reduction in SSE\nFor any \\(j\\) and \\(s\\), define \\[R_1 = \\{X|X_j &lt; s\\} \\quad \\text{and} \\quad R_2 = \\{X|X_j \\geq s\\}\\]\nFind \\(j\\) and \\(s\\) that minimize \\[SSE = \\displaystyle \\sum_{i \\in R_1}\\left(y_i - \\hat{y}_{R_1}\\right)^2 + \\sum_{i \\in R_2}\\left(y_i - \\hat{y}_{R_2}\\right)^2\\]\nFor a new observation in region \\(R_j\\): predict the mean of training observations in \\(R_j\\)\nRepeat process on each new region; continue until stopping criterion is reached"
   },
   {
-    "objectID": "slides/17-decision-trees.html#building-a-tree-and-prediction",
-    "href": "slides/17-decision-trees.html#building-a-tree-and-prediction",
+    "objectID": "slides/17-regression-trees.html#building-a-tree-and-prediction",
+    "href": "slides/17-regression-trees.html#building-a-tree-and-prediction",
     "title": "MATH 4025: Decision Trees",
     "section": "Building a Tree and Prediction",
     "text": "Building a Tree and Prediction\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: From Hands-On Machine Learning, Boehmke & Greenwell"
   },
   {
-    "objectID": "slides/17-decision-trees.html#building-a-tree-and-prediction-1",
-    "href": "slides/17-decision-trees.html#building-a-tree-and-prediction-1",
+    "objectID": "slides/17-regression-trees.html#building-a-tree-and-prediction-1",
+    "href": "slides/17-regression-trees.html#building-a-tree-and-prediction-1",
     "title": "MATH 4025: Decision Trees",
     "section": "Building a Tree and Prediction",
     "text": "Building a Tree and Prediction\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3: From Hands-On Machine Learning, Boehmke & Greenwell"
   },
   {
-    "objectID": "slides/17-decision-trees.html#building-a-tree-and-prediction-2",
-    "href": "slides/17-decision-trees.html#building-a-tree-and-prediction-2",
+    "objectID": "slides/17-regression-trees.html#building-a-tree-and-prediction-2",
+    "href": "slides/17-regression-trees.html#building-a-tree-and-prediction-2",
     "title": "MATH 4025: Decision Trees",
     "section": "Building a Tree and Prediction",
     "text": "Building a Tree and Prediction\n\nFrom ISLR"
   },
   {
-    "objectID": "slides/17-decision-trees.html#building-a-tree-the-greedy-algorithm",
-    "href": "slides/17-decision-trees.html#building-a-tree-the-greedy-algorithm",
+    "objectID": "slides/17-regression-trees.html#building-a-tree-the-greedy-algorithm",
+    "href": "slides/17-regression-trees.html#building-a-tree-the-greedy-algorithm",
     "title": "MATH 4025: Decision Trees",
     "section": "Building a Tree: The Greedy Algorithm",
     "text": "Building a Tree: The Greedy Algorithm\n\nAnyone know what a greedy algorithm is?\n\n\n\nComputationally infeasible to consider every possible partition\nIdea: top-down, greedy approach known as recursive binary splitting\n\nTop-down: begins at the top of the tree (root contains all data)\nGreedy: at each step, make the best split right now rather than looking ahead\n\nImportant consequence: ordinal vs. one-hot encoding of categorical predictors can change the tree!\n\nStop when each terminal node has fewer than some minimum number of observations"
   },
   {
-    "objectID": "slides/17-decision-trees.html#overfitting",
-    "href": "slides/17-decision-trees.html#overfitting",
+    "objectID": "slides/17-regression-trees.html#overfitting",
+    "href": "slides/17-regression-trees.html#overfitting",
     "title": "MATH 4025: Decision Trees",
     "section": "Overfitting",
     "text": "Overfitting\n\nThe process described above is likely to overfit the data\nOne (bad) solution: require each split to improve performance by some amount\n\nBad idea: sometimes seemingly meaningless cuts early on enable really good cuts later on\n\nGood solution: pruning\n\nGrow a big tree and then prune off branches that are unnecessary"
   },
   {
-    "objectID": "slides/17-decision-trees.html#tree-pruning",
-    "href": "slides/17-decision-trees.html#tree-pruning",
+    "objectID": "slides/17-regression-trees.html#tree-pruning",
+    "href": "slides/17-regression-trees.html#tree-pruning",
     "title": "MATH 4025: Decision Trees",
     "section": "Tree Pruning",
     "text": "Tree Pruning\n\nFrom Hands-On Machine Learning, Boehmke & Greenwell"
   },
   {
-    "objectID": "slides/17-decision-trees.html#bias-variance-trade-off",
-    "href": "slides/17-decision-trees.html#bias-variance-trade-off",
+    "objectID": "slides/17-regression-trees.html#bias-variance-trade-off",
+    "href": "slides/17-regression-trees.html#bias-variance-trade-off",
     "title": "MATH 4025: Decision Trees",
     "section": "Bias-Variance Trade-Off",
     "text": "Bias-Variance Trade-Off\n\nHow does tree size relate to the bias-variance trade-off?\n\nWould larger trees have higher or lower bias?\nWhat about variance?\n\n\n\n\nLarger tree → lower bias, higher variance\nSmaller (pruned) tree → higher bias, lower variance"
   },
   {
-    "objectID": "slides/17-decision-trees.html#cost-complexity-pruning",
-    "href": "slides/17-decision-trees.html#cost-complexity-pruning",
+    "objectID": "slides/17-regression-trees.html#cost-complexity-pruning",
+    "href": "slides/17-regression-trees.html#cost-complexity-pruning",
     "title": "MATH 4025: Decision Trees",
     "section": "Cost-Complexity Pruning",
     "text": "Cost-Complexity Pruning\n\nGrow a very large tree \\(T_0\\), then prune it back to obtain a subtree\nAlso called weakest link pruning\nSelect subtree \\(T \\subset T_0\\) which minimizes \\[SSE(T) + \\alpha \\times |T| = SSE(T) + \\alpha \\times (\\text{# of terminal nodes of } T)\\]\nWhat should happen to the tree as we increase \\(\\alpha\\)?\n\n\n\nLarger \\(\\alpha\\) → more penalization for complexity → fewer leaves → simpler tree\nWhat should happen to bias and variance as we increase \\(\\alpha\\)?\n\n\n\n\nLarger \\(\\alpha\\) → higher bias, lower variance\nHow should we choose \\(\\alpha\\)? Cross Validation"
   },
   {
-    "objectID": "slides/17-decision-trees.html#data-bikeshare",
-    "href": "slides/17-decision-trees.html#data-bikeshare",
+    "objectID": "slides/17-regression-trees.html#data-bikeshare",
+    "href": "slides/17-regression-trees.html#data-bikeshare",
     "title": "MATH 4025: Decision Trees",
     "section": "Data: Bikeshare",
     "text": "Data: Bikeshare\nBike sharing systems are a new generation of traditional bike rentals where the whole process from membership, rental, and return has become automatic. Through these systems, users can easily rent a bike from a particular position and return it at another position. Documentation. Let’s:\n\nCleaning the Data\nSplit the data\nGenerate a pre-processor"
   },
   {
-    "objectID": "slides/17-decision-trees.html#trees-in-python",
-    "href": "slides/17-decision-trees.html#trees-in-python",
+    "objectID": "slides/17-regression-trees.html#trees-in-python",
+    "href": "slides/17-regression-trees.html#trees-in-python",
     "title": "MATH 4025: Decision Trees",
     "section": "Tree’s in Python",
     "text": "Tree’s in Python\nUse sklearn.tree.DecisionTreeRegressor for regression trees. Key parameters:\n\nmax_depth: maximum depth of the tree\nmin_samples_split: minimum number of samples required to split an internal node\nmin_samples_leaf: minimum number of samples required to be at a leaf node\nccp_alpha: complexity parameter for pruning (cost-complexity pruning)"
   },
   {
-    "objectID": "slides/17-decision-trees.html#visualizing-trees-in-python",
-    "href": "slides/17-decision-trees.html#visualizing-trees-in-python",
+    "objectID": "slides/17-regression-trees.html#visualizing-trees-in-python",
+    "href": "slides/17-regression-trees.html#visualizing-trees-in-python",
     "title": "MATH 4025: Decision Trees",
     "section": "Visualizing Trees in Python",
     "text": "Visualizing Trees in Python\n\nUse sklearn.tree.plot_tree to visualize the tree structure\nNote: large trees can be difficult to interpret \\(\\Rightarrow\\) helpful to limit the depth of the tree when visualizing.\nEach node shows: split condition, squared error, number of samples, predicted value."
   },
   {
-    "objectID": "slides/17-decision-trees.html#practice",
-    "href": "slides/17-decision-trees.html#practice",
+    "objectID": "slides/17-regression-trees.html#practice",
+    "href": "slides/17-regression-trees.html#practice",
     "title": "MATH 4025: Decision Trees",
     "section": "Practice",
     "text": "Practice\nLet’s practice:\n\nFit a simply decision tree to the training data with a max_depth of 4\nVisualize the tree and interpret the splits\nExperiment with different values of ccp_alpha to see how it affects the tree structure and performance\nUse cross-validation to select the optimal ccp_alpha and visualize the results\nDiscuss the advantages and disadvantages of decision trees based on our findings"
   },
   {
-    "objectID": "slides/17-decision-trees.html#conceptual-questions",
-    "href": "slides/17-decision-trees.html#conceptual-questions",
+    "objectID": "slides/17-regression-trees.html#conceptual-questions",
+    "href": "slides/17-regression-trees.html#conceptual-questions",
     "title": "MATH 4025: Decision Trees",
     "section": "Conceptual Questions",
     "text": "Conceptual Questions\n\nWhy might ordinal encoding (instead of one-hot encoding) of mnth matter for a decision tree?\nWhy might we not want to use ordinal encoding for mnth when fitting a linear regression model (as opposited to a tree-based model)?\nLook at the best tree: which features appear near the root? Does that make sense?"
   },
   {
-    "objectID": "slides/17-decision-trees.html#decision-trees",
-    "href": "slides/17-decision-trees.html#decision-trees",
+    "objectID": "slides/17-regression-trees.html#decision-trees",
+    "href": "slides/17-regression-trees.html#decision-trees",
     "title": "MATH 4025: Decision Trees",
     "section": "Decision Trees",
     "text": "Decision Trees\n\nAdvantages\n\nEasy to explain and interpret\nClosely mirror human decision-making\nCan be displayed graphically and interpreted by non-experts\nDoes not require standardization of predictors\nCan handle missing data directly\nCan easily capture non-linear patterns\n\nDisadvantages\n\nGenerally lower prediction accuracy than other methods\nNot very robust — small changes in data can produce very different trees (high variance)"
