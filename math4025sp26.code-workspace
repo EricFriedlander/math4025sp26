@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "../math4025-slide-exercises"
 		}
 	],
 	"settings": {}

@@ -1,0 +1,357 @@
+---
+title: 'MATH 4025: Boosting'
+---
+
+```{python}
+#| include: false
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import HistGradientBoostingClassifier
+from sklearn.model_selection import train_test_split, StratifiedKFold, RandomizedSearchCV
+from sklearn.preprocessing import OrdinalEncoder, OneHotEncoder
+from sklearn.impute import SimpleImputer
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import accuracy_score, ConfusionMatrixDisplay
+from scipy.stats import randint, loguniform
+from plotnine import *
+from itables import show
+import warnings
+
+warnings.filterwarnings('ignore')
+np.random.seed(4025)
+
+# ── Load raw data ──────────────────────────────────────────────────────────────
+voter_url = 'https://raw.githubusercontent.com/fivethirtyeight/data/master/non-voters/nonvoters_data.csv'
+voter_raw = pd.read_csv(voter_url)
+
+# ── Cleaning ───────────────────────────────────────────────────────────────────
+voter_clean = voter_raw.drop(columns=['RespId', 'weight', 'Q1']).copy()
+
+voter_clean['educ'] = pd.Categorical(voter_clean['educ'],
+    categories=['High school or less', 'Some college', 'College'], ordered=True)
+voter_clean['income_cat'] = pd.Categorical(voter_clean['income_cat'],
+    categories=['Less than $40k', '$40-75k ', '$75-125k', '$125k or more'], ordered=True)
+voter_clean['voter_category'] = pd.Categorical(voter_clean['voter_category'],
+    categories=['rarely/never', 'sporadic', 'always'], ordered=False)
+
+voter_clean = voter_clean[voter_clean['Q22'] != 5].copy()
+voter_clean['Q22'] = voter_clean['Q22'].fillna('Not Asked').astype(str)
+
+q28_cols = [f'Q28_{i}' for i in range(1, 9)]
+for c in q28_cols:
+    voter_clean[c] = voter_clean[c].replace(-1.0, 0).fillna('Not Asked').astype(str)
+
+q29_cols = [f'Q29_{i}' for i in range(1, 11)]
+for c in q29_cols:
+    voter_clean[c] = voter_clean[c].replace(-1.0, 0).fillna('Not Asked').astype(str)
+
+def _party_id(row):
+    q31, q32, q33 = row['Q31'], row['Q32'], row['Q33']
+    if   q31 == 1: return 'Strong Republican'
+    elif q31 == 2: return 'Republican'
+    elif q32 == 1: return 'Strong Democrat'
+    elif q32 == 2: return 'Democrat'
+    elif q33 == 1: return 'Lean Republican'
+    elif q33 == 2: return 'Lean Democrat'
+    else:          return 'Other'
+
+voter_clean['Party_ID'] = voter_clean.apply(_party_id, axis=1)
+party_order = ['Strong Republican', 'Republican', 'Lean Republican',
+               'Other', 'Lean Democrat', 'Democrat', 'Strong Democrat']
+voter_clean['Party_ID'] = pd.Categorical(voter_clean['Party_ID'],
+                                         categories=party_order, ordered=True)
+voter_clean = voter_clean.drop(columns=['Q31', 'Q32', 'Q33'])
+
+for c in voter_clean.columns:
+    if c != 'ppage' and voter_clean[c].dtype in ['float64', 'int64']:
+        voter_clean[c] = voter_clean[c].replace(-1, np.nan)
+
+# ── Train/test split ───────────────────────────────────────────────────────────
+X_voter = voter_clean.drop(columns=['voter_category'])
+y_voter = voter_clean['voter_category']
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X_voter, y_voter,
+    test_size=0.3,
+    stratify=y_voter,
+    random_state=4025
+)
+
+# ── Preprocessing pipeline ─────────────────────────────────────────────────────
+ordered_cat_cols = ['educ', 'income_cat', 'Party_ID']
+num_cols = X_train.select_dtypes(include=['int64', 'float64']).columns.tolist()
+nom_cols = [c for c in X_train.columns
+            if c not in ordered_cat_cols and c not in num_cols]
+
+preproc_voter = ColumnTransformer([
+    ('num', Pipeline([
+        ('impute', SimpleImputer(strategy='median'))
+    ]), num_cols),
+    ('ord', Pipeline([
+        ('impute', SimpleImputer(strategy='most_frequent')),
+        ('encode', OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=-1))
+    ]), ordered_cat_cols),
+    ('nom', Pipeline([
+        ('impute', SimpleImputer(strategy='most_frequent')),
+        ('encode', OneHotEncoder(drop='first', sparse_output=False, handle_unknown='ignore'))
+    ]), nom_cols),
+], remainder='drop')
+```
+
+## Recap: Last Time
+
+-   **Ensemble Methods**: combine many models to improve performance
+-   **Bagging**: bootstrap aggregation — build many trees in parallel, average results
+    +   Reduces variance via averaging
+    +   OOB error as a free performance estimate
+-   **Random Forests**: bagging + random feature subset at each split
+    +   Decorrelates trees $\Rightarrow$ further variance reduction
+    +   Tune `max_features`
+-   Today: **Boosting** — a fundamentally different ensemble strategy
+
+## Flexibility vs. Interpretability
+
+![Adapted from ISLR, James et al.](images/25/2_7-1.png)
+
+# Boosting
+
+## Boosting {.smaller}
+
+-   Still an ensemble method — but trees are created **sequentially**, not in parallel
+-   Each new tree is fit to the **residuals** of the current ensemble
+-   **Idea**: each additional tree improves on the places where the previous trees perform poorly
+-   Each individual tree is a **weak learner** (often a shallow "stump")
+-   **Learning slowly**: as more trees are added, the ensemble gradually improves
+
+. . .
+
+-   Reminder: what is a residual?
+
+## Boosting Algorithm {.smaller}
+
+Let $B$ = number of trees, $\lambda$ = learning rate, $d$ = max splits per tree
+
+1.  Set $\hat{f}(x) = 0$ and residuals $r_i = y_i$ for all training observations
+2.  For $b = 1, \ldots, B$:
+    a.  Fit a shallow tree $\hat{f}_b$ with $d$ splits to the residuals $r$
+    b.  Update the ensemble: $\hat{f}(x) \leftarrow \hat{f}(x) + \lambda \hat{f}_b(x)$
+    c.  Update residuals: $r_i \leftarrow r_i - \lambda \hat{f}_b(x_i)$
+3.  Output the final model:
+$$\hat{f}(x) = \displaystyle \sum_{b=1}^{B} \lambda \, \hat{f}_b(x)$$
+
+-   This iterative residual-fitting is equivalent to **gradient descent on the loss function** — hence **gradient boosting**
+
+## Gradient Boosting Visualization
+
+```{python}
+#| echo: false
+#| fig-height: 6
+
+rng = np.random.default_rng(1112)
+x_vals = np.linspace(0, 2 * np.pi, 1000)
+y_vals = np.sin(x_vals) + rng.normal(scale=0.5, size=len(x_vals))
+truth  = np.sin(x_vals)
+
+# Manual gradient boosting with stumps
+def gradient_boost(x, y, num_trees=1024, learn_rate=0.05, max_depth=1):
+    X = x.reshape(-1, 1)
+    f_hat = np.zeros(len(y))
+    snapshots = {0: f_hat.copy()}
+    r = y.copy()
+    for b in range(1, num_trees + 1):
+        tree = DecisionTreeRegressor(max_depth=max_depth, random_state=b)
+        tree.fit(X, r)
+        update = learn_rate * tree.predict(X)
+        f_hat += update
+        r     -= update
+        if b in {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024}:
+            snapshots[b] = f_hat.copy()
+    return snapshots
+
+snapshots = gradient_boost(x_vals, y_vals)
+
+keys = sorted(snapshots.keys())
+nrows, ncols = 3, 4
+fig, axes = plt.subplots(nrows, ncols, figsize=(14, 8), sharex=True, sharey=True)
+
+for ax, k in zip(axes.flat, keys):
+    ax.scatter(x_vals, y_vals, alpha=0.08, s=3, color='gray')
+    ax.plot(x_vals, truth, color='cyan', linewidth=1.5, label='truth')
+    ax.plot(x_vals, snapshots[k], color='red', linewidth=1.5)
+    ax.set_title(f'B = {k}', fontsize=10)
+    ax.set_ylim(-2.5, 2.5)
+
+for ax in axes.flat[len(keys):]:
+    ax.set_visible(False)
+
+fig.suptitle('Gradient Boosting on a Sine Wave (learning rate = 0.05)', fontsize=12)
+plt.tight_layout()
+plt.show()
+```
+
+## Many Implementations of Boosting
+
+-   Most practical boosting implementations are variations on gradient boosting:
+    +   **AdaBoost** — reweights observations based on errors
+    +   **CatBoost** — handles categorical features natively
+    +   **LightGBM** — leaf-wise tree growth, very fast
+    +   **XGBoost** — extremely popular, regularized gradient boosting
+    +   **`HistGradientBoostingClassifier`** (sklearn) — histogram-based, fast, handles missing data
+
+## Key Tuning Parameters {.smaller}
+
+| Parameter | sklearn name | Effect |
+|-----------|-------------|--------|
+| Number of trees | `max_iter` | More trees → lower bias, risk of overfitting (use early stopping) |
+| Learning rate | `learning_rate` | Smaller → slower learning, need more trees |
+| Tree depth | `max_depth` | Deeper → more complex trees, higher variance |
+| Min leaf size | `min_samples_leaf` | Larger → simpler trees, less overfitting |
+
+-   `learning_rate` and `max_iter` interact strongly — shrink one, increase the other
+-   Use a **random search** (irregular grid) to efficiently explore this space
+
+# Boosting in Python
+
+## Why `HistGradientBoostingClassifier`? {.smaller}
+
+-   Part of `sklearn.ensemble` — no extra packages needed
+-   **Histogram-based**: bins continuous features before splitting → very fast
+-   **Natively handles missing values** — no imputation needed for numeric features
+-   Compatible with our `preproc_voter` pipeline for categorical encoding
+-   Key parameters to tune: `max_iter`, `learning_rate`, `max_depth`, `min_samples_leaf`
+
+## Define the Pipeline
+
+```{python}
+boost_pipe = Pipeline([
+    ('preproc', preproc_voter),
+    ('boost', HistGradientBoostingClassifier(random_state=4025))
+])
+```
+
+## Random Search over 4 Hyperparameters {.smaller}
+
+```{python}
+param_dist = {
+    'boost__max_iter':         randint(50, 400),
+    'boost__learning_rate':    loguniform(1e-3, 0.5),
+    'boost__max_depth':        randint(2, 10),
+    'boost__min_samples_leaf': randint(10, 100),
+}
+
+boost_cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=4025)
+
+boost_search = RandomizedSearchCV(
+    estimator=boost_pipe,
+    param_distributions=param_dist,
+    n_iter=50,
+    cv=boost_cv,
+    scoring='accuracy',
+    return_train_score=True,
+    random_state=4025,
+    n_jobs=-1
+)
+```
+
+## Fit the Search
+
+```{python}
+#| cache: true
+
+boost_search.fit(X_train, y_train)
+```
+
+## CV Results
+
+```{python}
+boost_results = pd.DataFrame(boost_search.cv_results_).sort_values(
+    'mean_test_score', ascending=False
+)
+
+fig, ax = plt.subplots(figsize=(7, 4))
+ax.scatter(boost_results['param_boost__learning_rate'],
+           boost_results['mean_test_score'],
+           c=boost_results['param_boost__max_depth'],
+           cmap='viridis', alpha=0.7)
+ax.set_xscale('log')
+ax.set_xlabel('learning_rate (log scale)')
+ax.set_ylabel('CV Accuracy')
+ax.set_title('Boosting Random Search Results\n(color = max_depth)')
+cb = plt.colorbar(ax.collections[0], ax=ax)
+cb.set_label('max_depth')
+plt.tight_layout()
+plt.show()
+```
+
+## Best Parameters
+
+```{python}
+print("Best params:")
+for k, v in boost_search.best_params_.items():
+    print(f"  {k}: {v:.4g}" if isinstance(v, float) else f"  {k}: {v}")
+print(f"\nBest CV Accuracy: {boost_search.best_score_:.3f}")
+```
+
+## Test Set Evaluation
+
+```{python}
+boost_preds = boost_search.predict(X_test)
+print(f"Test Accuracy: {accuracy_score(y_test, boost_preds):.3f}")
+
+fig, ax = plt.subplots(figsize=(6, 5))
+ConfusionMatrixDisplay.from_predictions(
+    y_test, boost_preds,
+    display_labels=list(y_voter.cat.categories),
+    ax=ax, colorbar=False
+)
+plt.title('Confusion Matrix: Boosting')
+plt.tight_layout()
+plt.show()
+```
+
+## Variable Importance
+
+```{python}
+best_boost = boost_search.best_estimator_.named_steps['boost']
+boost_feature_names = (
+    num_cols
+    + ordered_cat_cols
+    + list(boost_search.best_estimator_.named_steps['preproc']
+           .named_transformers_['nom']
+           .named_steps['encode']
+           .get_feature_names_out(nom_cols))
+)
+
+boost_imp_df = (pd.DataFrame({'feature': boost_feature_names,
+                               'importance': best_boost.feature_importances_})
+                .sort_values('importance', ascending=False)
+                .head(20))
+
+fig, ax = plt.subplots(figsize=(7, 5))
+ax.barh(boost_imp_df['feature'][::-1], boost_imp_df['importance'][::-1])
+ax.set_xlabel('Feature Importance')
+ax.set_title('Top 20 Features — Gradient Boosting')
+plt.tight_layout()
+plt.show()
+```
+
+## Conceptual Questions
+
+-   How does boosting's sequential approach differ from bagging's parallel approach?
+-   Why does a small `learning_rate` often lead to better generalization?
+-   Which features are most important? Do they match the random forest results?
+
+## Comparing Ensemble Methods {.smaller}
+
+| | Bagging | Random Forest | Boosting |
+|--|--|--|--|
+| Tree construction | Parallel | Parallel | Sequential |
+| Tree type | Full trees | Full trees | Shallow trees |
+| Variance reduction | Via averaging | Via decorrelation | Via slow learning |
+| Bias reduction | Minimal | Minimal | Iterative |
+| Key tuning params | `n_estimators` | `max_features` | `learning_rate`, `max_iter`, `max_depth` |
+| Overfitting risk | Low | Low | Higher (need careful tuning) |

@@ -2,112 +2,6 @@
 title: 'MATH 4025: Classification Trees'
 ---
 
-```{python}
-#| include: false
-
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.tree import DecisionTreeClassifier, plot_tree
-from sklearn.model_selection import train_test_split, StratifiedKFold, GridSearchCV
-from sklearn.preprocessing import OrdinalEncoder, OneHotEncoder
-from sklearn.impute import SimpleImputer
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
-from sklearn.metrics import accuracy_score, ConfusionMatrixDisplay
-from plotnine import *
-from itables import show
-import warnings
-import math
-
-warnings.filterwarnings('ignore')
-np.random.seed(4025)
-
-# ── Load raw data ──────────────────────────────────────────────────────────────
-voter_url = 'https://raw.githubusercontent.com/fivethirtyeight/data/master/non-voters/nonvoters_data.csv'
-voter_raw = pd.read_csv(voter_url)
-
-# ── Cleaning ───────────────────────────────────────────────────────────────────
-voter_clean = voter_raw.drop(columns=['RespId', 'weight', 'Q1']).copy()
-
-# Ordered categoricals
-voter_clean['educ'] = pd.Categorical(voter_clean['educ'],
-    categories=['High school or less', 'Some college', 'College'], ordered=True)
-voter_clean['income_cat'] = pd.Categorical(voter_clean['income_cat'],
-    categories=['Less than $40k', '$40-75k ', '$75-125k', '$125k or more'], ordered=True)
-voter_clean['voter_category'] = pd.Categorical(voter_clean['voter_category'],
-    categories=['rarely/never', 'sporadic', 'always'], ordered=False)
-
-# Q22: filter skip-logic (5 = did not register AND did not vote), fill NA as "Not Asked"
-voter_clean = voter_clean[voter_clean['Q22'] != 5].copy()
-voter_clean['Q22'] = voter_clean['Q22'].fillna('Not Asked').astype(str)
-
-# Q28: -1 = not selected (→ 0), NA = never asked (→ "Not Asked")
-q28_cols = [f'Q28_{i}' for i in range(1, 9)]
-for c in q28_cols:
-    voter_clean[c] = voter_clean[c].replace(-1.0, 0).fillna('Not Asked').astype(str)
-
-# Q29: same pattern
-q29_cols = [f'Q29_{i}' for i in range(1, 11)]
-for c in q29_cols:
-    voter_clean[c] = voter_clean[c].replace(-1.0, 0).fillna('Not Asked').astype(str)
-
-# Party_ID from Q31/Q32/Q33
-def _party_id(row):
-    q31, q32, q33 = row['Q31'], row['Q32'], row['Q33']
-    if   q31 == 1: return 'Strong Republican'
-    elif q31 == 2: return 'Republican'
-    elif q32 == 1: return 'Strong Democrat'
-    elif q32 == 2: return 'Democrat'
-    elif q33 == 1: return 'Lean Republican'
-    elif q33 == 2: return 'Lean Democrat'
-    else:          return 'Other'
-
-voter_clean['Party_ID'] = voter_clean.apply(_party_id, axis=1)
-party_order = ['Strong Republican', 'Republican', 'Lean Republican',
-               'Other', 'Lean Democrat', 'Democrat', 'Strong Democrat']
-voter_clean['Party_ID'] = pd.Categorical(voter_clean['Party_ID'],
-                                         categories=party_order, ordered=True)
-voter_clean = voter_clean.drop(columns=['Q31', 'Q32', 'Q33'])
-
-# Replace remaining -1s with NaN (except ppage which is continuous)
-for c in voter_clean.columns:
-    if c != 'ppage' and voter_clean[c].dtype in ['float64', 'int64']:
-        voter_clean[c] = voter_clean[c].replace(-1, np.nan)
-
-# ── Train/test split ───────────────────────────────────────────────────────────
-X_voter = voter_clean.drop(columns=['voter_category'])
-y_voter = voter_clean['voter_category']
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X_voter, y_voter,
-    test_size=0.3,
-    stratify=y_voter,
-    random_state=4025
-)
-
-# ── Preprocessing pipeline ─────────────────────────────────────────────────────
-# Column groups (determined after split to avoid leakage)
-ordered_cat_cols = ['educ', 'income_cat', 'Party_ID']
-num_cols = X_train.select_dtypes(include=['int64', 'float64']).columns.tolist()
-nom_cols = [c for c in X_train.columns
-            if c not in ordered_cat_cols and c not in num_cols]
-
-preproc_voter = ColumnTransformer([
-    ('num', Pipeline([
-        ('impute', SimpleImputer(strategy='median'))
-    ]), num_cols),
-    ('ord', Pipeline([
-        ('impute', SimpleImputer(strategy='most_frequent')),
-        ('encode', OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=-1))
-    ]), ordered_cat_cols),
-    ('nom', Pipeline([
-        ('impute', SimpleImputer(strategy='most_frequent')),
-        ('encode', OneHotEncoder(drop='first', sparse_output=False, handle_unknown='ignore'))
-    ]), nom_cols),
-], remainder='drop')
-```
-
 # Decision Trees for Classification
 
 ## Classification Tree Predictions
@@ -143,14 +37,14 @@ $$H = \displaystyle -\sum_{k=1}^{K} \hat{p}_{mk}\log\left(\hat{p}_{mk}\right)$$
 
 ## In Practice
 
--   ISLR2 recommendation:
+-   ISLP recommendation:
     +   Use **Gini** or **entropy** to decide where to split
     +   Use **classification error rate** to prune
 -   `sklearn` default: `criterion='gini'`
     +   Also supports `'entropy'` and `'log_loss'` (equivalent to entropy)
 -   Many implementations — always check the documentation!
 
-## Exploring Decision Trees with App {.smaller}
+<!-- ## Exploring Decision Trees with App {.smaller}
 
 -   Dr. F will split you into four groups
 -   On one of your computers connect to a TV and [open this app](https://efriedlander.shinyapps.io/ClassificationMetrics/)
@@ -169,40 +63,26 @@ $$H = \displaystyle -\sum_{k=1}^{K} \hat{p}_{mk}\log\left(\hat{p}_{mk}\right)$$
     +   **Complexity parameter (cp)**: the larger the number, the more pruning
     +   **Minimum leaf size**: minimum number of training observations that must be in a leaf
     +   **Max depth**: maximum number of splits before a terminal node
--   Write down any interesting observations
+-   Write down any interesting observations -->
 
-# Data Cleaning Side-Quest
+<!-- # Data Cleaning Side-Quest
 
 ## Data: Voter Frequency {.smaller}
 
 -   [Info about data](https://github.com/fivethirtyeight/data/tree/master/non-voters)
 -   **Goal**: Identify individuals who are unlikely to vote to help an organization target "get out the vote" efforts
+-   Open `slides-18-practice.ipynb` and:
+    1.  Run the **Setup** cell to load all libraries
+    2.  Run the **Load Raw Data** cell
+    3.  Spend ~2 minutes looking at the dataframe - what do you notice about the general structure? Reply in Teams.
 
-```{python}
-show(voter_raw.head())
-```
+## Checking for Missing Data {.smaller}
 
-## Checking for Missing Data
-
-```{python}
-na_summary = (voter_raw.isna().sum()
-              .reset_index()
-              .rename(columns={'index': 'column', 0: 'n_missing'})
-              .query('n_missing > 0'))
-show(na_summary)
-```
-
-## Checking for -1 Values
-
-```{python}
-neg1_counts = (voter_raw.drop(columns=['RespId', 'weight', 'Q1'])
-               .select_dtypes(include='number')
-               .apply(lambda col: (col == -1).sum())
-               .reset_index()
-               .rename(columns={'index': 'column', 0: 'n_neg1'})
-               .query('n_neg1 > 0'))
-show(neg1_counts)
-```
+-   Run the two **Explore Missing Data** cells in the notebook
+-   Observe the output and discuss:
+    +   Which columns have true `NaN` missing values?
+    +   Which columns have `-1` values? What might `-1` mean in a survey context?
+    +   Are these the same kind of "missing"?
 
 ## How Should We Handle -1s? {.smaller}
 
@@ -218,122 +98,33 @@ show(neg1_counts)
         +   More sophisticated but adds many columns
 :::
 
-## Cleaning: Straight-Forward Stuff
+## Following Along: Data Cleaning {.smaller}
 
-```{python}
-voter_clean = voter_raw.drop(columns=['RespId', 'weight', 'Q1']).copy()
+Work through the **Data Cleaning** section of the notebook:
 
-# Set ordered categoricals
-voter_clean['educ'] = pd.Categorical(voter_clean['educ'],
-    categories=['High school or less', 'Some college', 'College'], ordered=True)
-voter_clean['income_cat'] = pd.Categorical(voter_clean['income_cat'],
-    categories=['Less than $40k', '$40-75k ', '$75-125k', '$125k or more'], ordered=True)
-voter_clean['voter_category'] = pd.Categorical(voter_clean['voter_category'],
-    categories=['rarely/never', 'sporadic', 'always'], ordered=False)
-```
+1.  **Straight-Forward Stuff** — drop unused columns, set ordered categoricals for `educ`, `income_cat`, `voter_category`
+2.  **Clean Q22** — inspect `value_counts`, then filter out skip-logic rows and fill `NaN` as `"Not Asked"`
+3.  **Clean Q28 & Q29** — multi-select columns: `-1` → `0`, `NaN` → `"Not Asked"`
+4.  **Engineer Party ID** — combine Q31/Q32/Q33 into a single ordered `Party_ID` column, then drop the originals
+5.  **Final -1 Cleanup** — replace all remaining `-1`s with `NaN` (except `ppage`)
 
-## Cleaning Q22
-
-```{python}
-voter_clean['Q22'].value_counts(dropna=False).head(10)
-```
-
-```{python}
-# Q22 == 5 is skip logic (person neither registered nor voted)
-voter_clean = voter_clean[voter_clean['Q22'] != 5].copy()
-
-# NaN means the question was never asked
-voter_clean['Q22'] = voter_clean['Q22'].fillna('Not Asked').astype(str)
-```
-
-## Cleaning Q28 {.smaller}
-
-```{python}
-voter_clean['Q28_1'].value_counts(dropna=False)
-```
-
--   -1 = not selected → treat as 0
--   `NaN` = question never asked
-
-```{python}
-q28_cols = [f'Q28_{i}' for i in range(1, 9)]
-for c in q28_cols:
-    voter_clean[c] = voter_clean[c].replace(-1.0, 0).fillna('Not Asked').astype(str)
-```
-
-## Cleaning Q29 {.smaller}
-
-Same pattern as Q28:
-
-```{python}
-q29_cols = [f'Q29_{i}' for i in range(1, 11)]
-for c in q29_cols:
-    voter_clean[c] = voter_clean[c].replace(-1.0, 0).fillna('Not Asked').astype(str)
-```
-
-## Cleaning Q31-Q33: Party ID {.smaller}
-
-```{python}
-def _party_id(row):
-    q31, q32, q33 = row['Q31'], row['Q32'], row['Q33']
-    if   q31 == 1: return 'Strong Republican'
-    elif q31 == 2: return 'Republican'
-    elif q32 == 1: return 'Strong Democrat'
-    elif q32 == 2: return 'Democrat'
-    elif q33 == 1: return 'Lean Republican'
-    elif q33 == 2: return 'Lean Democrat'
-    else:          return 'Other'
-
-voter_clean['Party_ID'] = voter_clean.apply(_party_id, axis=1)
-party_order = ['Strong Republican', 'Republican', 'Lean Republican',
-               'Other', 'Lean Democrat', 'Democrat', 'Strong Democrat']
-voter_clean['Party_ID'] = pd.Categorical(voter_clean['Party_ID'],
-                                         categories=party_order, ordered=True)
-voter_clean = voter_clean.drop(columns=['Q31', 'Q32', 'Q33'])
-```
-
-## Final -1 Cleanup
-
-```{python}
-# Replace all remaining -1s with NaN (except ppage which is continuous age)
-for c in voter_clean.columns:
-    if c != 'ppage' and voter_clean[c].dtype in ['float64', 'int64']:
-        voter_clean[c] = voter_clean[c].replace(-1, np.nan)
-
-voter_clean.shape
-```
+After each step: why did we make that choice? What would happen if we didn't? -->
 
 # Classification Trees in Python
 
-## Split Data
+## Data: Voter Frequency {.smaller}
 
-```{python}
-X_voter = voter_clean.drop(columns=['voter_category'])
-y_voter = voter_clean['voter_category']
+-   [Info about data](https://github.com/fivethirtyeight/data/tree/master/non-voters)
+-   **Goal**: Identify individuals who are unlikely to vote to help an organization target "get out the vote" efforts
+-   Open `slides-18-practice.ipynb` and execute up until the *Train/Test Split* section.
 
-X_train, X_test, y_train, y_test = train_test_split(
-    X_voter, y_voter,
-    test_size=0.3,
-    stratify=y_voter,   # maintain class proportions in each split
-    random_state=4025
-)
+## Split Data {.smaller}
 
-print(f"Training: {X_train.shape[0]} obs  |  Test: {X_test.shape[0]} obs")
-```
+Run the **Train/Test Split** cell in the notebook.
 
-## Response Distribution
-
-```{python}
-train_df = X_train.assign(voter_category=y_train.values)
-
-(
-    ggplot(train_df, aes(x='voter_category')) +
-    geom_bar(fill='steelblue') +
-    labs(x='Voter Category', y='Count',
-         title='Distribution of voter_category (Training Set)') +
-    theme_classic()
-)
-```
+-   Note the `stratify=y_voter` argument: why is this important for classification?
+-   How many observations are in the training set? The test set?
+-   Run the **Response Distribution** cell: is the data balanced across voting categories?
 
 ## Preprocessing Strategy {.smaller}
 
@@ -341,124 +132,88 @@ Three groups of columns require different treatment:
 
 | Group | Columns | Strategy |
 |-------|---------|----------|
-| Numeric | `ppage`, `Q6`, numeric Qs | Median imputation |
-| Ordered categorical | `educ`, `income_cat`, `Party_ID` | Mode imputation + `OrdinalEncoder` |
+| Numeric | `ppage` | Median imputation |
+| Ordinal | `educ`, `income_cat`, `Party_ID` | Median + `OrdinalEncoder` |
 | Nominal categorical | `race`, `gender`, Q22, Q28\_\*, Q29\_\*, etc. | Mode imputation + `OneHotEncoder` |
 
--   Note: the R recipe also used `step_indicate_na` to add missing-value indicator columns
--   Here we use simple imputation for clarity — `sklearn.impute.MissingIndicator` can achieve the same effect
+-   Why does it make sense to do median imputation for ordinal but not mean imputation?
+-   Another strategy: `sklearn.impute.MissingIndicator` creates a column that indicates whether the original value was missing
 
 ## Building the Preprocessing Pipeline {.smaller}
 
-```{python}
-ordered_cat_cols = ['educ', 'income_cat', 'Party_ID']
-num_cols = X_train.select_dtypes(include=['int64', 'float64']).columns.tolist()
-nom_cols = [c for c in X_train.columns
-            if c not in ordered_cat_cols and c not in num_cols]
+Run the **Preprocessing Pipeline** cell in the notebook.
 
-preproc_voter = ColumnTransformer([
-    ('num', Pipeline([
-        ('impute', SimpleImputer(strategy='median'))
-    ]), num_cols),
-    ('ord', Pipeline([
-        ('impute', SimpleImputer(strategy='most_frequent')),
-        ('encode', OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=-1))
-    ]), ordered_cat_cols),
-    ('nom', Pipeline([
-        ('impute', SimpleImputer(strategy='most_frequent')),
-        ('encode', OneHotEncoder(drop='first', sparse_output=False, handle_unknown='ignore'))
-    ]), nom_cols),
-], remainder='drop')
-```
+-   The `ColumnTransformer` applies different steps to each column group
+-   For each transformer, identify:
+    +   Which columns does it process?
+    +   What imputation strategy is used?
+    +   What encoding is applied, and why is it appropriate for that column type?
+-   Why do we need to apply an ordinal encoder before median imputation for the ordinal columns? Would we still need to do this if we were imputing with the mode?
 
-## Define and Tune the Model
+## Tune the Model {.smaller}
 
-```{python}
-voter_folds = StratifiedKFold(n_splits=5, shuffle=True, random_state=4025)
+Run the **Tune the Model** cell... this may take a moment.
 
-param_grid_voter = {
-    'tree__ccp_alpha': np.logspace(-4, -1, 15),
-}
+-   We're searching over `ccp_alpha` values on a log scale
+-   `ccp_alpha` controls **cost-complexity pruning**: larger values → more pruning → simpler trees
+-   `StratifiedKFold` ensures each fold maintains the class distribution from the full training set
+-   While it runs: what do you expect to happen to accuracy as `ccp_alpha` increases?
 
-voter_pipe = Pipeline([
-    ('preproc', preproc_voter),
-    ('tree', DecisionTreeClassifier(random_state=4025))
-])
+## CV Results {.smaller}
 
-voter_grid = GridSearchCV(
-    estimator=voter_pipe,
-    param_grid=param_grid_voter,
-    cv=voter_folds,
-    scoring='accuracy',
-    return_train_score=True
-)
-voter_grid.fit(X_train, y_train)
-```
+Run the **CV Results** cell and examine the plot.
 
-## CV Results
+-   What happens to CV accuracy as `ccp_alpha` increases?
+-   Is there a "sweet spot"? Where on the plot is the model underfitting?
+-   Why do we use a log scale on the x-axis?
 
-```{python}
-voter_results = pd.DataFrame(voter_grid.cv_results_)
+## Select Best Model {.smaller}
 
-fig, ax = plt.subplots(figsize=(7, 4))
-ax.errorbar(voter_results['param_tree__ccp_alpha'],
-            voter_results['mean_test_score'],
-            yerr=voter_results['std_test_score'],
-            marker='o', capsize=3)
-ax.set_xscale('log')
-ax.set_xlabel('ccp_alpha')
-ax.set_ylabel('CV Accuracy')
-ax.set_title('Classification Tree CV Tuning (Voter Data)')
-plt.tight_layout()
-plt.show()
-```
+Run the **Best Model** cell.
 
-## Select Best Model
+-   Record the best `ccp_alpha` value
+-   What was the best cross-validated accuracy?
+-   How does this compare to a naive classifier that always predicts the most common class?
 
-```{python}
-print("Best params:", voter_grid.best_params_)
-print(f"Best CV Accuracy: {voter_grid.best_score_:.3f}")
-```
+## Fit and Visualize Best Tree {.smaller}
 
-## Fit and Visualize Best Tree
+Run the **Fit and Visualize Best Tree** cell.
 
-```{python}
-best_voter_pipe = Pipeline([
-    ('preproc', preproc_voter),
-    ('tree', DecisionTreeClassifier(
-        ccp_alpha=voter_grid.best_params_['tree__ccp_alpha'],
-        random_state=4025
-    ))
-])
-best_voter_pipe.fit(X_train, y_train)
-
-fig, ax = plt.subplots(figsize=(20, 8))
-plot_tree(best_voter_pipe.named_steps['tree'],
-          class_names=list(y_voter.cat.categories),
-          filled=True, max_depth=3, fontsize=7, ax=ax)
-plt.tight_layout()
-plt.show()
-```
-
-## Interpreting the Tree
-
--   Which features appear near the root?
--   What does that tell us about predictors of voting behavior?
--   Does this align with what you'd expect from domain knowledge?
+-   Examine the root  and features near the node:
+    +   Which feature is used for the first split?
+    +   What does that tell us about predictors of voting behavior?
+-   Does this align with what you'd expect?
 
 ## Test Set Evaluation {.smaller}
 
-```{python}
-voter_preds = voter_grid.predict(X_test)
-print(f"Test Accuracy: {accuracy_score(y_test, voter_preds):.3f}")
+Run the **Test Set Evaluation** cell.
 
-fig, ax = plt.subplots(figsize=(6, 5))
-ConfusionMatrixDisplay.from_predictions(
-    y_test, voter_preds,
-    display_labels=list(y_voter.cat.categories),
-    ax=ax, colorbar=False
-)
-plt.title('Confusion Matrix: Voter Category')
-plt.tight_layout()
-plt.show()
-```
+-   What is the test accuracy?
+-   Examine the confusion matrix:
+    +   Which class is hardest to predict correctly?
+    +   Which errors are most common — and are they costly in the real-world context?
+
+# Recap
+
+## Classification Trees: Key Ideas {.smaller}
+
+**Theory**
+
+-   Classification trees use recursive binary splitting: same as regression trees
+-   Splits are chosen to minimize **Gini index** or **entropy** (node impurity)
+-   Each terminal node predicts the **majority class** (or class probabilities)
+-   **Cost-complexity pruning** (`ccp_alpha`) controls tree size: tune with cross-validation
+
+**In Python**
+
+-   `DecisionTreeClassifier` with `ccp_alpha` for pruning
+-   Wrap in a `Pipeline` with `ColumnTransformer`: numeric, ordinal, and nominal columns each need different preprocessing
+-   Use `StratifiedKFold` + `GridSearchCV` to tune and maintain class balance across folds
+-   Evaluate with accuracy + confusion matrix: accuracy alone hides which classes are being confused
+
+**Big Picture**
+
+-   Trees are interpretable: you can trace a prediction from root to leaf
+-   Features near the root are the most important splits
+-   Real-world data rarely arrives clean — messy survey data (skip logic, -1s, multi-select) requires careful, domain-aware cleaning before modeling
+-   Does the test accuracy match the CV accuracy? What would it mean if they were very different?

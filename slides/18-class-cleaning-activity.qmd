@@ -1,0 +1,69 @@
+---
+title: 'MATH 4025: Activity & Data Cleaning Side Quest'
+---
+
+# Data Cleaning Side-Quest
+
+## Data: Voter Frequency {.smaller}
+
+-   [Info about data](https://github.com/fivethirtyeight/data/tree/master/non-voters)
+-   **Goal**: Identify individuals who are unlikely to vote to help an organization target "get out the vote" efforts
+-   Open `slides-18-practice.ipynb` and:
+    1.  Run the **Setup** cell to load all libraries
+    2.  Run the **Load Raw Data** cell
+    3.  Spend ~2 minutes looking at the dataframe - what do you notice about the general structure? Reply in Teams.
+
+## Checking for Missing Data {.smaller}
+
+-   Run the two **Explore Missing Data** cells in the notebook
+-   Observe the output and discuss:
+    +   Which columns have true `NaN` missing values?
+    +   Which columns have `-1` values? What might `-1` mean in a survey context?
+    +   Are these the same kind of "missing"?
+
+## How Should We Handle -1s? {.smaller}
+
+::: incremental
+-   Seems like **-1** means: question was asked but not answered / answer not selected
+-   Seems like **`NA`** means: question was never asked (skip logic)
+-   What should we do?
+-   A few options:
+    +   Replace -1 with `"Not Answered"` (treat as a category)
+    +   Replace -1 with `NaN`
+    +   Replace -1 with `NaN` **and** add indicator columns (e.g., `Q6_was_missing`)
+        +   Can do this with `sklearn.impute.MissingIndicator`
+        +   More sophisticated but adds many columns
+:::
+
+## Following Along: Data Cleaning {.smaller}
+
+Work through the **Data Cleaning** section of the notebook:
+
+1.  **Straight-Forward Stuff** — drop unused columns, set ordered categoricals for `educ`, `income_cat`, `voter_category`
+2.  **Clean Q22** — inspect `value_counts`, then filter out skip-logic rows and fill `NaN` as `"Not Asked"`
+3.  **Clean Q28 & Q29** — multi-select columns: `-1` → `0`, `NaN` → `"Not Asked"`
+4.  **Engineer Party ID** — combine Q31/Q32/Q33 into a single ordered `Party_ID` column, then drop the originals
+5.  **Final -1 Cleanup** — replace all remaining `-1`s with `NaN` (except `ppage`)
+
+After each step: why did we make that choice? What would happen if we didn't?
+
+## Exploring Decision Trees with App {.smaller}
+
+-   Dr. F will split you into four groups
+-   On one of your computers connect to a TV and [open this app](https://efriedlander.shinyapps.io/ClassificationMetrics/)
+-   Do the following based on your group number:
+    +   1: Choose **plane** on the first screen
+    +   2: Choose **circle** on the first screen
+    +   3: Choose **parabola** on the first screen
+    +   4: Choose **sine curve** on the first screen
+-   We will generate data from this population... do you think KNN, logistic regression, or a decision tree will yield a better classifier? Why?
+
+## Exploring Decision Trees with App {.smaller}
+
+-   Choose one of the populations
+-   Generate some data
+-   Fit a decision tree to the data and see how the different hyperparameters impact the resulting model:
+    +   **Complexity parameter (cp)**: the larger the number, the more pruning
+    +   **Minimum leaf size**: minimum number of training observations that must be in a leaf
+    +   **Max depth**: maximum number of splits before a terminal node
+-   Write down any interesting observations

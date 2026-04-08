@@ -1,0 +1,346 @@
+---
+title: 'MATH 4025: Bagging and Random Forests'
+---
+
+```{python}
+#| include: false
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import BaggingClassifier, RandomForestClassifier
+from sklearn.model_selection import train_test_split, StratifiedKFold, GridSearchCV
+from sklearn.preprocessing import OrdinalEncoder, OneHotEncoder
+from sklearn.impute import SimpleImputer
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import accuracy_score, ConfusionMatrixDisplay
+from plotnine import *
+from itables import show
+import warnings
+
+warnings.filterwarnings('ignore')
+np.random.seed(4025)
+
+# ── Load raw data ──────────────────────────────────────────────────────────────
+voter_url = 'https://raw.githubusercontent.com/fivethirtyeight/data/master/non-voters/nonvoters_data.csv'
+voter_raw = pd.read_csv(voter_url)
+
+# ── Cleaning ───────────────────────────────────────────────────────────────────
+voter_clean = voter_raw.drop(columns=['RespId', 'weight', 'Q1']).copy()
+
+voter_clean['educ'] = pd.Categorical(voter_clean['educ'],
+    categories=['High school or less', 'Some college', 'College'], ordered=True)
+voter_clean['income_cat'] = pd.Categorical(voter_clean['income_cat'],
+    categories=['Less than $40k', '$40-75k ', '$75-125k', '$125k or more'], ordered=True)
+voter_clean['voter_category'] = pd.Categorical(voter_clean['voter_category'],
+    categories=['rarely/never', 'sporadic', 'always'], ordered=False)
+
+voter_clean = voter_clean[voter_clean['Q22'] != 5].copy()
+voter_clean['Q22'] = voter_clean['Q22'].fillna('Not Asked').astype(str)
+
+q28_cols = [f'Q28_{i}' for i in range(1, 9)]
+for c in q28_cols:
+    voter_clean[c] = voter_clean[c].replace(-1.0, 0).fillna('Not Asked').astype(str)
+
+q29_cols = [f'Q29_{i}' for i in range(1, 11)]
+for c in q29_cols:
+    voter_clean[c] = voter_clean[c].replace(-1.0, 0).fillna('Not Asked').astype(str)
+
+def _party_id(row):
+    q31, q32, q33 = row['Q31'], row['Q32'], row['Q33']
+    if   q31 == 1: return 'Strong Republican'
+    elif q31 == 2: return 'Republican'
+    elif q32 == 1: return 'Strong Democrat'
+    elif q32 == 2: return 'Democrat'
+    elif q33 == 1: return 'Lean Republican'
+    elif q33 == 2: return 'Lean Democrat'
+    else:          return 'Other'
+
+voter_clean['Party_ID'] = voter_clean.apply(_party_id, axis=1)
+party_order = ['Strong Republican', 'Republican', 'Lean Republican',
+               'Other', 'Lean Democrat', 'Democrat', 'Strong Democrat']
+voter_clean['Party_ID'] = pd.Categorical(voter_clean['Party_ID'],
+                                         categories=party_order, ordered=True)
+voter_clean = voter_clean.drop(columns=['Q31', 'Q32', 'Q33'])
+
+for c in voter_clean.columns:
+    if c != 'ppage' and voter_clean[c].dtype in ['float64', 'int64']:
+        voter_clean[c] = voter_clean[c].replace(-1, np.nan)
+
+# ── Train/test split ───────────────────────────────────────────────────────────
+X_voter = voter_clean.drop(columns=['voter_category'])
+y_voter = voter_clean['voter_category']
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X_voter, y_voter,
+    test_size=0.3,
+    stratify=y_voter,
+    random_state=4025
+)
+
+# ── Preprocessing pipeline ─────────────────────────────────────────────────────
+ordered_cat_cols = ['educ', 'income_cat', 'Party_ID']
+num_cols = X_train.select_dtypes(include=['int64', 'float64']).columns.tolist()
+nom_cols = [c for c in X_train.columns
+            if c not in ordered_cat_cols and c not in num_cols]
+
+preproc_voter = ColumnTransformer([
+    ('num', Pipeline([
+        ('impute', SimpleImputer(strategy='median'))
+    ]), num_cols),
+    ('ord', Pipeline([
+        ('impute', SimpleImputer(strategy='most_frequent')),
+        ('encode', OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=-1))
+    ]), ordered_cat_cols),
+    ('nom', Pipeline([
+        ('impute', SimpleImputer(strategy='most_frequent')),
+        ('encode', OneHotEncoder(drop='first', sparse_output=False, handle_unknown='ignore'))
+    ]), nom_cols),
+], remainder='drop')
+```
+
+## Ensemble Methods
+
+-   Single decision trees usually have **poor predictive performance**
+-   **Ensemble Methods**: combine a collection of models to improve predictions
+    -   Downside: reduced interpretability
+-   Today:
+    -   Bagging
+    -   Random Forests
+-   Next time:
+    -   Boosting
+
+## Flexibility vs. Interpretability
+
+![Adapted from ISLR, James et al.](images/25/2_7-1.png)
+
+## Bagging {.smaller}
+
+-   **Bootstrap aggregation** (**bagging**): a general procedure for reducing the variance of a statistical learning method
+-   **Key insight**: Given $n$ independent observations $Z_1, \ldots, Z_n$ each with variance $\sigma^2$, the variance of their mean $\bar{Z}$ is $\sigma^2/n$
+    +   **Averaging reduces variance**
+-   **Idea**: build many trees and average their predictions
+-   In practice we only have one training set — so we bootstrap
+
+## Bootstrapping
+
+![Adapted from ISLR, James et al.](images/25/bootstrapping.png)
+
+## Bagging Algorithm {.smaller}
+
+1.  Draw $B$ bootstrap samples from the training data
+2.  Fit an unpruned tree $\hat{f}^{*b}$ on each bootstrap sample
+3.  Average predictions across all trees:
+$$\hat{f}_{\text{bag}}(x) = \frac{1}{B}\sum_{b=1}^{B}\hat{f}^{*b}(x)$$
+
+-   Trees are **not pruned**: high variance but low bias — averaging corrects the variance
+-   **Classification**: take a **majority vote** across all $B$ trees
+
+## Out-of-Bag Error Estimation {.smaller}
+
+-   Fitting many trees is computationally expensive; adding cross-validation makes it extreme
+-   On average, each bootstrap sample uses about **two-thirds** of the observations
+-   The remaining **one-third** are called **out-of-bag (OOB)** observations for that tree
+-   For each observation, average predictions from the trees where it was OOB
+-   This gives a free performance estimate — equivalent to LOOCV when $B$ is large
+
+## Variable Importance Measures
+
+-   Bagging improves accuracy at the cost of interpretability
+-   We can still summarize which predictors matter most:
+    +   At each split, record the reduction in the loss function (e.g., Gini impurity for classification) due to that variable
+    +   Sum the total reduction across all splits and all trees for each variable
+    +   A large value indicates an important predictor
+
+## Bagging: Disadvantages
+
+-   Reduces interpretability
+-   Trees are **not fully independent**: all predictors are considered at every split of every tree
+-   **Tree correlation**: trees from different bootstrap samples tend to have similar structure
+    +   Limits how much variance can be reduced by averaging
+-   **Random forests** address this by decorrelating the trees
+
+## Bagging: Disadvantages
+
+![Adapted from Hands-On Machine Learning, Boehmke & Greenwell](images/25/Boston-6-trees.png)
+
+# Random Forests
+
+## Random Forests {.smaller}
+
+-   **Decorrelates** bagged trees $\Rightarrow$ further reduces variance
+-   Same bootstrap sampling as bagging, but with a twist at each split:
+    +   **Randomly select $m$ predictors** out of all $p$
+    +   Only consider those $m$ predictors for the best split
+    +   A fresh sample of $m$ predictors is drawn at **each** split
+-   Typical choices: $m \approx \sqrt{p}$ for classification, $m \approx p/3$ for regression
+-   Treat $m$ as a tuning parameter (`max_features` in sklearn)
+
+. . .
+
+-   Why does randomly excluding features reduce correlation?
+
+# Bagging in Python
+
+## Define and Fit the Bagging Model
+
+```{python}
+bag_pipe = Pipeline([
+    ('preproc', preproc_voter),
+    ('bag', BaggingClassifier(
+        estimator=DecisionTreeClassifier(random_state=4025),
+        n_estimators=500,
+        oob_score=True,
+        random_state=4025,
+        n_jobs=-1
+    ))
+])
+
+bag_pipe.fit(X_train, y_train)
+```
+
+## OOB Error and Test Accuracy
+
+```{python}
+oob_acc = bag_pipe.named_steps['bag'].oob_score_
+test_acc = accuracy_score(y_test, bag_pipe.predict(X_test))
+
+print(f"OOB Accuracy:  {oob_acc:.3f}")
+print(f"Test Accuracy: {test_acc:.3f}")
+```
+
+## Variable Importance {.smaller}
+
+```{python}
+# Average feature importances across all trees in the bag
+importances = np.mean([
+    tree.feature_importances_
+    for tree in bag_pipe.named_steps['bag'].estimators_
+], axis=0)
+
+# Get feature names from the preprocessor
+feature_names = (
+    num_cols
+    + ordered_cat_cols
+    + list(bag_pipe.named_steps['preproc']
+           .named_transformers_['nom']
+           .named_steps['encode']
+           .get_feature_names_out(nom_cols))
+)
+
+imp_df = (pd.DataFrame({'feature': feature_names, 'importance': importances})
+          .sort_values('importance', ascending=False)
+          .head(20))
+
+fig, ax = plt.subplots(figsize=(7, 5))
+ax.barh(imp_df['feature'][::-1], imp_df['importance'][::-1])
+ax.set_xlabel('Mean Decrease in Impurity')
+ax.set_title('Top 20 Features — Bagging')
+plt.tight_layout()
+plt.show()
+```
+
+# Random Forests in Python
+
+## Tune `max_features`
+
+```{python}
+#| cache: true
+
+rf_pipe = Pipeline([
+    ('preproc', preproc_voter),
+    ('rf', RandomForestClassifier(n_estimators=100, random_state=4025, n_jobs=-1))
+])
+
+param_grid_rf = {
+    'rf__max_features': [1, 5, 10, 20, 'sqrt', 'log2', None]
+}
+
+rf_cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=4025)
+
+rf_grid = GridSearchCV(
+    estimator=rf_pipe,
+    param_grid=param_grid_rf,
+    cv=rf_cv,
+    scoring='accuracy',
+    return_train_score=True,
+    n_jobs=-1
+)
+
+rf_grid.fit(X_train, y_train)
+```
+
+## CV Results
+
+```{python}
+rf_results = pd.DataFrame(rf_grid.cv_results_)
+
+fig, ax = plt.subplots(figsize=(7, 4))
+ax.plot(range(len(param_grid_rf['rf__max_features'])),
+        rf_results['mean_test_score'], marker='o')
+ax.fill_between(
+    range(len(param_grid_rf['rf__max_features'])),
+    rf_results['mean_test_score'] - rf_results['std_test_score'],
+    rf_results['mean_test_score'] + rf_results['std_test_score'],
+    alpha=0.2
+)
+ax.set_xticks(range(len(param_grid_rf['rf__max_features'])))
+ax.set_xticklabels([str(v) for v in param_grid_rf['rf__max_features']])
+ax.set_xlabel('max_features')
+ax.set_ylabel('CV Accuracy')
+ax.set_title('Random Forest: Tuning max_features')
+plt.tight_layout()
+plt.show()
+```
+
+## Best Parameters and Test Accuracy
+
+```{python}
+print("Best params:", rf_grid.best_params_)
+print(f"Best CV Accuracy:  {rf_grid.best_score_:.3f}")
+print(f"Test Accuracy:     {accuracy_score(y_test, rf_grid.predict(X_test)):.3f}")
+```
+
+## Variable Importance
+
+```{python}
+best_rf = rf_grid.best_estimator_.named_steps['rf']
+rf_feature_names = (
+    num_cols
+    + ordered_cat_cols
+    + list(rf_grid.best_estimator_.named_steps['preproc']
+           .named_transformers_['nom']
+           .named_steps['encode']
+           .get_feature_names_out(nom_cols))
+)
+
+rf_imp_df = (pd.DataFrame({'feature': rf_feature_names,
+                            'importance': best_rf.feature_importances_})
+             .sort_values('importance', ascending=False)
+             .head(20))
+
+fig, ax = plt.subplots(figsize=(7, 5))
+ax.barh(rf_imp_df['feature'][::-1], rf_imp_df['importance'][::-1])
+ax.set_xlabel('Mean Decrease in Impurity')
+ax.set_title('Top 20 Features — Random Forest')
+plt.tight_layout()
+plt.show()
+```
+
+## Conceptual Questions
+
+-   Why does randomly selecting $m$ features at each split reduce tree correlation?
+-   Which features appear most important? Does that align with what you'd expect?
+-   When would you prefer bagging over random forests?
+
+## Decision Trees / Bagging / Random Forests {.smaller}
+
+| | Decision Tree | Bagging | Random Forest |
+|--|--|--|--|
+| Variance | High | Lower | Lowest |
+| Bias | Low | Low | Low |
+| Interpretable? | Yes | No | No |
+| OOB error? | No | Yes | Yes |
+| Key parameter | `ccp_alpha` | `n_estimators` | `max_features` |

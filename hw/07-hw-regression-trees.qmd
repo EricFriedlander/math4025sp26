@@ -1,0 +1,131 @@
+---
+title: "Homework 7: Regression Trees"
+author: "Your Name"
+---
+
+# Introduction
+
+In this homework you will practice fitting regression trees and using model tuning to select models.
+
+## Learning goals
+
+In this assignment, you will...
+
+-   Fit and interpret regression trees
+-   Use grid-based techniques to choose tuning parameters
+
+# Getting Started
+
+## Exercise 0
+
+::: {.callout-tip title="Question"}
+[Click this link](https://classroom.github.com/a/PLACEHOLDER) to accept the assignment and clone it to your computer.
+:::
+
+# Dataset: Communities and Crime
+
+For this homework, we'll be working with the Communities and Crime data set from the UCI Machine Learning repository. From the abstract:
+
+> "Communities in the US. Data combines socio-economic data from the '90 Census, law enforcement data from the 1990 Law Enforcement Management and Admin Stats survey, and crime data from the 1995 FBI UCR."
+
+More details can be found [here](http://archive.ics.uci.edu/ml/datasets/communities+and+crime+unnormalized). Our goal will be to predict the number of violent crimes per capita, stored in the column called `ViolentCrimesPerPop`.
+
+## Cleaning and Preprocessing
+
+## Exercise 1
+
+::: {.callout-tip title="Question"}
+Load the data set `CommViolPredUnnormalizedDataCleaned.csv`. This data set contains quite a bit of missing data, but it uses question marks to denote missing values. Pass `na_values="?"` to `pd.read_csv` so that question marks are automatically replaced with `NaN`. Then clean the data by:
+
+1.  [Reading the documentation](http://archive.ics.uci.edu/dataset/211/communities+and+crime+unnormalized) and dropping all "non-predictive" and "potential goal" columns *except* `ViolentCrimesPerPop`.
+2.  Dropping any rows that have a missing value in `ViolentCrimesPerPop`. Why do we want to drop these rows rather than impute them?
+3.  Ensuring all remaining features have the correct data type.
+
+Comment on any aspects of the data you find pertinent.
+:::
+
+## Exercise 2
+
+::: {.callout-tip title="Question"}
+How many observations remain? Split the data into a training and test set using an 80-20 split. Use `random_state=4025`.
+:::
+
+## Exercise 3
+
+::: {.callout-tip title="Question"}
+Generate a preprocessing pipeline using `ColumnTransformer` and `Pipeline` that can be used with a regression tree. Unlike linear models, decision trees do not require normalization. What preprocessing steps are still necessary? Hint: think about missing values and how to encode categorical variables.
+:::
+
+# Baseline Model
+
+Before building a regression tree, it's helpful to have a simple baseline for comparison.
+
+## Exercise 4
+
+::: {.callout-tip title="Question"}
+Fit a baseline linear regression model to the training data using your preprocessing pipeline. Report its RMSE and $R^2$ on the training set using 5-fold cross-validation with 5 repeats.
+:::
+
+## Exercise 5
+
+::: {.callout-tip title="Question"}
+Before you fit any trees, do you think a decision tree will have better performance than the baseline linear regression model? Describe the differences between linear models and decision trees, including the advantages and disadvantages of each.
+:::
+
+# Regression Trees
+
+## Exercise 6
+
+::: {.callout-tip title="Question"}
+Use `GridSearchCV` with `RepeatedKFold` (5 folds, 5 repeats) to find a good value of `ccp_alpha` (the cost-complexity pruning parameter) for a `DecisionTreeRegressor`. Use RMSE as your scoring metric. **Tip:** Start with a small grid and few folds until you are sure it is running correctly, then expand. Use caching or save results so you don't re-run cross-validation every time the document is rendered.
+:::
+
+## Exercise 7
+
+::: {.callout-tip title="Question"}
+Fit your best tree on the entire training set and visualize it using `sklearn.tree.plot_tree`. Limit the display to `max_depth=3` so the figure is readable.
+:::
+
+## Exercise 8
+
+::: {.callout-tip title="Question"}
+Based on your tree, which variable appears most important for predicting `ViolentCrimesPerPop`? Why?
+:::
+
+## Exercise 9
+
+::: {.callout-tip title="Question"}
+How many different predictions are possible from your regression tree model? Why? How does this compare with the baseline linear regression model from Exercise 4?
+:::
+
+# Final Evaluation
+
+## Exercise 10
+
+::: {.callout-tip title="Question"}
+Compute the RMSE for your regression tree model on the test set.
+:::
+
+## Exercise 11
+
+::: {.callout-tip title="Question"}
+How does the test RMSE compare to the baseline linear regression model? Which model has better performance? Compare the interpretability of each model.
+:::
+
+## Exercise 12
+
+::: {.callout-tip title="Question"}
+Look at the documentation for `DecisionTreeRegressor` by typing `help(DecisionTreeRegressor)` in Python or visiting the [scikit-learn docs](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeRegressor.html). Notice that there are two other useful tuning parameters, `max_depth` (default `None`) and `min_samples_leaf` (default `1`). Use `RandomizedSearchCV` with at least 100 iterations and `RepeatedKFold` (5 folds, 5 repeats) to find an optimal combination of `ccp_alpha`, `max_depth`, and `min_samples_leaf`. Why do we prefer a random search over an exhaustive grid search when tuning three parameters simultaneously?
+:::
+
+## Exercise 13
+
+::: {.callout-tip title="Question"}
+Fit the resulting model to the full training data and estimate its performance on the test set using RMSE and $R^2$. How does it compare to the single-parameter model from Exercise 10?
+:::
+
+## Exercise 14 (Practice interview question)
+
+::: {.callout-tip title="Question"}
+Describe how `max_depth` and `min_samples_leaf` affect the flexibility and bias-variance trade-off of the resulting tree.
+:::
