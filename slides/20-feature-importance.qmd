@@ -1,0 +1,153 @@
+---
+title: 'MATH 4025: Feature Importance'
+---
+
+# Why Feature Importance?
+
+## Interpretability vs. Accuracy
+
+-   Ensemble models (bagging, random forests) achieve high accuracy but are hard to interpret directly
+-   **Feature importance** gives us a window into black-box models:
+    +   Which inputs actually drive predictions?
+    +   Which can be safely ignored?
+-   Useful for: model debugging, communication with stakeholders, feature selection, detecting data leakage
+
+## Two Main Approaches
+
+| | MDI | Permutation Importance |
+|--|--|--|
+| Full name | Mean Decrease in Impurity | Permutation Importance |
+| Works with | Tree-based models only | **Any** model |
+| Speed | Very fast (computed during training) | Slower (requires refitting / re-scoring) |
+| Evaluated on | Training data | Test data (recommended) |
+| Main weakness | Biased toward high-cardinality features | Sensitive to correlated features |
+
+# MDI: Mean Decrease in Impurity
+
+## How MDI Works {.smaller}
+
+At every split in every tree:
+
+1.  A feature is chosen and a threshold is selected to split a node
+2.  The **decrease in impurity** (Gini or entropy) caused by that split is recorded for the chosen feature
+3.  After fitting all trees, sum the total impurity decrease attributed to each feature across all splits and all trees
+
+The result is a score per feature: higher = more useful for splitting.
+
+## MDI: Pros and Cons {.smaller}
+
+**Pros:**
+
+-   Computed for free during training — no extra computation needed
+-   Available directly as `feature_importances_` on any sklearn tree-based model
+-   Fast even with many features
+
+**Cons:**
+
+-   Only works for tree-based models
+-   **Biased toward high-cardinality features**: a feature with many unique values (or many one-hot encoded levels) has more split opportunities and tends to get inflated importance
+-   Evaluated on training data: can overstate importance of features the model overfit to
+
+# Permutation Importance
+
+## How Permutation Importance Works {.smaller}
+
+For each feature $j$:
+
+1.  Compute baseline accuracy on the test set (no shuffling)
+2.  Randomly shuffle feature $j$'s values in the test set, breaking its relationship with the response
+3.  Re-score the model on the shuffled data and record the **drop in accuracy**
+4.  Repeat $k$ times (e.g., 10) and average the drops
+
+A large drop means the model relied heavily on that feature. Near-zero or negative drops indicate the feature was not contributing.
+
+## Permutation Importance: Pros and Cons {.smaller}
+
+**Pros:**
+
+-   **Model-agnostic**: works with any fitted model (logistic regression, SVMs, neural nets, etc.)
+-   Evaluated on the **test set**: reflects real generalization performance
+-   Provides uncertainty estimates (std dev across repeats)
+
+**Cons:**
+
+-   Slower: requires $k \times p$ forward passes through the model
+-   **Correlated features** can share importance: shuffling one correlated feature may not drop accuracy much if the other correlated feature is still intact
+-   Results depend on the random shuffling seed
+
+## MDI vs. Permutation: Which to Trust? {.smaller}
+
+::: incremental
+-   When they agree: strong evidence a feature matters
+-   When MDI is high but permutation is low:
+    +   The feature may have been overfit (more splits on training data don't help test performance)
+    +   Or it's a high-cardinality feature benefiting from MDI's bias
+-   When permutation is high but MDI is low:
+    +   Less common — usually MDI and permutation agree on truly important features
+-   **General advice**: prefer permutation importance for final reporting; use MDI for quick exploration
+:::
+
+# Feature Importance in Python
+
+## Setup and Fit Models {.smaller}
+
+Open `slides-20-practice.ipynb` and run the **Setup** cell, then the **Fit Models** cell.
+
+-   We fit three models on the same voter data and preprocessing pipeline:
+    +   **Bagging** (200 trees, unpruned `DecisionTreeClassifier`)
+    +   **Random Forest** (`max_features='sqrt'`, 200 trees)
+    +   **Logistic Regression** (`max_iter=1000`)
+-   Run the **Helper: Get Feature Names** cell — this builds the full list of encoded feature names, needed for labeling all importance plots
+
+## MDI: Bagging {.smaller}
+
+Run the **MDI: Bagging** cell.
+
+-   We average `feature_importances_` manually across all 200 bagging trees
+-   Note the x-axis label: "Mean Decrease in Impurity" — a relative, not absolute, scale
+-   Which features appear most important?
+-   Are any one-hot encoded columns near the top? Should you trust those?
+
+## MDI: Random Forest {.smaller}
+
+Run the **MDI: Random Forest** cell.
+
+-   `RandomForestClassifier` stores aggregated importances in `feature_importances_` directly
+-   Compare to the bagging MDI plot:
+    +   Do the same features appear?
+    +   Does decorrelating the trees (random forests) change which features look important?
+
+## Permutation Importance: Bagging {.smaller}
+
+Run the **Permutation Importance: Bagging** cell.
+
+-   `permutation_importance()` from `sklearn.inspection` takes any fitted pipeline + test data
+-   Error bars show ± 1 SD across the 10 shuffle repeats
+-   Compare to the MDI plot for bagging:
+    +   Which features move up or down?
+    +   Any features that looked important via MDI but not here?
+
+## Permutation Importance: Random Forest {.smaller}
+
+Run the **Permutation Importance: Random Forest** cell.
+
+-   Compare to the random forest MDI plot — do rankings stay similar?
+-   Compare to bagging's permutation importance — does `max_features='sqrt'` change which features are most relied upon?
+
+## Permutation Importance: Logistic Regression {.smaller}
+
+Run the **Permutation Importance: Logistic Regression** cell.
+
+-   Logistic Regression has no `feature_importances_` attribute: permutation importance is the natural choice
+-   Compare the top features to the tree-based models:
+    +   Do all three models agree on the most important predictors?
+    +   Where do they disagree, and why might that be?
+
+## Comparing Across Models {.smaller}
+
+Run the **Comparison: Top Features Across Models** cell.
+
+-   The grouped bar chart shows permutation importance side-by-side for all three models
+-   Features that rank highly across **all three** models are more trustworthy signals — multiple model families agree they matter
+-   Features that only matter for one model type may reflect that model's specific assumptions or biases
+-   Discussion: which features would you prioritize if you had to explain this to a non-technical audience?

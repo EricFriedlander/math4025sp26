@@ -1,0 +1,159 @@
+---
+title: 'MATH 4025: SHAP Values (Special Topic)'
+---
+
+# What are SHAP Values?
+
+## Motivation {.smaller}
+
+-   MDI and permutation importance tell us which features matter **globally** — across all predictions
+-   But what if we want to explain **one specific prediction**?
+    +   Why did the model predict this person is an "always" voter?
+    +   Which features pushed that prediction up, and which pulled it down?
+-   **SHAP** (SHapley Additive exPlanations) answers exactly this question
+
+. . .
+
+-   Key difference from MDI and permutation importance: SHAP explains *individual predictions*, not just the overall model — and individual explanations can be aggregated for global summaries
+
+## What are SHAP Values? {.smaller}
+
+-   Grounded in cooperative game theory
+-   Treat each feature as a "player" in a game where the "payout" is the model's prediction
+-   A **Shapley value** for feature $j$ answers: on average across all possible subsets of features, how much does including feature $j$ change the prediction?
+-   The result is a contribution score for each feature, for **each individual observation**
+
+## Shapley Values: Intuition {.smaller}
+
+For a single prediction $\hat{f}(x)$:
+
+$$\hat{f}(x) = \underbrace{\mathbb{E}[\hat{f}]}_{\text{base value}} + \sum_{j=1}^{p} \phi_j$$
+
+-   $\mathbb{E}[\hat{f}]$: the model's average prediction across all training data (base value)
+-   $\phi_j$: the SHAP value for feature $j$ — how much it pushed this prediction up or down
+-   The SHAP values **sum exactly** to the difference between the prediction and the base value
+
+. . .
+
+This is called the **efficiency** property — one of four fairness axioms Shapley values satisfy
+
+## Local Explanations: Waterfall Plot {.smaller}
+
+A **waterfall plot** explains a single prediction:
+
+-   Starts at the base value (average prediction)
+-   Each feature adds or subtracts its SHAP value
+-   Ends at the actual predicted value for that observation
+-   Features shown in order of magnitude: largest contributors at top
+
+. . .
+
+Useful for: explaining a model's decision to a stakeholder, debugging surprising predictions, auditing for fairness
+
+## Global Explanations: Aggregating SHAP {.smaller}
+
+Aggregate local SHAP values across many observations for global summaries:
+
+-   **Bar plot**: mean $|\phi_j|$ across all observations — ranks overall importance
+-   **Beeswarm plot**: shows both importance and *direction* — each dot is one observation, color encodes feature value (red = high, blue = low), x-axis = SHAP value
+
+. . .
+
+The beeswarm plot is the most information-rich global summary: it shows not just *which* features matter, but *how* they affect predictions
+
+## Fast SHAP for Specific Model Types {.smaller}
+
+| Explainer | Models | Speed | Notes |
+|--|--|--|--|
+| `TreeExplainer` | Decision trees, RF, Bagging, XGBoost | Very fast | Exact SHAP, exploits tree structure |
+| `LinearExplainer` | Linear/logistic regression | Very fast | Exact SHAP for linear models |
+| `KernelExplainer` | Any model | Slow | Model-agnostic, approximate |
+| `Explainer` | Any model | Varies | Auto-selects best method |
+
+-   For our models: `TreeExplainer` for RF/Bagging, `LinearExplainer` for Logistic Regression
+
+## SHAP: Pros and Cons {.smaller}
+
+**Pros:**
+
+-   **Local + global**: explains individual predictions *and* overall model behavior
+-   **Theoretically grounded**: Shapley values satisfy fairness axioms (efficiency, symmetry, dummy, additivity)
+-   Rich built-in visualizations
+-   Consistent across model types (unlike MDI)
+
+**Cons:**
+
+-   Slower than MDI (though `TreeExplainer` is fast)
+-   **Correlated features**: SHAP values can be unintuitive when features are highly correlated — similar to permutation importance
+-   Multi-class output can be harder to summarize (one set of SHAP values per class)
+
+# SHAP in Python
+
+## Setup: Preprocess and Compute {.smaller}
+
+Open `slides-30-practice.ipynb` and run the **Setup** and **Fit Models** cells.
+
+Then run the **SHAP: Preprocess Data** cell.
+
+-   SHAP operates on the model's *internal estimator*, not the full pipeline, so we preprocess manually first using `.transform()`
+-   We use a subset of 300 test observations for speed
+-   Run the **SHAP: Random Forest — Compute** cell:
+    +   `TreeExplainer` is exact and fast for tree-based models
+    +   For a 3-class problem, `shap_vals_rf.values` has shape `(n_obs, n_features, 3)` — one set of SHAP values per class
+
+## SHAP: Global Bar Plot {.smaller}
+
+Run the **SHAP: Global Bar Plot (Random Forest)** cell.
+
+-   We focus on the `'always'` class (index 2): what drives predicting someone will always vote?
+-   `shap.plots.bar` shows mean $|\phi_j|$ across all 300 observations
+-   Compare to the MDI and permutation importance bar plots from lecture 20:
+    +   Do the same features appear at the top?
+    +   What does SHAP reveal that the other methods might obscure?
+
+## SHAP: Beeswarm Plot {.smaller}
+
+Run the **SHAP: Beeswarm Plot (Random Forest)** cell.
+
+-   Each dot is one observation; position on x-axis = SHAP value; color = feature value (red = high, blue = low)
+-   This plot shows both **which features matter** and **the direction of their effect**
+-   For each top feature: does a high feature value push the prediction up or down?
+-   Are the effects roughly linear, or do some features show non-monotone patterns?
+
+## SHAP: Local Explanation (Waterfall) {.smaller}
+
+Run the **SHAP: Local Explanation (Waterfall)** cell.
+
+-   This explains the **first test observation's** predicted probability of being an `'always'` voter
+-   Red bars push the prediction above the base value; blue bars push it below
+-   The base value is $\mathbb{E}[\hat{f}]$ — the model's average predicted probability for the `'always'` class
+-   Discussion: does the explanation make intuitive sense given the feature values shown?
+
+## SHAP: Logistic Regression {.smaller}
+
+Run the **SHAP: Logistic Regression** cell.
+
+-   `LinearExplainer` computes exact SHAP values analytically for linear models — very fast
+-   Compare the RF and LR SHAP bar plots:
+    +   Which features are consistently important across both model types?
+    +   Where do they disagree — and what does that reveal about each model's assumptions?
+
+## SHAP: RF vs. LR Comparison {.smaller}
+
+Run the **SHAP: Compare RF vs. Logistic Regression** cell.
+
+-   Side-by-side mean $|\phi_j|$ for the `'always'` class
+-   Features that rank highly for **both** models are the most trustworthy signals
+-   Discussion: if you had to pick 5 features to explain voter turnout to a policymaker, which would you choose and why?
+
+## All Three Methods: Summary {.smaller}
+
+| Method | Scope | Model-agnostic? | Data used | Per-prediction? |
+|--|--|--|--|--|
+| MDI | Global | No (trees only) | Training | No |
+| Permutation | Global | Yes | Test | No |
+| SHAP | Local + Global | Yes (speed varies) | Either | **Yes** |
+
+-   Use **MDI** for fast, exploratory importance during model development
+-   Use **Permutation** for a model-agnostic global benchmark on test data
+-   Use **SHAP** when you need to explain individual predictions or want the richest global summary
