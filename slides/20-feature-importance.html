@@ -158,8 +158,8 @@ Dr.&nbsp;Eric Friedlander
 <li>Useful for: model debugging, communication with stakeholders, feature selection, detecting data leakage</li>
 </ul>
 </section>
-<section id="two-main-approaches" class="slide level2">
-<h2>Two Main Approaches</h2>
+<section id="two-approaches" class="slide level2 smaller">
+<h2>Two Approaches</h2>
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -212,7 +212,7 @@ Dr.&nbsp;Eric Friedlander
 <p>At every split in every tree:</p>
 <ol type="1">
 <li>A feature is chosen and a threshold is selected to split a node</li>
-<li>The <strong>decrease in impurity</strong> (Gini or entropy) caused by that split is recorded for the chosen feature</li>
+<li>The <strong>decrease in impurity</strong> (SSE or Gini or entropy) caused by that split is recorded for the chosen feature</li>
 <li>After fitting all trees, sum the total impurity decrease attributed to each feature across all splits and all trees</li>
 </ol>
 <p>The result is a score per feature: higher = more useful for splitting.</p>
@@ -221,15 +221,15 @@ Dr.&nbsp;Eric Friedlander
 <h2>MDI: Pros and Cons</h2>
 <p><strong>Pros:</strong></p>
 <ul>
-<li>Computed for free during training — no extra computation needed</li>
+<li>Computed for free during training - no extra computation needed</li>
 <li>Available directly as <code>feature_importances_</code> on any sklearn tree-based model</li>
 <li>Fast even with many features</li>
 </ul>
 <p><strong>Cons:</strong></p>
 <ul>
 <li>Only works for tree-based models</li>
-<li><strong>Biased toward high-cardinality features</strong>: a feature with many unique values (or many one-hot encoded levels) has more split opportunities and tends to get inflated importance</li>
-<li>Evaluated on training data: can overstate importance of features the model overfit to</li>
+<li><strong>Biased toward high-cardinality features</strong>: a feature with many unique values (or many one-hot encoded levels) has more split opportunities and tends to get inflated importance (can mitigate by limits tree depth)</li>
+<li>Evaluated on training data: can overstate importance of features the model overfits to</li>
 </ul>
 </section></section>
 <section>
@@ -275,7 +275,7 @@ Dr.&nbsp;Eric Friedlander
 </ul></li>
 <li class="fragment">When permutation is high but MDI is low:
 <ul>
-<li class="fragment">Less common — usually MDI and permutation agree on truly important features</li>
+<li class="fragment">Less common - usually MDI and permutation agree on truly important features</li>
 </ul></li>
 <li class="fragment"><strong>General advice</strong>: prefer permutation importance for final reporting; use MDI for quick exploration</li>
 </ul>
@@ -292,11 +292,11 @@ Dr.&nbsp;Eric Friedlander
 <ul>
 <li>We fit three models on the same voter data and preprocessing pipeline:
 <ul>
-<li><strong>Bagging</strong> (200 trees, unpruned <code>DecisionTreeClassifier</code>)</li>
-<li><strong>Random Forest</strong> (<code>max_features='sqrt'</code>, 200 trees)</li>
+<li><strong>Bagging</strong> (500 trees, unpruned <code>DecisionTreeClassifier</code>)</li>
+<li><strong>Random Forest</strong> (<code>max_features='sqrt'</code>, 500 trees)</li>
 <li><strong>Logistic Regression</strong> (<code>max_iter=1000</code>)</li>
 </ul></li>
-<li>Run the <strong>Helper: Get Feature Names</strong> cell — this builds the full list of encoded feature names, needed for labeling all importance plots</li>
+<li>Run the <strong>Helper: Get Feature Names</strong> cell - this builds the full list of encoded feature names, needed for labeling all importance plots</li>
 </ul>
 </section>
 <section id="mdi-bagging" class="slide level2 smaller">
@@ -304,7 +304,7 @@ Dr.&nbsp;Eric Friedlander
 <p>Run the <strong>MDI: Bagging</strong> cell.</p>
 <ul>
 <li>We average <code>feature_importances_</code> manually across all 200 bagging trees</li>
-<li>Note the x-axis label: “Mean Decrease in Impurity” — a relative, not absolute, scale</li>
+<li>Note the x-axis label: “Mean Decrease in Impurity” - a relative, not absolute, scale</li>
 <li>Which features appear most important?</li>
 <li>Are any one-hot encoded columns near the top? Should you trust those?</li>
 </ul>
@@ -338,8 +338,8 @@ Dr.&nbsp;Eric Friedlander
 <h2>Permutation Importance: Random Forest</h2>
 <p>Run the <strong>Permutation Importance: Random Forest</strong> cell.</p>
 <ul>
-<li>Compare to the random forest MDI plot — do rankings stay similar?</li>
-<li>Compare to bagging’s permutation importance — does <code>max_features='sqrt'</code> change which features are most relied upon?</li>
+<li>Compare to the random forest MDI plot - do rankings stay similar?</li>
+<li>Compare to bagging’s permutation importance - does <code>max_features='sqrt'</code> change which features are most relied upon?</li>
 </ul>
 </section>
 <section id="permutation-importance-logistic-regression" class="slide level2 smaller">
@@ -359,7 +359,7 @@ Dr.&nbsp;Eric Friedlander
 <p>Run the <strong>Comparison: Top Features Across Models</strong> cell.</p>
 <ul>
 <li>The grouped bar chart shows permutation importance side-by-side for all three models</li>
-<li>Features that rank highly across <strong>all three</strong> models are more trustworthy signals — multiple model families agree they matter</li>
+<li>Features that rank highly across <strong>all three</strong> models are more trustworthy signals - multiple model families agree they matter</li>
 <li>Features that only matter for one model type may reflect that model’s specific assumptions or biases</li>
 <li>Discussion: which features would you prioritize if you had to explain this to a non-technical audience?</li>
 </ul>
@@ -373,7 +373,7 @@ Dr.&nbsp;Eric Friedlander
 <h2>Feature Importance: Key Ideas</h2>
 <p><strong>MDI (Mean Decrease in Impurity)</strong></p>
 <ul>
-<li>Built into tree-based models — free, fast, available as <code>feature_importances_</code></li>
+<li>Built into tree-based models - free, fast, available as <code>feature_importances_</code></li>
 <li>Computed on training data: can overstate importance for overfit features</li>
 <li>Biased toward high-cardinality features (many one-hot levels get more split opportunities)</li>
 <li>Best for: quick exploration during model development</li>
@@ -382,13 +382,13 @@ Dr.&nbsp;Eric Friedlander
 <ul>
 <li>Model-agnostic: works with any fitted model</li>
 <li>Evaluated on the test set: reflects real generalization</li>
-<li>Shuffle one feature, measure accuracy drop — repeat and average</li>
+<li>Shuffle one feature, measure accuracy drop - repeat and average</li>
 <li>Best for: final reporting, comparing importance across different model types</li>
 </ul>
 <p><strong>Big Picture</strong></p>
 <ul>
 <li>When MDI and permutation importance agree, you can trust the result</li>
-<li>When they disagree, prefer permutation importance — it uses held-out data</li>
+<li>When they disagree, prefer permutation importance - it uses held-out data</li>
 <li>Features that rank highly across multiple model families (trees, linear models) are the most reliable signals</li>
 <li>For individual-prediction explanations, see lecture 30 (SHAP)</li>
 </ul>
