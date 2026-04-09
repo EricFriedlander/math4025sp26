@@ -320,7 +320,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><a href="https://classroom.github.com/a/PLACEHOLDER">Click this link</a> to accept the assignment and clone it to your computer.</p>
+<p><a href="https://classroom.github.com/a/_Ie_anT9">Click this link</a> to accept the assignment and clone it to your computer.</p>
 </div>
 </div>
 </section>
@@ -405,7 +405,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Fit a baseline linear regression model to the training data using your preprocessing pipeline. Report its RMSE and <span class="math inline">\(R^2\)</span> on the training set using 5-fold cross-validation with 5 repeats.</p>
+<p>Fit a baseline linear regression model to the training data using your preprocessing pipeline. Report its RMSE and <span class="math inline">\(R^2\)</span> on the training set using 5-fold cross-validation with 5 repeats. I.e. use <code>RepeatedKFold</code> with 5 folds and 5 repeats.</p>
 </div>
 </div>
 </section>
@@ -488,7 +488,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>How many different predictions are possible from your regression tree model? Why? How does this compare with the baseline linear regression model from Exercise 4?</p>
+<p>How many different predictions are possible from your regression tree model? That is, how many unique values can your model output? Why? How does this compare with the baseline linear regression model from Exercise 4?</p>
 </div>
 </div>
 </section>
@@ -539,7 +539,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Look at the documentation for <code>DecisionTreeRegressor</code> by typing <code>help(DecisionTreeRegressor)</code> in Python or visiting the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeRegressor.html">scikit-learn docs</a>. Notice that there are two other useful tuning parameters, <code>max_depth</code> (default <code>None</code>) and <code>min_samples_leaf</code> (default <code>1</code>). Use <code>RandomizedSearchCV</code> with at least 100 iterations and <code>RepeatedKFold</code> (5 folds, 5 repeats) to find an optimal combination of <code>ccp_alpha</code>, <code>max_depth</code>, and <code>min_samples_leaf</code>. Why do we prefer a random search over an exhaustive grid search when tuning three parameters simultaneously?</p>
+<p>Look at the documentation for <code>DecisionTreeRegressor</code> by visiting the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeRegressor.html">scikit-learn docs</a>. Notice that there are two other useful tuning parameters, <code>max_depth</code> (default <code>None</code>) and <code>min_samples_leaf</code> (default <code>1</code>). Use <code>RandomizedSearchCV</code> with at least 100 iterations and <code>RepeatedKFold</code> (5 folds, 5 repeats) to find an optimal combination of <code>ccp_alpha</code>, <code>max_depth</code>, and <code>min_samples_leaf</code>. Why do we prefer a random search over an exhaustive grid search when tuning three parameters simultaneously? Note that this may take a few minutes to run. You may want to start with a smaller number of iterations to make sure you code works and then increase to a larger size.</p>
 </div>
 </div>
 </section>
