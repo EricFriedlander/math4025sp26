@@ -151,3 +151,28 @@ Run the **Comparison: Top Features Across Models** cell.
 -   Features that rank highly across **all three** models are more trustworthy signals — multiple model families agree they matter
 -   Features that only matter for one model type may reflect that model's specific assumptions or biases
 -   Discussion: which features would you prioritize if you had to explain this to a non-technical audience?
+
+# Recap
+
+## Feature Importance: Key Ideas {.smaller}
+
+**MDI (Mean Decrease in Impurity)**
+
+-   Built into tree-based models — free, fast, available as `feature_importances_`
+-   Computed on training data: can overstate importance for overfit features
+-   Biased toward high-cardinality features (many one-hot levels get more split opportunities)
+-   Best for: quick exploration during model development
+
+**Permutation Importance**
+
+-   Model-agnostic: works with any fitted model
+-   Evaluated on the test set: reflects real generalization
+-   Shuffle one feature, measure accuracy drop — repeat and average
+-   Best for: final reporting, comparing importance across different model types
+
+**Big Picture**
+
+-   When MDI and permutation importance agree, you can trust the result
+-   When they disagree, prefer permutation importance — it uses held-out data
+-   Features that rank highly across multiple model families (trees, linear models) are the most reliable signals
+-   For individual-prediction explanations, see lecture 30 (SHAP)

@@ -156,3 +156,27 @@ Run the **Best Parameters and Test Accuracy** cell.
 | Interpretable? | Yes | No | No |
 | OOB error? | No | Yes | Yes |
 | Key parameter | `ccp_alpha` | `n_estimators` | `max_features` |
+
+# Recap
+
+## Bagging and Random Forests: Key Ideas {.smaller}
+
+**Bagging**
+
+-   Fit many unpruned trees on bootstrap samples, then average (majority vote for classification)
+-   Reduces variance without increasing bias
+-   `oob_score=True` gives a free performance estimate equivalent to LOOCV
+-   Trees are correlated — all features compete at every split
+
+**Random Forests**
+
+-   Same as bagging, but at each split only $m$ randomly chosen features are considered
+-   Decorrelates trees: further reduces variance, often improves accuracy
+-   Tune `max_features` ($\approx \sqrt{p}$ is a good default for classification)
+-   Both support variable importance via mean decrease in impurity (MDI) — see lecture 20
+
+**Big Picture**
+
+-   Ensemble methods trade interpretability for accuracy: individual trees are readable, but 200 trees are not
+-   Always compare against a single tuned tree: is the ensemble worth the complexity?
+-   OOB error is a practical shortcut — use it instead of full CV when fitting many trees

@@ -1,0 +1,9 @@
+---
+title: "Preparation for Bagging & Random Forests"
+---
+
+## Assigned readings & videos
+
+- Read the [scikit-learn documentation on Feature Importance](https://scikit-learn.org/stable/modules/permutation_importance.html)
+- Read the [scikit-learn example on Feature Importance with forest of trees](https://scikit-learn.org/stable/auto_examples/ensemble/plot_forest_importances.html)
+- Read the [scikit-learn example on Permutation Importance](https://scikit-learn.org/stable/auto_examples/inspection/plot_permutation_importance.html#sphx-glr-auto-examples-inspection-plot-permutation-importance-py)
