@@ -1,5 +1,5 @@
 ---
-title: 'MATH 4025: Activity & Data Cleaning Side Quest'
+title: 'MATH 4025: Data Cleaning Side Quest'
 ---
 
 # Data Cleaning Side-Quest
@@ -8,41 +8,31 @@ title: 'MATH 4025: Activity & Data Cleaning Side Quest'
 
 -   [Info about data](https://github.com/fivethirtyeight/data/tree/master/non-voters)
 -   **Goal**: Identify individuals who are unlikely to vote to help an organization target "get out the vote" efforts
--   Open `slides-18-practice.ipynb` and:
-    1.  Run the **Setup** cell to load all libraries
-    2.  Run the **Load Raw Data** cell
-    3.  Spend ~2 minutes looking at the dataframe - what do you notice about the general structure?
+-   Create a jupyter notebook or quarto document and load the dataset using this code snippet:
 
-## Checking for Missing Data {.smaller}
+```{r}
+#| eval: false
+voter_url = 'https://raw.githubusercontent.com/fivethirtyeight/data/master/non-voters/nonvoters_data.csv'
+voter_raw = pd.read_csv(voter_url)
+```
 
--   Run the two **Explore Missing Data** cells in the notebook
--   Observe the output and discuss:
-    +   Which columns have true `NaN` missing values?
-    +   Which columns have `-1` values? What might `-1` mean in a survey context?
-    +   Are these the same kind of "missing"?
+Spend ~2 minutes looking at the dataframe - what do you notice about the general structure?
 
-## How Should We Handle -1s? {.smaller}
+## Exploring the Data
 
-::: incremental
--   Seems like **-1** means: question was asked but not answered / answer not selected
--   Seems like **`NA`** means: question was never asked (skip logic)
--   What should we do?
--   A few options:
-    +   Replace -1 with `"Not Answered"` (treat as a category)
-    +   Replace -1 with `NaN`
-    +   Replace -1 with `NaN` **and** add indicator columns (e.g., `Q6_was_missing`)
-        +   Can do this with `sklearn.impute.MissingIndicator`
-        +   More sophisticated but adds many columns
+- In group of about 4, split up the variables and explore them:
+    +   What are the different columns? Which ones are categorical vs. ordinal vs. numeric?
+    +   What do the different values mean? 
+    +   Are there any "missing" values?
+    +   Do you notice anything weird?
+    +   Discuss the following questions:
+        *   If someone doesn't answer a question, is that the same as the question not being asked? Should we treat these the same way?
+
+## Class Discussion {.smaller}
+
+:::{.incremental}
+- Missing Data
+- Ordinal Data
+- Q22, 28, 29
+- Party ID: 31, 32, 33
 :::
-
-## Following Along: Data Cleaning {.smaller}
-
-Work through the **Data Cleaning** section of the notebook:
-
-1.  **Straight-Forward Stuff** — drop unused columns, set ordered categoricals for `educ`, `income_cat`, `voter_category`
-2.  **Clean Q22** — inspect `value_counts`, then filter out skip-logic rows and fill `NaN` as `"Not Asked"`
-3.  **Clean Q28 & Q29** — multi-select columns: `-1` → `0`, `NaN` → `"Not Asked"`
-4.  **Engineer Party ID** — combine Q31/Q32/Q33 into a single ordered `Party_ID` column, then drop the originals
-5.  **Final -1 Cleanup** — replace all remaining `-1`s with `NaN` (except `ppage`)
-
-After each step: why did we make that choice? What would happen if we didn't?
