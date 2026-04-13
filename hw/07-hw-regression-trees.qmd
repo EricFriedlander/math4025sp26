@@ -28,7 +28,7 @@ For this homework, we'll be working with the Communities and Crime data set from
 
 > "Communities in the US. Data combines socio-economic data from the '90 Census, law enforcement data from the 1990 Law Enforcement Management and Admin Stats survey, and crime data from the 1995 FBI UCR."
 
-More details can be found [here](http://archive.ics.uci.edu/ml/datasets/communities+and+crime+unnormalized). Our goal will be to predict the number of violent crimes per capita, stored in the column called `ViolentCrimesPerPop`.
+More details can be found [here](https://archive-beta.ics.uci.edu/dataset/211/communities+and+crime+unnormalized). Please note that the variable names at the link may not 100% match the column names in the data set but you should be able to figure out which ones are which. For example, our goal will be to predict the number of violent crimes per capita, stored in the column called `ViolentCrimesPerPop` and on the website that corresponding variable is `violentPerPop`.
 
 ## Cleaning and Preprocessing
 
@@ -37,7 +37,7 @@ More details can be found [here](http://archive.ics.uci.edu/ml/datasets/communit
 ::: {.callout-tip title="Question"}
 Load the data set `CommViolPredUnnormalizedDataCleaned.csv`. This data set contains quite a bit of missing data, but it uses question marks to denote missing values. Pass `na_values="?"` to `pd.read_csv` so that question marks are automatically replaced with `NaN`. Then clean the data by:
 
-1.  [Reading the documentation](http://archive.ics.uci.edu/dataset/211/communities+and+crime+unnormalized) and dropping all "non-predictive" and "potential goal" columns *except* `ViolentCrimesPerPop`.
+1.  [Reading the documentation](https://archive-beta.ics.uci.edu/dataset/211/communities+and+crime+unnormalized) and dropping all "non-predictive" and "potential goal" columns *except* `ViolentCrimesPerPop`.
 2.  Dropping any rows that have a missing value in `ViolentCrimesPerPop`. Why do we want to drop these rows rather than impute them?
 3.  Ensuring all remaining features have the correct data type.
 
