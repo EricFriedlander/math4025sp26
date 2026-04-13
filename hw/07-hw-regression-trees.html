@@ -331,7 +331,7 @@ Question
 <blockquote class="blockquote">
 <p>“Communities in the US. Data combines socio-economic data from the ’90 Census, law enforcement data from the 1990 Law Enforcement Management and Admin Stats survey, and crime data from the 1995 FBI UCR.”</p>
 </blockquote>
-<p>More details can be found <a href="http://archive.ics.uci.edu/ml/datasets/communities+and+crime+unnormalized">here</a>. Our goal will be to predict the number of violent crimes per capita, stored in the column called <code>ViolentCrimesPerPop</code>.</p>
+<p>More details can be found <a href="https://archive-beta.ics.uci.edu/dataset/211/communities+and+crime+unnormalized">here</a>. Please note that the variable names at the link may not 100% match the column names in the data set but you should be able to figure out which ones are which. For example, our goal will be to predict the number of violent crimes per capita, stored in the column called <code>ViolentCrimesPerPop</code> and on the website that corresponding variable is <code>violentPerPop</code>.</p>
 <section id="cleaning-and-preprocessing" class="level2">
 <h2 class="anchored" data-anchor-id="cleaning-and-preprocessing">Cleaning and Preprocessing</h2>
 </section>
@@ -349,7 +349,7 @@ Question
 <div class="callout-body-container callout-body">
 <p>Load the data set <code>CommViolPredUnnormalizedDataCleaned.csv</code>. This data set contains quite a bit of missing data, but it uses question marks to denote missing values. Pass <code>na_values="?"</code> to <code>pd.read_csv</code> so that question marks are automatically replaced with <code>NaN</code>. Then clean the data by:</p>
 <ol type="1">
-<li><a href="http://archive.ics.uci.edu/dataset/211/communities+and+crime+unnormalized">Reading the documentation</a> and dropping all “non-predictive” and “potential goal” columns <em>except</em> <code>ViolentCrimesPerPop</code>.</li>
+<li><a href="https://archive-beta.ics.uci.edu/dataset/211/communities+and+crime+unnormalized">Reading the documentation</a> and dropping all “non-predictive” and “potential goal” columns <em>except</em> <code>ViolentCrimesPerPop</code>.</li>
 <li>Dropping any rows that have a missing value in <code>ViolentCrimesPerPop</code>. Why do we want to drop these rows rather than impute them?</li>
 <li>Ensuring all remaining features have the correct data type.</li>
 </ol>
