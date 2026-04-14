@@ -1,0 +1,113 @@
+---
+title: "Homework 8: Classification Trees and Random Forests"
+author: "Your Name"
+---
+
+# Introduction
+
+In this homework we will practice fitting classification trees and random forests, using them to predict survival on the Titanic.
+
+## Learning goals
+
+In this assignment, you will...
+
+-   Fit and interpret classification trees
+-   Fit random forests and use variable importance plots to interpret them
+-   Use cross-validation and grid search to tune model parameters
+
+# Getting Started
+
+## Exercise 0
+
+::: {.callout-tip title="Question"}
+[Click this link](GITHUB_CLASSROOM_LINK) to accept the assignment and clone it to your computer.
+:::
+
+## Data: Titanic
+
+We will be using the famous Titanic dataset, which includes passenger information and whether each passenger survived. The data has already been split for you into `Titanic_train.csv` and `Titanic_test.csv` in your repo's `data/` folder. The variables are:
+
+-   `Survived`: whether the passenger survived (1) or died (0)
+-   `Pclass`: passenger class (1st, 2nd, or 3rd)
+-   `Sex`: sex of the passenger
+-   `Age`: age in years (`NaN` if unknown)
+-   `SibSp`: number of siblings/spouses aboard
+-   `Parch`: number of parents/children aboard
+-   `Fare`: fare paid
+-   `Embarked`: port of embarkation (C = Cherbourg, Q = Queenstown, S = Southampton)
+
+# Exploratory Data Analysis
+
+## Exercise 1
+
+::: {.callout-tip title="Question"}
+Load `Titanic_train.csv` and `Titanic_test.csv`. Inspect the data and perform any cleaning you think is necessary (e.g., dropping ID or row-number columns, correcting data types). Based on domain knowledge, which two or three features do you expect to be most predictive of survival? Give a brief justification for each.
+:::
+
+## Exercise 2
+
+::: {.callout-tip title="Question"}
+Conduct a **brief** EDA exploring the relationship between survival and the variables you identified in Exercise 1. Use plots rather than tables where possible, display and interpret each plot one at a time, and aim for a professional presentation.
+:::
+
+# Pre-Processing
+
+## Exercise 3
+
+::: {.callout-tip title="Question"}
+Build a preprocessing pipeline using `ColumnTransformer` and `Pipeline` suitable for both a classification tree and a random forest. Think carefully about what preprocessing is needed — decision tree-based models do not require normalization, but there are still other steps to consider.
+:::
+
+# Classification Tree
+
+## Exercise 4
+
+::: {.callout-tip title="Question"}
+Fit a `DecisionTreeClassifier` from `sklearn.tree` to the training data using your pipeline. Visualize the tree with `sklearn.tree.plot_tree`, limiting the display to `max_depth=3` for readability. Based on the tree, which variables appear most important?
+:::
+
+## Exercise 5
+
+::: {.callout-tip title="Question"}
+Evaluate your classification tree on the test set. Report accuracy and display a confusion matrix using `ConfusionMatrixDisplay` from `sklearn.metrics`. Comment on where the tree makes mistakes.
+:::
+
+# Random Forest
+
+## Exercise 6
+
+::: {.callout-tip title="Question"}
+Fit a `RandomForestClassifier` from `sklearn.ensemble` to the training data. Choose reasonable values for `n_estimators` (number of trees) and `max_features` (number of features considered at each split). Evaluate it on the test set and compare its accuracy to the classification tree from Exercise 5.
+:::
+
+## Exercise 7
+
+::: {.callout-tip title="Question"}
+Generate a variable importance plot using the `feature_importances_` attribute of your fitted random forest. Plot the top features using `plotnine`. How do the variables identified as important compare to what the classification tree highlighted in Exercise 4?
+:::
+
+## Exercise 8
+
+::: {.callout-tip title="Question"}
+Use `GridSearchCV` with `RepeatedStratifiedKFold` (5 folds, 3 repeats) to tune `max_features`. Use accuracy as your scoring metric. **Tip:** Use caching or save your CV results so you don't re-run cross-validation every time the document is rendered.
+:::
+
+## Exercise 9
+
+::: {.callout-tip title="Question"}
+Fit your best model from Exercise 8 to the full training data and evaluate it on the test set. How does the tuned model's accuracy compare to the untuned random forest from Exercise 6?
+:::
+
+# Conceptual Questions
+
+## Exercise 10
+
+::: {.callout-tip title="Question"}
+Discuss `max_features` in the context of the bias-variance trade-off. How should increasing or decreasing `max_features` affect the flexibility, bias, and variance of the resulting forest?
+:::
+
+## Exercise 11
+
+::: {.callout-tip title="Question"}
+Compare the variable importance plot from Exercise 7 with the visualization of the classification tree from Exercise 4. What information does each one convey? Is there anything you can learn from one that you cannot learn from the other? Which is more useful for communicating results to a non-technical audience?
+:::

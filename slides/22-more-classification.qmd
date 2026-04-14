@@ -1,0 +1,212 @@
+---
+title: 'MATH 4025: Classification with More Than Two Classes'
+---
+
+## Quick Review of Classification {.smaller}
+
+-   We have covered many different classification methods:
+    +   Logistic Regression (potentially with regularization)
+    +   K-Nearest Neighbors
+    +   Decision Trees
+    +   Random Forests
+    +   Gradient Boosted Trees
+-   For each method, rank it as **high / medium / low** for:
+    +   Computational complexity to fit
+    +   Computational complexity to predict
+    +   Ability to handle non-linearity
+    +   Interpretability
+    +   Prediction accuracy
+
+## Quick Review of Classification {.smaller}
+
+|              | Logistic Reg. | KNN | Decision Trees | Random Forests | Gradient Boosting |
+|-------------|--------------|-----|----------------|---------------|-------------------|
+| Comp. Fit   | Low          | Low | Low            | Medium        | High              |
+| Comp. Pred. | Low          | Depends | Low        | Medium        | Medium            |
+| Non-linearity | Low        | Medium | Medium       | High          | High              |
+| Interp.     | High         | Low | High           | Medium/Low    | Medium/Low        |
+| Accuracy    | Low          | Depends | Low        | Medium/High   | High              |
+
+# Multiclass Classification
+
+## The Multiclass Problem {.smaller}
+
+-   All the methods we have discussed so far can handle more than two classes
+-   The challenge: most **evaluation metrics** were defined for binary classification
+-   Our voter data has three response categories:
+    +   `rarely/never`
+    +   `sporadic`
+    +   `always`
+
+. . .
+
+Open `slides-22-practice.ipynb` and run the **Setup** and **Visualize Response** cells.
+
+## Multinomial Logistic Regression {.smaller}
+
+-   Binary logistic regression: model the log-odds of one class vs. the other
+-   **Multinomial logistic regression**: model log-odds of each class $k$ vs. a reference class $K$
+$$\log \frac{P(\text{class } k \mid X)}{P(\text{class } K \mid X)} = \beta_{0k} + \beta_{1k} X_1 + \cdots + \beta_{pk} X_p$$
+-   One set of coefficients $(\beta_{0k}, \ldots, \beta_{pk})$ per class, except the reference
+-   sklearn's `LogisticRegression` handles this automatically with `multi_class='multinomial'`
+
+. . .
+
+Run the **Define and Fit Multinomial LR** cell.
+
+## Look at Predictions {.smaller}
+
+Run the **Predictions** cell.
+
+-   Note the output: three probability columns — one per class
+-   Each row's probabilities sum to 1
+-   The predicted class is whichever has the highest probability
+
+## Confusion Matrix {.smaller}
+
+Run the **Confusion Matrix** cell.
+
+-   Rows = true class, columns = predicted class
+-   The diagonal = correct predictions
+-   Off-diagonal cells = specific misclassification patterns
+-   Discussion: which class is hardest to predict? Why might that be?
+
+# Evaluating Multiclass Models
+
+## Evaluating Multiclass Models {.smaller}
+
+-   Accuracy still works: $\frac{\text{Correct classifications}}{\text{Total observations}}$
+-   Most binary metrics assumed a "Positive" and a "Negative" class:
+    +   Precision / PPV
+    +   Recall / Sensitivity
+    +   Specificity
+    +   NPV
+    +   ROC / AUC
+-   These need to be extended for multiclass settings
+
+## Solution 1: One-vs-All Metrics {.smaller}
+
+-   Apply binary metrics to each class in turn, treating it as "positive" vs. all others
+-   Example — recall per class (from voter data):
+    +   `rarely/never`: $\frac{285}{285 + 110 + 35} \approx 0.66$
+    +   `sporadic`: $\frac{559}{47 + 559 + 173} \approx 0.72$
+    +   `always`: $\frac{221}{21 + 301 + 221} \approx 0.41$
+
+. . .
+
+Run the **Per-Class Recall** cell.
+
+## Solution 2: Averaging {.smaller}
+
+-   *Macro-averaging*: average the one-vs-all metrics equally across all classes
+    +   Recall: $\frac{0.66 + 0.72 + 0.41}{3} \approx 0.60$
+-   *Macro-weighted averaging*: same but weight each class by its size
+    +   Recall: $\frac{430 \times 0.66 + 779 \times 0.72 + 543 \times 0.41}{1752} \approx 0.61$
+-   *Micro-averaging*: pool all TP / FP / FN counts across classes, then compute the metric
+    +   Recall: $\frac{285 + 559 + 221}{430 + 779 + 543} \approx 0.61$
+    +   Note: micro recall = micro precision = accuracy for multiclass
+
+## Macro Averaging in Python {.smaller}
+
+Run the **Macro Averaging** cell.
+
+-   `average='macro'` in `precision_score`, `recall_score`, `f1_score`
+-   Each class gets **equal weight** regardless of how many observations it has
+-   Useful when you care equally about performance on all classes
+
+## Macro-Weighted Averaging in Python {.smaller}
+
+Run the **Macro-Weighted Averaging** cell.
+
+-   `average='weighted'`
+-   Each class's metric is weighted by the number of true observations in that class
+-   Favors larger classes — closer to overall accuracy as a summary
+
+## Micro Averaging in Python {.smaller}
+
+Run the **Micro Averaging** cell.
+
+-   `average='micro'`
+-   Aggregates TP, FP, FN across all classes before computing the metric
+-   For standard multiclass (not multi-label): micro recall = micro precision = accuracy
+
+## Discussion {.smaller}
+
+-   Why do we compute averages / means in the first place?
+
+. . .
+
+-   How would **heavily imbalanced classes** impact each type of averaging?
+    +   Which type(s) weight each class equally regardless of balance?
+    +   Which type(s) favor larger classes?
+    +   Does that mean one is always better than the others?
+
+# Probability-Based Metrics
+
+## What if the Output is a Probability? {.smaller}
+
+-   For binary classification we used ROC curves and AUC
+-   Similar ideas apply to multiclass:
+    +   **One-vs-all ROC curves**: plot a separate curve for each class treated as "positive"
+    +   **Macro-averaged AUC**: average the one-vs-all AUC values equally
+    +   **Macro-weighted AUC**: weight by class size
+    +   **Hand and Till AUC**: pairwise comparisons between all class pairs, then average
+    +   No micro-averaging for AUC
+
+## One-vs-All ROC Curves {.smaller}
+
+Run the **ROC Curves** cell.
+
+-   One curve per class: how well does the model separate that class from all others?
+-   Curves close to the top-left corner = good separation
+-   Which class is best separated? Which is worst?
+
+## AUC Variants {.smaller}
+
+Run the **AUC Variants** cell.
+
+| Variant | `roc_auc_score` argument | Weight |
+|---------|--------------------------|--------|
+| Macro | `multi_class='ovr', average='macro'` | Equal per class |
+| Macro-weighted | `multi_class='ovr', average='weighted'` | Proportional to class size |
+| Hand and Till | `multi_class='ovo'` | Pairwise, equal weight |
+
+## Hand and Till AUC {.smaller}
+
+-   Idea behind traditional AUC: "How well does my model separate the two classes?"
+-   [Hand and Till (2001)](https://link.springer.com/article/10.1023/A:1010920819831): extend this to multiclass
+    +   Compute AUC for every **pair** of classes (one vs. one)
+    +   Average across all $\binom{K}{2}$ pairs
+-   Measures overall pairwise class separation, regardless of class sizes
+
+## Discussion
+
+-   How would heavily imbalanced classes impact each type of AUC averaging?
+    +   Which metric(s) would be most misleading with a dominant majority class?
+    +   When would you prefer Hand and Till over macro-averaged AUC?
+
+# Class Imbalance
+
+## Class Imbalance {.smaller}
+
+-   **Class imbalance**: the response categories differ greatly in frequency
+-   Occurs frequently in practice:
+    +   Medicine: survival vs. death after surgery
+    +   Admissions: enrolled vs. did not enroll
+    +   Finance: repaid loan vs. defaulted
+    +   Tech: clicked on ad vs. did not click
+    +   Tech: churned vs. retained
+    +   Finance: fraudulent transaction vs. legitimate
+
+## What Do We Do? {.smaller}
+
+-   The right approach depends on **what your goal is**
+-   Ask yourself: what matters most for this problem?
+    +   Accurate predicted probabilities?
+    +   Effective separation between classes?
+    +   Effective identification of the minority class (high recall)?
+    +   Low false-positive rate?
+
+. . .
+
+-   Discussion: think of scenarios where each goal is the most important

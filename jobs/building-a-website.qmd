@@ -1,0 +1,26 @@
+---
+title: "Building A Website Using Quarto"
+---
+
+If you've already built a website, or want to use a different method, that's ok. To me, this is the easiest way to build a website and it will be a good skill to have.
+
+### Step 1: Using Quarto to Create Your Website Locally
+
+-  Open the VSCode or Positron control panel (Ctrl + Shift + P)/(Command + Shift + P) and select "Quarto: Create New Project"
+-  Select "Website" and then select the folder where you want to create your website. You can name the project whatever you like, but I suggest "my-website" or something similar.
+
+### Step 2: Creating Your GitHub Repository
+
+- In the Source Control tab, click on the "Publish to GitHub" button. This will create a new repository on GitHub and push your local website to it. You can name the repository whatever you like, but I suggest "my-website" or something similar.
+
+### Step 3: Publishing Your Website on GitHub Pages
+
+- Open up your command line and type `quarto publish`. When prompted, select "GitHub Pages" and confirm. This will publish your website on GitHub Pages and provide you with a URL where you can access it.
+- Once it's done add a `/_site/` to your `.gitignore` file to prevent the generated website files from being tracked by Git.
+
+### Wrapping up
+
+Now you have a functional website! From here you can customize it however you like. Your first task is to add your resume and cover letter to the website. You can accomplish this by adding those documents to your folder and modifying the config file `_quarto.yml`. See the **Config File** section of the [Quarto website documentation](https://quarto.org/docs/websites/) for more information on how to do this. Each time you want to update your website you can do one of the following:
+
+- Use the `Preview` button if you just want to see how it looks locally.
+- Use the `quarto publish` command to update the website on GitHub Pages. You'll usually have to select "GitHub Pages" each time you run Quarto publish.
