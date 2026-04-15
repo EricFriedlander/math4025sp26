@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Your Name">
 
-<title>Preparation for Feature Importance – Math 4025 - Spring 2026</title>
+<title>Homework 8: Classification Trees and Random Forests – Math 4025 - Spring 2026</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -79,7 +80,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Preparation for Feature Importance</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Homework 8: Classification Trees and Random Forests</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -198,22 +199,62 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#assigned-readings-videos" id="toc-assigned-readings-videos" class="nav-link active" data-scroll-target="#assigned-readings-videos">Assigned readings &amp; videos</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning goals</a></li>
+  </ul></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting Started</a>
+  <ul class="collapse">
+  <li><a href="#exercise-0" id="toc-exercise-0" class="nav-link" data-scroll-target="#exercise-0">Exercise 0</a></li>
+  <li><a href="#data-titanic" id="toc-data-titanic" class="nav-link" data-scroll-target="#data-titanic">Data: Titanic</a></li>
+  </ul></li>
+  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis">Exploratory Data Analysis</a>
+  <ul class="collapse">
+  <li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1">Exercise 1</a></li>
+  <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2">Exercise 2</a></li>
+  </ul></li>
+  <li><a href="#pre-processing" id="toc-pre-processing" class="nav-link" data-scroll-target="#pre-processing">Pre-Processing</a>
+  <ul class="collapse">
+  <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3">Exercise 3</a></li>
+  </ul></li>
+  <li><a href="#classification-tree" id="toc-classification-tree" class="nav-link" data-scroll-target="#classification-tree">Classification Tree</a>
+  <ul class="collapse">
+  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4">Exercise 4</a></li>
+  <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5">Exercise 5</a></li>
+  </ul></li>
+  <li><a href="#random-forest" id="toc-random-forest" class="nav-link" data-scroll-target="#random-forest">Random Forest</a>
+  <ul class="collapse">
+  <li><a href="#exercise-6" id="toc-exercise-6" class="nav-link" data-scroll-target="#exercise-6">Exercise 6</a></li>
+  <li><a href="#exercise-7" id="toc-exercise-7" class="nav-link" data-scroll-target="#exercise-7">Exercise 7</a></li>
+  <li><a href="#exercise-8" id="toc-exercise-8" class="nav-link" data-scroll-target="#exercise-8">Exercise 8</a></li>
+  <li><a href="#exercise-9" id="toc-exercise-9" class="nav-link" data-scroll-target="#exercise-9">Exercise 9</a></li>
+  </ul></li>
+  <li><a href="#conceptual-questions" id="toc-conceptual-questions" class="nav-link" data-scroll-target="#conceptual-questions">Conceptual Questions</a>
+  <ul class="collapse">
+  <li><a href="#exercise-10" id="toc-exercise-10" class="nav-link" data-scroll-target="#exercise-10">Exercise 10</a></li>
+  <li><a href="#exercise-11" id="toc-exercise-11" class="nav-link" data-scroll-target="#exercise-11">Exercise 11</a></li>
+  </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/prepare/prepare-20.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/hw/08-hw-classification-trees-rf.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Preparation for Feature Importance</h1>
+<h1 class="title">Homework 8: Classification Trees and Random Forests</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Your Name </p>
+          </div>
+  </div>
     
   
     
@@ -224,15 +265,244 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="assigned-readings-videos" class="level2">
-<h2 class="anchored" data-anchor-id="assigned-readings-videos">Assigned readings &amp; videos</h2>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>In this homework we will practice fitting classification trees and random forests, using them to predict survival on the Titanic.</p>
+<section id="learning-goals" class="level2">
+<h2 class="anchored" data-anchor-id="learning-goals">Learning goals</h2>
+<p>In this assignment, you will…</p>
 <ul>
-<li>Read the <a href="https://scikit-learn.org/stable/modules/permutation_importance.html">scikit-learn documentation on Feature Importance</a></li>
-<li>Read the <a href="https://scikit-learn.org/stable/auto_examples/ensemble/plot_forest_importances.html">scikit-learn example on Feature Importance with forest of trees</a></li>
-<li>Read the <a href="https://scikit-learn.org/stable/auto_examples/inspection/plot_permutation_importance.html#sphx-glr-auto-examples-inspection-plot-permutation-importance-py">scikit-learn example on Permutation Importance</a></li>
+<li>Fit and interpret classification trees</li>
+<li>Fit random forests and use variable importance plots to interpret them</li>
+<li>Use cross-validation and grid search to tune model parameters</li>
 </ul>
+</section>
+</section>
+<section id="getting-started" class="level1">
+<h1>Getting Started</h1>
+<section id="exercise-0" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-0">Exercise 0</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="GITHUB_CLASSROOM_LINK">Click this link</a> to accept the assignment and clone it to your computer.</p>
+</div>
+</div>
+</section>
+<section id="data-titanic" class="level2">
+<h2 class="anchored" data-anchor-id="data-titanic">Data: Titanic</h2>
+<p>We will be using the famous Titanic dataset, which includes passenger information and whether each passenger survived. The data has already been split for you into <code>Titanic_train.csv</code> and <code>Titanic_test.csv</code> in your repo’s <code>data/</code> folder. The variables are:</p>
+<ul>
+<li><code>Survived</code>: whether the passenger survived (1) or died (0)</li>
+<li><code>Pclass</code>: passenger class (1st, 2nd, or 3rd)</li>
+<li><code>Sex</code>: sex of the passenger</li>
+<li><code>Age</code>: age in years (<code>NaN</code> if unknown)</li>
+<li><code>SibSp</code>: number of siblings/spouses aboard</li>
+<li><code>Parch</code>: number of parents/children aboard</li>
+<li><code>Fare</code>: fare paid</li>
+<li><code>Embarked</code>: port of embarkation (C = Cherbourg, Q = Queenstown, S = Southampton)</li>
+</ul>
+</section>
+</section>
+<section id="exploratory-data-analysis" class="level1">
+<h1>Exploratory Data Analysis</h1>
+<section id="exercise-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-1">Exercise 1</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Load <code>Titanic_train.csv</code> and <code>Titanic_test.csv</code>. Inspect the data and perform any cleaning you think is necessary (e.g., dropping ID or row-number columns, correcting data types). Based on domain knowledge, which two or three features do you expect to be most predictive of survival? Give a brief justification for each.</p>
+</div>
+</div>
+</section>
+<section id="exercise-2" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-2">Exercise 2</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Conduct a <strong>brief</strong> EDA exploring the relationship between survival and the variables you identified in Exercise 1. Use plots rather than tables where possible, display and interpret each plot one at a time, and aim for a professional presentation.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="pre-processing" class="level1">
+<h1>Pre-Processing</h1>
+<section id="exercise-3" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-3">Exercise 3</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Build a preprocessing pipeline using <code>ColumnTransformer</code> and <code>Pipeline</code> suitable for both a classification tree and a random forest. Think carefully about what preprocessing is needed — decision tree-based models do not require normalization, but there are still other steps to consider.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="classification-tree" class="level1">
+<h1>Classification Tree</h1>
+<section id="exercise-4" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-4">Exercise 4</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Fit a <code>DecisionTreeClassifier</code> from <code>sklearn.tree</code> to the training data using your pipeline. Visualize the tree with <code>sklearn.tree.plot_tree</code>, limiting the display to <code>max_depth=3</code> for readability. Based on the tree, which variables appear most important?</p>
+</div>
+</div>
+</section>
+<section id="exercise-5" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-5">Exercise 5</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Evaluate your classification tree on the test set. Report accuracy and display a confusion matrix using <code>ConfusionMatrixDisplay</code> from <code>sklearn.metrics</code>. Comment on where the tree makes mistakes.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="random-forest" class="level1">
+<h1>Random Forest</h1>
+<section id="exercise-6" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-6">Exercise 6</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Fit a <code>RandomForestClassifier</code> from <code>sklearn.ensemble</code> to the training data. Choose reasonable values for <code>n_estimators</code> (number of trees) and <code>max_features</code> (number of features considered at each split). Evaluate it on the test set and compare its accuracy to the classification tree from Exercise 5.</p>
+</div>
+</div>
+</section>
+<section id="exercise-7" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-7">Exercise 7</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Generate a variable importance plot using the <code>feature_importances_</code> attribute of your fitted random forest. Plot the top features using <code>plotnine</code>. How do the variables identified as important compare to what the classification tree highlighted in Exercise 4?</p>
+</div>
+</div>
+</section>
+<section id="exercise-8" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-8">Exercise 8</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use <code>GridSearchCV</code> with <code>RepeatedStratifiedKFold</code> (5 folds, 3 repeats) to tune <code>max_features</code>. Use accuracy as your scoring metric. <strong>Tip:</strong> Use caching or save your CV results so you don’t re-run cross-validation every time the document is rendered.</p>
+</div>
+</div>
+</section>
+<section id="exercise-9" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-9">Exercise 9</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Fit your best model from Exercise 8 to the full training data and evaluate it on the test set. How does the tuned model’s accuracy compare to the untuned random forest from Exercise 6?</p>
+</div>
+</div>
+</section>
+</section>
+<section id="conceptual-questions" class="level1">
+<h1>Conceptual Questions</h1>
+<section id="exercise-10" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-10">Exercise 10</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Discuss <code>max_features</code> in the context of the bias-variance trade-off. How should increasing or decreasing <code>max_features</code> affect the flexibility, bias, and variance of the resulting forest?</p>
+</div>
+</div>
+</section>
+<section id="exercise-11" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-11">Exercise 11</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Compare the variable importance plot from Exercise 7 with the visualization of the classification tree from Exercise 4. What information does each one convey? Is there anything you can learn from one that you cannot learn from the other? Which is more useful for communicating results to a non-technical audience?</p>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -661,7 +931,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/prepare/prepare-20.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/hw/08-hw-classification-trees-rf.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This site is built with <a href="https://quarto.org/">Quarto</a></p>
 </div>

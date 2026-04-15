@@ -49,56 +49,60 @@
     <lastmod>2026-03-06T15:00:59.905Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-19.html</loc>
-    <lastmod>2026-04-09T14:56:46.008Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-13.html</loc>
+    <lastmod>2026-03-08T18:48:27.954Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-09.html</loc>
-    <lastmod>2026-03-06T15:01:04.508Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-08.html</loc>
+    <lastmod>2026-03-06T15:01:03.598Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/hw/01-hw-eda.html</loc>
-    <lastmod>2026-02-10T21:22:17.498Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-17.html</loc>
+    <lastmod>2026-04-02T14:15:04.138Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/hw/06-hw-regularization.html</loc>
-    <lastmod>2026-04-02T14:27:27.515Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/hw/07-hw-regression-trees.html</loc>
+    <lastmod>2026-04-13T16:21:44.065Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/hw/04-hw-classification.html</loc>
-    <lastmod>2026-03-04T23:46:33.120Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/hw/09-hw-boosting-multiclass.html</loc>
+    <lastmod>2026-04-14T16:02:40.449Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/hw/02-hw-mlr.html</loc>
-    <lastmod>2026-02-17T14:24:57.962Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/hw/05-hw-preproc-cv.html</loc>
+    <lastmod>2026-03-12T14:13:28.989Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/06-knn.html</loc>
-    <lastmod>2026-02-18T22:59:35.896Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/hw/03-hw-knn.html</loc>
+    <lastmod>2026-02-23T15:11:04.947Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/16-model-tuning.html</loc>
-    <lastmod>2026-04-01T23:21:03.870Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/11-cross-validation.html</loc>
+    <lastmod>2026-03-05T16:27:34.166Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/10-roc-auc.html</loc>
-    <lastmod>2026-02-26T15:40:46.418Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/08-classification-logistic.html</loc>
+    <lastmod>2026-02-23T19:56:14.884Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/18-class-cleaning-activity.html</loc>
-    <lastmod>2026-04-09T17:00:56.120Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/21-boosting.html</loc>
+    <lastmod>2026-04-15T13:18:28.814Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/13-missing-data.html</loc>
-    <lastmod>2026-03-08T18:49:35.656Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/slides-19-practice.html</loc>
+    <lastmod>2026-04-08T23:17:35.896Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/15-regularization.html</loc>
-    <lastmod>2026-03-19T23:14:05.321Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/00-welcome.html</loc>
+    <lastmod>2026-02-03T17:49:39.874Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/slides-22-practice.html</loc>
-    <lastmod>2026-04-13T16:46:45.517Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/05-data-splitting.html</loc>
+    <lastmod>2026-02-12T20:52:49.992Z</lastmod>
+  </url>
+  <url>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/14-feature-selection.html</loc>
+    <lastmod>2026-03-19T13:25:17.589Z</lastmod>
   </url>
   <url>
     <loc>https://EricFriedlander.github.io/math4025sp26/slides/slides-30-practice.html</loc>
@@ -197,60 +201,64 @@
     <lastmod>2026-02-10T14:14:33.091Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/slides-21-practice.html</loc>
-    <lastmod>2026-04-13T16:45:51.058Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/slides-22-practice.html</loc>
+    <lastmod>2026-04-13T16:46:45.517Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/14-feature-selection.html</loc>
-    <lastmod>2026-03-19T13:25:17.589Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/15-regularization.html</loc>
+    <lastmod>2026-03-19T23:14:05.321Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/05-data-splitting.html</loc>
-    <lastmod>2026-02-12T20:52:49.992Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/13-missing-data.html</loc>
+    <lastmod>2026-03-08T18:49:35.656Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/00-welcome.html</loc>
-    <lastmod>2026-02-03T17:49:39.874Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/18-class-cleaning-activity.html</loc>
+    <lastmod>2026-04-09T17:00:56.120Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/slides-19-practice.html</loc>
-    <lastmod>2026-04-08T23:17:35.896Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/10-roc-auc.html</loc>
+    <lastmod>2026-02-26T15:40:46.418Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/21-boosting.html</loc>
-    <lastmod>2026-04-13T16:44:24.213Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/16-model-tuning.html</loc>
+    <lastmod>2026-04-01T23:21:03.870Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/08-classification-logistic.html</loc>
-    <lastmod>2026-02-23T19:56:14.884Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/slides/06-knn.html</loc>
+    <lastmod>2026-02-18T22:59:35.896Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/slides/11-cross-validation.html</loc>
-    <lastmod>2026-03-05T16:27:34.166Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/hw/02-hw-mlr.html</loc>
+    <lastmod>2026-02-17T14:24:57.962Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/hw/03-hw-knn.html</loc>
-    <lastmod>2026-02-23T15:11:04.947Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/hw/04-hw-classification.html</loc>
+    <lastmod>2026-03-04T23:46:33.120Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/hw/05-hw-preproc-cv.html</loc>
-    <lastmod>2026-03-12T14:13:28.989Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/hw/08-hw-classification-trees-rf.html</loc>
+    <lastmod>2026-04-14T19:51:59.413Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/hw/07-hw-regression-trees.html</loc>
-    <lastmod>2026-04-13T16:21:44.065Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/hw/06-hw-regularization.html</loc>
+    <lastmod>2026-04-02T14:27:27.515Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-17.html</loc>
-    <lastmod>2026-04-02T14:15:04.138Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/hw/01-hw-eda.html</loc>
+    <lastmod>2026-02-10T21:22:17.498Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-08.html</loc>
-    <lastmod>2026-03-06T15:01:03.598Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-09.html</loc>
+    <lastmod>2026-03-06T15:01:04.508Z</lastmod>
   </url>
   <url>
-    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-13.html</loc>
-    <lastmod>2026-03-08T18:48:27.954Z</lastmod>
+    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-19.html</loc>
+    <lastmod>2026-04-09T14:56:46.008Z</lastmod>
+  </url>
+  <url>
+    <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-21.html</loc>
+    <lastmod>2026-04-15T13:55:38.383Z</lastmod>
   </url>
   <url>
     <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-12.html</loc>
@@ -258,7 +266,7 @@
   </url>
   <url>
     <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-20.html</loc>
-    <lastmod>2026-04-09T15:36:54.349Z</lastmod>
+    <lastmod>2026-04-15T13:54:18.202Z</lastmod>
   </url>
   <url>
     <loc>https://EricFriedlander.github.io/math4025sp26/prepare/prepare-14.html</loc>

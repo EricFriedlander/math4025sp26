@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Your Name">
 
-<title>Preparation for Feature Importance – Math 4025 - Spring 2026</title>
+<title>Homework 9: Boosting and Multiclass Classification – Math 4025 - Spring 2026</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -79,7 +80,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Preparation for Feature Importance</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Homework 9: Boosting and Multiclass Classification</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -198,22 +199,56 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#assigned-readings-videos" id="toc-assigned-readings-videos" class="nav-link active" data-scroll-target="#assigned-readings-videos">Assigned readings &amp; videos</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning goals</a></li>
+  </ul></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting Started</a>
+  <ul class="collapse">
+  <li><a href="#teams-rules" id="toc-teams-rules" class="nav-link" data-scroll-target="#teams-rules">Teams &amp; Rules</a></li>
+  <li><a href="#data-academic_success" id="toc-data-academic_success" class="nav-link" data-scroll-target="#data-academic_success">Data: <code>academic_success</code></a></li>
+  </ul></li>
+  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis">Exploratory Data Analysis</a>
+  <ul class="collapse">
+  <li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1">Exercise 1</a></li>
+  <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2">Exercise 2</a></li>
+  </ul></li>
+  <li><a href="#pre-processing" id="toc-pre-processing" class="nav-link" data-scroll-target="#pre-processing">Pre-Processing</a>
+  <ul class="collapse">
+  <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3">Exercise 3</a></li>
+  </ul></li>
+  <li><a href="#boosted-tree" id="toc-boosted-tree" class="nav-link" data-scroll-target="#boosted-tree">Boosted Tree</a>
+  <ul class="collapse">
+  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4">Exercise 4</a></li>
+  <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5">Exercise 5</a></li>
+  </ul></li>
+  <li><a href="#cross-validation-and-parameter-tuning" id="toc-cross-validation-and-parameter-tuning" class="nav-link" data-scroll-target="#cross-validation-and-parameter-tuning">Cross Validation and Parameter Tuning</a>
+  <ul class="collapse">
+  <li><a href="#exercise-6" id="toc-exercise-6" class="nav-link" data-scroll-target="#exercise-6">Exercise 6</a></li>
+  <li><a href="#exercise-7" id="toc-exercise-7" class="nav-link" data-scroll-target="#exercise-7">Exercise 7</a></li>
+  <li><a href="#exercise-8" id="toc-exercise-8" class="nav-link" data-scroll-target="#exercise-8">Exercise 8</a></li>
+  </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/prepare/prepare-20.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/hw/09-hw-boosting-multiclass.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Preparation for Feature Importance</h1>
+<h1 class="title">Homework 9: Boosting and Multiclass Classification</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Your Name </p>
+          </div>
+  </div>
     
   
     
@@ -224,15 +259,188 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="assigned-readings-videos" class="level2">
-<h2 class="anchored" data-anchor-id="assigned-readings-videos">Assigned readings &amp; videos</h2>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>In this homework, we will practice solving multi-class classification problems using gradient boosted trees.</p>
+<section id="learning-goals" class="level2">
+<h2 class="anchored" data-anchor-id="learning-goals">Learning goals</h2>
+<p>In this assignment, you will…</p>
 <ul>
-<li>Read the <a href="https://scikit-learn.org/stable/modules/permutation_importance.html">scikit-learn documentation on Feature Importance</a></li>
-<li>Read the <a href="https://scikit-learn.org/stable/auto_examples/ensemble/plot_forest_importances.html">scikit-learn example on Feature Importance with forest of trees</a></li>
-<li>Read the <a href="https://scikit-learn.org/stable/auto_examples/inspection/plot_permutation_importance.html#sphx-glr-auto-examples-inspection-plot-permutation-importance-py">scikit-learn example on Permutation Importance</a></li>
+<li>Fit gradient boosted trees</li>
+<li>Use variable importance plots to interpret your model</li>
+<li>Interpret multi-class classification metrics</li>
 </ul>
+</section>
+</section>
+<section id="getting-started" class="level1">
+<h1>Getting Started</h1>
+<section id="teams-rules" class="level2">
+<h2 class="anchored" data-anchor-id="teams-rules">Teams &amp; Rules</h2>
+<p>You can find your team for this assignment on Canvas in the <strong>People</strong> section. The group set is called <strong>HW9</strong>. Your group will consist of 2-3 people and has been randomly generated. The GitHub assignment can be found <a href="GITHUB_CLASSROOM_LINK">here</a>. Rules:</p>
+<ol type="1">
+<li>You are all responsible for understanding the work that your team turns in.</li>
+<li>All team members must make roughly equal contributions to the homework.</li>
+<li>Any work completed by a team member must be committed and pushed to GitHub by that person.</li>
+</ol>
+</section>
+<section id="data-academic_success" class="level2">
+<h2 class="anchored" data-anchor-id="data-academic_success">Data: <code>academic_success</code></h2>
+<p>We will be using a data set from the UCI Machine Learning Repository. From the website:</p>
+<blockquote class="blockquote">
+<p>A dataset created from a higher education institution (acquired from several disjoint databases) related to students enrolled in different undergraduate degrees, such as agronomy, design, education, nursing, journalism, management, social service, and technologies. The dataset includes information known at the time of student enrollment (academic path, demographics, and social-economic factors) and the students’ academic performance at the end of the first and second semesters. The data is used to build classification models to predict students’ dropout and academic success. The problem is formulated as a three category classification task, in which there is a strong imbalance towards one of the classes.</p>
+</blockquote>
+<p>Our goal will be to predict the column <code>Target</code> which contains three different factors:</p>
+<ul>
+<li><code>Dropout</code>: the student dropped out before graduating</li>
+<li><code>Enrolled</code>: the student graduated but took extra time</li>
+<li><code>Graduate</code>: the student graduated on time</li>
+</ul>
+<p>More information (such as feature descriptions) can be found on the <a href="https://archive.ics.uci.edu/dataset/697/predict+students+dropout+and+academic+success">website here</a>. Download the data from that page and place the CSV file in your repo’s <code>data/</code> folder.</p>
+</section>
+</section>
+<section id="exploratory-data-analysis" class="level1">
+<h1>Exploratory Data Analysis</h1>
+<section id="exercise-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-1">Exercise 1</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Load the data set. Note that the file is delimited by semicolons (<code>;</code>) instead of commas — pass <code>sep=';'</code> to <code>pd.read_csv</code>. After loading, clean up the column names (e.g., convert to lowercase and replace spaces with underscores). Make sure to read the documentation so that you are treating the appropriate columns as categorical rather than numeric. Do any other cleaning you think is necessary.</p>
+<p>Once that is done, split your data into training and test sets. Use <code>stratify=y</code> to preserve the class distribution.</p>
+</div>
+</div>
+</section>
+<section id="exercise-2" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-2">Exercise 2</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Describe the different metrics and strategies you might use to evaluate how a model performs on this data. Generate a plot of the response variable and comment on anything that you think may impact your model and these different metrics.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="pre-processing" class="level1">
+<h1>Pre-Processing</h1>
+<section id="exercise-3" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-3">Exercise 3</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Generate a preprocessing pipeline using <code>ColumnTransformer</code> and <code>Pipeline</code> that can be used with a gradient boosted tree. Unlike linear models, decision trees do not require normalization. What preprocessing steps are still necessary?</p>
+</div>
+</div>
+</section>
+</section>
+<section id="boosted-tree" class="level1">
+<h1>Boosted Tree</h1>
+<section id="exercise-4" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-4">Exercise 4</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using all of the default settings in <code>GradientBoostingClassifier</code> from <code>sklearn.ensemble</code>, fit a gradient boosted tree to the training data.</p>
+</div>
+</div>
+</section>
+<section id="exercise-5" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-5">Exercise 5</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Compute all of the metrics you described in Exercise 2. You may find <code>classification_report</code> and <code>roc_auc_score(multi_class='ovr')</code> from <code>sklearn.metrics</code> useful.</p>
+<p>Our goal is to identify any student in the <code>Dropout</code> or <code>Enrolled</code> categories so that we can target interventions (e.g.&nbsp;extra advising, tutoring, mentorship, etc.) towards these students. It’s not a big deal if students that were going to graduate on time also get these interventions because it doesn’t harm students to give them some extra support they don’t need. That said, the school’s budget isn’t infinite so we’d like to minimize the number of students who get unnecessary support, as long as the students who do need it are still getting it. Based on this goal, which metrics would you be most invested in? How does the model perform on these metrics?</p>
+</div>
+</div>
+</section>
+</section>
+<section id="cross-validation-and-parameter-tuning" class="level1">
+<h1>Cross Validation and Parameter Tuning</h1>
+<section id="exercise-6" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-6">Exercise 6</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use <code>GridSearchCV</code> with <code>RepeatedStratifiedKFold</code> to tune <code>n_estimators</code> (the number of trees) and choose your best model. You may try to tune more parameters if you’d like, but this may take a long time to run. Try to optimize over a metric that best aligns with the goal outlined in Exercise 5. Once you choose your best model, fit it to the full training data. <strong>Tip:</strong> Use caching or save your CV results so you don’t re-run cross-validation every time the document is rendered.</p>
+</div>
+</div>
+</section>
+<section id="exercise-7" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-7">Exercise 7</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Generate and interpret a variable importance plot. Use the <code>feature_importances_</code> attribute of your fitted <code>GradientBoostingClassifier</code> and plot the top features using <code>plotnine</code>.</p>
+</div>
+</div>
+</section>
+<section id="exercise-8" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-8">Exercise 8</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Compute per-class (one-vs-all) metrics using <code>classification_report</code> and display a confusion matrix using <code>ConfusionMatrixDisplay</code> from <code>sklearn.metrics</code>. Interpret both in the context of the goal outlined in Exercise 5.</p>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -661,7 +869,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/prepare/prepare-20.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/hw/09-hw-boosting-multiclass.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This site is built with <a href="https://quarto.org/">Quarto</a></p>
 </div>

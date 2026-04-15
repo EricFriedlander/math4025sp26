@@ -141,22 +141,19 @@ Dr.&nbsp;Eric Friedlander
 </div>
 
 </section>
-<section id="recap-last-time" class="slide level2">
-<h2>Recap: Last Time</h2>
+<section id="concept-check" class="slide level2 scrollable">
+<h2>Concept Check</h2>
+<ol type="1">
+<li>What is an <strong>ensemble method</strong>?</li>
+<li>What was the primary difference between <strong>bagging</strong> and <strong>random forests</strong>?</li>
+<li>Do bagging and random forests primarily reduce bias, variance, or both over a single decision tree (without pruning)?</li>
+<li>What is a residual?</li>
+</ol>
+<div class="fragment">
 <ul>
-<li><strong>Ensemble Methods</strong>: combine many models to improve performance</li>
-<li><strong>Bagging</strong>: bootstrap aggregation — build many trees in parallel, average results
-<ul>
-<li>Reduces variance via averaging</li>
-<li>OOB error as a free performance estimate</li>
-</ul></li>
-<li><strong>Random Forests</strong>: bagging + random feature subset at each split
-<ul>
-<li>Decorrelates trees <span class="math inline">\(\Rightarrow\)</span> further variance reduction</li>
-<li>Tune <code>max_features</code></li>
-</ul></li>
 <li>Today: <strong>Boosting</strong> — a fundamentally different ensemble strategy</li>
 </ul>
+</div>
 </section>
 <section id="flexibility-vs.-interpretability" class="slide level2">
 <h2>Flexibility vs.&nbsp;Interpretability</h2>
@@ -170,17 +167,13 @@ Dr.&nbsp;Eric Friedlander
 <section id="boosting-1" class="slide level2 smaller">
 <h2>Boosting</h2>
 <ul>
-<li>Still an ensemble method — but trees are created <strong>sequentially</strong>, not in parallel</li>
+<li>Still an ensemble method (build lots of trees) but</li>
+<li>Trees are created <strong>sequentially</strong>, not in parallel</li>
 <li>Each new tree is fit to the <strong>residuals</strong> of the current ensemble</li>
 <li><strong>Idea</strong>: each additional tree improves on the places where the previous trees perform poorly</li>
 <li>Each individual tree is a <strong>weak learner</strong> (often a shallow “stump”)</li>
 <li><strong>Learning slowly</strong>: as more trees are added, the ensemble gradually improves</li>
 </ul>
-<div class="fragment">
-<ul>
-<li>Reminder: what is a residual?</li>
-</ul>
-</div>
 </section>
 <section id="boosting-algorithm" class="slide level2 smaller scrollable">
 <h2>Boosting Algorithm</h2>
@@ -196,67 +189,112 @@ Dr.&nbsp;Eric Friedlander
 <li>Output the final model: <span class="math display">\[\hat{f}(x) = \displaystyle \sum_{b=1}^{B} \lambda \, \hat{f}_b(x)\]</span></li>
 </ol>
 <ul>
-<li>This iterative residual-fitting is equivalent to <strong>gradient descent on the loss function</strong> — hence <strong>gradient boosting</strong></li>
+<li>This iterative residual-fitting is equivalent to <strong>gradient descent on the SSE</strong>, hence <strong>gradient boosting</strong></li>
 </ul>
 </section>
-<section id="gradient-boosting-visualization" class="slide level2">
-<h2>Gradient Boosting Visualization</h2>
+<section id="boosting-visualization" class="slide level2">
+<h2>Boosting Visualization</h2>
 
 <img data-src="21-boosting_files/figure-revealjs/cell-3-output-1.png" class="r-stretch"></section>
-<section id="many-implementations-of-boosting" class="slide level2">
-<h2>Many Implementations of Boosting</h2>
+<section id="common-boosting-implementations-python" class="slide level2 smaller">
+<h2>Common Boosting Implementations (Python)</h2>
+<p>Lot’s of different boosting algorithms and implementations, but some ofthe most popular are:</p>
 <ul>
-<li>Most practical boosting implementations are variations on gradient boosting:
+<li><strong>AdaBoost</strong> - original boosting algorithm; re-weights misclassified observations rather than fitting residuals</li>
+<li><strong>GradientBoosting</strong> - flexible reference implementation; supports many loss functions; slow on large data</li>
+<li><strong>HistGradientBoostingClassifier</strong> - histogram-based, very fast; handles missing values natively; inspired by LightGBM</li>
+<li><strong>XGBoost</strong> - regularized gradient boosting; uses second order information in updates; dominant in competitions and production;
 <ul>
-<li><strong>AdaBoost</strong> — reweights observations based on errors</li>
-<li><strong>CatBoost</strong> — handles categorical features natively</li>
-<li><strong>LightGBM</strong> — leaf-wise tree growth, very fast</li>
-<li><strong>XGBoost</strong> — extremely popular, regularized gradient boosting</li>
-<li><strong><code>HistGradientBoostingClassifier</code></strong> (sklearn) — histogram-based, fast, handles missing data natively</li>
+<li>First three available in <code>sklearn.ensemble</code>, last one via <code>xgboost</code> package</li>
 </ul></li>
 </ul>
 </section>
+<section id="comparing-implementations" class="slide level2 smaller">
+<h2>Comparing Implementations</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th>AdaBoost</th>
+<th>GradientBoosting</th>
+<th>HistGradientBoosting</th>
+<th>XGBoost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Speed</td>
+<td>Slow</td>
+<td>Slow</td>
+<td>Fast</td>
+<td>Very fast</td>
+</tr>
+<tr class="even">
+<td>Large datasets</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>Handles Numeric Missing values (natively)</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>L1 / L2 regularization</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>GPU support</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>Extra install</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td><code>xgboost</code> package</td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="key-tuning-parameters" class="slide level2 smaller">
 <h2>Key Tuning Parameters</h2>
+<p>Every implementation has a whole host of tuning parameters, but two are common to all:</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 34%">
-<col style="width: 40%">
-<col style="width: 25%">
+<col style="width: 57%">
+<col style="width: 42%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Parameter</th>
-<th>sklearn name</th>
 <th>Effect</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Number of trees</td>
-<td><code>max_iter</code></td>
 <td>More trees <span class="math inline">\(\rightarrow\)</span> lower bias, risk of overfitting</td>
 </tr>
 <tr class="even">
 <td>Learning rate</td>
-<td><code>learning_rate</code></td>
 <td>Smaller <span class="math inline">\(\rightarrow\)</span> slower learning, need more trees</td>
-</tr>
-<tr class="odd">
-<td>Tree depth</td>
-<td><code>max_depth</code></td>
-<td>Deeper <span class="math inline">\(\rightarrow\)</span> more complex trees, higher variance</td>
-</tr>
-<tr class="even">
-<td>Min leaf size</td>
-<td><code>min_samples_leaf</code></td>
-<td>Larger <span class="math inline">\(\rightarrow\)</span> simpler trees, less overfitting</td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li><code>learning_rate</code> and <code>max_iter</code> interact strongly: shrink one, increase the other</li>
-<li>Use a <strong>random search</strong> (irregular grid) to efficiently explore this high-dimensional space</li>
+<li>learning rate and number of trees interact strongly: shrink one, increase the other</li>
+<li>If tuning a lot of parameters, use a <strong>random search</strong> (irregular grid) to efficiently explore this high-dimensional space</li>
 </ul>
 </section></section>
 <section>
@@ -264,22 +302,31 @@ Dr.&nbsp;Eric Friedlander
 <h1>Boosting in Python</h1>
 
 </section>
-<section id="why-histgradientboostingclassifier" class="slide level2 smaller">
-<h2>Why <code>HistGradientBoostingClassifier</code>?</h2>
+<section id="practice" class="slide level2 smaller">
+<h2>Practice!</h2>
+<p>I’ve uploaded a new notebook <code>slides-21-practice.ipynb</code> with a complete example of using AdaBoost, GradientBoosting, HistGradientBoosting and XGBoost on the voter dataset. We’ll focus on the XGBoost section in the slides, but feel free to explore the other implementations on your own time!</p>
+<p>Be careful! Some of the cells will take between 10-20 minutes to run.</p>
+</section>
+<section id="using-xgboost" class="slide level2 smaller">
+<h2>Using XGBoost</h2>
 <ul>
-<li>Part of <code>sklearn.ensemble</code> — no extra packages needed</li>
-<li><strong>Histogram-based</strong>: bins continuous features before splitting <span class="math inline">\(\rightarrow\)</span> very fast on large datasets</li>
-<li><strong>Natively handles missing values</strong> — no imputation needed for numeric features</li>
-<li>Fully compatible with our <code>preproc_voter</code> pipeline for categorical encoding</li>
-<li>Key parameters to tune: <code>max_iter</code>, <code>learning_rate</code>, <code>max_depth</code>, <code>min_samples_leaf</code></li>
+<li>Install: <code>xgboost</code> import as <code>from xgboost import XGBClassifier</code> or <code>XGBRegressor</code></li>
+<li>Fully compatible with scikit-learn: works inside <code>Pipeline</code>, <code>GridSearchCV</code>, <code>RandomizedSearchCV</code>, etc.</li>
+<li><strong>Handles missing values natively</strong> - no imputation needed for numeric features</li>
+<li>Built-in <strong>L1 and L2 regularization</strong> (<code>alpha</code>, <code>lambda</code>)
+<ul>
+<li><a href="https://xgboost.readthedocs.io/en/stable/tutorials/model.html#model-complexity">See documentation for details</a></li>
+</ul></li>
+<li>Key parameters to tune: <code>n_estimators</code>, <code>learning_rate</code>, <code>max_depth</code>, <code>min_child_weight</code></li>
 </ul>
 </section>
 <section id="define-the-pipeline" class="slide level2 smaller">
 <h2>Define the Pipeline</h2>
 <p>Open <code>slides-21-practice.ipynb</code> and run the <strong>Setup</strong> cell, then the <strong>Define Pipeline</strong> cell.</p>
 <ul>
-<li>We wrap <code>HistGradientBoostingClassifier</code> in the same pipeline pattern used for bagging and random forests</li>
+<li>We wrap <code>XGBClassifier</code> in the same pipeline pattern used for bagging and random forests</li>
 <li>The <code>preproc_voter</code> transformer handles encoding; the <code>boost</code> step handles the rest</li>
+<li><strong>Note:</strong> <code>xgboost</code> requires that the response variable be encoded as integers</li>
 </ul>
 </section>
 <section id="random-search" class="slide level2 smaller">
@@ -288,10 +335,10 @@ Dr.&nbsp;Eric Friedlander
 <ul>
 <li>We search over four hyperparameters simultaneously:
 <ul>
-<li><code>max_iter</code>: number of trees (50–400)</li>
+<li><code>n_estimators</code>: number of trees (50–400)</li>
 <li><code>learning_rate</code>: log-uniform between 0.001 and 0.5</li>
 <li><code>max_depth</code>: tree depth (2–10)</li>
-<li><code>min_samples_leaf</code>: minimum leaf size (10–100)</li>
+<li><code>min_child_weight</code>: minimum leaf weight (1–20)</li>
 </ul></li>
 <li><code>n_iter=50</code> means we evaluate 50 random combinations — much more efficient than a full grid</li>
 <li>5-fold stratified cross-validation, scored by accuracy</li>
@@ -301,8 +348,7 @@ Dr.&nbsp;Eric Friedlander
 <h2>Fit the Search</h2>
 <p>Run the <strong>Fit</strong> cell.</p>
 <ul>
-<li><code>n_jobs=-1</code> parallelizes across all available cores</li>
-<li>This will take ~30–60 seconds with <code>n_iter=50</code></li>
+<li>This will take a few minutes with <code>n_iter=50</code></li>
 <li>Increasing <code>n_iter</code> gives a better search but takes proportionally longer</li>
 </ul>
 </section>
@@ -328,7 +374,7 @@ Dr.&nbsp;Eric Friedlander
 </section>
 <section id="test-set-evaluation" class="slide level2 smaller">
 <h2>Test Set Evaluation</h2>
-<p>Run the <strong>Test Set Evaluation</strong> cell.</p>
+<p>Run the <strong>Test Set Evaluation</strong> cells.</p>
 <ul>
 <li>Compare the test accuracy to the random forest result from lecture 19</li>
 <li>Look at the confusion matrix: which voter category is hardest to classify?</li>
@@ -337,9 +383,9 @@ Dr.&nbsp;Eric Friedlander
 </section>
 <section id="variable-importance" class="slide level2 smaller">
 <h2>Variable Importance</h2>
-<p>Run the <strong>Variable Importance</strong> cell.</p>
+<p>Run the <strong>Variable Importance</strong> cells.</p>
 <ul>
-<li><code>HistGradientBoostingClassifier</code> provides <code>feature_importances_</code> (MDI-based) after fitting</li>
+<li><code>XGBClassifier</code> provides <code>feature_importances_</code> (MDI-based) after fitting</li>
 <li>Compare the top 20 features to the random forest importance plot from lecture 20:
 <ul>
 <li>Do the same features dominate?</li>
@@ -402,7 +448,7 @@ Dr.&nbsp;Eric Friedlander
 <td>Key tuning params</td>
 <td><code>n_estimators</code></td>
 <td><code>max_features</code></td>
-<td><code>learning_rate</code>, <code>max_iter</code>, <code>max_depth</code></td>
+<td><code>learning_rate</code>, <code>n_estimators</code>, <code>max_depth</code></td>
 </tr>
 <tr class="even">
 <td>Overfitting risk</td>
@@ -412,6 +458,26 @@ Dr.&nbsp;Eric Friedlander
 </tr>
 </tbody>
 </table>
+</section>
+<section id="recap" class="slide level2 smaller">
+<h2>Recap</h2>
+<p><strong>What is boosting?</strong></p>
+<ul>
+<li>An ensemble of <strong>weak learners</strong> built <strong>sequentially</strong>: each tree corrects the errors of the previous ones</li>
+<li>Equivalent to <strong>gradient descent on a loss function</strong> — hence “gradient boosting”</li>
+</ul>
+<p><strong>Key ideas to remember</strong></p>
+<ul>
+<li><code>learning_rate</code> and number of trees interact: a smaller rate needs more trees</li>
+<li>Boosting can <strong>overfit</strong> if trees are too deep or too many — tuning matters more than in random forests</li>
+<li><code>HistGradientBoosting</code> and <code>XGBoost</code> handle missing numeric values natively (no imputation needed)</li>
+</ul>
+<p><strong>Which implementation to use?</strong></p>
+<ul>
+<li><strong>Learning / small data:</strong> <code>GradientBoostingClassifier</code> — easy to understand, no extra install</li>
+<li><strong>Speed + missing values:</strong> <code>HistGradientBoostingClassifier</code> — fast, sklearn-native</li>
+<li><strong>Production / competitions:</strong> <code>XGBoost</code> — regularization, GPU support, widely used</li>
+</ul>
 
 
 </section></section>
