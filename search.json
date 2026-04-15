@@ -481,7 +481,7 @@
     "href": "hw/07-hw-regression-trees.html#exercise-1",
     "title": "Homework 7: Regression Trees",
     "section": "Exercise 1",
-    "text": "Exercise 1\n\n\n\n\n\n\nQuestion\n\n\n\nLoad the data set CommViolPredUnnormalizedDataCleaned.csv. This data set contains quite a bit of missing data, but it uses question marks to denote missing values. Pass na_values=\"?\" to pd.read_csv so that question marks are automatically replaced with NaN. Then clean the data by:\n\nReading the documentation and dropping all “non-predictive” and “potential goal” columns except ViolentCrimesPerPop.\nDropping any rows that have a missing value in ViolentCrimesPerPop. Why do we want to drop these rows rather than impute them?\nEnsuring all remaining features have the correct data type.\n\nComment on any aspects of the data you find pertinent."
+    "text": "Exercise 1\n\n\n\n\n\n\nQuestion\n\n\n\nLoad the data set CommViolPredUnnormalizedDataCleaned.csv. This data set contains quite a bit of missing data, but it uses question marks to denote missing values. Pass na_values=\"?\" to pd.read_csv so that question marks are automatically replaced with NaN. Then clean the data by:\n\nReading the documentation and dropping all “non-predictive” and “potential goal” columns except ViolentCrimesPerPop. Note that most of the other potential target columns have already been removed from the data set I’ve provided you.\nDropping any rows that have a missing value in ViolentCrimesPerPop. Why do we want to drop these rows rather than impute them?\nEnsuring all remaining features have the correct data type.\n\nComment on any aspects of the data you find pertinent."
   },
   {
     "objectID": "hw/07-hw-regression-trees.html#exercise-2",

@@ -349,7 +349,7 @@ Question
 <div class="callout-body-container callout-body">
 <p>Load the data set <code>CommViolPredUnnormalizedDataCleaned.csv</code>. This data set contains quite a bit of missing data, but it uses question marks to denote missing values. Pass <code>na_values="?"</code> to <code>pd.read_csv</code> so that question marks are automatically replaced with <code>NaN</code>. Then clean the data by:</p>
 <ol type="1">
-<li><a href="https://archive-beta.ics.uci.edu/dataset/211/communities+and+crime+unnormalized">Reading the documentation</a> and dropping all “non-predictive” and “potential goal” columns <em>except</em> <code>ViolentCrimesPerPop</code>.</li>
+<li><a href="https://archive-beta.ics.uci.edu/dataset/211/communities+and+crime+unnormalized">Reading the documentation</a> and dropping all “non-predictive” and “potential goal” columns <em>except</em> <code>ViolentCrimesPerPop</code>. Note that most of the other potential target columns have already been removed from the data set I’ve provided you.</li>
 <li>Dropping any rows that have a missing value in <code>ViolentCrimesPerPop</code>. Why do we want to drop these rows rather than impute them?</li>
 <li>Ensuring all remaining features have the correct data type.</li>
 </ol>
