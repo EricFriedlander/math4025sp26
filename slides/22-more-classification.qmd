@@ -94,11 +94,13 @@ Run the **Confusion Matrix** cell.
 -   **Recall**: $\frac{\text{True Positives}}{\text{True Positives} + \text{False Negatives}}$
 -   Apply binary metrics to each class in turn, treating it as "positive" vs. all others
 -   Example - recall per class (from voter data):
-    +   `rarely/never`: $\frac{285}{285 + 110 + 35} \approx 0.66$
+    +   `rarely/never`: $\frac{237}{237 + 24 + 282} \approx 0.66$
     +   `sporadic`: compute in notebook
     +   `always`: computer in notebook
 
 . . .
+
+-   
 
 Run the **Per-Class Recall** cell.
 
