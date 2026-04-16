@@ -206,7 +206,11 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting Started</a>
   <ul class="collapse">
   <li><a href="#exercise-0" id="toc-exercise-0" class="nav-link" data-scroll-target="#exercise-0">Exercise 0</a></li>
+  </ul></li>
+  <li><a href="#part-1-individual-analysis" id="toc-part-1-individual-analysis" class="nav-link" data-scroll-target="#part-1-individual-analysis">Part 1: Individual Analysis</a>
+  <ul class="collapse">
   <li><a href="#data-titanic" id="toc-data-titanic" class="nav-link" data-scroll-target="#data-titanic">Data: Titanic</a></li>
+  <li><a href="#data-nfl-field-goals" id="toc-data-nfl-field-goals" class="nav-link" data-scroll-target="#data-nfl-field-goals">Data: NFL Field Goals</a></li>
   </ul></li>
   <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis">Exploratory Data Analysis</a>
   <ul class="collapse">
@@ -233,6 +237,10 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#exercise-10" id="toc-exercise-10" class="nav-link" data-scroll-target="#exercise-10">Exercise 10</a></li>
   <li><a href="#exercise-11" id="toc-exercise-11" class="nav-link" data-scroll-target="#exercise-11">Exercise 11</a></li>
+  </ul></li>
+  <li><a href="#part-2-group-work" id="toc-part-2-group-work" class="nav-link" data-scroll-target="#part-2-group-work">Part 2: Group Work</a>
+  <ul class="collapse">
+  <li><a href="#exercise-g1-presentation-preparation" id="toc-exercise-g1-presentation-preparation" class="nav-link" data-scroll-target="#exercise-g1-presentation-preparation">Exercise G1: Presentation Preparation</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/hw/08-hw-classification-trees-rf.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -267,7 +275,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>In this homework we will practice fitting classification trees and random forests, using them to predict survival on the Titanic.</p>
+<p>In this homework we will practice fitting classification trees and random forests. There are two parts: an individual portion where you work with a dataset of your choice, and a group portion where you apply random forests to your project data and prepare a short presentation.</p>
 <section id="learning-goals" class="level2">
 <h2 class="anchored" data-anchor-id="learning-goals">Learning goals</h2>
 <p>In this assignment, you will…</p>
@@ -275,6 +283,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Fit and interpret classification trees</li>
 <li>Fit random forests and use variable importance plots to interpret them</li>
 <li>Use cross-validation and grid search to tune model parameters</li>
+<li>Apply random forests to your group’s project dataset</li>
 </ul>
 </section>
 </section>
@@ -292,13 +301,35 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><a href="GITHUB_CLASSROOM_LINK">Click this link</a> to accept the assignment and clone it to your computer.</p>
+<p><a href="https://classroom.github.com/a/fMKBLKmu">Click this link</a> to accept the assignment and clone it to your computer.</p>
 </div>
 </div>
+<p>There are two parts to this homework. Part 1 is an individual analysis of a dataset either a titanic data set or the NFL field goals dataset and will be completed in this homework repository. Part 2 is focused on your group project dataset and will be completed in your project repository. You should complete both parts, but they are independent of each other.</p>
 </section>
+</section>
+<section id="part-1-individual-analysis" class="level1">
+<h1>Part 1: Individual Analysis</h1>
+<div class="callout callout-style-default callout-note callout-titled" title="Dataset Choice">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Dataset Choice
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For Part 1, you may use <strong>either</strong> of the following datasets in the <code>data/</code> directory:</p>
+<ul>
+<li><strong>Titanic</strong>: <code>Titanic_train.csv</code> and <code>Titanic_test.csv</code>.</li>
+<li><strong>NFL Field Goals</strong> (from HW-06): <code>nfl-fg-data.xlsx</code>.</li>
+</ul>
+<p>Pick one and stick with it throughout Part 1. The exercises are written with the Titanic dataset in mind, but all steps apply equally to the NFL dataset — where Titanic-specific context is given, substitute the equivalent for the NFL data (e.g., predicting <code>Made</code> instead of <code>Survived</code>).</p>
+</div>
+</div>
 <section id="data-titanic" class="level2">
 <h2 class="anchored" data-anchor-id="data-titanic">Data: Titanic</h2>
-<p>We will be using the famous Titanic dataset, which includes passenger information and whether each passenger survived. The data has already been split for you into <code>Titanic_train.csv</code> and <code>Titanic_test.csv</code> in your repo’s <code>data/</code> folder. The variables are:</p>
+<p>The Titanic dataset includes passenger information and whether each passenger survived. The variables are:</p>
 <ul>
 <li><code>Survived</code>: whether the passenger survived (1) or died (0)</li>
 <li><code>Pclass</code>: passenger class (1st, 2nd, or 3rd)</li>
@@ -309,6 +340,10 @@ Question
 <li><code>Fare</code>: fare paid</li>
 <li><code>Embarked</code>: port of embarkation (C = Cherbourg, Q = Queenstown, S = Southampton)</li>
 </ul>
+</section>
+<section id="data-nfl-field-goals" class="level2">
+<h2 class="anchored" data-anchor-id="data-nfl-field-goals">Data: NFL Field Goals</h2>
+<p>If you are using the NFL dataset, refer to <a href="06-hw-regularization.html">HW-06</a> for variable descriptions. Your target variable is <code>Made</code> (1 = field goal made, 0 = missed).</p>
 </section>
 </section>
 <section id="exploratory-data-analysis" class="level1">
@@ -325,7 +360,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Load <code>Titanic_train.csv</code> and <code>Titanic_test.csv</code>. Inspect the data and perform any cleaning you think is necessary (e.g., dropping ID or row-number columns, correcting data types). Based on domain knowledge, which two or three features do you expect to be most predictive of survival? Give a brief justification for each.</p>
+<p>Load your chosen dataset(s) (training and test splits if applicable). Inspect the data and perform any cleaning you think is necessary (e.g., dropping ID or row-number columns, correcting data types). Based on domain knowledge, which two or three features do you expect to be most predictive of the outcome? Give a brief justification for each.</p>
 </div>
 </div>
 </section>
@@ -341,7 +376,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Conduct a <strong>brief</strong> EDA exploring the relationship between survival and the variables you identified in Exercise 1. Use plots rather than tables where possible, display and interpret each plot one at a time, and aim for a professional presentation.</p>
+<p>Conduct a <strong>brief</strong> EDA exploring the relationship between the outcome and the variables you identified in Exercise 1. Use plots rather than tables where possible, display and interpret each plot one at a time, and aim for a professional presentation.</p>
 </div>
 </div>
 </section>
@@ -379,7 +414,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Fit a <code>DecisionTreeClassifier</code> from <code>sklearn.tree</code> to the training data using your pipeline. Visualize the tree with <code>sklearn.tree.plot_tree</code>, limiting the display to <code>max_depth=3</code> for readability. Based on the tree, which variables appear most important?</p>
+<p>Fit a <code>DecisionTreeClassifier</code> from <code>sklearn.tree</code> to the training data using your pipeline. Visualize the tree with <code>sklearn.tree.plot_tree</code>. Based on the tree, which variables appear most important?</p>
 </div>
 </div>
 </section>
@@ -414,7 +449,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Fit a <code>RandomForestClassifier</code> from <code>sklearn.ensemble</code> to the training data. Choose reasonable values for <code>n_estimators</code> (number of trees) and <code>max_features</code> (number of features considered at each split). Evaluate it on the test set and compare its accuracy to the classification tree from Exercise 5.</p>
+<p>Fit a <code>RandomForestClassifier</code> from <code>sklearn.ensemble</code> to the training data. Without doing any tuning, choose values you think are reasonable for <code>n_estimators</code> (number of trees) and <code>max_features</code> (number of features considered at each split). Evaluate it on the test set and compare its accuracy to the classification tree from Exercise 5.</p>
 </div>
 </div>
 </section>
@@ -430,7 +465,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Generate a variable importance plot using the <code>feature_importances_</code> attribute of your fitted random forest. Plot the top features using <code>plotnine</code>. How do the variables identified as important compare to what the classification tree highlighted in Exercise 4?</p>
+<p>Generate a variable importance plot using the <code>feature_importances_</code> attribute of your fitted random forest. How do the variables identified as important compare to what the classification tree highlighted in Exercise 4?</p>
 </div>
 </div>
 </section>
@@ -446,7 +481,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Use <code>GridSearchCV</code> with <code>RepeatedStratifiedKFold</code> (5 folds, 3 repeats) to tune <code>max_features</code>. Use accuracy as your scoring metric. <strong>Tip:</strong> Use caching or save your CV results so you don’t re-run cross-validation every time the document is rendered.</p>
+<p>Use <code>GridSearchCV</code> with <code>StratifiedKFold</code> to tune <code>max_features</code>. You don’t need to tune <code>n_estimators</code> but make sure it’s large enough that you accuracy isn’t changing much if you increase it further. Use accuracy as your scoring metric. <strong>Tip:</strong> Use caching or save your CV results so you don’t re-run cross-validation every time the document is rendered.</p>
 </div>
 </div>
 </section>
@@ -498,6 +533,47 @@ Question
 </div>
 <div class="callout-body-container callout-body">
 <p>Compare the variable importance plot from Exercise 7 with the visualization of the classification tree from Exercise 4. What information does each one convey? Is there anything you can learn from one that you cannot learn from the other? Which is more useful for communicating results to a non-technical audience?</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-2-group-work" class="level1">
+<h1>Part 2: Group Work</h1>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Where to submit Part 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Complete Exercises G1–G4 <strong>in your project repository</strong>, not in this homework repo. Add a new file called <code>02-modeling-overview.qmd</code> to the root of your project repo and complete the exercises there. Submit this part by committing and pushing to your project GitHub Classroom repository.</p>
+</div>
+</div>
+<p>In Part 2, you will apply what you have learned about random forests to your group’s project dataset. Refer to the <a href="https://EricFriedlander.github.io/math4025sp26/project/project-instructions.html">project instructions</a> and your <code>01-eda.qmd</code> from HW-06 for context on the data and your assigned target variable.</p>
+<section id="exercise-g1-presentation-preparation" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-g1-presentation-preparation">Exercise G1: Presentation Preparation</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Prepare a <strong>5-minute group presentation</strong> to be delivered in class on <strong>Tuesday, April 21st</strong>. Your presentation should cover:</p>
+<ol type="1">
+<li>A brief reminder of your target variable, what it measures, and any important features of the data (e.g.&nbsp;skew, missing values, etc.)</li>
+<li>A description of the models that you’ve fit so far, how you’ve tuned (or plan to tune) them, and any challenges you’ve encountered. You should have tested out at least three different types of models: logistic regression, random forest, and at least one more model of your choice.</li>
+<li>A description of the performance of your models, including how you evaluated them and how they compare to each other.</li>
+<li>A brief description of what your group plans to investigate next or any open questions you have.</li>
+</ol>
+<p>You should present from a set of slides and be prepared to answers questions from the audience. All group members should be prepared to speak.</p>
 </div>
 </div>
 
