@@ -1,5 +1,5 @@
 ---
-title: "Preparation for Bagging & Random Forests"
+title: "Preparation for Feature Importance"
 ---
 
 ## Assigned readings & videos

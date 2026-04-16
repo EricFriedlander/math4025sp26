@@ -17,7 +17,7 @@ title: 'MATH 4025: Classification with More Than Two Classes'
     +   Interpretability
     +   Prediction accuracy
 
-## Quick Review of Classification {.smaller}
+<!-- ## Quick Review of Classification {.smaller}
 
 |              | Logistic Reg. | KNN | Decision Trees | Random Forests | Gradient Boosting |
 |-------------|--------------|-----|----------------|---------------|-------------------|
@@ -25,7 +25,7 @@ title: 'MATH 4025: Classification with More Than Two Classes'
 | Comp. Pred. | Low          | Depends | Low        | Medium        | Medium            |
 | Non-linearity | Low        | Medium | Medium       | High          | High              |
 | Interp.     | High         | Low | High           | Medium/Low    | Medium/Low        |
-| Accuracy    | Low          | Depends | Low        | Medium/High   | High              |
+| Accuracy    | Low          | Depends | Low        | Medium/High   | High              | -->
 
 # Multiclass Classification
 
@@ -48,7 +48,7 @@ Open `slides-22-practice.ipynb` and run the **Setup** and **Visualize Response**
 -   **Multinomial logistic regression**: model log-odds of each class $k$ vs. a reference class $K$
 $$\log \frac{P(\text{class } k \mid X)}{P(\text{class } K \mid X)} = \beta_{0k} + \beta_{1k} X_1 + \cdots + \beta_{pk} X_p$$
 -   One set of coefficients $(\beta_{0k}, \ldots, \beta_{pk})$ per class, except the reference
--   sklearn's `LogisticRegression` handles this automatically with `multi_class='multinomial'`
+-   sklearn's `LogisticRegression` handles this automatically
 
 . . .
 
@@ -56,7 +56,12 @@ Run the **Define and Fit Multinomial LR** cell.
 
 ## Look at Predictions {.smaller}
 
-Run the **Predictions** cell.
+Two types of predictions (same as binary case):
+
+-   **Class labels**: `predict()` method; predicted class
+-   **Class probabilities**: `predict_proba()` method; gives probability of each class
+
+Run the **Predictions** section.
 
 -   Note the output: three probability columns — one per class
 -   Each row's probabilities sum to 1
@@ -69,14 +74,14 @@ Run the **Confusion Matrix** cell.
 -   Rows = true class, columns = predicted class
 -   The diagonal = correct predictions
 -   Off-diagonal cells = specific misclassification patterns
--   Discussion: which class is hardest to predict? Why might that be?
+-   Discussion: which class is hardest to predict?
 
 # Evaluating Multiclass Models
 
 ## Evaluating Multiclass Models {.smaller}
 
 -   Accuracy still works: $\frac{\text{Correct classifications}}{\text{Total observations}}$
--   Most binary metrics assumed a "Positive" and a "Negative" class:
+-   Most other metrics assumed a binary setting with a designated "Positive" and a "Negative" class:
     +   Precision / PPV
     +   Recall / Sensitivity
     +   Specificity
@@ -86,11 +91,12 @@ Run the **Confusion Matrix** cell.
 
 ## Solution 1: One-vs-All Metrics {.smaller}
 
+-   **Recall**: $\frac{\text{True Positives}}{\text{True Positives} + \text{False Negatives}}$
 -   Apply binary metrics to each class in turn, treating it as "positive" vs. all others
--   Example — recall per class (from voter data):
+-   Example - recall per class (from voter data):
     +   `rarely/never`: $\frac{285}{285 + 110 + 35} \approx 0.66$
-    +   `sporadic`: $\frac{559}{47 + 559 + 173} \approx 0.72$
-    +   `always`: $\frac{221}{21 + 301 + 221} \approx 0.41$
+    +   `sporadic`: compute in notebook
+    +   `always`: computer in notebook
 
 . . .
 

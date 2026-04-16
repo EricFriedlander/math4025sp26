@@ -37,7 +37,7 @@ More details can be found [here](https://archive-beta.ics.uci.edu/dataset/211/co
 ::: {.callout-tip title="Question"}
 Load the data set `CommViolPredUnnormalizedDataCleaned.csv`. This data set contains quite a bit of missing data, but it uses question marks to denote missing values. Pass `na_values="?"` to `pd.read_csv` so that question marks are automatically replaced with `NaN`. Then clean the data by:
 
-1.  [Reading the documentation](https://archive-beta.ics.uci.edu/dataset/211/communities+and+crime+unnormalized) and dropping all "non-predictive" and "potential goal" columns *except* `ViolentCrimesPerPop`.
+1.  [Reading the documentation](https://archive-beta.ics.uci.edu/dataset/211/communities+and+crime+unnormalized) and dropping all "non-predictive" and "potential goal" columns *except* `ViolentCrimesPerPop`. Note that most of the other potential target columns have already been removed from the data set I've provided you.
 2.  Dropping any rows that have a missing value in `ViolentCrimesPerPop`. Why do we want to drop these rows rather than impute them?
 3.  Ensuring all remaining features have the correct data type.
 

@@ -137,6 +137,12 @@ Every implementation has a whole host of tuning parameters, but two are common t
 
 # Boosting in Python
 
+## Practice! {.smaller}
+
+I've uploaded a new notebook `slides-21-practice.ipynb` with a complete example of using AdaBoost, GradientBoosting, HistGradientBoosting and XGBoost on the voter dataset. We'll focus on the XGBoost section in the slides, but feel free to explore the other implementations on your own time!
+
+Be careful! Some of the cells will take between 10-20 minutes to run.
+
 ## Using XGBoost {.smaller}
 
 -   Install: `xgboost` import as `from xgboost import XGBClassifier` or `XGBRegressor`
@@ -191,7 +197,7 @@ Run the **Best Parameters** cell.
 
 ## Test Set Evaluation {.smaller}
 
-Run the **Test Set Evaluation** cell.
+Run the **Test Set Evaluation** cells.
 
 -   Compare the test accuracy to the random forest result from lecture 19
 -   Look at the confusion matrix: which voter category is hardest to classify?
@@ -199,7 +205,7 @@ Run the **Test Set Evaluation** cell.
 
 ## Variable Importance {.smaller}
 
-Run the **Variable Importance** cell.
+Run the **Variable Importance** cells.
 
 -   `XGBClassifier` provides `feature_importances_` (MDI-based) after fitting
 -   Compare the top 20 features to the random forest importance plot from lecture 20:

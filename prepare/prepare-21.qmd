@@ -1,0 +1,8 @@
+---
+title: "Preparation for Boosting"
+---
+
+## Assigned readings & videos
+
+- Read 8.2.3 of ISLP
+- Read [Introduction to Boosted Trees](https://xgboost.readthedocs.io/en/stable/tutorials/model.html) from the XGBoost documentation
