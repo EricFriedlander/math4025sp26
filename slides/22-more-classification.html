@@ -161,71 +161,15 @@ Dr.&nbsp;Eric Friedlander
 <li>Prediction accuracy</li>
 </ul></li>
 </ul>
-</section>
-<section id="quick-review-of-classification-1" class="slide level2 smaller">
-<h2>Quick Review of Classification</h2>
-<table class="caption-top">
-<colgroup>
-<col style="width: 15%">
-<col style="width: 17%">
-<col style="width: 6%">
-<col style="width: 19%">
-<col style="width: 18%">
-<col style="width: 23%">
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th>Logistic Reg.</th>
-<th>KNN</th>
-<th>Decision Trees</th>
-<th>Random Forests</th>
-<th>Gradient Boosting</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Comp. Fit</td>
-<td>Low</td>
-<td>Low</td>
-<td>Low</td>
-<td>Medium</td>
-<td>High</td>
-</tr>
-<tr class="even">
-<td>Comp. Pred.</td>
-<td>Low</td>
-<td>Depends</td>
-<td>Low</td>
-<td>Medium</td>
-<td>Medium</td>
-</tr>
-<tr class="odd">
-<td>Non-linearity</td>
-<td>Low</td>
-<td>Medium</td>
-<td>Medium</td>
-<td>High</td>
-<td>High</td>
-</tr>
-<tr class="even">
-<td>Interp.</td>
-<td>High</td>
-<td>Low</td>
-<td>High</td>
-<td>Medium/Low</td>
-<td>Medium/Low</td>
-</tr>
-<tr class="odd">
-<td>Accuracy</td>
-<td>Low</td>
-<td>Depends</td>
-<td>Low</td>
-<td>Medium/High</td>
-<td>High</td>
-</tr>
-</tbody>
-</table>
+<!-- ## Quick Review of Classification {.smaller}
+
+|              | Logistic Reg. | KNN | Decision Trees | Random Forests | Gradient Boosting |
+|-------------|--------------|-----|----------------|---------------|-------------------|
+| Comp. Fit   | Low          | Low | Low            | Medium        | High              |
+| Comp. Pred. | Low          | Depends | Low        | Medium        | Medium            |
+| Non-linearity | Low        | Medium | Medium       | High          | High              |
+| Interp.     | High         | Low | High           | Medium/Low    | Medium/Low        |
+| Accuracy    | Low          | Depends | Low        | Medium/High   | High              | -->
 </section>
 <section>
 <section id="multiclass-classification" class="title-slide slide level1 center">
@@ -254,7 +198,7 @@ Dr.&nbsp;Eric Friedlander
 <li>Binary logistic regression: model the log-odds of one class vs.&nbsp;the other</li>
 <li><strong>Multinomial logistic regression</strong>: model log-odds of each class <span class="math inline">\(k\)</span> vs.&nbsp;a reference class <span class="math inline">\(K\)</span> <span class="math display">\[\log \frac{P(\text{class } k \mid X)}{P(\text{class } K \mid X)} = \beta_{0k} + \beta_{1k} X_1 + \cdots + \beta_{pk} X_p\]</span></li>
 <li>One set of coefficients <span class="math inline">\((\beta_{0k}, \ldots, \beta_{pk})\)</span> per class, except the reference</li>
-<li>sklearn’s <code>LogisticRegression</code> handles this automatically with <code>multi_class='multinomial'</code></li>
+<li>sklearn’s <code>LogisticRegression</code> handles this automatically</li>
 </ul>
 <div class="fragment">
 <p>Run the <strong>Define and Fit Multinomial LR</strong> cell.</p>
@@ -262,7 +206,12 @@ Dr.&nbsp;Eric Friedlander
 </section>
 <section id="look-at-predictions" class="slide level2 smaller">
 <h2>Look at Predictions</h2>
-<p>Run the <strong>Predictions</strong> cell.</p>
+<p>Two types of predictions (same as binary case):</p>
+<ul>
+<li><strong>Class labels</strong>: <code>predict()</code> method; predicted class</li>
+<li><strong>Class probabilities</strong>: <code>predict_proba()</code> method; gives probability of each class</li>
+</ul>
+<p>Run the <strong>Predictions</strong> section.</p>
 <ul>
 <li>Note the output: three probability columns — one per class</li>
 <li>Each row’s probabilities sum to 1</li>
@@ -276,7 +225,7 @@ Dr.&nbsp;Eric Friedlander
 <li>Rows = true class, columns = predicted class</li>
 <li>The diagonal = correct predictions</li>
 <li>Off-diagonal cells = specific misclassification patterns</li>
-<li>Discussion: which class is hardest to predict? Why might that be?</li>
+<li>Discussion: which class is hardest to predict?</li>
 </ul>
 </section></section>
 <section>
@@ -288,7 +237,7 @@ Dr.&nbsp;Eric Friedlander
 <h2>Evaluating Multiclass Models</h2>
 <ul>
 <li>Accuracy still works: <span class="math inline">\(\frac{\text{Correct classifications}}{\text{Total observations}}\)</span></li>
-<li>Most binary metrics assumed a “Positive” and a “Negative” class:
+<li>Most other metrics assumed a binary setting with a designated “Positive” and a “Negative” class:
 <ul>
 <li>Precision / PPV</li>
 <li>Recall / Sensitivity</li>
@@ -302,12 +251,13 @@ Dr.&nbsp;Eric Friedlander
 <section id="solution-1-one-vs-all-metrics" class="slide level2 smaller">
 <h2>Solution 1: One-vs-All Metrics</h2>
 <ul>
+<li><strong>Recall</strong>: <span class="math inline">\(\frac{\text{True Positives}}{\text{True Positives} + \text{False Negatives}}\)</span></li>
 <li>Apply binary metrics to each class in turn, treating it as “positive” vs.&nbsp;all others</li>
-<li>Example — recall per class (from voter data):
+<li>Example - recall per class (from voter data):
 <ul>
 <li><code>rarely/never</code>: <span class="math inline">\(\frac{285}{285 + 110 + 35} \approx 0.66\)</span></li>
-<li><code>sporadic</code>: <span class="math inline">\(\frac{559}{47 + 559 + 173} \approx 0.72\)</span></li>
-<li><code>always</code>: <span class="math inline">\(\frac{221}{21 + 301 + 221} \approx 0.41\)</span></li>
+<li><code>sporadic</code>: compute in notebook</li>
+<li><code>always</code>: computer in notebook</li>
 </ul></li>
 </ul>
 <div class="fragment">

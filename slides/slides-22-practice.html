@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-html/tabby.min.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -189,6 +189,9 @@
       margin-right: 0; 
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+  
+  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -209,7 +212,7 @@ Dr.&nbsp;Eric Friedlander
 <section id="setup" class="slide level2">
 <h2>Setup</h2>
 <p><em>Same voter data setup as notebooks 18–21.</em></p>
-<div id="b2c3d4e5-0002-4000-b000-000000000003" class="cell">
+<div id="b2c3d4e5-0002-4000-b000-000000000003" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -295,158 +298,329 @@ Dr.&nbsp;Eric Friedlander
 <span id="cb1-83"><a></a></span>
 <span id="cb1-84"><a></a><span class="bu">print</span>(<span class="ss">f"Training: </span><span class="sc">{</span>X_train<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> obs  |  Test: </span><span class="sc">{</span>X_test<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> obs"</span>)</span>
 <span id="cb1-85"><a></a><span class="bu">print</span>(<span class="ss">f"Classes: </span><span class="sc">{</span>classes<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training: 4071 obs  |  Test: 1746 obs
+Classes: ['rarely/never', 'sporadic', 'always']</code></pre>
+</div>
 </div>
 </section>
 <section id="visualize-response" class="slide level2">
 <h2>Visualize Response</h2>
 <p>How balanced are the three voter categories in the training set?</p>
-<div id="b2c3d4e5-0002-4000-b000-000000000005" class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>counts <span class="op">=</span> y_train.value_counts().reindex(classes)</span>
-<span id="cb2-2"><a></a></span>
-<span id="cb2-3"><a></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
-<span id="cb2-4"><a></a>ax.bar(counts.index, counts.values, color<span class="op">=</span><span class="st">'steelblue'</span>)</span>
-<span id="cb2-5"><a></a>ax.set_xlabel(<span class="st">'Voter Category'</span>)</span>
-<span id="cb2-6"><a></a>ax.set_ylabel(<span class="st">'Count'</span>)</span>
-<span id="cb2-7"><a></a>ax.set_title(<span class="st">'Distribution of Voter Category (Training Set)'</span>)</span>
-<span id="cb2-8"><a></a>plt.tight_layout()</span>
-<span id="cb2-9"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="b2c3d4e5-0002-4000-b000-000000000005" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>counts <span class="op">=</span> y_train.value_counts().reindex(classes)</span>
+<span id="cb3-2"><a></a></span>
+<span id="cb3-3"><a></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb3-4"><a></a>ax.bar(counts.index, counts.values, color<span class="op">=</span><span class="st">'steelblue'</span>)</span>
+<span id="cb3-5"><a></a>ax.set_xlabel(<span class="st">'Voter Category'</span>)</span>
+<span id="cb3-6"><a></a>ax.set_ylabel(<span class="st">'Count'</span>)</span>
+<span id="cb3-7"><a></a>ax.set_title(<span class="st">'Distribution of Voter Category (Training Set)'</span>)</span>
+<span id="cb3-8"><a></a>plt.tight_layout()</span>
+<span id="cb3-9"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
-</section>
+<img data-src="slides-22-practice_files/figure-revealjs/cell-3-output-1.png" class="r-stretch"></section>
 <section id="define-and-fit-multinomial-logistic-regression" class="slide level2">
 <h2>Define and Fit Multinomial Logistic Regression</h2>
 <p>Multinomial logistic regression models log-odds of each class relative to a reference class. We use the <code>saga</code> solver which supports L1 regularization for multiclass problems. <code>C</code> is the inverse regularization strength — larger C = less regularization.</p>
-<div id="b2c3d4e5-0002-4000-b000-000000000007" class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>mn_pipe <span class="op">=</span> Pipeline([</span>
-<span id="cb3-2"><a></a>    (<span class="st">'preproc'</span>, preproc_voter),</span>
-<span id="cb3-3"><a></a>    (<span class="st">'mn'</span>, LogisticRegression(</span>
-<span id="cb3-4"><a></a>        C<span class="op">=</span><span class="dv">200</span>,</span>
-<span id="cb3-5"><a></a>        solver<span class="op">=</span><span class="st">'saga'</span>,</span>
-<span id="cb3-6"><a></a>        multi_class<span class="op">=</span><span class="st">'multinomial'</span>,</span>
-<span id="cb3-7"><a></a>        max_iter<span class="op">=</span><span class="dv">500</span>,</span>
-<span id="cb3-8"><a></a>        random_state<span class="op">=</span><span class="dv">4025</span></span>
-<span id="cb3-9"><a></a>    ))</span>
-<span id="cb3-10"><a></a>])</span>
-<span id="cb3-11"><a></a></span>
-<span id="cb3-12"><a></a>mn_pipe.fit(X_train, y_train)</span>
-<span id="cb3-13"><a></a><span class="bu">print</span>(<span class="ss">f"Train Accuracy: </span><span class="sc">{</span>accuracy_score(y_train, mn_pipe.predict(X_train))<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb3-14"><a></a><span class="bu">print</span>(<span class="ss">f"Test Accuracy:  </span><span class="sc">{</span>accuracy_score(y_test,  mn_pipe.predict(X_test))<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="b2c3d4e5-0002-4000-b000-000000000007" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>mn_pipe <span class="op">=</span> Pipeline([</span>
+<span id="cb4-2"><a></a>    (<span class="st">'preproc'</span>, preproc_voter),</span>
+<span id="cb4-3"><a></a>    (<span class="st">'mn'</span>, LogisticRegression(</span>
+<span id="cb4-4"><a></a>        C<span class="op">=</span><span class="dv">200</span>,</span>
+<span id="cb4-5"><a></a>        solver<span class="op">=</span><span class="st">'saga'</span>,</span>
+<span id="cb4-6"><a></a>        max_iter<span class="op">=</span><span class="dv">500</span>,</span>
+<span id="cb4-7"><a></a>        random_state<span class="op">=</span><span class="dv">4025</span></span>
+<span id="cb4-8"><a></a>    ))</span>
+<span id="cb4-9"><a></a>])</span>
+<span id="cb4-10"><a></a></span>
+<span id="cb4-11"><a></a>mn_pipe.fit(X_train, y_train)</span>
+<span id="cb4-12"><a></a><span class="bu">print</span>(<span class="ss">f"Train Accuracy: </span><span class="sc">{</span>accuracy_score(y_train, mn_pipe.predict(X_train))<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb4-13"><a></a><span class="bu">print</span>(<span class="ss">f"Test Accuracy:  </span><span class="sc">{</span>accuracy_score(y_test,  mn_pipe.predict(X_test))<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Train Accuracy: 0.636
+Test Accuracy:  0.590</code></pre>
+</div>
 </div>
 </section>
 <section id="predictions" class="slide level2">
 <h2>Predictions</h2>
 <p>The model outputs three probability columns — one per class. Each row sums to 1. The predicted class is the one with the highest probability.</p>
 <div id="b2c3d4e5-0002-4000-b000-000000000009" class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>proba <span class="op">=</span> mn_pipe.predict_proba(X_test)</span>
-<span id="cb4-2"><a></a>preds <span class="op">=</span> mn_pipe.predict(X_test)</span>
-<span id="cb4-3"><a></a></span>
-<span id="cb4-4"><a></a>pred_df <span class="op">=</span> pd.DataFrame(proba, columns<span class="op">=</span>[<span class="ss">f'P(</span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">)'</span> <span class="cf">for</span> c <span class="kw">in</span> classes])</span>
-<span id="cb4-5"><a></a>pred_df[<span class="st">'predicted'</span>] <span class="op">=</span> preds</span>
-<span id="cb4-6"><a></a>pred_df[<span class="st">'actual'</span>] <span class="op">=</span> y_test.values</span>
-<span id="cb4-7"><a></a></span>
-<span id="cb4-8"><a></a><span class="co"># Show a random sample of 10 rows</span></span>
-<span id="cb4-9"><a></a>pred_df.sample(<span class="dv">10</span>, random_state<span class="op">=</span><span class="dv">4025</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>proba <span class="op">=</span> mn_pipe.predict_proba(X_test)</span>
+<span id="cb6-2"><a></a>proba</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>array([[1.17474606e-01, 3.90574732e-01, 4.91950662e-01],
+       [1.05942578e-01, 7.10547104e-01, 1.83510318e-01],
+       [3.33826783e-01, 3.16119909e-01, 3.50053308e-01],
+       ...,
+       [6.98945127e-04, 9.94941157e-01, 4.35989759e-03],
+       [3.85663827e-01, 9.70948359e-02, 5.17241337e-01],
+       [6.87887798e-01, 4.29562545e-02, 2.69155947e-01]], shape=(1746, 3))</code></pre>
+</div>
+</div>
+<div id="7c67bff6" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>preds <span class="op">=</span> mn_pipe.predict(X_test)</span>
+<span id="cb8-2"><a></a>preds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>array(['sporadic', 'rarely/never', 'sporadic', ..., 'rarely/never',
+       'sporadic', 'always'], shape=(1746,), dtype=object)</code></pre>
+</div>
+</div>
+<div id="d463104e" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a></span>
+<span id="cb10-2"><a></a>pred_df <span class="op">=</span> pd.DataFrame(proba, columns<span class="op">=</span>[<span class="ss">f'P(</span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">)'</span> <span class="cf">for</span> c <span class="kw">in</span> classes])</span>
+<span id="cb10-3"><a></a>pred_df[<span class="st">'predicted'</span>] <span class="op">=</span> preds</span>
+<span id="cb10-4"><a></a>pred_df[<span class="st">'actual'</span>] <span class="op">=</span> y_test.values</span>
+<span id="cb10-5"><a></a></span>
+<span id="cb10-6"><a></a><span class="co"># Show a random sample of 10 rows</span></span>
+<span id="cb10-7"><a></a>pred_df.sample(<span class="dv">10</span>, random_state<span class="op">=</span><span class="dv">4025</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">P(rarely/never)</th>
+<th data-quarto-table-cell-role="th">P(sporadic)</th>
+<th data-quarto-table-cell-role="th">P(always)</th>
+<th data-quarto-table-cell-role="th">predicted</th>
+<th data-quarto-table-cell-role="th">actual</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">172</td>
+<td>0.121116</td>
+<td>0.514183</td>
+<td>0.364701</td>
+<td>rarely/never</td>
+<td>sporadic</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">500</td>
+<td>0.299785</td>
+<td>0.074449</td>
+<td>0.625766</td>
+<td>sporadic</td>
+<td>sporadic</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">479</td>
+<td>0.005793</td>
+<td>0.972623</td>
+<td>0.021584</td>
+<td>rarely/never</td>
+<td>rarely/never</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">934</td>
+<td>0.572564</td>
+<td>0.023685</td>
+<td>0.403751</td>
+<td>always</td>
+<td>sporadic</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">530</td>
+<td>0.519544</td>
+<td>0.039284</td>
+<td>0.441172</td>
+<td>always</td>
+<td>always</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1555</td>
+<td>0.131894</td>
+<td>0.419992</td>
+<td>0.448113</td>
+<td>sporadic</td>
+<td>sporadic</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1045</td>
+<td>0.489456</td>
+<td>0.045355</td>
+<td>0.465189</td>
+<td>always</td>
+<td>always</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1258</td>
+<td>0.565219</td>
+<td>0.068371</td>
+<td>0.366410</td>
+<td>always</td>
+<td>always</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1082</td>
+<td>0.217215</td>
+<td>0.107874</td>
+<td>0.674911</td>
+<td>sporadic</td>
+<td>sporadic</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1349</td>
+<td>0.223152</td>
+<td>0.287633</td>
+<td>0.489215</td>
+<td>sporadic</td>
+<td>always</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="confusion-matrix" class="slide level2">
 <h2>Confusion Matrix</h2>
 <p>Rows = true class, columns = predicted class. The diagonal = correct predictions.</p>
-<div id="b2c3d4e5-0002-4000-b000-000000000011" class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">5</span>))</span>
-<span id="cb5-2"><a></a>ConfusionMatrixDisplay.from_estimator(</span>
-<span id="cb5-3"><a></a>    mn_pipe, X_test, y_test,</span>
-<span id="cb5-4"><a></a>    display_labels<span class="op">=</span>classes,</span>
-<span id="cb5-5"><a></a>    cmap<span class="op">=</span><span class="st">'Blues'</span>, ax<span class="op">=</span>ax, colorbar<span class="op">=</span><span class="va">False</span></span>
-<span id="cb5-6"><a></a>)</span>
-<span id="cb5-7"><a></a>ax.set_title(<span class="st">'Confusion Matrix: Multinomial Logistic Regression'</span>)</span>
-<span id="cb5-8"><a></a>plt.tight_layout()</span>
-<span id="cb5-9"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="b2c3d4e5-0002-4000-b000-000000000011" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">5</span>))</span>
+<span id="cb11-2"><a></a>ConfusionMatrixDisplay.from_estimator(</span>
+<span id="cb11-3"><a></a>    mn_pipe, X_test, y_test,</span>
+<span id="cb11-4"><a></a>    display_labels<span class="op">=</span>classes,</span>
+<span id="cb11-5"><a></a>    cmap<span class="op">=</span><span class="st">'Blues'</span>, ax<span class="op">=</span>ax, colorbar<span class="op">=</span><span class="va">False</span></span>
+<span id="cb11-6"><a></a>)</span>
+<span id="cb11-7"><a></a>ax.set_title(<span class="st">'Confusion Matrix: Multinomial Logistic Regression'</span>)</span>
+<span id="cb11-8"><a></a>plt.tight_layout()</span>
+<span id="cb11-9"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
-</section>
+<img data-src="slides-22-practice_files/figure-revealjs/cell-8-output-1.png" class="r-stretch"></section>
 <section id="per-class-recall" class="slide level2">
 <h2>Per-Class Recall</h2>
 <p>One-vs-all recall: for each class, treat it as “positive” and all others as “negative”. This tells us how well the model identifies each class individually.</p>
-<div id="b2c3d4e5-0002-4000-b000-000000000013" class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="bu">print</span>(<span class="st">"Per-class recall (one-vs-all):"</span>)</span>
-<span id="cb6-2"><a></a>per_class_recall <span class="op">=</span> recall_score(y_test, preds, labels<span class="op">=</span>classes, average<span class="op">=</span><span class="va">None</span>)</span>
-<span id="cb6-3"><a></a><span class="cf">for</span> cls, rec <span class="kw">in</span> <span class="bu">zip</span>(classes, per_class_recall):</span>
-<span id="cb6-4"><a></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>rec<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb6-5"><a></a></span>
-<span id="cb6-6"><a></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Full classification report:"</span>)</span>
-<span id="cb6-7"><a></a><span class="bu">print</span>(classification_report(y_test, preds, target_names<span class="op">=</span>classes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="ed33a433" class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a><span class="co"># Compute one-vs-all recall using only addition and division</span></span>
+<span id="cb12-2"><a></a></span>
+<span id="cb12-3"><a></a><span class="co"># Rarely/never</span></span>
+<span id="cb12-4"><a></a><span class="dv">237</span><span class="op">/</span>(<span class="dv">237</span> <span class="op">+</span> <span class="dv">24</span> <span class="op">+</span> <span class="dv">282</span>)</span>
+<span id="cb12-5"><a></a></span>
+<span id="cb12-6"><a></a><span class="co"># Sporadic</span></span>
+<span id="cb12-7"><a></a></span>
+<span id="cb12-8"><a></a></span>
+<span id="cb12-9"><a></a><span class="co"># Always</span></span>
+<span id="cb12-10"><a></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="c78da5b5" class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a><span class="co"># Compute one-vs all precision using only addition and division (paste your results in Teams)</span></span>
+<span id="cb13-2"><a></a></span>
+<span id="cb13-3"><a></a><span class="co"># Rarely/never</span></span>
+<span id="cb13-4"><a></a></span>
+<span id="cb13-5"><a></a></span>
+<span id="cb13-6"><a></a><span class="co"># Sporadic</span></span>
+<span id="cb13-7"><a></a></span>
+<span id="cb13-8"><a></a></span>
+<span id="cb13-9"><a></a><span class="co"># Always</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="b2c3d4e5-0002-4000-b000-000000000013" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a><span class="bu">print</span>(<span class="st">"Per-class recall (one-vs-all):"</span>)</span>
+<span id="cb14-2"><a></a>per_class_recall <span class="op">=</span> recall_score(y_test, preds, labels<span class="op">=</span>classes, average<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb14-3"><a></a><span class="co"># for cls, rec in zip(classes, per_class_recall):</span></span>
+<span id="cb14-4"><a></a><span class="co">#     print(f"  {cls}: {rec:.3f}")</span></span>
+<span id="cb14-5"><a></a></span>
+<span id="cb14-6"><a></a><span class="co"># print("\nFull classification report:")</span></span>
+<span id="cb14-7"><a></a><span class="co"># print(classification_report(y_test, preds, target_names=classes))</span></span>
+<span id="cb14-8"><a></a>per_class_recall</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Per-class recall (one-vs-all):</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>array([0.6627907 , 0.65717982, 0.43646409])</code></pre>
+</div>
 </div>
 </section>
 <section id="macro-averaging" class="slide level2">
 <h2>Macro Averaging</h2>
 <p>Macro-averaging computes the metric for each class independently, then averages them <strong>equally</strong>. Every class gets equal weight regardless of how many observations it contains.</p>
 <div id="b2c3d4e5-0002-4000-b000-000000000015" class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="bu">print</span>(<span class="st">"Macro-averaged metrics:"</span>)</span>
-<span id="cb7-2"><a></a><span class="bu">print</span>(<span class="ss">f"  Accuracy:  </span><span class="sc">{</span>accuracy_score(y_test, preds)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb7-3"><a></a><span class="bu">print</span>(<span class="ss">f"  Precision: </span><span class="sc">{</span>precision_score(y_test, preds, average<span class="op">=</span><span class="st">'macro'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb7-4"><a></a><span class="bu">print</span>(<span class="ss">f"  Recall:    </span><span class="sc">{</span>recall_score(y_test, preds, average<span class="op">=</span><span class="st">'macro'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb7-5"><a></a><span class="bu">print</span>(<span class="ss">f"  F1:        </span><span class="sc">{</span>f1_score(y_test, preds, average<span class="op">=</span><span class="st">'macro'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a><span class="bu">print</span>(<span class="st">"Macro-averaged metrics:"</span>)</span>
+<span id="cb17-2"><a></a><span class="bu">print</span>(<span class="ss">f"  Accuracy:  </span><span class="sc">{</span>accuracy_score(y_test, preds)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb17-3"><a></a><span class="bu">print</span>(<span class="ss">f"  Precision: </span><span class="sc">{</span>precision_score(y_test, preds, average<span class="op">=</span><span class="st">'macro'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb17-4"><a></a><span class="bu">print</span>(<span class="ss">f"  Recall:    </span><span class="sc">{</span>recall_score(y_test, preds, average<span class="op">=</span><span class="st">'macro'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb17-5"><a></a><span class="bu">print</span>(<span class="ss">f"  F1:        </span><span class="sc">{</span>f1_score(y_test, preds, average<span class="op">=</span><span class="st">'macro'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="macro-weighted-averaging" class="slide level2">
 <h2>Macro-Weighted Averaging</h2>
 <p>Macro-weighted averaging weights each class by the number of true observations in that class. Larger classes have more influence on the final metric.</p>
 <div id="b2c3d4e5-0002-4000-b000-000000000017" class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="bu">print</span>(<span class="st">"Macro-weighted metrics:"</span>)</span>
-<span id="cb8-2"><a></a><span class="bu">print</span>(<span class="ss">f"  Accuracy:  </span><span class="sc">{</span>accuracy_score(y_test, preds)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb8-3"><a></a><span class="bu">print</span>(<span class="ss">f"  Precision: </span><span class="sc">{</span>precision_score(y_test, preds, average<span class="op">=</span><span class="st">'weighted'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb8-4"><a></a><span class="bu">print</span>(<span class="ss">f"  Recall:    </span><span class="sc">{</span>recall_score(y_test, preds, average<span class="op">=</span><span class="st">'weighted'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb8-5"><a></a><span class="bu">print</span>(<span class="ss">f"  F1:        </span><span class="sc">{</span>f1_score(y_test, preds, average<span class="op">=</span><span class="st">'weighted'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a></a><span class="bu">print</span>(<span class="st">"Macro-weighted metrics:"</span>)</span>
+<span id="cb18-2"><a></a><span class="bu">print</span>(<span class="ss">f"  Accuracy:  </span><span class="sc">{</span>accuracy_score(y_test, preds)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb18-3"><a></a><span class="bu">print</span>(<span class="ss">f"  Precision: </span><span class="sc">{</span>precision_score(y_test, preds, average<span class="op">=</span><span class="st">'weighted'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb18-4"><a></a><span class="bu">print</span>(<span class="ss">f"  Recall:    </span><span class="sc">{</span>recall_score(y_test, preds, average<span class="op">=</span><span class="st">'weighted'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb18-5"><a></a><span class="bu">print</span>(<span class="ss">f"  F1:        </span><span class="sc">{</span>f1_score(y_test, preds, average<span class="op">=</span><span class="st">'weighted'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="micro-averaging" class="slide level2">
 <h2>Micro Averaging</h2>
 <p>Micro-averaging pools all TP, FP, and FN counts across classes before computing the metric. For standard multiclass classification (not multi-label), micro recall = micro precision = accuracy.</p>
 <div id="b2c3d4e5-0002-4000-b000-000000000019" class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a><span class="bu">print</span>(<span class="st">"Micro-averaged metrics:"</span>)</span>
-<span id="cb9-2"><a></a><span class="bu">print</span>(<span class="ss">f"  Accuracy:  </span><span class="sc">{</span>accuracy_score(y_test, preds)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb9-3"><a></a><span class="bu">print</span>(<span class="ss">f"  Precision: </span><span class="sc">{</span>precision_score(y_test, preds, average<span class="op">=</span><span class="st">'micro'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb9-4"><a></a><span class="bu">print</span>(<span class="ss">f"  Recall:    </span><span class="sc">{</span>recall_score(y_test, preds, average<span class="op">=</span><span class="st">'micro'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb9-5"><a></a><span class="bu">print</span>(<span class="ss">f"  F1:        </span><span class="sc">{</span>f1_score(y_test, preds, average<span class="op">=</span><span class="st">'micro'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb9-6"><a></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Note: micro precision = micro recall = micro F1 = accuracy for multiclass."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a><span class="bu">print</span>(<span class="st">"Micro-averaged metrics:"</span>)</span>
+<span id="cb19-2"><a></a><span class="bu">print</span>(<span class="ss">f"  Accuracy:  </span><span class="sc">{</span>accuracy_score(y_test, preds)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb19-3"><a></a><span class="bu">print</span>(<span class="ss">f"  Precision: </span><span class="sc">{</span>precision_score(y_test, preds, average<span class="op">=</span><span class="st">'micro'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb19-4"><a></a><span class="bu">print</span>(<span class="ss">f"  Recall:    </span><span class="sc">{</span>recall_score(y_test, preds, average<span class="op">=</span><span class="st">'micro'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb19-5"><a></a><span class="bu">print</span>(<span class="ss">f"  F1:        </span><span class="sc">{</span>f1_score(y_test, preds, average<span class="op">=</span><span class="st">'micro'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb19-6"><a></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Note: micro precision = micro recall = micro F1 = accuracy for multiclass."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="roc-curves-one-vs-all" class="slide level2">
 <h2>ROC Curves (One-vs-All)</h2>
 <p>For each class, plot the ROC curve treating that class as “positive” vs.&nbsp;all others. The area under each curve tells us how well the model separates that class from the rest.</p>
 <div id="b2c3d4e5-0002-4000-b000-000000000021" class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a><span class="co"># Binarize the test labels: one column per class</span></span>
-<span id="cb10-2"><a></a>y_test_bin <span class="op">=</span> label_binarize(y_test, classes<span class="op">=</span>classes)</span>
-<span id="cb10-3"><a></a>proba_arr  <span class="op">=</span> mn_pipe.predict_proba(X_test)</span>
-<span id="cb10-4"><a></a></span>
-<span id="cb10-5"><a></a>colors <span class="op">=</span> [<span class="st">'steelblue'</span>, <span class="st">'darkorange'</span>, <span class="st">'seagreen'</span>]</span>
-<span id="cb10-6"><a></a></span>
-<span id="cb10-7"><a></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">5</span>))</span>
-<span id="cb10-8"><a></a><span class="cf">for</span> i, (cls, color) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(classes, colors)):</span>
-<span id="cb10-9"><a></a>    RocCurveDisplay.from_predictions(</span>
-<span id="cb10-10"><a></a>        y_test_bin[:, i], proba_arr[:, i],</span>
-<span id="cb10-11"><a></a>        name<span class="op">=</span>cls, color<span class="op">=</span>color, ax<span class="op">=</span>ax</span>
-<span id="cb10-12"><a></a>    )</span>
-<span id="cb10-13"><a></a></span>
-<span id="cb10-14"><a></a>ax.plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], <span class="st">'k--'</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>, label<span class="op">=</span><span class="st">'Random'</span>)</span>
-<span id="cb10-15"><a></a>ax.set_title(<span class="st">'One-vs-All ROC Curves: Multinomial Logistic Regression'</span>)</span>
-<span id="cb10-16"><a></a>ax.legend(loc<span class="op">=</span><span class="st">'lower right'</span>)</span>
-<span id="cb10-17"><a></a>plt.tight_layout()</span>
-<span id="cb10-18"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a><span class="co"># Binarize the test labels: one column per class</span></span>
+<span id="cb20-2"><a></a>y_test_bin <span class="op">=</span> label_binarize(y_test, classes<span class="op">=</span>classes)</span>
+<span id="cb20-3"><a></a>proba_arr  <span class="op">=</span> mn_pipe.predict_proba(X_test)</span>
+<span id="cb20-4"><a></a></span>
+<span id="cb20-5"><a></a>colors <span class="op">=</span> [<span class="st">'steelblue'</span>, <span class="st">'darkorange'</span>, <span class="st">'seagreen'</span>]</span>
+<span id="cb20-6"><a></a></span>
+<span id="cb20-7"><a></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">5</span>))</span>
+<span id="cb20-8"><a></a><span class="cf">for</span> i, (cls, color) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(classes, colors)):</span>
+<span id="cb20-9"><a></a>    RocCurveDisplay.from_predictions(</span>
+<span id="cb20-10"><a></a>        y_test_bin[:, i], proba_arr[:, i],</span>
+<span id="cb20-11"><a></a>        name<span class="op">=</span>cls, color<span class="op">=</span>color, ax<span class="op">=</span>ax</span>
+<span id="cb20-12"><a></a>    )</span>
+<span id="cb20-13"><a></a></span>
+<span id="cb20-14"><a></a>ax.plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], <span class="st">'k--'</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>, label<span class="op">=</span><span class="st">'Random'</span>)</span>
+<span id="cb20-15"><a></a>ax.set_title(<span class="st">'One-vs-All ROC Curves: Multinomial Logistic Regression'</span>)</span>
+<span id="cb20-16"><a></a>ax.legend(loc<span class="op">=</span><span class="st">'lower right'</span>)</span>
+<span id="cb20-17"><a></a>plt.tight_layout()</span>
+<span id="cb20-18"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="auc-variants" class="slide level2">
 <h2>AUC Variants</h2>
 <p>Three ways to summarize multiclass AUC into a single number: - <strong>Macro OVR</strong>: average one-vs-all AUC equally across classes - <strong>Weighted OVR</strong>: weight one-vs-all AUC by class size - <strong>Hand and Till (OVO)</strong>: average pairwise AUC across all class pairs</p>
 <div id="b2c3d4e5-0002-4000-b000-000000000023" class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a>auc_macro    <span class="op">=</span> roc_auc_score(y_test, proba_arr, multi_class<span class="op">=</span><span class="st">'ovr'</span>, average<span class="op">=</span><span class="st">'macro'</span>)</span>
-<span id="cb11-2"><a></a>auc_weighted <span class="op">=</span> roc_auc_score(y_test, proba_arr, multi_class<span class="op">=</span><span class="st">'ovr'</span>, average<span class="op">=</span><span class="st">'weighted'</span>)</span>
-<span id="cb11-3"><a></a>auc_ovo      <span class="op">=</span> roc_auc_score(y_test, proba_arr, multi_class<span class="op">=</span><span class="st">'ovo'</span>, average<span class="op">=</span><span class="st">'macro'</span>)</span>
-<span id="cb11-4"><a></a></span>
-<span id="cb11-5"><a></a>auc_summary <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb11-6"><a></a>    <span class="st">'Method'</span>:   [<span class="st">'Macro OVR'</span>, <span class="st">'Weighted OVR'</span>, <span class="st">'Hand and Till (OVO)'</span>],</span>
-<span id="cb11-7"><a></a>    <span class="st">'AUC'</span>:      [auc_macro, auc_weighted, auc_ovo],</span>
-<span id="cb11-8"><a></a>    <span class="st">'Weighting'</span>: [<span class="st">'Equal per class'</span>, <span class="st">'Proportional to class size'</span>, <span class="st">'Equal per class pair'</span>]</span>
-<span id="cb11-9"><a></a>})</span>
-<span id="cb11-10"><a></a>auc_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a>auc_macro    <span class="op">=</span> roc_auc_score(y_test, proba_arr, multi_class<span class="op">=</span><span class="st">'ovr'</span>, average<span class="op">=</span><span class="st">'macro'</span>)</span>
+<span id="cb21-2"><a></a>auc_weighted <span class="op">=</span> roc_auc_score(y_test, proba_arr, multi_class<span class="op">=</span><span class="st">'ovr'</span>, average<span class="op">=</span><span class="st">'weighted'</span>)</span>
+<span id="cb21-3"><a></a>auc_ovo      <span class="op">=</span> roc_auc_score(y_test, proba_arr, multi_class<span class="op">=</span><span class="st">'ovo'</span>, average<span class="op">=</span><span class="st">'macro'</span>)</span>
+<span id="cb21-4"><a></a></span>
+<span id="cb21-5"><a></a>auc_summary <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb21-6"><a></a>    <span class="st">'Method'</span>:   [<span class="st">'Macro OVR'</span>, <span class="st">'Weighted OVR'</span>, <span class="st">'Hand and Till (OVO)'</span>],</span>
+<span id="cb21-7"><a></a>    <span class="st">'AUC'</span>:      [auc_macro, auc_weighted, auc_ovo],</span>
+<span id="cb21-8"><a></a>    <span class="st">'Weighting'</span>: [<span class="st">'Equal per class'</span>, <span class="st">'Proportional to class size'</span>, <span class="st">'Equal per class pair'</span>]</span>
+<span id="cb21-9"><a></a>})</span>
+<span id="cb21-10"><a></a>auc_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
