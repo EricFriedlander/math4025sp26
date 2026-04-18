@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-html/tabby.min.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.6.39">
 
   <meta name="author" content="Dr.&nbsp;Eric Friedlander">
   <title>Math 4025 - Spring 2026 – Multiclass Classification Practice: Voter Data</title>
@@ -17,9 +17,6 @@
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -32,9 +29,8 @@
       vertical-align: middle;
     }
     /* CSS for syntax highlighting */
-    html { -webkit-text-size-adjust: 100%; }
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -45,7 +41,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -98,7 +94,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-79616c004a19fe9d8d22e049353151e9.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-72811bd306436bae30bfb620bac545c3.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -193,7 +189,7 @@
       margin-right: 0; 
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
   
   <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 </head>
@@ -217,7 +213,7 @@ Dr.&nbsp;Eric Friedlander
 <h2>Setup</h2>
 <p><em>Same voter data setup as notebooks 18–21.</em></p>
 <div id="b2c3d4e5-0002-4000-b000-000000000003" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-4"><a></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
@@ -301,7 +297,7 @@ Dr.&nbsp;Eric Friedlander
 <span id="cb1-82"><a></a>], remainder<span class="op">=</span><span class="st">'drop'</span>)</span>
 <span id="cb1-83"><a></a></span>
 <span id="cb1-84"><a></a><span class="bu">print</span>(<span class="ss">f"Training: </span><span class="sc">{</span>X_train<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> obs  |  Test: </span><span class="sc">{</span>X_test<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> obs"</span>)</span>
-<span id="cb1-85"><a></a><span class="bu">print</span>(<span class="ss">f"Classes: </span><span class="sc">{</span>classes<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-85"><a></a><span class="bu">print</span>(<span class="ss">f"Classes: </span><span class="sc">{</span>classes<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Training: 4071 obs  |  Test: 1746 obs
 Classes: ['rarely/never', 'sporadic', 'always']</code></pre>
@@ -312,7 +308,7 @@ Classes: ['rarely/never', 'sporadic', 'always']</code></pre>
 <h2>Visualize Response</h2>
 <p>How balanced are the three voter categories in the training set?</p>
 <div id="b2c3d4e5-0002-4000-b000-000000000005" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>counts <span class="op">=</span> y_train.value_counts().reindex(classes)</span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>counts <span class="op">=</span> y_train.value_counts().reindex(classes)</span>
 <span id="cb3-2"><a></a></span>
 <span id="cb3-3"><a></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
 <span id="cb3-4"><a></a>ax.bar(counts.index, counts.values, color<span class="op">=</span><span class="st">'steelblue'</span>)</span>
@@ -320,7 +316,7 @@ Classes: ['rarely/never', 'sporadic', 'always']</code></pre>
 <span id="cb3-6"><a></a>ax.set_ylabel(<span class="st">'Count'</span>)</span>
 <span id="cb3-7"><a></a>ax.set_title(<span class="st">'Distribution of Voter Category (Training Set)'</span>)</span>
 <span id="cb3-8"><a></a>plt.tight_layout()</span>
-<span id="cb3-9"><a></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-9"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="slides-22-practice_files/figure-revealjs/cell-3-output-1.png" class="r-stretch"></section>
@@ -328,7 +324,7 @@ Classes: ['rarely/never', 'sporadic', 'always']</code></pre>
 <h2>Define and Fit Multinomial Logistic Regression</h2>
 <p>Multinomial logistic regression models log-odds of each class relative to a reference class. We use the <code>saga</code> solver which supports L1 regularization for multiclass problems. <code>C</code> is the inverse regularization strength — larger C = less regularization.</p>
 <div id="b2c3d4e5-0002-4000-b000-000000000007" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>mn_pipe <span class="op">=</span> Pipeline([</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>mn_pipe <span class="op">=</span> Pipeline([</span>
 <span id="cb4-2"><a></a>    (<span class="st">'preproc'</span>, preproc_voter),</span>
 <span id="cb4-3"><a></a>    (<span class="st">'mn'</span>, LogisticRegression(</span>
 <span id="cb4-4"><a></a>        C<span class="op">=</span><span class="dv">200</span>,</span>
@@ -340,7 +336,7 @@ Classes: ['rarely/never', 'sporadic', 'always']</code></pre>
 <span id="cb4-10"><a></a></span>
 <span id="cb4-11"><a></a>mn_pipe.fit(X_train, y_train)</span>
 <span id="cb4-12"><a></a><span class="bu">print</span>(<span class="ss">f"Train Accuracy: </span><span class="sc">{</span>accuracy_score(y_train, mn_pipe.predict(X_train))<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb4-13"><a></a><span class="bu">print</span>(<span class="ss">f"Test Accuracy:  </span><span class="sc">{</span>accuracy_score(y_test,  mn_pipe.predict(X_test))<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-13"><a></a><span class="bu">print</span>(<span class="ss">f"Test Accuracy:  </span><span class="sc">{</span>accuracy_score(y_test,  mn_pipe.predict(X_test))<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Train Accuracy: 0.636
 Test Accuracy:  0.590</code></pre>
@@ -351,8 +347,8 @@ Test Accuracy:  0.590</code></pre>
 <h2>Predictions</h2>
 <p>The model outputs three probability columns — one per class. Each row sums to 1. The predicted class is the one with the highest probability.</p>
 <div id="b2c3d4e5-0002-4000-b000-000000000009" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>proba <span class="op">=</span> mn_pipe.predict_proba(X_test)</span>
-<span id="cb6-2"><a></a>proba</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>proba <span class="op">=</span> mn_pipe.predict_proba(X_test)</span>
+<span id="cb6-2"><a></a>proba</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>array([[1.17474606e-01, 3.90574732e-01, 4.91950662e-01],
        [1.05942578e-01, 7.10547104e-01, 1.83510318e-01],
@@ -364,21 +360,21 @@ Test Accuracy:  0.590</code></pre>
 </div>
 </div>
 <div id="7c67bff6" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>preds <span class="op">=</span> mn_pipe.predict(X_test)</span>
-<span id="cb8-2"><a></a>preds</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>preds <span class="op">=</span> mn_pipe.predict(X_test)</span>
+<span id="cb8-2"><a></a>preds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>array(['sporadic', 'rarely/never', 'sporadic', ..., 'rarely/never',
        'sporadic', 'always'], shape=(1746,), dtype=object)</code></pre>
 </div>
 </div>
 <div id="d463104e" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a></span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a></span>
 <span id="cb10-2"><a></a>pred_df <span class="op">=</span> pd.DataFrame(proba, columns<span class="op">=</span>[<span class="ss">f'P(</span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">)'</span> <span class="cf">for</span> c <span class="kw">in</span> classes])</span>
 <span id="cb10-3"><a></a>pred_df[<span class="st">'predicted'</span>] <span class="op">=</span> preds</span>
 <span id="cb10-4"><a></a>pred_df[<span class="st">'actual'</span>] <span class="op">=</span> y_test.values</span>
 <span id="cb10-5"><a></a></span>
 <span id="cb10-6"><a></a><span class="co"># Show a random sample of 10 rows</span></span>
-<span id="cb10-7"><a></a>pred_df.sample(<span class="dv">10</span>, random_state<span class="op">=</span><span class="dv">4025</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-7"><a></a>pred_df.sample(<span class="dv">10</span>, random_state<span class="op">=</span><span class="dv">4025</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 <style scoped="">
@@ -395,7 +391,7 @@ Test Accuracy:  0.590</code></pre>
     }
 </style>
 
-<table class="dataframe caption-top" data-border="1">
+<table class="dataframe caption-top" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header" style="text-align: right;">
 <th data-quarto-table-cell-role="th"></th>
@@ -408,7 +404,7 @@ Test Accuracy:  0.590</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">172</th>
+<td data-quarto-table-cell-role="th">172</td>
 <td>0.121116</td>
 <td>0.514183</td>
 <td>0.364701</td>
@@ -416,7 +412,7 @@ Test Accuracy:  0.590</code></pre>
 <td>sporadic</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">500</th>
+<td data-quarto-table-cell-role="th">500</td>
 <td>0.299785</td>
 <td>0.074449</td>
 <td>0.625766</td>
@@ -424,7 +420,7 @@ Test Accuracy:  0.590</code></pre>
 <td>sporadic</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">479</th>
+<td data-quarto-table-cell-role="th">479</td>
 <td>0.005793</td>
 <td>0.972623</td>
 <td>0.021584</td>
@@ -432,7 +428,7 @@ Test Accuracy:  0.590</code></pre>
 <td>rarely/never</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">934</th>
+<td data-quarto-table-cell-role="th">934</td>
 <td>0.572564</td>
 <td>0.023685</td>
 <td>0.403751</td>
@@ -440,7 +436,7 @@ Test Accuracy:  0.590</code></pre>
 <td>sporadic</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">530</th>
+<td data-quarto-table-cell-role="th">530</td>
 <td>0.519544</td>
 <td>0.039284</td>
 <td>0.441172</td>
@@ -448,7 +444,7 @@ Test Accuracy:  0.590</code></pre>
 <td>always</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">1555</th>
+<td data-quarto-table-cell-role="th">1555</td>
 <td>0.131894</td>
 <td>0.419992</td>
 <td>0.448113</td>
@@ -456,7 +452,7 @@ Test Accuracy:  0.590</code></pre>
 <td>sporadic</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">1045</th>
+<td data-quarto-table-cell-role="th">1045</td>
 <td>0.489456</td>
 <td>0.045355</td>
 <td>0.465189</td>
@@ -464,7 +460,7 @@ Test Accuracy:  0.590</code></pre>
 <td>always</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">1258</th>
+<td data-quarto-table-cell-role="th">1258</td>
 <td>0.565219</td>
 <td>0.068371</td>
 <td>0.366410</td>
@@ -472,7 +468,7 @@ Test Accuracy:  0.590</code></pre>
 <td>always</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">1082</th>
+<td data-quarto-table-cell-role="th">1082</td>
 <td>0.217215</td>
 <td>0.107874</td>
 <td>0.674911</td>
@@ -480,7 +476,7 @@ Test Accuracy:  0.590</code></pre>
 <td>sporadic</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">1349</th>
+<td data-quarto-table-cell-role="th">1349</td>
 <td>0.223152</td>
 <td>0.287633</td>
 <td>0.489215</td>
@@ -498,7 +494,7 @@ Test Accuracy:  0.590</code></pre>
 <h2>Confusion Matrix</h2>
 <p>Rows = true class, columns = predicted class. The diagonal = correct predictions.</p>
 <div id="b2c3d4e5-0002-4000-b000-000000000011" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">5</span>))</span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">5</span>))</span>
 <span id="cb11-2"><a></a>ConfusionMatrixDisplay.from_estimator(</span>
 <span id="cb11-3"><a></a>    mn_pipe, X_test, y_test,</span>
 <span id="cb11-4"><a></a>    display_labels<span class="op">=</span>classes,</span>
@@ -506,7 +502,7 @@ Test Accuracy:  0.590</code></pre>
 <span id="cb11-6"><a></a>)</span>
 <span id="cb11-7"><a></a>ax.set_title(<span class="st">'Confusion Matrix: Multinomial Logistic Regression'</span>)</span>
 <span id="cb11-8"><a></a>plt.tight_layout()</span>
-<span id="cb11-9"><a></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-9"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="slides-22-practice_files/figure-revealjs/cell-8-output-1.png" class="r-stretch"></section>
@@ -514,7 +510,7 @@ Test Accuracy:  0.590</code></pre>
 <h2>Per-Class Recall</h2>
 <p>One-vs-all recall: for each class, treat it as “positive” and all others as “negative”. This tells us how well the model identifies each class individually.</p>
 <div id="ed33a433" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a><span class="co"># Compute one-vs-all recall using only addition and division</span></span>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a><span class="co"># Compute one-vs-all recall using only addition and division</span></span>
 <span id="cb12-2"><a></a></span>
 <span id="cb12-3"><a></a><span class="co"># Rarely/never</span></span>
 <span id="cb12-4"><a></a><span class="dv">237</span><span class="op">/</span>(<span class="dv">237</span> <span class="op">+</span> <span class="dv">24</span> <span class="op">+</span> <span class="dv">282</span>)</span>
@@ -523,10 +519,10 @@ Test Accuracy:  0.590</code></pre>
 <span id="cb12-7"><a></a></span>
 <span id="cb12-8"><a></a></span>
 <span id="cb12-9"><a></a><span class="co"># Always</span></span>
-<span id="cb12-10"><a></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-10"><a></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="c78da5b5" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a><span class="co"># Compute one-vs all precision using only addition and division (paste your results in Teams)</span></span>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a><span class="co"># Compute one-vs all precision using only addition and division (paste your results in Teams)</span></span>
 <span id="cb13-2"><a></a></span>
 <span id="cb13-3"><a></a><span class="co"># Rarely/never</span></span>
 <span id="cb13-4"><a></a></span>
@@ -534,17 +530,17 @@ Test Accuracy:  0.590</code></pre>
 <span id="cb13-6"><a></a><span class="co"># Sporadic</span></span>
 <span id="cb13-7"><a></a></span>
 <span id="cb13-8"><a></a></span>
-<span id="cb13-9"><a></a><span class="co"># Always</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-9"><a></a><span class="co"># Always</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="b2c3d4e5-0002-4000-b000-000000000013" class="cell" data-execution_count="13">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a><span class="bu">print</span>(<span class="st">"Per-class recall (one-vs-all):"</span>)</span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a><span class="bu">print</span>(<span class="st">"Per-class recall (one-vs-all):"</span>)</span>
 <span id="cb14-2"><a></a>per_class_recall <span class="op">=</span> recall_score(y_test, preds, labels<span class="op">=</span>classes, average<span class="op">=</span><span class="va">None</span>)</span>
 <span id="cb14-3"><a></a><span class="co"># for cls, rec in zip(classes, per_class_recall):</span></span>
 <span id="cb14-4"><a></a><span class="co">#     print(f"  {cls}: {rec:.3f}")</span></span>
 <span id="cb14-5"><a></a></span>
 <span id="cb14-6"><a></a><span class="co"># print("\nFull classification report:")</span></span>
 <span id="cb14-7"><a></a><span class="co"># print(classification_report(y_test, preds, target_names=classes))</span></span>
-<span id="cb14-8"><a></a>per_class_recall</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb14-8"><a></a>per_class_recall</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Per-class recall (one-vs-all):</code></pre>
 </div>
@@ -557,41 +553,41 @@ Test Accuracy:  0.590</code></pre>
 <h2>Macro Averaging</h2>
 <p>Macro-averaging computes the metric for each class independently, then averages them <strong>equally</strong>. Every class gets equal weight regardless of how many observations it contains.</p>
 <div id="b2c3d4e5-0002-4000-b000-000000000015" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a><span class="bu">print</span>(<span class="st">"Macro-averaged metrics:"</span>)</span>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a><span class="bu">print</span>(<span class="st">"Macro-averaged metrics:"</span>)</span>
 <span id="cb17-2"><a></a><span class="bu">print</span>(<span class="ss">f"  Accuracy:  </span><span class="sc">{</span>accuracy_score(y_test, preds)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
 <span id="cb17-3"><a></a><span class="bu">print</span>(<span class="ss">f"  Precision: </span><span class="sc">{</span>precision_score(y_test, preds, average<span class="op">=</span><span class="st">'macro'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
 <span id="cb17-4"><a></a><span class="bu">print</span>(<span class="ss">f"  Recall:    </span><span class="sc">{</span>recall_score(y_test, preds, average<span class="op">=</span><span class="st">'macro'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb17-5"><a></a><span class="bu">print</span>(<span class="ss">f"  F1:        </span><span class="sc">{</span>f1_score(y_test, preds, average<span class="op">=</span><span class="st">'macro'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb17-5"><a></a><span class="bu">print</span>(<span class="ss">f"  F1:        </span><span class="sc">{</span>f1_score(y_test, preds, average<span class="op">=</span><span class="st">'macro'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="macro-weighted-averaging" class="slide level2">
 <h2>Macro-Weighted Averaging</h2>
 <p>Macro-weighted averaging weights each class by the number of true observations in that class. Larger classes have more influence on the final metric.</p>
 <div id="b2c3d4e5-0002-4000-b000-000000000017" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a></a><span class="bu">print</span>(<span class="st">"Macro-weighted metrics:"</span>)</span>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a></a><span class="bu">print</span>(<span class="st">"Macro-weighted metrics:"</span>)</span>
 <span id="cb18-2"><a></a><span class="bu">print</span>(<span class="ss">f"  Accuracy:  </span><span class="sc">{</span>accuracy_score(y_test, preds)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
 <span id="cb18-3"><a></a><span class="bu">print</span>(<span class="ss">f"  Precision: </span><span class="sc">{</span>precision_score(y_test, preds, average<span class="op">=</span><span class="st">'weighted'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
 <span id="cb18-4"><a></a><span class="bu">print</span>(<span class="ss">f"  Recall:    </span><span class="sc">{</span>recall_score(y_test, preds, average<span class="op">=</span><span class="st">'weighted'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb18-5"><a></a><span class="bu">print</span>(<span class="ss">f"  F1:        </span><span class="sc">{</span>f1_score(y_test, preds, average<span class="op">=</span><span class="st">'weighted'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb18-5"><a></a><span class="bu">print</span>(<span class="ss">f"  F1:        </span><span class="sc">{</span>f1_score(y_test, preds, average<span class="op">=</span><span class="st">'weighted'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="micro-averaging" class="slide level2">
 <h2>Micro Averaging</h2>
 <p>Micro-averaging pools all TP, FP, and FN counts across classes before computing the metric. For standard multiclass classification (not multi-label), micro recall = micro precision = accuracy.</p>
 <div id="b2c3d4e5-0002-4000-b000-000000000019" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a><span class="bu">print</span>(<span class="st">"Micro-averaged metrics:"</span>)</span>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a><span class="bu">print</span>(<span class="st">"Micro-averaged metrics:"</span>)</span>
 <span id="cb19-2"><a></a><span class="bu">print</span>(<span class="ss">f"  Accuracy:  </span><span class="sc">{</span>accuracy_score(y_test, preds)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
 <span id="cb19-3"><a></a><span class="bu">print</span>(<span class="ss">f"  Precision: </span><span class="sc">{</span>precision_score(y_test, preds, average<span class="op">=</span><span class="st">'micro'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
 <span id="cb19-4"><a></a><span class="bu">print</span>(<span class="ss">f"  Recall:    </span><span class="sc">{</span>recall_score(y_test, preds, average<span class="op">=</span><span class="st">'micro'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
 <span id="cb19-5"><a></a><span class="bu">print</span>(<span class="ss">f"  F1:        </span><span class="sc">{</span>f1_score(y_test, preds, average<span class="op">=</span><span class="st">'micro'</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb19-6"><a></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Note: micro precision = micro recall = micro F1 = accuracy for multiclass."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb19-6"><a></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Note: micro precision = micro recall = micro F1 = accuracy for multiclass."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="roc-curves-one-vs-all" class="slide level2">
 <h2>ROC Curves (One-vs-All)</h2>
 <p>For each class, plot the ROC curve treating that class as “positive” vs.&nbsp;all others. The area under each curve tells us how well the model separates that class from the rest.</p>
 <div id="b2c3d4e5-0002-4000-b000-000000000021" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a><span class="co"># Binarize the test labels: one column per class</span></span>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a><span class="co"># Binarize the test labels: one column per class</span></span>
 <span id="cb20-2"><a></a>y_test_bin <span class="op">=</span> label_binarize(y_test, classes<span class="op">=</span>classes)</span>
 <span id="cb20-3"><a></a>proba_arr  <span class="op">=</span> mn_pipe.predict_proba(X_test)</span>
 <span id="cb20-4"><a></a></span>
@@ -608,14 +604,14 @@ Test Accuracy:  0.590</code></pre>
 <span id="cb20-15"><a></a>ax.set_title(<span class="st">'One-vs-All ROC Curves: Multinomial Logistic Regression'</span>)</span>
 <span id="cb20-16"><a></a>ax.legend(loc<span class="op">=</span><span class="st">'lower right'</span>)</span>
 <span id="cb20-17"><a></a>plt.tight_layout()</span>
-<span id="cb20-18"><a></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb20-18"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="auc-variants" class="slide level2">
 <h2>AUC Variants</h2>
 <p>Three ways to summarize multiclass AUC into a single number: - <strong>Macro OVR</strong>: average one-vs-all AUC equally across classes - <strong>Weighted OVR</strong>: weight one-vs-all AUC by class size - <strong>Hand and Till (OVO)</strong>: average pairwise AUC across all class pairs</p>
 <div id="b2c3d4e5-0002-4000-b000-000000000023" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a>auc_macro    <span class="op">=</span> roc_auc_score(y_test, proba_arr, multi_class<span class="op">=</span><span class="st">'ovr'</span>, average<span class="op">=</span><span class="st">'macro'</span>)</span>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a>auc_macro    <span class="op">=</span> roc_auc_score(y_test, proba_arr, multi_class<span class="op">=</span><span class="st">'ovr'</span>, average<span class="op">=</span><span class="st">'macro'</span>)</span>
 <span id="cb21-2"><a></a>auc_weighted <span class="op">=</span> roc_auc_score(y_test, proba_arr, multi_class<span class="op">=</span><span class="st">'ovr'</span>, average<span class="op">=</span><span class="st">'weighted'</span>)</span>
 <span id="cb21-3"><a></a>auc_ovo      <span class="op">=</span> roc_auc_score(y_test, proba_arr, multi_class<span class="op">=</span><span class="st">'ovo'</span>, average<span class="op">=</span><span class="st">'macro'</span>)</span>
 <span id="cb21-4"><a></a></span>
@@ -624,7 +620,7 @@ Test Accuracy:  0.590</code></pre>
 <span id="cb21-7"><a></a>    <span class="st">'AUC'</span>:      [auc_macro, auc_weighted, auc_ovo],</span>
 <span id="cb21-8"><a></a>    <span class="st">'Weighting'</span>: [<span class="st">'Equal per class'</span>, <span class="st">'Proportional to class size'</span>, <span class="st">'Equal per class pair'</span>]</span>
 <span id="cb21-9"><a></a>})</span>
-<span id="cb21-10"><a></a>auc_summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb21-10"><a></a>auc_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
@@ -821,7 +817,7 @@ Test Accuracy:  0.590</code></pre>
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -848,173 +844,190 @@ Test Accuracy:  0.590</code></pre>
       });
     </script>
     <script id="quarto-html-after-body" type="application/javascript">
-      window.document.addEventListener("DOMContentLoaded", function (event) {
-        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-        tabsets.forEach(function(tabset) {
-          const tabby = new Tabby('#' + tabset.id);
-        });
-        const isCodeAnnotation = (el) => {
-          for (const clz of el.classList) {
-            if (clz.startsWith('code-annotation-')) {                     
-              return true;
-            }
-          }
-          return false;
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
         }
-        const onCopySuccess = function(e) {
-          // button target
-          const button = e.trigger;
-          // don't keep focus
-          button.blur();
-          // flash "checked"
-          button.classList.add('code-copy-button-checked');
-          var currentTitle = button.getAttribute("title");
-          button.setAttribute("title", "Copied!");
-          let tooltip;
-          if (window.bootstrap) {
-            button.setAttribute("data-bs-toggle", "tooltip");
-            button.setAttribute("data-bs-placement", "left");
-            button.setAttribute("data-bs-title", "Copied!");
-            tooltip = new bootstrap.Tooltip(button, 
-              { trigger: "manual", 
-                customClass: "code-copy-button-tooltip",
-                offset: [0, -8]});
-            tooltip.show();    
-          }
-          setTimeout(function() {
-            if (tooltip) {
-              tooltip.hide();
-              button.removeAttribute("data-bs-title");
-              button.removeAttribute("data-bs-toggle");
-              button.removeAttribute("data-bs-placement");
-            }
-            button.setAttribute("title", currentTitle);
-            button.classList.remove('code-copy-button-checked');
-          }, 1000);
-          // clear code selection
-          e.clearSelection();
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
         }
-        const getTextToCopy = function(trigger) {
-          const outerScaffold = trigger.parentElement.cloneNode(true);
-          const codeEl = outerScaffold.querySelector('code');
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
           for (const childEl of codeEl.children) {
             if (isCodeAnnotation(childEl)) {
               childEl.remove();
             }
           }
           return codeEl.innerText;
-        }
-        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-          text: getTextToCopy
-        });
-        clipboard.on('success', onCopySuccess);
-        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-            text: getTextToCopy,
-            container: window.document.getElementById('quarto-embedded-source-code-modal')
-          });
-          clipboardModal.on('success', onCopySuccess);
-        }
-          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-          var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp("https:\/\/EricFriedlander\.github\.io\/math4025sp26\/");
-          var isInternal = (href) => {
-              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-          }
-          // Inspect non-navigation links and adorn them if external
-         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-          for (var i=0; i<links.length; i++) {
-            const link = links[i];
-            if (!isInternal(link.href)) {
-              // undo the damage that might have been done by quarto-nav.js in the case of
-              // links that we want to consider external
-              if (link.dataset.originalHref !== undefined) {
-                link.href = link.dataset.originalHref;
-              }
-            }
-          }
-        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-          const config = {
-            allowHTML: true,
-            maxWidth: 500,
-            delay: 100,
-            arrow: false,
-            appendTo: function(el) {
-                return el.closest('section.slide') || el.parentElement;
-            },
-            interactive: true,
-            interactiveBorder: 10,
-            theme: 'light-border',
-            placement: 'bottom-start',
-          };
-          if (contentFn) {
-            config.content = contentFn;
-          }
-          if (onTriggerFn) {
-            config.onTrigger = onTriggerFn;
-          }
-          if (onUntriggerFn) {
-            config.onUntrigger = onUntriggerFn;
-          }
-            config['offset'] = [0,0];
-            config['maxWidth'] = 700;
-          window.tippy(el, config); 
-        }
-        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-        for (var i=0; i<noterefs.length; i++) {
-          const ref = noterefs[i];
-          tippyHover(ref, function() {
-            // use id or data attribute instead here
-            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-            try { href = new URL(href).hash; } catch {}
-            const id = href.replace(/^#\/?/, "");
-            const note = window.document.getElementById(id);
-            if (note) {
-              return note.innerHTML;
-            } else {
-              return "";
-            }
-          });
-        }
-        const findCites = (el) => {
-          const parentEl = el.parentElement;
-          if (parentEl) {
-            const cites = parentEl.dataset.cites;
-            if (cites) {
-              return {
-                el,
-                cites: cites.split(' ')
-              };
-            } else {
-              return findCites(el.parentElement)
-            }
-          } else {
-            return undefined;
-          }
-        };
-        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-        for (var i=0; i<bibliorefs.length; i++) {
-          const ref = bibliorefs[i];
-          const citeInfo = findCites(ref);
-          if (citeInfo) {
-            tippyHover(citeInfo.el, function() {
-              var popup = window.document.createElement('div');
-              citeInfo.cites.forEach(function(cite) {
-                var citeDiv = window.document.createElement('div');
-                citeDiv.classList.add('hanging-indent');
-                citeDiv.classList.add('csl-entry');
-                var biblioDiv = window.document.getElementById('ref-' + cite);
-                if (biblioDiv) {
-                  citeDiv.innerHTML = biblioDiv.innerHTML;
-                }
-                popup.appendChild(citeDiv);
-              });
-              return popup.innerHTML;
-            });
-          }
-        }
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
-      </script>
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp("https:\/\/EricFriedlander\.github\.io\/math4025sp26\/");
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
     
 
 </body></html>
