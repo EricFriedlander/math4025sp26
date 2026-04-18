@@ -95,7 +95,7 @@ Run the **Confusion Matrix** cell.
 -   **Recall**: $\frac{\text{True Positives}}{\text{True Positives} + \text{False Negatives}}$
 -   Apply binary metrics to each class in turn, treating it as "positive" vs. all others
 -   Example - recall per class (from voter data):
-    +   `rarely/never`: $\frac{237}{237 + 24 + 282} \approx 0.66$
+    +   `rarely/never`: $\frac{279}{279 + 127 + 24} \approx 0.65$
     +   `sporadic`: compute in notebook
     +   `always`: computer in notebook
 
@@ -106,11 +106,11 @@ Run the **Per-Class Recall** cell.
 ## Solution 2: Averaging {.smaller}
 
 -   *Macro-averaging*: average the one-vs-all metrics equally across all classes
-    +   Recall: $\frac{0.66 + 0.72 + 0.41}{3} \approx 0.60$
+    +   Recall: $\frac{0.65 + 0.72 + 0.41 }{3} \approx 0.57$
 -   *Macro-weighted averaging*: same but weight each class by its size
-    +   Recall: $\frac{430 \times 0.66 + 779 \times 0.72 + 543 \times 0.41}{1752} \approx 0.61$
+    +   Recall: $\frac{(0.65 * 430 + 0.72 * 773 + 0.41 * 543)/(430+773+543)} \approx 0.58$
 -   *Micro-averaging*: pool all TP / FP / FN counts across classes, then compute the metric (Useful when you have multi-label classification)
-    +   Recall: $\frac{285 + 559 + 221}{430 + 779 + 543} \approx 0.61$
+    +   Recall: $\frac{279+557+181}{279+557+181+127+24+65+151+24+181} \approx 0.64$
     +   Note: micro recall = micro precision = accuracy for multiclass
 
 ## Macro Averaging in Python {.smaller}

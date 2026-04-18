@@ -1,0 +1,8 @@
+---
+title: "Preparation for Multiclass Classification"
+---
+
+## Assigned readings & videos
+
+- Read [Section 9.4](https://www.tmwr.org/performance#multiclass-classification-metrics) of Tidy Modeling with R
+- Read [3.4.4.1 From binary to multiclass and multilabel](https://scikit-learn.org/stable/modules/model_evaluation.html#from-binary-to-multiclass-and-multilabel) from the scikit-learn documentation
