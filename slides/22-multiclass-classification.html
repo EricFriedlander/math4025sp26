@@ -258,7 +258,7 @@ Dr.&nbsp;Eric Friedlander
 <li>Apply binary metrics to each class in turn, treating it as “positive” vs.&nbsp;all others</li>
 <li>Example - recall per class (from voter data):
 <ul>
-<li><code>rarely/never</code>: <span class="math inline">\(\frac{237}{237 + 24 + 282} \approx 0.66\)</span></li>
+<li><code>rarely/never</code>: <span class="math inline">\(\frac{279}{279 + 127 + 24} \approx 0.65\)</span></li>
 <li><code>sporadic</code>: compute in notebook</li>
 <li><code>always</code>: computer in notebook</li>
 </ul></li>
@@ -272,15 +272,15 @@ Dr.&nbsp;Eric Friedlander
 <ul>
 <li><em>Macro-averaging</em>: average the one-vs-all metrics equally across all classes
 <ul>
-<li>Recall: <span class="math inline">\(\frac{0.66 + 0.72 + 0.41}{3} \approx 0.60\)</span></li>
+<li>Recall: <span class="math inline">\(\frac{0.65 + 0.72 + 0.41 }{3} \approx 0.57\)</span></li>
 </ul></li>
 <li><em>Macro-weighted averaging</em>: same but weight each class by its size
 <ul>
-<li>Recall: <span class="math inline">\(\frac{430 \times 0.66 + 779 \times 0.72 + 543 \times 0.41}{1752} \approx 0.61\)</span></li>
+<li>Recall: <span class="math inline">\(\frac{(0.65 * 430 + 0.72 * 773 + 0.41 * 543)/(430+773+543)} \approx 0.58\)</span></li>
 </ul></li>
 <li><em>Micro-averaging</em>: pool all TP / FP / FN counts across classes, then compute the metric (Useful when you have multi-label classification)
 <ul>
-<li>Recall: <span class="math inline">\(\frac{285 + 559 + 221}{430 + 779 + 543} \approx 0.61\)</span></li>
+<li>Recall: <span class="math inline">\(\frac{279+557+181}{279+557+181+127+24+65+151+24+181} \approx 0.64\)</span></li>
 <li>Note: micro recall = micro precision = accuracy for multiclass</li>
 </ul></li>
 </ul>
