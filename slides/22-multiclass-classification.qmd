@@ -48,6 +48,7 @@ Open `slides-22-practice.ipynb` and run the **Setup** and **Visualize Response**
 -   **Multinomial logistic regression**: model log-odds of each class $k$ vs. a reference class $K$
 $$\log \frac{P(\text{class } k \mid X)}{P(\text{class } K \mid X)} = \beta_{0k} + \beta_{1k} X_1 + \cdots + \beta_{pk} X_p$$
 -   One set of coefficients $(\beta_{0k}, \ldots, \beta_{pk})$ per class, except the reference
+    -   Why don't we need coefficients for the reference class?
 -   sklearn's `LogisticRegression` handles this automatically
 
 . . .
@@ -74,7 +75,7 @@ Run the **Confusion Matrix** cell.
 -   Rows = true class, columns = predicted class
 -   The diagonal = correct predictions
 -   Off-diagonal cells = specific misclassification patterns
--   Discussion: which class is hardest to predict?
+-   Which class is hardest to predict?
 
 # Evaluating Multiclass Models
 
@@ -100,8 +101,6 @@ Run the **Confusion Matrix** cell.
 
 . . .
 
--   
-
 Run the **Per-Class Recall** cell.
 
 ## Solution 2: Averaging {.smaller}
@@ -110,7 +109,7 @@ Run the **Per-Class Recall** cell.
     +   Recall: $\frac{0.66 + 0.72 + 0.41}{3} \approx 0.60$
 -   *Macro-weighted averaging*: same but weight each class by its size
     +   Recall: $\frac{430 \times 0.66 + 779 \times 0.72 + 543 \times 0.41}{1752} \approx 0.61$
--   *Micro-averaging*: pool all TP / FP / FN counts across classes, then compute the metric
+-   *Micro-averaging*: pool all TP / FP / FN counts across classes, then compute the metric (Useful when you have multi-label classification)
     +   Recall: $\frac{285 + 559 + 221}{430 + 779 + 543} \approx 0.61$
     +   Note: micro recall = micro precision = accuracy for multiclass
 
@@ -138,7 +137,7 @@ Run the **Micro Averaging** cell.
 -   Aggregates TP, FP, FN across all classes before computing the metric
 -   For standard multiclass (not multi-label): micro recall = micro precision = accuracy
 
-## Discussion {.smaller}
+<!-- ## Discussion {.smaller}
 
 -   Why do we compute averages / means in the first place?
 
@@ -147,7 +146,7 @@ Run the **Micro Averaging** cell.
 -   How would **heavily imbalanced classes** impact each type of averaging?
     +   Which type(s) weight each class equally regardless of balance?
     +   Which type(s) favor larger classes?
-    +   Does that mean one is always better than the others?
+    +   Does that mean one is always better than the others? -->
 
 # Probability-Based Metrics
 
@@ -156,18 +155,28 @@ Run the **Micro Averaging** cell.
 -   For binary classification we used ROC curves and AUC
 -   Similar ideas apply to multiclass:
     +   **One-vs-all ROC curves**: plot a separate curve for each class treated as "positive"
-    +   **Macro-averaged AUC**: average the one-vs-all AUC values equally
-    +   **Macro-weighted AUC**: weight by class size
+    +   **One-vs-one ROC curves**: plot a separate curve for each pair of classes treated as "positive" vs. "negative"
+    +   **Macro-averaged ROC/AUC**: average the one-vs-all AUC values equally
+    +   **Macro-weighted ROC/AUC**: weight by class size
+    +   **Micro-weighted ROC/AUC**: compute micro-averaged TPs/FPs/FNs across all classes, then compute AUC
     +   **Hand and Till AUC**: pairwise comparisons between all class pairs, then average
-    +   No micro-averaging for AUC
 
 ## One-vs-All ROC Curves {.smaller}
-
-Run the **ROC Curves** cell.
 
 -   One curve per class: how well does the model separate that class from all others?
 -   Curves close to the top-left corner = good separation
 -   Which class is best separated? Which is worst?
+   
+## One-vs-One ROC Curves {.smaller}
+
+
+-   One curve per pair of classes: how well does the model separate these two classes?
+-   Curves close to the top-left corner = good separation
+-   Which two classes are hardest to separate?
+
+## Averaging to get Overall ROC/AUC
+
+- Can micro or macro average the one-vs-all ROC curves and AUCs
 
 ## AUC Variants {.smaller}
 
@@ -177,6 +186,8 @@ Run the **AUC Variants** cell.
 |---------|--------------------------|--------|
 | Macro | `multi_class='ovr', average='macro'` | Equal per class |
 | Macro-weighted | `multi_class='ovr', average='weighted'` | Proportional to class size |
+| Micro-weighted | `multi_class='ovr', average='micro'` | Aggregated across all classes |
+
 | Hand and Till | `multi_class='ovo'` | Pairwise, equal weight |
 
 ## Hand and Till AUC {.smaller}
@@ -186,12 +197,12 @@ Run the **AUC Variants** cell.
     +   Compute AUC for every **pair** of classes (one vs. one)
     +   Average across all $\binom{K}{2}$ pairs
 -   Measures overall pairwise class separation, regardless of class sizes
-
+<!-- 
 ## Discussion
 
 -   How would heavily imbalanced classes impact each type of AUC averaging?
     +   Which metric(s) would be most misleading with a dominant majority class?
-    +   When would you prefer Hand and Till over macro-averaged AUC?
+    +   When would you prefer Hand and Till over macro-averaged AUC? -->
 
 # Class Imbalance
 
@@ -215,6 +226,28 @@ Run the **AUC Variants** cell.
     +   Effective identification of the minority class (high recall)?
     +   Low false-positive rate?
 
+# Recap
+
+## Key Takeaways {.smaller}
+
+**Multiclass classification:**
+
+-   Multinomial logistic regression extends binary logistic regression — one set of coefficients per class relative to a reference
+-   All methods we have covered (KNN, trees, random forests, boosting) handle multiclass natively
+
 . . .
 
--   Discussion: think of scenarios where each goal is the most important
+**Evaluating multiclass models:**
+
+-   **Confusion matrix**: rows = true class, columns = predicted class; diagonal = correct predictions
+-   **One-vs-all**: treat each class as "positive" vs. all others; compute precision, recall, F1 per class
+-   **Averaging strategies**: macro (equal weight per class), macro-weighted (weight by class size), micro (pool all TP/FP/FN counts)
+
+. . .
+
+**Probability-based metrics:**
+
+-   **OvA ROC curves**: one curve per class; AUC measures how well the model separates that class from all others
+-   **OvO ROC curves**: one curve per class pair; directly measures pairwise separability
+-   **Hand and Till AUC**: average pairwise AUC across all $\binom{K}{2}$ pairs — robust to class imbalance
+
