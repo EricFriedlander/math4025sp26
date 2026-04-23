@@ -205,7 +205,6 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting Started</a>
   <ul class="collapse">
-  <li><a href="#teams-rules" id="toc-teams-rules" class="nav-link" data-scroll-target="#teams-rules">Teams &amp; Rules</a></li>
   <li><a href="#data-academic_success" id="toc-data-academic_success" class="nav-link" data-scroll-target="#data-academic_success">Data: <code>academic_success</code></a></li>
   </ul></li>
   <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis">Exploratory Data Analysis</a>
@@ -274,15 +273,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="getting-started" class="level1">
 <h1>Getting Started</h1>
-<section id="teams-rules" class="level2">
-<h2 class="anchored" data-anchor-id="teams-rules">Teams &amp; Rules</h2>
-<p>You can find your team for this assignment on Canvas in the <strong>People</strong> section. The group set is called <strong>HW9</strong>. Your group will consist of 2-3 people and has been randomly generated. The GitHub assignment can be found <a href="GITHUB_CLASSROOM_LINK">here</a>. Rules:</p>
-<ol type="1">
-<li>You are all responsible for understanding the work that your team turns in.</li>
-<li>All team members must make roughly equal contributions to the homework.</li>
-<li>Any work completed by a team member must be committed and pushed to GitHub by that person.</li>
-</ol>
-</section>
+<p>The GitHub assignment can be found <a href="GITHUB_CLASSROOM_LINK">here</a>. Rules:</p>
 <section id="data-academic_success" class="level2">
 <h2 class="anchored" data-anchor-id="data-academic_success">Data: <code>academic_success</code></h2>
 <p>We will be using a data set from the UCI Machine Learning Repository. From the website:</p>
@@ -295,7 +286,7 @@ ul.task-list li input[type="checkbox"] {
 <li><code>Enrolled</code>: the student graduated but took extra time</li>
 <li><code>Graduate</code>: the student graduated on time</li>
 </ul>
-<p>More information (such as feature descriptions) can be found on the <a href="https://archive.ics.uci.edu/dataset/697/predict+students+dropout+and+academic+success">website here</a>. Download the data from that page and place the CSV file in your repo’s <code>data/</code> folder.</p>
+<p>More information (such as feature descriptions) can be found on the <a href="https://archive.ics.uci.edu/dataset/697/predict+students+dropout+and+academic+success">website here</a>.</p>
 </section>
 </section>
 <section id="exploratory-data-analysis" class="level1">
@@ -312,8 +303,8 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Load the data set. Note that the file is delimited by semicolons (<code>;</code>) instead of commas — pass <code>sep=';'</code> to <code>pd.read_csv</code>. After loading, clean up the column names (e.g., convert to lowercase and replace spaces with underscores). Make sure to read the documentation so that you are treating the appropriate columns as categorical rather than numeric. Do any other cleaning you think is necessary.</p>
-<p>Once that is done, split your data into training and test sets. Use <code>stratify=y</code> to preserve the class distribution.</p>
+<p>Load the data set. You can either download the data from that page and place the CSV file in your repo’s <code>data/</code> folder and load it manually or you can import directly by clicking the “IMPORT IN PYTHON” button on the website and following the directions. Note that the file is delimited by semicolons (<code>;</code>) instead of commas. After loading, clean up the column names (e.g., convert to lowercase and replace spaces with underscores). Make sure to read the documentation so that you are treating the appropriate columns as categorical rather than numeric. Do any other cleaning you think is necessary.</p>
+<p>Once that is done, split your data into training and test sets using a stratified split on the response variable.</p>
 </div>
 </div>
 </section>
@@ -348,7 +339,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Generate a preprocessing pipeline using <code>ColumnTransformer</code> and <code>Pipeline</code> that can be used with a gradient boosted tree. Unlike linear models, decision trees do not require normalization. What preprocessing steps are still necessary?</p>
+<p>Generate a preprocessing pipeline using <code>ColumnTransformer</code> and <code>Pipeline</code> that can be used with a gradient boosted tree. Unlike linear models, decision trees do not require scaling. What preprocessing steps are still necessary?</p>
 </div>
 </div>
 </section>
@@ -383,7 +374,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Compute all of the metrics you described in Exercise 2. You may find <code>classification_report</code> and <code>roc_auc_score(multi_class='ovr')</code> from <code>sklearn.metrics</code> useful.</p>
+<p>Compute all of the metrics you described in Exercise 2.</p>
 <p>Our goal is to identify any student in the <code>Dropout</code> or <code>Enrolled</code> categories so that we can target interventions (e.g.&nbsp;extra advising, tutoring, mentorship, etc.) towards these students. It’s not a big deal if students that were going to graduate on time also get these interventions because it doesn’t harm students to give them some extra support they don’t need. That said, the school’s budget isn’t infinite so we’d like to minimize the number of students who get unnecessary support, as long as the students who do need it are still getting it. Based on this goal, which metrics would you be most invested in? How does the model perform on these metrics?</p>
 </div>
 </div>
@@ -403,7 +394,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Use <code>GridSearchCV</code> with <code>RepeatedStratifiedKFold</code> to tune <code>n_estimators</code> (the number of trees) and choose your best model. You may try to tune more parameters if you’d like, but this may take a long time to run. Try to optimize over a metric that best aligns with the goal outlined in Exercise 5. Once you choose your best model, fit it to the full training data. <strong>Tip:</strong> Use caching or save your CV results so you don’t re-run cross-validation every time the document is rendered.</p>
+<p>Use <code>GridSearchCV</code> with <code>RepeatedStratifiedKFold</code> to tune <code>n_estimators</code> (the number of trees) and choose your best model. You may try to tune more parameters if you’d like, but this may take a long time to run. <strong>Tip:</strong> Use caching or save your CV results so you don’t re-run cross-validation every time the document is rendered.</p>
 </div>
 </div>
 </section>
@@ -419,7 +410,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Generate and interpret a variable importance plot. Use the <code>feature_importances_</code> attribute of your fitted <code>GradientBoostingClassifier</code> and plot the top features using <code>plotnine</code>.</p>
+<p>Generate and interpret a variable importance plot.</p>
 </div>
 </div>
 </section>
