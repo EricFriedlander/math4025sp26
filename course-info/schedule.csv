@@ -39,11 +39,9 @@ x,12,4/21/2026,Job App, Generate Draft of Website,,[website-directions](jobs/bui
 x,12,4/23/2026,Lecture,Boosting,[Click here for readings](prepare/prepare-21.html),[21-boosting](slides/21-boosting.html),[video-21](https://youtu.be/nvX3ls18h2A),
 x,12,4/23/2026,Lecture,Multiclass Classification,[Click here for readings](prepare/prepare-22.html),[22-multiclass-classification](slides/22-multiclass-classification.html),[video-22](https://youtu.be/9lEtZTGk70E),
 x,13,4/28/2026,Homework,HW 8: Classification Trees & Random Forests,,,,[08-hw-classification-trees-rf](hw/08-hw-classification-trees-rf.html),
-,12,4/23/2026,Lecture,PCA,,,,,
-,12,4/30/2026,Homework,HW 9: Boosting and Multiclass,,,,,
-,13,4/30/2026,Lecture,PCA Continued,,,,,
-x,13,4/30/2026,Group Project,Practice Presentation,,,,[project-instructions](hw/08-hw-classification-trees-rf.html),
+x,13,4/28/2026,Group Project,Practice Presentation,,,,[project-instructions](hw/08-hw-classification-trees-rf.html),
 x,13,4/30/2026,Group Project,Presentation,,,,[project-instructions](project/project-instructions.html),
+x,14,,5/4/2026,Homework, HW 9: Boosting and Multiclass,,,[09-hw-boosting-multiclass](hw/09-hw-boosting-multiclass.html),
 x,14,5/4/2026,Group Project,Team Contribution Report,,,,[project-instructions](project/project-instructions.html#team-contribution-report-submitted-individually-on-canvas), Submitted Individually on Canvas
 x,14,5/5/2026,Hack-a-thon,,,,,,
 x,14,5/7/2026,Hack-a-thon,,,,,,

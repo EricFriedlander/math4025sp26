@@ -17,13 +17,7 @@ In this assignment, you will...
 
 # Getting Started
 
-## Teams & Rules
-
-You can find your team for this assignment on Canvas in the **People** section. The group set is called **HW9**. Your group will consist of 2-3 people and has been randomly generated. The GitHub assignment can be found [here](GITHUB_CLASSROOM_LINK). Rules:
-
-1.  You are all responsible for understanding the work that your team turns in.
-2.  All team members must make roughly equal contributions to the homework.
-3.  Any work completed by a team member must be committed and pushed to GitHub by that person.
+ The GitHub assignment can be found [here](GITHUB_CLASSROOM_LINK). Rules:
 
 ## Data: `academic_success`
 
@@ -37,16 +31,16 @@ Our goal will be to predict the column `Target` which contains three different f
 -   `Enrolled`: the student graduated but took extra time
 -   `Graduate`: the student graduated on time
 
-More information (such as feature descriptions) can be found on the [website here](https://archive.ics.uci.edu/dataset/697/predict+students+dropout+and+academic+success). Download the data from that page and place the CSV file in your repo's `data/` folder.
+More information (such as feature descriptions) can be found on the [website here](https://archive.ics.uci.edu/dataset/697/predict+students+dropout+and+academic+success).
 
 # Exploratory Data Analysis
 
 ## Exercise 1
 
 ::: {.callout-tip title="Question"}
-Load the data set. Note that the file is delimited by semicolons (`;`) instead of commas — pass `sep=';'` to `pd.read_csv`. After loading, clean up the column names (e.g., convert to lowercase and replace spaces with underscores). Make sure to read the documentation so that you are treating the appropriate columns as categorical rather than numeric. Do any other cleaning you think is necessary.
+Load the data set. You can either download the data from that page and place the CSV file in your repo's `data/` folder and load it manually or you can import directly by clicking the "IMPORT IN PYTHON" button on the website and following the directions. Note that the file is delimited by semicolons (`;`) instead of commas. After loading, clean up the column names (e.g., convert to lowercase and replace spaces with underscores). Make sure to read the documentation so that you are treating the appropriate columns as categorical rather than numeric. Do any other cleaning you think is necessary.
 
-Once that is done, split your data into training and test sets. Use `stratify=y` to preserve the class distribution.
+Once that is done, split your data into training and test sets using a stratified split on the response variable.
 :::
 
 ## Exercise 2
@@ -60,7 +54,7 @@ Describe the different metrics and strategies you might use to evaluate how a mo
 ## Exercise 3
 
 ::: {.callout-tip title="Question"}
-Generate a preprocessing pipeline using `ColumnTransformer` and `Pipeline` that can be used with a gradient boosted tree. Unlike linear models, decision trees do not require normalization. What preprocessing steps are still necessary?
+Generate a preprocessing pipeline using `ColumnTransformer` and `Pipeline` that can be used with a gradient boosted tree. Unlike linear models, decision trees do not require scaling. What preprocessing steps are still necessary?
 :::
 
 # Boosted Tree
@@ -74,7 +68,7 @@ Using all of the default settings in `GradientBoostingClassifier` from `sklearn.
 ## Exercise 5
 
 ::: {.callout-tip title="Question"}
-Compute all of the metrics you described in Exercise 2. You may find `classification_report` and `roc_auc_score(multi_class='ovr')` from `sklearn.metrics` useful.
+Compute all of the metrics you described in Exercise 2.
 
 Our goal is to identify any student in the `Dropout` or `Enrolled` categories so that we can target interventions (e.g. extra advising, tutoring, mentorship, etc.) towards these students. It's not a big deal if students that were going to graduate on time also get these interventions because it doesn't harm students to give them some extra support they don't need. That said, the school's budget isn't infinite so we'd like to minimize the number of students who get unnecessary support, as long as the students who do need it are still getting it. Based on this goal, which metrics would you be most invested in? How does the model perform on these metrics?
 :::
@@ -84,13 +78,13 @@ Our goal is to identify any student in the `Dropout` or `Enrolled` categories so
 ## Exercise 6
 
 ::: {.callout-tip title="Question"}
-Use `GridSearchCV` with `RepeatedStratifiedKFold` to tune `n_estimators` (the number of trees) and choose your best model. You may try to tune more parameters if you'd like, but this may take a long time to run. Try to optimize over a metric that best aligns with the goal outlined in Exercise 5. Once you choose your best model, fit it to the full training data. **Tip:** Use caching or save your CV results so you don't re-run cross-validation every time the document is rendered.
+Use `GridSearchCV` with `RepeatedStratifiedKFold` to tune `n_estimators` (the number of trees) and choose your best model. You may try to tune more parameters if you'd like, but this may take a long time to run. **Tip:** Use caching or save your CV results so you don't re-run cross-validation every time the document is rendered.
 :::
 
 ## Exercise 7
 
 ::: {.callout-tip title="Question"}
-Generate and interpret a variable importance plot. Use the `feature_importances_` attribute of your fitted `GradientBoostingClassifier` and plot the top features using `plotnine`.
+Generate and interpret a variable importance plot. 
 :::
 
 ## Exercise 8
