@@ -2533,7 +2533,18 @@
     "href": "jobs/job-app-1-resources.html",
     "title": "Job Application Guide",
     "section": "",
-    "text": "Using Quarto & GitHub Pages (Recommended)\nUsing Quarto & Netlify\nUsing Quarto, Netlify, & GitHub",
+    "text": "Your final submission should contain the following materials:\n\nA website containing a sample data analysis\nA Resume (PDF)\nA Cover Letter (PDF)\nA GitHub repository containing your sample data analysis code and any other relevant materials (e.g. data, slides, etc.)",
+    "crumbs": [
+      "Job Applications & Interviews",
+      "Job Application Instructions"
+    ]
+  },
+  {
+    "objectID": "jobs/job-app-1-resources.html#final-submission",
+    "href": "jobs/job-app-1-resources.html#final-submission",
+    "title": "Job Application Guide",
+    "section": "",
+    "text": "Your final submission should contain the following materials:\n\nA website containing a sample data analysis\nA Resume (PDF)\nA Cover Letter (PDF)\nA GitHub repository containing your sample data analysis code and any other relevant materials (e.g. data, slides, etc.)",
     "crumbs": [
       "Job Applications & Interviews",
       "Job Application Instructions"
@@ -2543,8 +2554,8 @@
     "objectID": "jobs/job-app-1-resources.html#building-a-website",
     "href": "jobs/job-app-1-resources.html#building-a-website",
     "title": "Job Application Guide",
-    "section": "",
-    "text": "Using Quarto & GitHub Pages (Recommended)\nUsing Quarto & Netlify\nUsing Quarto, Netlify, & GitHub",
+    "section": "Building a Website",
+    "text": "Building a Website\n\nUsing Quarto & GitHub Pages (Recommended)\nUsing Quarto & Netlify\nUsing Quarto, Netlify, & GitHub",
     "crumbs": [
       "Job Applications & Interviews",
       "Job Application Instructions"
@@ -2577,7 +2588,7 @@
     "href": "jobs/job-app-1-rubric.html",
     "title": "Job Application 1 Rubric",
     "section": "",
-    "text": "You overall job application grade will be 15% from the resume, 15% from the cover letter, and 70% from the data analysis.\nTip: When the word “relevant” is used, look at the job advertisement you submitted to decide what is relevant.\n\n\nBefore submitting, verify:\n\nJob advertisement submitted as a PDF on Canvas\nResume saved and submitted as a PDF (≤ 1 page)\nCover letter saved and submitted as a PDF\nSample analysis is published on a GitHub Pages website\nEricFriedlander is added as a collaborator on your GitHub repository\nGitHub Pages site URL submitted on Canvas\nGitHub repository URL submitted on Canvas\nAll materials are tailored to your chosen job ad\nAll materials are free of typos and grammatical errors\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCriteria\nExcellent (4)\nGood (3)\nAverage (2)\nNeeds Improvement (1)\n\n\n\n\nContact Information\nComplete, professional, and easy to find.\nComplete and professional.\nComplete but not easily found.\nIncomplete or unprofessional.\n\n\nSkills\nComprehensive list of relevant technical skills, including proficiency levels.\nGood list of relevant technical skills.\nAdequate list, but missing some key skills.\nLimited list of relevant skills.\n\n\nExperience and/or Projects\nDetailed descriptions of relevant experience, with quantifiable achievements. Detailed descriptions of relevant projects, with clear outcomes and technologies used.\nGood descriptions of relevant experience, with some quantifiable achievements. Adequate descriptions of projects, but lacks detail on outcomes or technologies used.\nAdequate descriptions, but lacks quantifiable achievements.\nLimited descriptions, with few or no quantifiable achievements and few or no relevant projects listed.\n\n\nEducation\nRelevant degrees or certifications, with details on coursework or projects.\nRelevant degrees or certifications.\nAdequate education listed, but lacks detail.\nLimited education listed, with little relevance to the role.\n\n\nSoft Skills\nClear evidence of communication, teamwork, and problem-solving skills.\nGood evidence of soft skills.\nAdequate evidence, but lacks detail.\nLimited evidence of soft skills.\n\n\nFormatting\nProfessional, clean, and easy to read, with consistent formatting.\nProfessional and easy to read, with minor formatting inconsistencies.\nAdequate formatting, but some sections are hard to read.\nPoor formatting, with multiple inconsistencies.\n\n\nOverall Impression\nStrong candidate with a well-rounded resume that stands out.\nGood candidate with a solid resume.\nAdequate candidate, but resume lacks some key elements.\nWeak candidate, with a resume that needs significant improvement.",
+    "text": "You overall job application grade will be 15% from the resume, 15% from the cover letter, and 70% from the data analysis.\nTip: When the word “relevant” is used, look at the job advertisement you submitted to decide what is relevant.\n\n\nBefore submitting, verify:\n\nJob advertisement submitted as a PDF on Canvas\nSample analysis is published on a GitHub Pages website\nEricFriedlander is added as a collaborator on your GitHub repository\nGitHub Pages site URL submitted on Canvas\nGitHub repository URL submitted on Canvas\nResume saved and submitted as a PDF (≤ 1 page), this can be uploaded to Canvas or included in your website\nCover letter saved and submitted as a PDF, this can be uploaded to Canvas or included in your website\nAll materials are tailored to your chosen job ad\nAll materials are free of typos and grammatical errors\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCriteria\nExcellent (4)\nGood (3)\nAverage (2)\nNeeds Improvement (1)\n\n\n\n\nContact Information\nComplete, professional, and easy to find.\nComplete and professional.\nComplete but not easily found.\nIncomplete or unprofessional.\n\n\nSkills\nComprehensive list of relevant technical skills, including proficiency levels.\nGood list of relevant technical skills.\nAdequate list, but missing some key skills.\nLimited list of relevant skills.\n\n\nExperience and/or Projects\nDetailed descriptions of relevant experience, with quantifiable achievements. Detailed descriptions of relevant projects, with clear outcomes and technologies used.\nGood descriptions of relevant experience, with some quantifiable achievements. Adequate descriptions of projects, but lacks detail on outcomes or technologies used.\nAdequate descriptions, but lacks quantifiable achievements.\nLimited descriptions, with few or no quantifiable achievements and few or no relevant projects listed.\n\n\nEducation\nRelevant degrees or certifications, with details on coursework or projects.\nRelevant degrees or certifications.\nAdequate education listed, but lacks detail.\nLimited education listed, with little relevance to the role.\n\n\nSoft Skills\nClear evidence of communication, teamwork, and problem-solving skills.\nGood evidence of soft skills.\nAdequate evidence, but lacks detail.\nLimited evidence of soft skills.\n\n\nFormatting\nProfessional, clean, and easy to read, with consistent formatting.\nProfessional and easy to read, with minor formatting inconsistencies.\nAdequate formatting, but some sections are hard to read.\nPoor formatting, with multiple inconsistencies.\n\n\nOverall Impression\nStrong candidate with a well-rounded resume that stands out.\nGood candidate with a solid resume.\nAdequate candidate, but resume lacks some key elements.\nWeak candidate, with a resume that needs significant improvement.",
     "crumbs": [
       "Job Applications & Interviews",
       "Job Application Rubric"
@@ -2588,7 +2599,7 @@
     "href": "jobs/job-app-1-rubric.html#submission-checklist",
     "title": "Job Application 1 Rubric",
     "section": "",
-    "text": "Before submitting, verify:\n\nJob advertisement submitted as a PDF on Canvas\nResume saved and submitted as a PDF (≤ 1 page)\nCover letter saved and submitted as a PDF\nSample analysis is published on a GitHub Pages website\nEricFriedlander is added as a collaborator on your GitHub repository\nGitHub Pages site URL submitted on Canvas\nGitHub repository URL submitted on Canvas\nAll materials are tailored to your chosen job ad\nAll materials are free of typos and grammatical errors",
+    "text": "Before submitting, verify:\n\nJob advertisement submitted as a PDF on Canvas\nSample analysis is published on a GitHub Pages website\nEricFriedlander is added as a collaborator on your GitHub repository\nGitHub Pages site URL submitted on Canvas\nGitHub repository URL submitted on Canvas\nResume saved and submitted as a PDF (≤ 1 page), this can be uploaded to Canvas or included in your website\nCover letter saved and submitted as a PDF, this can be uploaded to Canvas or included in your website\nAll materials are tailored to your chosen job ad\nAll materials are free of typos and grammatical errors",
     "crumbs": [
       "Job Applications & Interviews",
       "Job Application Rubric"
