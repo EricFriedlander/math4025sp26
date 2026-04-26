@@ -135,7 +135,7 @@ The final course grade will be calculated as follows:
 | Job Application            | 20%        |
 | Job Interview              | 20%        |
 | Midterm Exam               | 15%        |
-| Hack-a-thon & Presentation | 10%        |
+| Hack-a-thon                | 10%        |
 | Final Project              | 15%        |
 
 

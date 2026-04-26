@@ -1,0 +1,130 @@
+---
+title: "Hack-A-Thon Instructions"
+---
+
+# GreenFin Capital: Loan Outcome Prediction
+
+GreenFin Capital is a fintech startup that offers personal loans to borrowers who may not qualify for traditional bank financing. Unlike conventional lenders, GreenFin uses machine learning to evaluate applications in real time, aiming to extend credit responsibly to a broader population.
+
+To do this well, GreenFin needs accurate models. An applicant who will repay on time should be approved and offered a competitive rate. An applicant who is likely to default should either be declined or offered a smaller loan. Making the wrong call in either direction costs the company money.
+
+You've just joined GreenFin's data science team. Your first assignment is to build a classifier that predicts the repayment outcome for each loan in a held-out test set.
+
+## Project Overview
+
+GreenFin has provided two data files drawn from their historical lending records:
+
+- `greenfin_train.csv` contains **28,000** rows representing past loans, with **15 columns** of borrower and loan characteristics, plus the outcome column `loan_outcome`.
+- `greenfin_test.csv` contains **12,000** rows with the same 15 feature columns, but `loan_outcome` has been withheld. These are the loans you must predict.
+
+The target variable, `loan_outcome`, takes one of three values:
+
+| Value | Meaning |
+|-------|---------|
+| `0`   | **On-Time** — borrower repaid on schedule |
+| `1`   | **Delinquent** — borrower made payments, but repeatedly late |
+| `2`   | **Default** — borrower stopped making payments |
+
+## Deliverables
+
+There are two deliverables for this project:
+
+1. **An HTML report** describing your modeling process. This should follow the same guidelines as the [Hack-A-Thon Report Guidelines](/jobs/job-app-2-resources.qmd). Push your `.qmd` source file and the rendered `.html` to the [GitHub Classroom assignment](). This is also where you can download the data files.
+
+2. **A `.csv` file**, uploaded to Canvas, containing your predictions for the 12,000 loans in the test set. Your file should have **two columns**: `loan_id` and `loan_outcome`, matching the loan IDs from `greenfin_test.csv` in the same row order. You can write this in Python with:
+
+```python
+import pandas as pd
+
+# df_test is your test dataframe; predictions is a list or array of 0s, 1s, and 2s
+submission = pd.DataFrame({
+    "loan_id": df_test["loan_id"],
+    "loan_outcome": predictions
+})
+submission.to_csv("my_predictions.csv", index=False)
+```
+
+Your submission will be evaluated primarily on **predictive accuracy** — the fraction of test loans you correctly classify. Writing quality and depth of analysis are also assessed, as described below.
+
+Not all columns in the data are immediately usable. You will need to handle non-numerical columns, address missing data, and think carefully about which features to include and how to represent them. Thoughtful feature engineering can substantially improve performance.
+
+## Grading
+
+Your submission will be graded across three components:
+
+| Component | Weight |
+|-----------|--------|
+| **Predictive Accuracy** | 60% |
+| **Writing Quality** | 20% |
+| **Data Analysis** | 20% |
+
+Predictive accuracy is the primary criterion: your test accuracy will be compared against your classmates' and graded accordingly. The writing and data analysis components follow the same rubric as previous assignments — a well-organized, clearly written report that explains your methodology and justifies your choices.
+
+## Notes
+
+The GreenFin dataset was constructed specifically for this course and does not exist elsewhere on the internet. You are welcome to search for general advice about machine learning for multi-class classification, but any approach lifted directly from a published analysis of this specific dataset constitutes academic dishonesty and will result in a zero. **If you have questions about the data or the task, please ask the instructor.**
+
+## Description of Variables
+
+`loan_id`: A unique alphanumeric identifier assigned to each loan application. This column is provided for tracking purposes.
+
+`age`: Age of the primary borrower in years at the time of application.
+
+`annual_income`: Gross annual income reported by the borrower, in dollars.
+
+`employment_years`: Number of years the borrower has been employed at their current job. Some borrowers did not report this, so the column contains missing values.
+
+`credit_score`: FICO credit score at the time of application, ranging from 300 (poor) to 850 (excellent).
+
+`loan_amount`: Total loan amount requested, in dollars.
+
+`loan_term_months`: Agreed repayment term in months. Takes one of five values: 12, 24, 36, 48, or 60.
+
+`debt_to_income`: The ratio of the borrower's total monthly debt payments to their gross monthly income, expressed as a decimal (e.g., 0.25 means 25%). Also called DTI.
+
+`num_credit_lines`: Number of open credit accounts on the borrower's credit report at application time. Some values are missing.
+
+`num_late_payments`: Number of late payments recorded on the borrower's credit report in the 24 months prior to application.
+
+`has_mortgage`: Whether the borrower currently holds a mortgage. Encoded as 1 (yes) or 0 (no).
+
+`home_ownership`: The borrower's current housing situation. Takes one of three values: `Own`, `Rent`, or `Mortgage`.
+
+`loan_purpose`: The stated primary purpose of the loan. Takes one of five values: `Debt Consolidation`, `Home Improvement`, `Education`, `Business`, or `Other`.
+
+`state_region`: Geographic region of the borrower's primary address. Takes one of five values: `Northeast`, `Southeast`, `Midwest`, `Southwest`, or `West`.
+
+`monthly_obligations`: The borrower's total recurring monthly debt obligations in dollars, not counting the new GreenFin loan.
+
+## Evaluation Guidelines
+
+Your submission will be assessed in each of the following areas as Outstanding, Good, Acceptable, Needs Work, or Inadequate. The questions below serve as a guide.
+
+### Predictive Accuracy
+
+- Are your predictions submitted in the correct format (a CSV with `loan_id` and `loan_outcome`)?
+- Do your predictions cover all 12,000 rows in the test set?
+- Are appropriate modeling techniques used given the data and the task?
+- How accurate are your predictions on the held-out test set?
+- How do your predictions rank relative to your classmates?
+
+### Writing Quality
+
+- Is the report well-organized and easy to follow?
+- Is the modeling process described in a clear, logical, and engaging manner?
+- Are modeling choices clearly justified?
+- Is the report free of spelling and grammatical errors?
+- Is the report written for an appropriate technical audience?
+
+### Data Analysis
+
+- Are statistical and machine learning methods described accurately?
+- Are appropriate predictor variables used? Are exclusions justified?
+- Are data cleaning and transformation decisions sensible and well-explained?
+- How was the model chosen and validated (e.g., cross-validation)?
+- If applicable, how were model parameters tuned?
+
+## Submitting Your Work
+
+1. Push your `.qmd` and rendered `.html` report to GitHub Classroom.
+2. Upload your predictions CSV to [Canvas](https://cofi.instructure.com/courses/17021/assignments/213175).

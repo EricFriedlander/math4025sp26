@@ -2,6 +2,15 @@
 title: "Job Application Guide"
 ---
 
+## Final Submission
+
+Your final submission should contain the following materials:
+
+- A website containing a sample data analysis
+- A Resume (PDF)
+- A Cover Letter (PDF)
+- A GitHub repository containing your sample data analysis code and any other relevant materials (e.g. data, slides, etc.)
+
 ## Building a Website
 
 -   [Using Quarto & GitHub Pages (Recommended)](https://quarto.org/docs/publishing/github-pages.html)

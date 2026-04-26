@@ -13,12 +13,12 @@ Tip: When the word "relevant" is used, look at **the job advertisement you submi
 Before submitting, verify:
 
 -   [ ] Job advertisement submitted as a PDF on Canvas
--   [ ] Resume saved and submitted as a PDF (≤ 1 page)
--   [ ] Cover letter saved and submitted as a PDF
 -   [ ] Sample analysis is published on a GitHub Pages website
 -   [ ] `EricFriedlander` is added as a collaborator on your GitHub repository
 -   [ ] GitHub Pages site URL submitted on Canvas
 -   [ ] GitHub repository URL submitted on Canvas
+-   [ ] Resume saved and submitted as a PDF (≤ 1 page), this can be uploaded to Canvas or included in your website
+-   [ ] Cover letter saved and submitted as a PDF, this can be uploaded to Canvas or included in your website
 -   [ ] All materials are tailored to your chosen job ad
 -   [ ] All materials are free of typos and grammatical errors
 

@@ -1,5 +1,5 @@
 ---
-title: "Job Interview Resources"
+title: "Job Interview Information"
 ---
 
 As discussed at the beginning of the course, you will complete a job interview during Finals Week, worth 20% of your overall course grade. This document will guide you through preparing for it.
@@ -12,18 +12,20 @@ As discussed at the beginning of the course, you will complete a job interview d
 
 Your interview will mimic a technical interview with a hiring manager. It will last about one hour and have the following format:
 
-1.  (5 minutes) Your interview will begin with the following two prompts:
+1.  (~5 minutes) Your interview will begin with the following two prompts:
     +   Tell me about yourself.
-    +   Why are you interested in this role?
-2.  (10 minutes) You will be asked questions about your resume, asking you describe the details of some of the projects or jobs you have listed. If you don't have any projects or job's that are relevant you will be asked questions about your previous coursework. In real life, it is unlikely that you'd make it to this interview without anything relevant listed on your resume.
-3.  (10 minutes) You will be asked questions about the sample data analysis you turned in. For example, "Why do you choose method X instead of method Y?"
-4.  (35 minutes) You will be asked general technical questions related to the role. Each of these questions will fall into one of the following categories:
+    +   (Referencing the job advertisement you submitted) Why are you interested in this company and role?
+    +   One question off of the **Sample Interview Questions** on the [Career Prep Resources Canvas Page.](https://cofi.instructure.com/courses/14763/pages/career-prep-resources)
+2.  (~10 minutes) You will be asked questions about your resume, asking you describe the details of some of the projects or jobs you have listed. If you don't have any projects or job's that are relevant you will be asked questions about your previous coursework. In real life, it is unlikely that you'd make it to this interview without anything relevant listed on your resume.
+3.  (~10 minutes) You will be asked questions about the sample data analysis you turned in. For example, "Why do you choose method X instead of method Y?", "Explain what this code is doing.", "What are some limitations of your analysis?", "What are some next steps you would take if you had more time?" etc.
+4.  (~30 minutes) You will be asked general technical questions related to the machine learning. Each of these questions will fall into one of the following categories:
     +   Questions asking you to explain something you did on your homework.
     +   Questions similar in style to those asked in Chapter 5-8 of [this book](https://huyenchip.com/ml-interviews-book/). Please note that only content that has been covered in this class, a pre-requisite for this class, or is listed on your resume will be included with a heavy focus on content from this class. 
       +   Pseudo-coding questions: E.g. "Write pseudo-code to perform gradient-descent".
       +   Theory questions: E.g. "Why do we do cross-validation?"
       +   Closed Case-Study Questions: E.g. "Suppose you are trying to build an model that classifies pictures of food as either a *hot dog* or *not a hot dog*. What metrics would you use to evaluate performance?
       +   Open-Ended Case-Study Questions: E.g. "Suppose you are tasked with building a model to predict whether an employee will leave the company within a year. How would you approach this problem?"
+5.  (~5 minutes) At the end of the interview, you will have the opportunity to ask any questions you have about the company or role. It is expected that you come prepared with some good questions for the company you submitted an advertisement for.
       
 ### Grading
 
@@ -37,18 +39,18 @@ Your attire and professionalism will account for 5% of your interview grade. The
 -   Did the student bring a notepad and writing implement?
 -   Was the student respectful?
 
-#### Meta-cognition (5% of total grade)
+#### Meta-cognition (15% of total grade)
 
-The next 5% of your interview grade will be based on your meta-cognition. That is, whether you are able to self-assess what you know and what you don't know. The following criteria will be used to determine your grade:
+The next 15% of your interview grade will be based on your meta-cognition. That is, whether you are able to self-assess what you know and what you don't know. The following criteria will be used to determine your grade:
 
 -   Did the student seem to understand where the gaps in their knowledge were?
 -   Did the student seem to know if their answers were complete?
 -   Did the student think that answers that were wrong were actually right?
 -   Has the student actually mastered the skills on their resume?
 
-#### Preparation and Enthusiasm (30% of total grade)
+#### Preparation and Enthusiasm (20% of total grade)
 
-The next 30% of your interview grade will be based on your preparation and enthusiasm. The following criteria will be used to determine your grade:
+The next 20% of your interview grade will be based on your preparation and enthusiasm. The following criteria will be used to determine your grade:
 
 -   Did the student seem prepared to discuss their resume?
 -   Did the student speak knowledgeably about their portfolio/sample analysis?
@@ -66,7 +68,7 @@ The next 20% of your interview grade will be based on your communication skills.
 -   Did student stay focused on the question being asked?
 -   Were the student's answers too long or too short?
 -   Were the student's answers clear?
--   Was the student good and talking through their thought process?
+-   Was the student good at talking through their thought process?
 
 
 #### Content (40% of total grade)
@@ -83,4 +85,13 @@ The remaining 40% of your interview grade will be determined based on whether th
 -   If you are asked a question you don't know the answer to, be honest. It is OK to say something like "I'm honestly not sure." However, unless you absolutely know NOTHING about it I think the best way to answer is to state that you don't really know but say what you do know. For example, suppose the interviewer asks "What are some strategies for dealing with imbalanced data?" You may not know the answer to this question, but it's not like you know nothing about it! You could say something like, "Hmm... I'm not familiar with techniques for dealing with imbalanced data, but I do know that when you're data is extremely imbalanced, accuracy isn't super useful. You might want to focus more on metrics which are a bit more robust to imbalanced data like F-measure, AUC, or precision."
 -   Don't be afraid to ask for more information, especially when you are being asked an open-ended question! Remember, they are trying to evaluate whether you'll be good at your job. An important part of any job is asking good questions and obtaining the appropriate information necessary to solve a problem. In fact, some questions are purposely vague to see if you can properly scope a problem and obtain the information you need to solve it.
 -   Practice thinking through problems out loud. Employers are really interested in seeing how you think through problems. Even if you don't know the answer, talk through your thoughts as you grappling with it.
--   That said, don't be afraid of a little silence. It is OK to take some time to think things through.
+-   That said, don't be afraid of a little silence. It is OK to take some time to think things through and to response to a question by saying "That's a good question, let me think about that for a second." In fact, this is often a good strategy to use when you are asked a question you don't know the answer to. It gives you some time to think through the problem and come up with a response that shows your thought process.
+
+#### What should I study?
+
+-   Honestly... everything that I've assigned you this semester. That includes all of the readings, homework assignments, lectures, and projects.
+-   Focus on conceptual understanding. There may be times I expect you to explain code that you've written, or maybe even write some pseudo code, but I'm not going to ask you to pull out a computer and write code on the spot. So, you should focus on understanding the concepts and being able to explain them clearly rather than memorizing specific lines of code.
+-   Make sure you understand the sample data analysis you turned in. You should be able to explain every line of code and every decision you made in your analysis.
+-   EXTREMELY EXPERIMENTAL, USE AT YOUR OWN RISK: [Watch this first](https://youtu.be/FF1QhVBCXJU)
+    -   I've create a custom "GEM" designed to help you prepare for the interview. The way that you can use it is be uploading your resume, job ad, and sample analysis and then ask to start a mock job interview. The GEM SHOULD then ask you questions in a similar to style to what I would do. This is extremely experimental so if it isn't working as you think it should please notify Dr. F IMMEDIATELY. [Practice GEM](https://gemini.google.com/gem/1amWGAKNhWMyekChSJP7OpCAS2fTVAg6m?usp=sharing)
+    -   I've also created a [NotebookLM](https://notebooklm.google.com/notebook/33910200-322f-42bf-9e92-9bfa2204fc75) that contains all of the materials from the course.

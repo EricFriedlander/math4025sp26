@@ -1,3 +1,7 @@
+# Hack-a-thon instructor-only files
+hack-a-thon/generate_data.py
+hack-a-thon/greenfin_test_labels.csv
+
 .Rproj.user
 .Rhistory
 .RData
