@@ -17,7 +17,7 @@ In this assignment, you will...
 
 # Getting Started
 
- The GitHub assignment can be found [here](GITHUB_CLASSROOM_LINK). Rules:
+ The GitHub assignment can be found [here](https://classroom.github.com/a/nLAvjj37). Rules:
 
 ## Data: `academic_success`
 
