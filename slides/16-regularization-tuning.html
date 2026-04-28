@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.6.39">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.27">
 
   <meta name="author" content="Eric Friedlander">
   <title>Math 4025 - Spring 2026 – MATH 4025: Regularization &amp; Model Tuning</title>
@@ -28,8 +28,74 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-72811bd306436bae30bfb620bac545c3.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-0f85c99103221d1ebb6c43a3583f9823.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -141,9 +207,47 @@ Eric Friedlander
 </div>
 
 </section>
+<section id="computational-set-up" class="slide level2">
+<h2>Computational Set-Up</h2>
+<div id="ad013d4b" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split, KFold, GridSearchCV</span>
+<span id="cb1-5"><a></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression, Ridge, Lasso</span>
+<span id="cb1-6"><a></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler, OneHotEncoder</span>
+<span id="cb1-7"><a></a><span class="im">from</span> sklearn.compose <span class="im">import</span> ColumnTransformer</span>
+<span id="cb1-8"><a></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb1-9"><a></a><span class="im">from</span> itables <span class="im">import</span> show</span>
+<span id="cb1-10"><a></a><span class="im">import</span> warnings</span>
+<span id="cb1-11"><a></a></span>
+<span id="cb1-12"><a></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
+<span id="cb1-13"><a></a>np.random.seed(<span class="dv">4025</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
 <section id="data-candy" class="slide level2 smaller">
 <h2>Data: Candy</h2>
 <p>The data for this lecture comes from the article FiveThirtyEight <a href="https://fivethirtyeight.com/features/the-ultimate-halloween-candy-power-ranking"><em>The Ultimate Halloween Candy Power Ranking</em></a>.</p>
+<div id="de8c473b" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>candy_url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/fivethirtyeight/data/master/candy-power-ranking/candy-data.csv"</span></span>
+<span id="cb2-2"><a></a>candy_rankings <span class="op">=</span> pd.read_csv(candy_url)</span>
+<span id="cb2-3"><a></a></span>
+<span id="cb2-4"><a></a>candy_rankings_clean <span class="op">=</span> candy_rankings.drop(columns<span class="op">=</span>[<span class="st">'competitorname'</span>]).copy()</span>
+<span id="cb2-5"><a></a></span>
+<span id="cb2-6"><a></a><span class="co"># Convert probabilities into percentages</span></span>
+<span id="cb2-7"><a></a>candy_rankings_clean[<span class="st">'sugarpercent'</span>] <span class="op">=</span> candy_rankings_clean[<span class="st">'sugarpercent'</span>] <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb2-8"><a></a>candy_rankings_clean[<span class="st">'pricepercent'</span>] <span class="op">=</span> candy_rankings_clean[<span class="st">'pricepercent'</span>] <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb2-9"><a></a></span>
+<span id="cb2-10"><a></a>bool_cols <span class="op">=</span> [<span class="st">'chocolate'</span>, <span class="st">'fruity'</span>, <span class="st">'caramel'</span>, <span class="st">'peanutyalmondy'</span>, <span class="st">'nougat'</span>, </span>
+<span id="cb2-11"><a></a>             <span class="st">'crispedricewafer'</span>, <span class="st">'hard'</span>, <span class="st">'bar'</span>, <span class="st">'pluribus'</span>]</span>
+<span id="cb2-12"><a></a>candy_rankings_clean[bool_cols] <span class="op">=</span> candy_rankings_clean[bool_cols].astype(<span class="bu">str</span>)</span>
+<span id="cb2-13"><a></a></span>
+<span id="cb2-14"><a></a>stratify_bins <span class="op">=</span> pd.qcut(candy_rankings_clean[<span class="st">'winpercent'</span>], q<span class="op">=</span><span class="dv">4</span>, labels<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb2-15"><a></a>candy_train, candy_test <span class="op">=</span> train_test_split(candy_rankings_clean, </span>
+<span id="cb2-16"><a></a>                                           test_size<span class="op">=</span><span class="fl">0.25</span>, </span>
+<span id="cb2-17"><a></a>                                           stratify<span class="op">=</span>stratify_bins, </span>
+<span id="cb2-18"><a></a>                                           random_state<span class="op">=</span><span class="dv">4025</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 <section>
 <section id="model-tuning" class="title-slide slide level1 center">
@@ -160,8 +264,8 @@ Eric Friedlander
 <li>Today: How to choose our tuning parameters?</li>
 </ul>
 </section>
-<section id="concept-check" class="slide level2">
-<h2>Concept Check</h2>
+<section id="question" class="slide level2">
+<h2>Question</h2>
 <ul>
 <li>Which of the following are tuning parameters:
 <ul>
@@ -204,39 +308,182 @@ Eric Friedlander
 </ul></li>
 </ul>
 </section>
-<section id="regular-grid-search-in-python" class="slide level2 smaller scrollable">
-<h2>Regular Grid Search in Python</h2>
+<section id="grid-search-in-python" class="slide level2 smaller scrollable">
+<h2>Grid Search in Python</h2>
 <ul>
-<li>Take advantage of <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html"><code>GridSearchCV</code></a> inside <code>sklearn.model_selection</code>.</li>
+<li>Take advantage of <code>GridSearchCV</code> inside <code>sklearn.model_selection</code>.</li>
 <li>You provide:
 <ol type="1">
 <li>Your pipeline</li>
 <li>A dictionary of parameters ending with a list of values to search (e.g.&nbsp;<code>{'model__alpha': [0.1, 1.0, 10.0]}</code>)</li>
 <li>A cross-validation strategy (e.g.&nbsp;<code>KFold</code>)</li>
-<li>Pass estimator, parameter grid, cv folds, and scoring metric into <code>GridSearchCV</code> and it will do the rest!</li>
 </ol></li>
 </ul>
+<div id="a0454808" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="co"># Let's set up our Pipeline again</span></span>
+<span id="cb3-2"><a></a>X_train <span class="op">=</span> candy_train.drop(columns<span class="op">=</span>[<span class="st">'winpercent'</span>])</span>
+<span id="cb3-3"><a></a>y_train <span class="op">=</span> candy_train[<span class="st">'winpercent'</span>]</span>
+<span id="cb3-4"><a></a></span>
+<span id="cb3-5"><a></a>num_vars <span class="op">=</span> X_train.select_dtypes(include<span class="op">=</span>[<span class="st">'float64'</span>, <span class="st">'int64'</span>]).columns.tolist()</span>
+<span id="cb3-6"><a></a>cat_vars <span class="op">=</span> X_train.select_dtypes(include<span class="op">=</span>[<span class="st">'object'</span>, <span class="st">'category'</span>]).columns.tolist()</span>
+<span id="cb3-7"><a></a></span>
+<span id="cb3-8"><a></a>preproc <span class="op">=</span> ColumnTransformer([</span>
+<span id="cb3-9"><a></a>    (<span class="st">'num'</span>, StandardScaler(), num_vars),</span>
+<span id="cb3-10"><a></a>    (<span class="st">'cat'</span>, OneHotEncoder(drop<span class="op">=</span><span class="st">'first'</span>, sparse_output<span class="op">=</span><span class="va">False</span>), cat_vars)</span>
+<span id="cb3-11"><a></a>])</span>
+<span id="cb3-12"><a></a></span>
+<span id="cb3-13"><a></a>ridge_pipe <span class="op">=</span> Pipeline([(<span class="st">'preproc'</span>, preproc), (<span class="st">'model'</span>, Ridge())])</span>
+<span id="cb3-14"><a></a>lasso_pipe <span class="op">=</span> Pipeline([(<span class="st">'preproc'</span>, preproc), (<span class="st">'model'</span>, Lasso())])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="define-the-grids" class="slide level2">
+<h2>Define the Grids</h2>
+<div id="7fe9968a" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="co"># Alpha typically ranges logarithmically, for example 10^-10 to 10^2</span></span>
+<span id="cb4-2"><a></a>param_grid <span class="op">=</span> {</span>
+<span id="cb4-3"><a></a>    <span class="st">'model__alpha'</span>: np.logspace(<span class="op">-</span><span class="dv">10</span>, <span class="dv">2</span>, <span class="dv">10</span>)</span>
+<span id="cb4-4"><a></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="5d5e9cd9" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="co"># Let's see the alphas</span></span>
+<span id="cb5-2"><a></a>param_grid[<span class="st">'model__alpha'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>array([1.00000000e-10, 2.15443469e-09, 4.64158883e-08, 1.00000000e-06,
+       2.15443469e-05, 4.64158883e-04, 1.00000000e-02, 2.15443469e-01,
+       4.64158883e+00, 1.00000000e+02])</code></pre>
+</div>
+</div>
+</section>
+<section id="define-the-cross-validation" class="slide level2">
+<h2>Define the Cross-Validation</h2>
+<div id="3f3135ea" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="co"># We use a simple 5-fold cross validation for speed</span></span>
+<span id="cb7-2"><a></a>candy_folds <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">4025</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="regular-grid-search-in-python" class="slide level2 smaller">
+<h2>Regular Grid Search in Python</h2>
+<p>We pass the pipeline and parameter grid into <code>GridSearchCV</code>:</p>
+<div id="4b22b78d" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>ridge_grid <span class="op">=</span> GridSearchCV(estimator<span class="op">=</span>ridge_pipe,</span>
+<span id="cb8-2"><a></a>                          param_grid<span class="op">=</span>param_grid,</span>
+<span id="cb8-3"><a></a>                          cv<span class="op">=</span>candy_folds,</span>
+<span id="cb8-4"><a></a>                          scoring<span class="op">=</span><span class="st">'neg_root_mean_squared_error'</span>,</span>
+<span id="cb8-5"><a></a>                          return_train_score<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-6"><a></a></span>
+<span id="cb8-7"><a></a>lasso_grid <span class="op">=</span> GridSearchCV(estimator<span class="op">=</span>lasso_pipe,</span>
+<span id="cb8-8"><a></a>                          param_grid<span class="op">=</span>param_grid,</span>
+<span id="cb8-9"><a></a>                          cv<span class="op">=</span>candy_folds,</span>
+<span id="cb8-10"><a></a>                          scoring<span class="op">=</span><span class="st">'neg_root_mean_squared_error'</span>,</span>
+<span id="cb8-11"><a></a>                          return_train_score<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-12"><a></a>                          </span>
+<span id="cb8-13"><a></a><span class="co"># Ignore convergence warnings for low alpha lassos</span></span>
+<span id="cb8-14"><a></a><span class="cf">with</span> warnings.catch_warnings():</span>
+<span id="cb8-15"><a></a>    warnings.simplefilter(<span class="st">"ignore"</span>)</span>
+<span id="cb8-16"><a></a>    ridge_grid.fit(X_train, y_train)</span>
+<span id="cb8-17"><a></a>    lasso_grid.fit(X_train, y_train)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 <section id="inspecting-results" class="slide level2">
 <h2>Inspecting Results</h2>
-<p>The <code>cv_results_</code> attribute returns a dictionary of information that we can put right into a DataFrame.</p>
-<p>Let’s practice by:</p>
-<ul>
-<li>Using <code>GridSearchCV</code> to tune our a Ridge and LASSO regression model</li>
-<li>Visualizing the results</li>
-<li>Selecting the best model from LASSO and Ridge use (<code>.best_params_</code> and <code>.best_score_</code>)</li>
-<li>Refit the best model (using <code>refit=True</code>) on the entire training data and evaluate on the test set</li>
-</ul>
+<p>The <code>cv_results_</code> attribute returns a dictionary of information that we can put right into a DataFrame:</p>
+<div id="f3fc6491" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>ridge_results <span class="op">=</span> pd.DataFrame(ridge_grid.cv_results_)</span>
+<span id="cb9-2"><a></a><span class="co"># We flip the score to be positive RMSE instead of negative RMSE</span></span>
+<span id="cb9-3"><a></a>ridge_results[<span class="st">'mean_test_rmse'</span>] <span class="op">=</span> <span class="op">-</span>ridge_results[<span class="st">'mean_test_score'</span>]</span>
+<span id="cb9-4"><a></a>ridge_results[<span class="st">'std_test_rmse'</span>] <span class="op">=</span> ridge_results[<span class="st">'std_test_score'</span>]</span>
+<span id="cb9-5"><a></a></span>
+<span id="cb9-6"><a></a>lasso_results <span class="op">=</span> pd.DataFrame(lasso_grid.cv_results_)</span>
+<span id="cb9-7"><a></a>lasso_results[<span class="st">'mean_test_rmse'</span>] <span class="op">=</span> <span class="op">-</span>lasso_results[<span class="st">'mean_test_score'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
-<section id="random-grid-search" class="slide level2">
-<h2>Random Grid Search</h2>
-<ul>
-<li>If you have a lot of tuning parameters, you can use <code>RandomizedSearchCV</code> instead of <code>GridSearchCV</code></li>
-<li>You specify the number of random combinations to try instead of trying all combinations</li>
-<li>This is a good option when you have a lot of tuning parameters and/or a large range of values to try for each parameter</li>
-<li>In practice, this is often the best option when you have more than 2-3 tuning parameters or a large range of values to try for each parameter</li>
-<li>Can specify distributions to sample from instead of a list of values (e.g.&nbsp;<code>scipy.stats.uniform</code> or <code>scipy.stats.loguniform</code>)</li>
-</ul>
+<section id="visualizing-results-ridge" class="slide level2">
+<h2>Visualizing Results: Ridge</h2>
+<div id="143b0cef" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb10-2"><a></a>ax.errorbar(ridge_results[<span class="st">'param_model__alpha'</span>], ridge_results[<span class="st">'mean_test_rmse'</span>],</span>
+<span id="cb10-3"><a></a>            yerr<span class="op">=</span>ridge_results[<span class="st">'std_test_rmse'</span>], marker<span class="op">=</span><span class="st">'o'</span>)</span>
+<span id="cb10-4"><a></a>ax.set_xscale(<span class="st">'log'</span>)</span>
+<span id="cb10-5"><a></a>ax.set_xlabel(<span class="st">'Alpha'</span>)</span>
+<span id="cb10-6"><a></a>ax.set_ylabel(<span class="st">'RMSE'</span>)</span>
+<span id="cb10-7"><a></a>ax.set_title(<span class="st">'Ridge CV Results'</span>)</span>
+<span id="cb10-8"><a></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="16-regularization-tuning_files/figure-revealjs/cell-10-output-1.png" width="510" height="377"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="selecting-best-model-ridge" class="slide level2">
+<h2>Selecting Best Model: Ridge</h2>
+<p>By default, <code>GridSearchCV</code> automatically finds and stores the best parameters inside <code>.best_params_</code>.</p>
+<div id="1441b07e" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a>ridge_grid.best_params_</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>{'model__alpha': np.float64(0.21544346900318778)}</code></pre>
+</div>
+</div>
+<p>We can also inspect what its RMSE was:</p>
+<div id="17a2e7d3" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a><span class="op">-</span>ridge_grid.best_score_</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>np.float64(11.370754902835525)</code></pre>
+</div>
+</div>
+</section>
+<section id="visualizing-results-lasso" class="slide level2">
+<h2>Visualizing Results: LASSO</h2>
+<div id="a546d22e" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb15-2"><a></a>ax.errorbar(lasso_results[<span class="st">'param_model__alpha'</span>], lasso_results[<span class="st">'mean_test_rmse'</span>],</span>
+<span id="cb15-3"><a></a>            yerr<span class="op">=</span>lasso_grid.cv_results_[<span class="st">'std_test_score'</span>], marker<span class="op">=</span><span class="st">'o'</span>)</span>
+<span id="cb15-4"><a></a>ax.set_xscale(<span class="st">'log'</span>)</span>
+<span id="cb15-5"><a></a>ax.set_xlabel(<span class="st">'Alpha'</span>)</span>
+<span id="cb15-6"><a></a>ax.set_ylabel(<span class="st">'RMSE'</span>)</span>
+<span id="cb15-7"><a></a>ax.set_title(<span class="st">'Lasso CV Results'</span>)</span>
+<span id="cb15-8"><a></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="16-regularization-tuning_files/figure-revealjs/cell-13-output-1.png" width="510" height="377"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="selecting-best-model-lasso" class="slide level2">
+<h2>Selecting Best Model: LASSO</h2>
+<div id="13f3fb6f" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a>lasso_grid.best_params_</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>{'model__alpha': np.float64(1e-10)}</code></pre>
+</div>
+</div>
+<div id="de287e1e" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a></a><span class="op">-</span>lasso_grid.best_score_</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>np.float64(11.411606424946518)</code></pre>
+</div>
+</div>
+</section>
+<section id="finalize-model" class="slide level2 smaller">
+<h2>Finalize Model</h2>
+<p>One amazing feature of <code>GridSearchCV</code> is <code>refit=True</code> (on by default). Under the hood, once the grid search is finished, it automatically refits the single best performing model configuration on the <strong>entire</strong> training data.</p>
+<p>You can predict directly via the grid search object:</p>
+<div id="4beddebb" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a><span class="co"># Under the hood this is just calling the globally best pipeline</span></span>
+<span id="cb20-2"><a></a>ridge_grid.predict(candy_test.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>array([67.41397423, 56.01088107, 45.76796825, 53.13301898, 49.15503721])</code></pre>
+</div>
+</div>
+<div id="421f679d" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a></a><span class="co"># You can extract the best estimator pipeline this way</span></span>
+<span id="cb22-2"><a></a>best_ridge_pipe <span class="op">=</span> ridge_grid.best_estimator_</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 <section id="using-parsimony-as-a-tie-breaker" class="slide level2">
 <h2>Using Parsimony as a Tie-Breaker</h2>
@@ -249,12 +496,68 @@ Eric Friedlander
 </ul></li>
 </ul>
 </section>
+<section id="calculating-one-standard-error-ridge" class="slide level2 smaller">
+<h2>Calculating One-Standard Error: Ridge</h2>
+<p>We need custom code for this in scikit-learn. We want the model with the largest <span class="math inline">\(\alpha\)</span> (highest penalty -&gt; most parsimonious) whose error is no more than the lowest error + 1 standard error of the lowest error.</p>
+<div id="98fe95a7" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a><span class="co"># 1. Identify the index of the absolute minimum RMSE</span></span>
+<span id="cb23-2"><a></a>best_idx <span class="op">=</span> ridge_results[<span class="st">'mean_test_score'</span>].argmax()</span>
+<span id="cb23-3"><a></a></span>
+<span id="cb23-4"><a></a><span class="co"># 2. Get the RMSE and the std error bounding the best model</span></span>
+<span id="cb23-5"><a></a><span class="co"># Ensure we divide standard deviation by sqrt(folds) to get standard error!</span></span>
+<span id="cb23-6"><a></a><span class="im">import</span> math</span>
+<span id="cb23-7"><a></a>best_rmse <span class="op">=</span> <span class="op">-</span>ridge_results.loc[best_idx, <span class="st">'mean_test_score'</span>]</span>
+<span id="cb23-8"><a></a>best_se <span class="op">=</span> ridge_results.loc[best_idx, <span class="st">'std_test_score'</span>] <span class="op">/</span> math.sqrt(candy_folds.n_splits)</span>
+<span id="cb23-9"><a></a></span>
+<span id="cb23-10"><a></a><span class="co"># 3. Threshold we are willing to tolerate</span></span>
+<span id="cb23-11"><a></a>threshold <span class="op">=</span> best_rmse <span class="op">+</span> best_se</span>
+<span id="cb23-12"><a></a><span class="bu">print</span>(<span class="ss">f"Best RMSE: </span><span class="sc">{</span>best_rmse<span class="sc">:.3f}</span><span class="ss">, Threshold: </span><span class="sc">{</span>threshold<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb23-13"><a></a></span>
+<span id="cb23-14"><a></a><span class="co"># 4. Filter for alphas where RMSE &lt;= Threshold</span></span>
+<span id="cb23-15"><a></a>candidates <span class="op">=</span> ridge_results[ridge_results[<span class="st">'mean_test_rmse'</span>] <span class="op">&lt;=</span> threshold]</span>
+<span id="cb23-16"><a></a></span>
+<span id="cb23-17"><a></a><span class="co"># 5. Pick the most parsimonious (largest alpha)</span></span>
+<span id="cb23-18"><a></a>optimal_alpha_se <span class="op">=</span> candidates[<span class="st">'param_model__alpha'</span>].<span class="bu">max</span>()</span>
+<span id="cb23-19"><a></a><span class="bu">print</span>(<span class="ss">f"Optimal Alpha (1-SE Rule): </span><span class="sc">{</span>optimal_alpha_se<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Best RMSE: 11.371, Threshold: 12.572
+Optimal Alpha (1-SE Rule): 4.641588833612772</code></pre>
+</div>
+</div>
+</section>
 <section id="using-the-test-set-as-a-tie-breaker" class="slide level2">
 <h2>Using the Test Set as a Tie Breaker</h2>
 <ul>
-<li>Once you’ve found you “best” candidate from several different classes of model (e.g.&nbsp;KNN, LASSO, Ridge), it’s ok to compare on test set</li>
+<li>Once you’ve found you “best” candidate from several different classes of model, it’s ok to compare on test set</li>
 <li>In this case, we have our best ridge and our best lasso model</li>
 <li>Main thing to avoid… LOTS of comparisons on your test set</li>
+</ul>
+</section>
+<section id="using-the-test-set-as-a-tie-breaker-1" class="slide level2 smaller">
+<h2>Using the Test Set as a Tie Breaker</h2>
+<div id="ffca9690" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> root_mean_squared_error, r2_score</span>
+<span id="cb25-2"><a></a></span>
+<span id="cb25-3"><a></a>X_test <span class="op">=</span> candy_test.drop(columns<span class="op">=</span>[<span class="st">'winpercent'</span>])</span>
+<span id="cb25-4"><a></a>y_test <span class="op">=</span> candy_test[<span class="st">'winpercent'</span>]</span>
+<span id="cb25-5"><a></a></span>
+<span id="cb25-6"><a></a>ridge_preds <span class="op">=</span> ridge_grid.predict(X_test)</span>
+<span id="cb25-7"><a></a>lasso_preds <span class="op">=</span> lasso_grid.predict(X_test)</span>
+<span id="cb25-8"><a></a></span>
+<span id="cb25-9"><a></a><span class="bu">print</span>(<span class="ss">f"Ridge RMSE: </span><span class="sc">{</span>root_mean_squared_error(y_test, ridge_preds)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb25-10"><a></a><span class="bu">print</span>(<span class="ss">f"Lasso RMSE: </span><span class="sc">{</span>root_mean_squared_error(y_test, lasso_preds)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb25-11"><a></a></span>
+<span id="cb25-12"><a></a><span class="bu">print</span>(<span class="ss">f"Ridge R2: </span><span class="sc">{</span>r2_score(y_test, ridge_preds)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb25-13"><a></a><span class="bu">print</span>(<span class="ss">f"Lasso R2: </span><span class="sc">{</span>r2_score(y_test, lasso_preds)<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ridge RMSE: 13.765
+Lasso RMSE: 14.120
+Ridge R2: 0.279
+Lasso R2: 0.241</code></pre>
+</div>
+</div>
+<ul>
+<li>Ridge Wins!</li>
 </ul>
 </section>
 <section id="good-strategies" class="slide level2">
@@ -287,7 +590,6 @@ Eric Friedlander
 </section>
 <section id="bayesian-search-gp" class="slide level2 smaller">
 <h2>Bayesian Search: GP</h2>
-<div>
 <ul>
 <li class="fragment">Assume performance metrics follow a Gaussian process</li>
 <li class="fragment">Consider two sets of tuning parameters: <span class="math inline">\(x_1 = (\alpha_1, k_1)\)</span> and <span class="math inline">\(x_2 = (\alpha_2, k_2)\)</span></li>
@@ -297,11 +599,9 @@ Eric Friedlander
 <li class="fragment">Covariance should decrease the further apart <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> are</li>
 </ul></li>
 </ul>
-</div>
 </section>
 <section id="bayesian-search-acquisition-function" class="slide level2 smaller">
 <h2>Bayesian Search: Acquisition Function</h2>
-<div>
 <ul>
 <li class="fragment">GP process gives us predicted mean and variance of performance metrics</li>
 <li class="fragment">Imagine two scenario’s:
@@ -319,11 +619,9 @@ Eric Friedlander
 <li class="fragment">Two competing goals: <em>Exploration</em> (go toward high variance) and <em>Exploitation</em> (go toward best mean)</li>
 <li class="fragment">Acquisition function: balances these two goals</li>
 </ul>
-</div>
 </section>
 <section id="simulated-annealing" class="slide level2 smaller">
 <h2>Simulated Annealing</h2>
-<div>
 <ul>
 <li class="fragment">Does anyone know what annealing is in Physics/Material Science?</li>
 <li class="fragment">Start with initial parameter combination <span class="math inline">\(x_0\)</span>(think gradient descent)</li>
@@ -345,7 +643,6 @@ Eric Friedlander
 <li class="fragment">cools over time: decrease number sub-optimal acceptances</li>
 </ul></li>
 </ul>
-</div>
 </section>
 <section id="iterative-methods-in-python" class="slide level2 smaller">
 <h2>Iterative Methods in Python</h2>
@@ -553,7 +850,7 @@ Eric Friedlander
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -580,190 +877,173 @@ Eric Friedlander
       });
     </script>
     <script id="quarto-html-after-body" type="application/javascript">
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-      const toggleBodyColorMode = (bsSheetEl) => {
-        const mode = bsSheetEl.getAttribute("data-mode");
-        const bodyEl = window.document.querySelector("body");
-        if (mode === "dark") {
-          bodyEl.classList.add("quarto-dark");
-          bodyEl.classList.remove("quarto-light");
-        } else {
-          bodyEl.classList.add("quarto-light");
-          bodyEl.classList.remove("quarto-dark");
-        }
-      }
-      const toggleBodyColorPrimary = () => {
-        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-        if (bsSheetEl) {
-          toggleBodyColorMode(bsSheetEl);
-        }
-      }
-      toggleBodyColorPrimary();  
-      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-      tabsets.forEach(function(tabset) {
-        const tabby = new Tabby('#' + tabset.id);
-      });
-      const isCodeAnnotation = (el) => {
-        for (const clz of el.classList) {
-          if (clz.startsWith('code-annotation-')) {                     
-            return true;
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
           }
+          return false;
         }
-        return false;
-      }
-      const onCopySuccess = function(e) {
-        // button target
-        const button = e.trigger;
-        // don't keep focus
-        button.blur();
-        // flash "checked"
-        button.classList.add('code-copy-button-checked');
-        var currentTitle = button.getAttribute("title");
-        button.setAttribute("title", "Copied!");
-        let tooltip;
-        if (window.bootstrap) {
-          button.setAttribute("data-bs-toggle", "tooltip");
-          button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
-          tooltip = new bootstrap.Tooltip(button, 
-            { trigger: "manual", 
-              customClass: "code-copy-button-tooltip",
-              offset: [0, -8]});
-          tooltip.show();    
-        }
-        setTimeout(function() {
-          if (tooltip) {
-            tooltip.hide();
-            button.removeAttribute("data-bs-title");
-            button.removeAttribute("data-bs-toggle");
-            button.removeAttribute("data-bs-placement");
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
           }
-          button.setAttribute("title", currentTitle);
-          button.classList.remove('code-copy-button-checked');
-        }, 1000);
-        // clear code selection
-        e.clearSelection();
-      }
-      const getTextToCopy = function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
           for (const childEl of codeEl.children) {
             if (isCodeAnnotation(childEl)) {
               childEl.remove();
             }
           }
           return codeEl.innerText;
-      }
-      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-        text: getTextToCopy
-      });
-      clipboard.on('success', onCopySuccess);
-      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-          text: getTextToCopy,
-          container: window.document.getElementById('quarto-embedded-source-code-modal')
-        });
-        clipboardModal.on('success', onCopySuccess);
-      }
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-        var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp("https:\/\/EricFriedlander\.github\.io\/math4025sp26\/");
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-            // undo the damage that might have been done by quarto-nav.js in the case of
-            // links that we want to consider external
-            if (link.dataset.originalHref !== undefined) {
-              link.href = link.dataset.originalHref;
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/EricFriedlander\.github\.io\/math4025sp26\/");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
             }
           }
-        }
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-        const config = {
-          allowHTML: true,
-          maxWidth: 500,
-          delay: 100,
-          arrow: false,
-          appendTo: function(el) {
-              return el.closest('section.slide') || el.parentElement;
-          },
-          interactive: true,
-          interactiveBorder: 10,
-          theme: 'light-border',
-          placement: 'bottom-start',
-        };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
-          config['offset'] = [0,0];
-          config['maxWidth'] = 700;
-        window.tippy(el, config); 
-      }
-      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-      for (var i=0; i<noterefs.length; i++) {
-        const ref = noterefs[i];
-        tippyHover(ref, function() {
-          // use id or data attribute instead here
-          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-          try { href = new URL(href).hash; } catch {}
-          const id = href.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note) {
-            return note.innerHTML;
-          } else {
-            return "";
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
           }
-        });
-      }
-      const findCites = (el) => {
-        const parentEl = el.parentElement;
-        if (parentEl) {
-          const cites = parentEl.dataset.cites;
-          if (cites) {
-            return {
-              el,
-              cites: cites.split(' ')
-            };
-          } else {
-            return findCites(el.parentElement)
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
           }
-        } else {
-          return undefined;
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
         }
-      };
-      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-      for (var i=0; i<bibliorefs.length; i++) {
-        const ref = bibliorefs[i];
-        const citeInfo = findCites(ref);
-        if (citeInfo) {
-          tippyHover(citeInfo.el, function() {
-            var popup = window.document.createElement('div');
-            citeInfo.cites.forEach(function(cite) {
-              var citeDiv = window.document.createElement('div');
-              citeDiv.classList.add('hanging-indent');
-              citeDiv.classList.add('csl-entry');
-              var biblioDiv = window.document.getElementById('ref-' + cite);
-              if (biblioDiv) {
-                citeDiv.innerHTML = biblioDiv.innerHTML;
-              }
-              popup.appendChild(citeDiv);
-            });
-            return popup.innerHTML;
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
           });
         }
-      }
-    });
-    </script>
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
     
 
 </body></html>
