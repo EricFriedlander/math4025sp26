@@ -29,7 +29,7 @@ The target variable, `loan_outcome`, takes one of three values:
 
 There are two deliverables for this project:
 
-1. **An HTML report** describing your modeling process. This should follow the same guidelines as the [Hack-A-Thon Report Guidelines](/jobs/job-app-2-resources.qmd). Push your `.qmd` source file and the rendered `.html` to the [GitHub Classroom assignment](). This is also where you can download the data files.
+1. **An HTML report or Jupyter Notebook** walking through your final model. Push your `.qmd` source file and the rendered `.html` to the [GitHub Classroom assignment](). This is also where you can download the data files.
 
 2. **A `.csv` file**, uploaded to Canvas, containing your predictions for the 12,000 loans in the test set. Your file should have **two columns**: `loan_id` and `loan_outcome`, matching the loan IDs from `greenfin_test.csv` in the same row order. You can write this in Python with:
 
@@ -54,8 +54,8 @@ Your submission will be graded across three components:
 
 | Component | Weight |
 |-----------|--------|
-| **Predictive Accuracy** | 60% |
-| **Writing Quality** | 20% |
+| **Predictive Accuracy** | 70% |
+| **Clarity** | 30% |
 | **Data Analysis** | 20% |
 
 Predictive accuracy is the primary criterion: your test accuracy will be compared against your classmates' and graded accordingly. The writing and data analysis components follow the same rubric as previous assignments — a well-organized, clearly written report that explains your methodology and justifies your choices.
@@ -96,35 +96,37 @@ The GreenFin dataset was constructed specifically for this course and does not e
 
 `monthly_obligations`: The borrower's total recurring monthly debt obligations in dollars, not counting the new GreenFin loan.
 
-## Evaluation Guidelines
+## Report Requirements
 
-Your submission will be assessed in each of the following areas as Outstanding, Good, Acceptable, Needs Work, or Inadequate. The questions below serve as a guide.
+### General Guidelines
 
-### Predictive Accuracy
+- ONLY INCLUDE STEPS THAT MADE IT INTO YOUR FINAL MODEL. DO NOT INCLUDE MODELS OR STEPS THAT YOU TRIED BUT DECIDED AGAINST.
+- Keep the written parts of your submitted report extremely short.
+- All prose should be concise and written in bulleted lists.
+- Your report should be formatted as a Jupyter notebook or qmd file. Note that I should be able to run it from top-to-bottom without an error.
+- Note that you should be running a lot of code (e.g. data exploration) that is should not be included in your final report.
 
-- Are your predictions submitted in the correct format (a CSV with `loan_id` and `loan_outcome`)?
-- Do your predictions cover all 12,000 rows in the test set?
-- Are appropriate modeling techniques used given the data and the task?
-- How accurate are your predictions on the held-out test set?
-- How do your predictions rank relative to your classmates?
+### Report Structure
 
-### Writing Quality
+Include the following sections each which includes a bulleted list of important information and all of the code for those corresponding steps. For each section you should create a markdown header (e.g. `## Data Cleaning`) and then include the required content for that section. The sections should be in the following order and include the following information:
 
-- Is the report well-organized and easy to follow?
-- Is the modeling process described in a clear, logical, and engaging manner?
-- Are modeling choices clearly justified?
-- Is the report free of spelling and grammatical errors?
-- Is the report written for an appropriate technical audience?
+1. **Loading python packages and the data** (2 code blocks)
+    - Code block 1: load all of the packages your use in your analysis. Note that any packages you use in your code MUST be loaded here.
+    - Code block 2: load the data. You should load both the training and test data here.
+2. **Data Cleaning and Feature Engineering** (1 bulleted list and 1 code block) 
+    - Bulleted list of the data cleaning steps you took and a VERY brief explanation for why. For examples, what variables did you remove, what new variables did you create, etc.
+    - Code block: All the code that executes those steps. Any `Pipelines` and `ColumnTransformer`s should go in the next section. Note: You SHOULD be making plots of your data, but do not include them in your final report.
+3. **Pre-processing** (1 bulleted list and 1 code block) 
+    - Bulleted list of the pre-processing steps you took and a VERY brief explanation for why. 
+    - Code block: All the code for those steps. This is where any `Pipelines` and `ColumnTransformer`s should go in this section.
+4. **Model Fit and Tuning** (1 bulleted list and 2 code blocks) 
+    - Bulleted list: You list should include the following information:
+       - Any splitting or cross-validation strategy you used to evaluate your model.
+       - All the types of models you tried and the one you ultimately chose for your final model.
+       - All the hyperparameters you tuned for your **final model** and how you tuned them.
+    - Code block 1: A code block that includes all of the code preparing to fit and tune **ONLY YOUR FINAL MODEL**. Do not include code for models you tried but ultimately decided against.
+    - Code block 2: The line or lines of code that actually fit and tune your final model. This is the only code cell that should take a long time to execute.
+5. **Prediction Generation**: (1 code block)
+    - A code block that include the code for generating the prediction for the test set and writing the results to a `.csv` file.
 
-### Data Analysis
 
-- Are statistical and machine learning methods described accurately?
-- Are appropriate predictor variables used? Are exclusions justified?
-- Are data cleaning and transformation decisions sensible and well-explained?
-- How was the model chosen and validated (e.g., cross-validation)?
-- If applicable, how were model parameters tuned?
-
-## Submitting Your Work
-
-1. Push your `.qmd` and rendered `.html` report to GitHub Classroom.
-2. Upload your predictions CSV to [Canvas](https://cofi.instructure.com/courses/17021/assignments/213175).
