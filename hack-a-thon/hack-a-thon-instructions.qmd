@@ -31,7 +31,7 @@ There are two deliverables for this project:
 
 1. **An HTML report or Jupyter Notebook** walking through your final model. Push your `.qmd` source file and the rendered `.html` to the [GitHub Classroom assignment](). This is also where you can download the data files.
 
-2. **A `.csv` file**, uploaded to Canvas, containing your predictions for the 12,000 loans in the test set. Your file should have **two columns**: `loan_id` and `loan_outcome`, matching the loan IDs from `greenfin_test.csv` in the same row order. You can write this in Python with:
+2. **A `.csv` file**, pushed to your GitHub repository, containing your predictions for the 12,000 loans in the test set. Your file should have **two columns**: `loan_id` and `loan_outcome`, matching the loan IDs from `greenfin_test.csv` in the same row order, and be called `my_predictions.csv`. If it is not in this format, you will lose points. You can write this in Python with:
 
 ```python
 import pandas as pd
@@ -127,6 +127,6 @@ Include the following sections each which includes a bulleted list of important 
     - Code block 1: A code block that includes all of the code preparing to fit and tune **ONLY YOUR FINAL MODEL**. Do not include code for models you tried but ultimately decided against.
     - Code block 2: The line or lines of code that actually fit and tune your final model. This is the only code cell that should take a long time to execute.
 5. **Prediction Generation**: (1 code block)
-    - A code block that include the code for generating the prediction for the test set and writing the results to a `.csv` file.
+    - A code block that include the code for generating the prediction for the test set and writing the results to a `my_predictions.csv` file.
 
 
