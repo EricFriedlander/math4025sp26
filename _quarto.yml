@@ -59,7 +59,7 @@ website:
           text: "Quarto Python Guide"
       - section: Hack-A-Thon
         contents:
-        # - href: hack-a-thon/hack-a-thon-instruction.qmd
+        - href: hack-a-thon/hack-a-thon-instructions.qmd
   
 format:
   html:

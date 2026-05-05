@@ -2,6 +2,37 @@
 title: "Hack-A-Thon Instructions"
 ---
 
+# Artificial Intelligence Prologue
+
+The grade for much of this assignment will be based on the accuracy of the predictions you generate on the test set. This is a relatively high-stakes assignment, and I want to be clear about the rules regarding the use of AI. It is expected that you don't just following the literal instructions, but that you follow the spirit of the instructions. If you find yourself trying to find a "work-around" to these rules, that is a violation of the rules. If I suspect that you have violated the rules, I will investigate by reviewing your GitHub commit and, potentially, inviting you to explain your code during your "Job Interview" or during another time. If I find evidence of a violation, I will give you a zero on the assignment and may take further disciplinary action. If you have any questions about what is or is not allowed, please ask me before you do it. Moreover, *you are expected to commit and push your code to GitHub regularly*. If I suspect that you have violated the rules, I will check your commit history. If I see that all of your code was written and committed in a single big commit, you will receive a maximum of 50% on the assignment, regardless of your AI usage.
+
+## AI Rules
+
+While I have been rather open to the use of AI in this class, the rules for this assignment are very strict. Please read carefully:
+
+The following uses of AI are **STRICTLY PROHIBITED**:
+
+- Allowing any form of AI to *see* any of the data. This includes, but is not limited to, uploading the data to an AI platform. For example, you may not:
+  - Upload the data to an LLM.
+  - Copy an paste any output or summary statistics of your data into an LLM.
+- Using any form of agentic AI. For example, you may not use:
+  - Claude Code, GitHub Copilot, OpenAI's Codex, or any other AI that can see the context of your project and write code for you. It does not matter what capabilities you are using these tools for, if they can see the context of your project, you may not use them.
+  - This includes the AI-augmented autocomplete features that are integrated in your code editor if you're using GitHub Copilot or a similar tool.
+- Allowing any form of AI to *see* any of your results, the description of the project, or descriptions of the data. For example, you may not:
+  - Paste any of your code, results, or descriptions into an LLM.
+  - Copy and paste any of your code or any parts of the assignment instructions into an LLM.
+  - Provide written descriptions of the data or project to an LLM in a way that would allow it to infer information about the data.
+  - Provide a link to the course website to an LLM.
+- Having AI generate anything other than code (see below) that is eventually turned in to me.
+
+The following uses of AI are **PERMITTED** as long as the restrictions are followed:
+
+- Using AI to help you write code, WITHOUT providing it any information about the context of the data. For example, you ask something like: 
+  - "Please generate Python code that generates a confusions matrix based on the output of a `sklearn` model." This is fine, but if you were to add something like the names of the variables in your dataset, or any information about the project, that would be a violation of the rules. You may even use stand-in variable names (e.g. `X_train`, `y_train`, etc.) in your prompts, but you may not use the actual variable names or variable names that would give the AI any information about the context of the data.
+  - "Generate a code snippet that takes a dataframe called `X_test`, generated predictions from a model called `my_model`, and writes the results to a files called `my_predictions.csv`." This is ONLY ok, because `X_test`, `my_model`, and `my_predictions.csv` are all generic variable names that do not give the AI any information about the context of the data or project.
+- Use AI to help you brainstorm ideas for how to approach the project, WITHOUT providing it any information about the context of the data. For example, you ask something like: "What are some common approaches to multi-class classification problems?" This is fine, but if you were to add something like the names of the variables in your dataset, or any information about the project (like that it's about finance), that would be a violation of the rules. You **ARE** welcome to look-up or google information about data analytics on financial data. However, **you may not use AI in this aspect of the project**.
+- You may use AI to help you debug your code. You MAY copy & paste error message as long as any references to variable names are removed or replaced. You are also allowed to copy & paste code that is causing the errors as long as you remove or replace the variable names.
+
 # GreenFin Capital: Loan Outcome Prediction
 
 GreenFin Capital is a fintech startup that offers personal loans to borrowers who may not qualify for traditional bank financing. Unlike conventional lenders, GreenFin uses machine learning to evaluate applications in real time, aiming to extend credit responsibly to a broader population.
@@ -25,11 +56,13 @@ The target variable, `loan_outcome`, takes one of three values:
 | `1`   | **Delinquent** — borrower made payments, but repeatedly late |
 | `2`   | **Default** — borrower stopped making payments |
 
+You can find these datasets in the [GitHub Classroom assignment](https://classroom.github.com/a/jBgE3UBL).
+
 ## Deliverables
 
 There are two deliverables for this project:
 
-1. **An HTML report or Jupyter Notebook** walking through your final model. Push your `.qmd` source file and the rendered `.html` to the [GitHub Classroom assignment](). This is also where you can download the data files.
+1. **An HTML report or Jupyter Notebook** walking through your final model. If using Quarto, push your `.qmd` source file and the rendered `.html` to the [GitHub Classroom assignment](https://classroom.github.com/a/jBgE3UBL). If using Jupyter Notebook, push the notebook. This is also where you can download the data files.
 
 2. **A `.csv` file**, pushed to your GitHub repository, containing your predictions for the 12,000 loans in the test set. Your file should have **two columns**: `loan_id` and `loan_outcome`, matching the loan IDs from `greenfin_test.csv` in the same row order, and be called `my_predictions.csv`. If it is not in this format, you will lose points. You can write this in Python with:
 
@@ -46,7 +79,7 @@ submission.to_csv("my_predictions.csv", index=False)
 
 Your submission will be evaluated primarily on **predictive accuracy** — the fraction of test loans you correctly classify. Writing quality and depth of analysis are also assessed, as described below.
 
-Not all columns in the data are immediately usable. You will need to handle non-numerical columns, address missing data, and think carefully about which features to include and how to represent them. Thoughtful feature engineering can substantially improve performance.
+Not all columns in the data are immediately usable. You will need to handle non-numerical columns, address missing data, and think carefully about which features to include and how to represent them. Thoughtful feature engineering can substantially improve performance. Note that this data is is synthetic, but it is designed to reflect the kinds of challenges and patterns you would encounter in a real-world financial dataset.
 
 ## Grading
 
@@ -54,15 +87,12 @@ Your submission will be graded across three components:
 
 | Component | Weight |
 |-----------|--------|
-| **Predictive Accuracy** | 70% |
-| **Clarity** | 30% |
-| **Data Analysis** | 20% |
+| **Predictive Accuracy** | 80% |
+| **Writing/Clarity** | 20% |
 
-Predictive accuracy is the primary criterion: your test accuracy will be compared against your classmates' and graded accordingly. The writing and data analysis components follow the same rubric as previous assignments — a well-organized, clearly written report that explains your methodology and justifies your choices.
 
-## Notes
+Predictive accuracy is the primary criterion: your test accuracy will be compared against your classmates' and graded accordingly. The writing /clarity component corresponds to how well you adhere to the [Report Requirements](#report-requirements).
 
-The GreenFin dataset was constructed specifically for this course and does not exist elsewhere on the internet. You are welcome to search for general advice about machine learning for multi-class classification, but any approach lifted directly from a published analysis of this specific dataset constitutes academic dishonesty and will result in a zero. **If you have questions about the data or the task, please ask the instructor.**
 
 ## Description of Variables
 
@@ -104,11 +134,11 @@ The GreenFin dataset was constructed specifically for this course and does not e
 - Keep the written parts of your submitted report extremely short.
 - All prose should be concise and written in bulleted lists.
 - Your report should be formatted as a Jupyter notebook or qmd file. Note that I should be able to run it from top-to-bottom without an error.
-- Note that you should be running a lot of code (e.g. data exploration) that is should not be included in your final report.
+- Note that you should be running a lot of code (e.g. data exploration) that should not be included in your final report.
 
 ### Report Structure
 
-Include the following sections each which includes a bulleted list of important information and all of the code for those corresponding steps. For each section you should create a markdown header (e.g. `## Data Cleaning`) and then include the required content for that section. The sections should be in the following order and include the following information:
+Include the following sections. For each section you should create a markdown header (e.g. `## Data Cleaning`) and then include the required content for that section. The sections should be in the following order and include the following information:
 
 1. **Loading python packages and the data** (2 code blocks)
     - Code block 1: load all of the packages your use in your analysis. Note that any packages you use in your code MUST be loaded here.
@@ -120,13 +150,13 @@ Include the following sections each which includes a bulleted list of important 
     - Bulleted list of the pre-processing steps you took and a VERY brief explanation for why. 
     - Code block: All the code for those steps. This is where any `Pipelines` and `ColumnTransformer`s should go in this section.
 4. **Model Fit and Tuning** (1 bulleted list and 2 code blocks) 
-    - Bulleted list: You list should include the following information:
-       - Any splitting or cross-validation strategy you used to evaluate your model.
+    - Bulleted list: Your list should include the following information:
+       - Any splitting or cross-validation strategy you used to evaluate your model. DO NOT INCLUDE THE cross-validation code, just a description of what you did.
        - All the types of models you tried and the one you ultimately chose for your final model.
-       - All the hyperparameters you tuned for your **final model** and how you tuned them.
-    - Code block 1: A code block that includes all of the code preparing to fit and tune **ONLY YOUR FINAL MODEL**. Do not include code for models you tried but ultimately decided against.
-    - Code block 2: The line or lines of code that actually fit and tune your final model. This is the only code cell that should take a long time to execute.
+       - All the hyperparameters you tuned for your **final model** and how you tuned them. If you used a tool like `GridSearchCV` or `RandomizedSearchCV`, DO NOT INCLUDE THESE. Instead, just fit the model with the optimal hyperparameters that you found with these tools.
+    - Code block 1: A code block that includes all of the code preparing to fit and tune **ONLY YOUR FINAL MODEL**. Do not include code for models you tried but ultimately decided against. Do not include code for tuning hyperparameters. Do not include cross-validation or model evaluation.
+    - Code block 2: The line or lines of code that actually fit your final model. This is the only code cell that should take a long time to execute.
 5. **Prediction Generation**: (1 code block)
-    - A code block that include the code for generating the prediction for the test set and writing the results to a `my_predictions.csv` file.
+    - A code block that includes the code for generating the predictions for the test set and writing the results to a `my_predictions.csv` file.
 
 
