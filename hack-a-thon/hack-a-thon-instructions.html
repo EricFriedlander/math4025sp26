@@ -2,16 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.6.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Hack-A-Thon Instructions – Math 4025 - Spring 2026</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -24,9 +21,8 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -37,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -68,16 +64,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-8b1e046bd30e95e4260ff60c1a6d1226.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-a468f417d409e5b90f43decb280e538f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -109,7 +104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="nav-sidebar docked quarto-light">
+<body class="nav-sidebar docked">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -133,8 +128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-center sidebar-header">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../images/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
-      <img src="../images/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      <img src="../images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
       <div class="sidebar-tools-main">
     <a href="https://classroom.github.com/classrooms/256856191-math4025sp26-classroom" title="GitHub" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
@@ -231,8 +225,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Hack-A-Thon</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Hack-A-Thon</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+      </ul>
   </li>
     </ul>
     </div>
@@ -244,20 +245,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#greenfin-capital-loan-outcome-prediction" id="toc-greenfin-capital-loan-outcome-prediction" class="nav-link active" data-scroll-target="#greenfin-capital-loan-outcome-prediction">GreenFin Capital: Loan Outcome Prediction</a>
+  <li><a href="#artificial-intelligence-prologue" id="toc-artificial-intelligence-prologue" class="nav-link active" data-scroll-target="#artificial-intelligence-prologue">Artificial Intelligence Prologue</a>
+  <ul class="collapse">
+  <li><a href="#ai-rules" id="toc-ai-rules" class="nav-link" data-scroll-target="#ai-rules">AI Rules</a></li>
+  </ul></li>
+  <li><a href="#greenfin-capital-loan-outcome-prediction" id="toc-greenfin-capital-loan-outcome-prediction" class="nav-link" data-scroll-target="#greenfin-capital-loan-outcome-prediction">GreenFin Capital: Loan Outcome Prediction</a>
   <ul class="collapse">
   <li><a href="#project-overview" id="toc-project-overview" class="nav-link" data-scroll-target="#project-overview">Project Overview</a></li>
   <li><a href="#deliverables" id="toc-deliverables" class="nav-link" data-scroll-target="#deliverables">Deliverables</a></li>
   <li><a href="#grading" id="toc-grading" class="nav-link" data-scroll-target="#grading">Grading</a></li>
-  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a></li>
   <li><a href="#description-of-variables" id="toc-description-of-variables" class="nav-link" data-scroll-target="#description-of-variables">Description of Variables</a></li>
-  <li><a href="#evaluation-guidelines" id="toc-evaluation-guidelines" class="nav-link" data-scroll-target="#evaluation-guidelines">Evaluation Guidelines</a>
+  <li><a href="#report-requirements" id="toc-report-requirements" class="nav-link" data-scroll-target="#report-requirements">Report Requirements</a>
   <ul class="collapse">
-  <li><a href="#predictive-accuracy" id="toc-predictive-accuracy" class="nav-link" data-scroll-target="#predictive-accuracy">Predictive Accuracy</a></li>
-  <li><a href="#writing-quality" id="toc-writing-quality" class="nav-link" data-scroll-target="#writing-quality">Writing Quality</a></li>
-  <li><a href="#data-analysis" id="toc-data-analysis" class="nav-link" data-scroll-target="#data-analysis">Data Analysis</a></li>
+  <li><a href="#general-guidelines" id="toc-general-guidelines" class="nav-link" data-scroll-target="#general-guidelines">General Guidelines</a></li>
+  <li><a href="#report-structure" id="toc-report-structure" class="nav-link" data-scroll-target="#report-structure">Report Structure</a></li>
   </ul></li>
-  <li><a href="#submitting-your-work" id="toc-submitting-your-work" class="nav-link" data-scroll-target="#submitting-your-work">Submitting Your Work</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/EricFriedlander/MATH4025SP26/edit/main/hack-a-thon/hack-a-thon-instructions.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/EricFriedlander/MATH4025SP26/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -284,6 +286,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<section id="artificial-intelligence-prologue" class="level1">
+<h1>Artificial Intelligence Prologue</h1>
+<p>The grade for much of this assignment will be based on the accuracy of the predictions you generate on the test set. This is a relatively high-stakes assignment, and I want to be clear about the rules regarding the use of AI. It is expected that you don’t just following the literal instructions, but that you follow the spirit of the instructions. If you find yourself trying to find a “work-around” to these rules, that is a violation of the rules. If I suspect that you have violated the rules, I will investigate by reviewing your GitHub commit and, potentially, inviting you to explain your code during your “Job Interview” or during another time. If I find evidence of a violation, I will give you a zero on the assignment and may take further disciplinary action. If you have any questions about what is or is not allowed, please ask me before you do it. Moreover, <em>you are expected to commit and push your code to GitHub regularly</em>. If I suspect that you have violated the rules, I will check your commit history. If I see that all of your code was written and committed in a single big commit, you will receive a maximum of 50% on the assignment, regardless of your AI usage.</p>
+<section id="ai-rules" class="level2">
+<h2 class="anchored" data-anchor-id="ai-rules">AI Rules</h2>
+<p>While I have been rather open to the use of AI in this class, the rules for this assignment are very strict. Please read carefully:</p>
+<p>The following uses of AI are <strong>STRICTLY PROHIBITED</strong>:</p>
+<ul>
+<li>Allowing any form of AI to <em>see</em> any of the data. This includes, but is not limited to, uploading the data to an AI platform. For example, you may not:
+<ul>
+<li>Upload the data to an LLM.</li>
+<li>Copy an paste any output or summary statistics of your data into an LLM.</li>
+</ul></li>
+<li>Using any form of agentic AI. For example, you may not use:
+<ul>
+<li>Claude Code, GitHub Copilot, OpenAI’s Codex, or any other AI that can see the context of your project and write code for you. It does not matter what capabilities you are using these tools for, if they can see the context of your project, you may not use them.</li>
+<li>This includes the AI-augmented autocomplete features that are integrated in your code editor if you’re using GitHub Copilot or a similar tool.</li>
+</ul></li>
+<li>Allowing any form of AI to <em>see</em> any of your results, the description of the project, or descriptions of the data. For example, you may not:
+<ul>
+<li>Paste any of your code, results, or descriptions into an LLM.</li>
+<li>Copy and paste any of your code or any parts of the assignment instructions into an LLM.</li>
+<li>Provide written descriptions of the data or project to an LLM in a way that would allow it to infer information about the data.</li>
+<li>Provide a link to the course website to an LLM.</li>
+</ul></li>
+<li>Having AI generate anything other than code (see below) that is eventually turned in to me.</li>
+</ul>
+<p>The following uses of AI are <strong>PERMITTED</strong> as long as the restrictions are followed:</p>
+<ul>
+<li>Using AI to help you write code, WITHOUT providing it any information about the context of the data. For example, you ask something like:
+<ul>
+<li>“Please generate Python code that generates a confusions matrix based on the output of a <code>sklearn</code> model.” This is fine, but if you were to add something like the names of the variables in your dataset, or any information about the project, that would be a violation of the rules. You may even use stand-in variable names (e.g.&nbsp;<code>X_train</code>, <code>y_train</code>, etc.) in your prompts, but you may not use the actual variable names or variable names that would give the AI any information about the context of the data.</li>
+<li>“Generate a code snippet that takes a dataframe called <code>X_test</code>, generated predictions from a model called <code>my_model</code>, and writes the results to a files called <code>my_predictions.csv</code>.” This is ONLY ok, because <code>X_test</code>, <code>my_model</code>, and <code>my_predictions.csv</code> are all generic variable names that do not give the AI any information about the context of the data or project.</li>
+</ul></li>
+<li>Use AI to help you brainstorm ideas for how to approach the project, WITHOUT providing it any information about the context of the data. For example, you ask something like: “What are some common approaches to multi-class classification problems?” This is fine, but if you were to add something like the names of the variables in your dataset, or any information about the project (like that it’s about finance), that would be a violation of the rules. You <strong>ARE</strong> welcome to look-up or google information about data analytics on financial data. However, <strong>you may not use AI in this aspect of the project</strong>.</li>
+<li>You may use AI to help you debug your code. You MAY copy &amp; paste error message as long as any references to variable names are removed or replaced. You are also allowed to copy &amp; paste code that is causing the errors as long as you remove or replace the variable names.</li>
+</ul>
+</section>
+</section>
 <section id="greenfin-capital-loan-outcome-prediction" class="level1">
 <h1>GreenFin Capital: Loan Outcome Prediction</h1>
 <p>GreenFin Capital is a fintech startup that offers personal loans to borrowers who may not qualify for traditional bank financing. Unlike conventional lenders, GreenFin uses machine learning to evaluate applications in real time, aiming to extend credit responsibly to a broader population.</p>
@@ -319,24 +360,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
+<p>You can find these datasets in the <a href="https://classroom.github.com/a/jBgE3UBL">GitHub Classroom assignment</a>.</p>
 </section>
 <section id="deliverables" class="level2">
 <h2 class="anchored" data-anchor-id="deliverables">Deliverables</h2>
 <p>There are two deliverables for this project:</p>
 <ol type="1">
-<li><p><strong>An HTML report</strong> describing your modeling process. This should follow the same guidelines as the <a href="../jobs/job-app-2-resources.html">Hack-A-Thon Report Guidelines</a>. Push your <code>.qmd</code> source file and the rendered <code>.html</code> to the <a href="">GitHub Classroom assignment</a>. This is also where you can download the data files.</p></li>
-<li><p><strong>A <code>.csv</code> file</strong>, uploaded to Canvas, containing your predictions for the 12,000 loans in the test set. Your file should have <strong>two columns</strong>: <code>loan_id</code> and <code>loan_outcome</code>, matching the loan IDs from <code>greenfin_test.csv</code> in the same row order. You can write this in Python with:</p></li>
+<li><p><strong>An HTML report or Jupyter Notebook</strong> walking through your final model. If using Quarto, push your <code>.qmd</code> source file and the rendered <code>.html</code> to the <a href="https://classroom.github.com/a/jBgE3UBL">GitHub Classroom assignment</a>. If using Jupyter Notebook, push the notebook. This is also where you can download the data files.</p></li>
+<li><p><strong>A <code>.csv</code> file</strong>, pushed to your GitHub repository, containing your predictions for the 12,000 loans in the test set. Your file should have <strong>two columns</strong>: <code>loan_id</code> and <code>loan_outcome</code>, matching the loan IDs from <code>greenfin_test.csv</code> in the same row order, and be called <code>my_predictions.csv</code>. If it is not in this format, you will lose points. You can write this in Python with:</p></li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># df_test is your test dataframe; predictions is a list or array of 0s, 1s, and 2s</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>submission <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"loan_id"</span>: df_test[<span class="st">"loan_id"</span>],</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"loan_outcome"</span>: predictions</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>submission.to_csv(<span class="st">"my_predictions.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>submission.to_csv(<span class="st">"my_predictions.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Your submission will be evaluated primarily on <strong>predictive accuracy</strong> — the fraction of test loans you correctly classify. Writing quality and depth of analysis are also assessed, as described below.</p>
-<p>Not all columns in the data are immediately usable. You will need to handle non-numerical columns, address missing data, and think carefully about which features to include and how to represent them. Thoughtful feature engineering can substantially improve performance.</p>
+<p>Not all columns in the data are immediately usable. You will need to handle non-numerical columns, address missing data, and think carefully about which features to include and how to represent them. Thoughtful feature engineering can substantially improve performance. Note that this data is is synthetic, but it is designed to reflect the kinds of challenges and patterns you would encounter in a real-world financial dataset.</p>
 </section>
 <section id="grading" class="level2">
 <h2 class="anchored" data-anchor-id="grading">Grading</h2>
@@ -351,23 +393,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td><strong>Predictive Accuracy</strong></td>
-<td>60%</td>
+<td>80%</td>
 </tr>
 <tr class="even">
-<td><strong>Writing Quality</strong></td>
-<td>20%</td>
-</tr>
-<tr class="odd">
-<td><strong>Data Analysis</strong></td>
+<td><strong>Writing/Clarity</strong></td>
 <td>20%</td>
 </tr>
 </tbody>
 </table>
-<p>Predictive accuracy is the primary criterion: your test accuracy will be compared against your classmates’ and graded accordingly. The writing and data analysis components follow the same rubric as previous assignments — a well-organized, clearly written report that explains your methodology and justifies your choices.</p>
-</section>
-<section id="notes" class="level2">
-<h2 class="anchored" data-anchor-id="notes">Notes</h2>
-<p>The GreenFin dataset was constructed specifically for this course and does not exist elsewhere on the internet. You are welcome to search for general advice about machine learning for multi-class classification, but any approach lifted directly from a published analysis of this specific dataset constitutes academic dishonesty and will result in a zero. <strong>If you have questions about the data or the task, please ask the instructor.</strong></p>
+<p>Predictive accuracy is the primary criterion: your test accuracy will be compared against your classmates’ and graded accordingly. The writing /clarity component corresponds to how well you adhere to the <a href="#report-requirements">Report Requirements</a>.</p>
 </section>
 <section id="description-of-variables" class="level2">
 <h2 class="anchored" data-anchor-id="description-of-variables">Description of Variables</h2>
@@ -387,290 +421,291 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>state_region</code>: Geographic region of the borrower’s primary address. Takes one of five values: <code>Northeast</code>, <code>Southeast</code>, <code>Midwest</code>, <code>Southwest</code>, or <code>West</code>.</p>
 <p><code>monthly_obligations</code>: The borrower’s total recurring monthly debt obligations in dollars, not counting the new GreenFin loan.</p>
 </section>
-<section id="evaluation-guidelines" class="level2">
-<h2 class="anchored" data-anchor-id="evaluation-guidelines">Evaluation Guidelines</h2>
-<p>Your submission will be assessed in each of the following areas as Outstanding, Good, Acceptable, Needs Work, or Inadequate. The questions below serve as a guide.</p>
-<section id="predictive-accuracy" class="level3">
-<h3 class="anchored" data-anchor-id="predictive-accuracy">Predictive Accuracy</h3>
+<section id="report-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="report-requirements">Report Requirements</h2>
+<section id="general-guidelines" class="level3">
+<h3 class="anchored" data-anchor-id="general-guidelines">General Guidelines</h3>
 <ul>
-<li>Are your predictions submitted in the correct format (a CSV with <code>loan_id</code> and <code>loan_outcome</code>)?</li>
-<li>Do your predictions cover all 12,000 rows in the test set?</li>
-<li>Are appropriate modeling techniques used given the data and the task?</li>
-<li>How accurate are your predictions on the held-out test set?</li>
-<li>How do your predictions rank relative to your classmates?</li>
+<li>ONLY INCLUDE STEPS THAT MADE IT INTO YOUR FINAL MODEL. DO NOT INCLUDE MODELS OR STEPS THAT YOU TRIED BUT DECIDED AGAINST.</li>
+<li>Keep the written parts of your submitted report extremely short.</li>
+<li>All prose should be concise and written in bulleted lists.</li>
+<li>Your report should be formatted as a Jupyter notebook or qmd file. Note that I should be able to run it from top-to-bottom without an error.</li>
+<li>Note that you should be running a lot of code (e.g.&nbsp;data exploration) that should not be included in your final report.</li>
 </ul>
 </section>
-<section id="writing-quality" class="level3">
-<h3 class="anchored" data-anchor-id="writing-quality">Writing Quality</h3>
-<ul>
-<li>Is the report well-organized and easy to follow?</li>
-<li>Is the modeling process described in a clear, logical, and engaging manner?</li>
-<li>Are modeling choices clearly justified?</li>
-<li>Is the report free of spelling and grammatical errors?</li>
-<li>Is the report written for an appropriate technical audience?</li>
-</ul>
-</section>
-<section id="data-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="data-analysis">Data Analysis</h3>
-<ul>
-<li>Are statistical and machine learning methods described accurately?</li>
-<li>Are appropriate predictor variables used? Are exclusions justified?</li>
-<li>Are data cleaning and transformation decisions sensible and well-explained?</li>
-<li>How was the model chosen and validated (e.g., cross-validation)?</li>
-<li>If applicable, how were model parameters tuned?</li>
-</ul>
-</section>
-</section>
-<section id="submitting-your-work" class="level2">
-<h2 class="anchored" data-anchor-id="submitting-your-work">Submitting Your Work</h2>
+<section id="report-structure" class="level3">
+<h3 class="anchored" data-anchor-id="report-structure">Report Structure</h3>
+<p>Include the following sections. For each section you should create a markdown header (e.g.&nbsp;<code>## Data Cleaning</code>) and then include the required content for that section. The sections should be in the following order and include the following information:</p>
 <ol type="1">
-<li>Push your <code>.qmd</code> and rendered <code>.html</code> report to GitHub Classroom.</li>
-<li>Upload your predictions CSV to <a href="https://cofi.instructure.com/courses/17021/assignments/213175">Canvas</a>.</li>
+<li><strong>Loading python packages and the data</strong> (2 code blocks)
+<ul>
+<li>Code block 1: load all of the packages your use in your analysis. Note that any packages you use in your code MUST be loaded here.</li>
+<li>Code block 2: load the data. You should load both the training and test data here.</li>
+</ul></li>
+<li><strong>Data Cleaning and Feature Engineering</strong> (1 bulleted list and 1 code block)
+<ul>
+<li>Bulleted list of the data cleaning steps you took and a VERY brief explanation for why. For examples, what variables did you remove, what new variables did you create, etc.</li>
+<li>Code block: All the code that executes those steps. Any <code>Pipelines</code> and <code>ColumnTransformer</code>s should go in the next section. Note: You SHOULD be making plots of your data, but do not include them in your final report.</li>
+</ul></li>
+<li><strong>Pre-processing</strong> (1 bulleted list and 1 code block)
+<ul>
+<li>Bulleted list of the pre-processing steps you took and a VERY brief explanation for why.</li>
+<li>Code block: All the code for those steps. This is where any <code>Pipelines</code> and <code>ColumnTransformer</code>s should go in this section.</li>
+</ul></li>
+<li><strong>Model Fit and Tuning</strong> (1 bulleted list and 2 code blocks)
+<ul>
+<li>Bulleted list: Your list should include the following information:
+<ul>
+<li>Any splitting or cross-validation strategy you used to evaluate your model. DO NOT INCLUDE THE cross-validation code, just a description of what you did.</li>
+<li>All the types of models you tried and the one you ultimately chose for your final model.</li>
+<li>All the hyperparameters you tuned for your <strong>final model</strong> and how you tuned them. If you used a tool like <code>GridSearchCV</code> or <code>RandomizedSearchCV</code>, DO NOT INCLUDE THESE. Instead, just fit the model with the optimal hyperparameters that you found with these tools.</li>
+</ul></li>
+<li>Code block 1: A code block that includes all of the code preparing to fit and tune <strong>ONLY YOUR FINAL MODEL</strong>. Do not include code for models you tried but ultimately decided against. Do not include code for tuning hyperparameters. Do not include cross-validation or model evaluation.</li>
+<li>Code block 2: The line or lines of code that actually fit your final model. This is the only code cell that should take a long time to execute.</li>
+</ul></li>
+<li><strong>Prediction Generation</strong>: (1 code block)
+<ul>
+<li>A code block that includes the code for generating the predictions for the test set and writing the results to a <code>my_predictions.csv</code> file.</li>
+</ul></li>
 </ol>
 
 
 </section>
 </section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
-    const isCodeAnnotation = (el) => {
-      for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
-          return true;
-        }
-      }
-      return false;
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
     }
-    const onCopySuccess = function(e) {
-      // button target
-      const button = e.trigger;
-      // don't keep focus
-      button.blur();
-      // flash "checked"
-      button.classList.add('code-copy-button-checked');
-      var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copied!");
-      let tooltip;
-      if (window.bootstrap) {
-        button.setAttribute("data-bs-toggle", "tooltip");
-        button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
-            customClass: "code-copy-button-tooltip",
-            offset: [0, -8]});
-        tooltip.show();    
-      }
-      setTimeout(function() {
-        if (tooltip) {
-          tooltip.hide();
-          button.removeAttribute("data-bs-title");
-          button.removeAttribute("data-bs-toggle");
-          button.removeAttribute("data-bs-placement");
-        }
-        button.setAttribute("title", currentTitle);
-        button.classList.remove('code-copy-button-checked');
-      }, 1000);
-      // clear code selection
-      e.clearSelection();
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
     }
-    const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
         }
       }
       return codeEl.innerText;
-    }
-    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-      text: getTextToCopy
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
     });
-    clipboard.on('success', onCopySuccess);
-    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-        text: getTextToCopy,
-        container: window.document.getElementById('quarto-embedded-source-code-modal')
-      });
-      clipboardModal.on('success', onCopySuccess);
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/EricFriedlander\.github\.io\/math4025sp26\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
-      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/EricFriedlander\.github\.io\/math4025sp26\/");
-      var isInternal = (href) => {
-          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-      }
-      // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-      for (var i=0; i<links.length; i++) {
-        const link = links[i];
-        if (!isInternal(link.href)) {
-          // undo the damage that might have been done by quarto-nav.js in the case of
-          // links that we want to consider external
-          if (link.dataset.originalHref !== undefined) {
-            link.href = link.dataset.originalHref;
-          }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
         }
       }
-    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-      const config = {
-        allowHTML: true,
-        maxWidth: 500,
-        delay: 100,
-        arrow: false,
-        appendTo: function(el) {
-            return el.parentElement;
-        },
-        interactive: true,
-        interactiveBorder: 10,
-        theme: 'quarto',
-        placement: 'bottom-start',
-      };
-      if (contentFn) {
-        config.content = contentFn;
-      }
-      if (onTriggerFn) {
-        config.onTrigger = onTriggerFn;
-      }
-      if (onUntriggerFn) {
-        config.onUntrigger = onUntriggerFn;
-      }
-      window.tippy(el, config); 
     }
-    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-    for (var i=0; i<noterefs.length; i++) {
-      const ref = noterefs[i];
-      tippyHover(ref, function() {
-        // use id or data attribute instead here
-        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-        try { href = new URL(href).hash; } catch {}
-        const id = href.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note) {
-          return note.innerHTML;
-        } else {
-          return "";
-        }
-      });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
     }
-    const xrefs = window.document.querySelectorAll('a.quarto-xref');
-    const processXRef = (id, note) => {
-      // Strip column container classes
-      const stripColumnClz = (el) => {
-        el.classList.remove("page-full", "page-columns");
-        if (el.children) {
-          for (const child of el.children) {
-            stripColumnClz(child);
-          }
-        }
-      }
-      stripColumnClz(note)
-      if (id === null || id.startsWith('sec-')) {
-        // Special case sections, only their first couple elements
-        const container = document.createElement("div");
-        if (note.children && note.children.length > 2) {
-          container.appendChild(note.children[0].cloneNode(true));
-          for (let i = 1; i < note.children.length; i++) {
-            const child = note.children[i];
-            if (child.tagName === "P" && child.innerText === "") {
-              continue;
-            } else {
-              container.appendChild(child.cloneNode(true));
-              break;
-            }
-          }
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(container);
-          }
-          return container.innerHTML
-        } else {
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(note);
-          }
-          return note.innerHTML;
-        }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
       } else {
-        // Remove any anchor links if they are present
-        const anchorLink = note.querySelector('a.anchorjs-link');
-        if (anchorLink) {
-          anchorLink.remove();
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
         }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        if (note.classList.contains("callout")) {
-          return note.outerHTML;
-        } else {
-          return note.innerHTML;
-        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
       }
     }
-    for (var i=0; i<xrefs.length; i++) {
-      const xref = xrefs[i];
-      tippyHover(xref, undefined, function(instance) {
-        instance.disable();
-        let url = xref.getAttribute('href');
-        let hash = undefined; 
-        if (url.startsWith('#')) {
-          hash = url;
-        } else {
-          try { hash = new URL(url).hash; } catch {}
-        }
-        if (hash) {
-          const id = hash.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note !== null) {
-            try {
-              const html = processXRef(id, note.cloneNode(true));
-              instance.setContent(html);
-            } finally {
-              instance.enable();
-              instance.show();
-            }
-          } else {
-            // See if we can fetch this
-            fetch(url.split('#')[0])
-            .then(res => res.text())
-            .then(html => {
-              const parser = new DOMParser();
-              const htmlDoc = parser.parseFromString(html, "text/html");
-              const note = htmlDoc.getElementById(id);
-              if (note !== null) {
-                const html = processXRef(id, note);
-                instance.setContent(html);
-              } 
-            }).finally(() => {
-              instance.enable();
-              instance.show();
-            });
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
           }
         } else {
-          // See if we can fetch a full url (with no hash to target)
-          // This is a special case and we should probably do some content thinning / targeting
-          fetch(url)
+          // See if we can fetch this
+          fetch(url.split('#')[0])
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.querySelector('main.content');
+            const note = htmlDoc.getElementById(id);
             if (note !== null) {
-              // This should only happen for chapter cross references
-              // (since there is no id in the URL)
-              // remove the first header
-              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-                note.children[0].remove();
-              }
-              const html = processXRef(null, note);
+              const html = processXRef(id, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -678,161 +713,185 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             instance.show();
           });
         }
-      }, function(instance) {
-      });
-    }
-        let selectedAnnoteEl;
-        const selectorForAnnotation = ( cell, annotation) => {
-          let cellAttr = 'data-code-cell="' + cell + '"';
-          let lineAttr = 'data-code-annotation="' +  annotation + '"';
-          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-          return selector;
-        }
-        const selectCodeLines = (annoteEl) => {
-          const doc = window.document;
-          const targetCell = annoteEl.getAttribute("data-target-cell");
-          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-          const lineIds = lines.map((line) => {
-            return targetCell + "-" + line;
-          })
-          let top = null;
-          let height = null;
-          let parent = null;
-          if (lineIds.length > 0) {
-              //compute the position of the single el (top and bottom and make a div)
-              const el = window.document.getElementById(lineIds[0]);
-              top = el.offsetTop;
-              height = el.offsetHeight;
-              parent = el.parentElement.parentElement;
-            if (lineIds.length > 1) {
-              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-              height = bottom - top;
-            }
-            if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
-              let div = window.document.getElementById("code-annotation-line-highlight");
-              if (div === null) {
-                div = window.document.createElement("div");
-                div.setAttribute("id", "code-annotation-line-highlight");
-                div.style.position = 'absolute';
-                parent.appendChild(div);
-              }
-              div.style.top = top - 2 + "px";
-              div.style.height = height + 4 + "px";
-              div.style.left = 0;
-              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-              if (gutterDiv === null) {
-                gutterDiv = window.document.createElement("div");
-                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                gutterDiv.style.position = 'absolute';
-                const codeCell = window.document.getElementById(targetCell);
-                const gutter = codeCell.querySelector('.code-annotation-gutter');
-                gutter.appendChild(gutterDiv);
-              }
-              gutterDiv.style.top = top - 2 + "px";
-              gutterDiv.style.height = height + 4 + "px";
-            }
-            selectedAnnoteEl = annoteEl;
-          }
-        };
-        const unselectCodeLines = () => {
-          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-          elementsIds.forEach((elId) => {
-            const div = window.document.getElementById(elId);
-            if (div) {
-              div.remove();
-            }
-          });
-          selectedAnnoteEl = undefined;
-        };
-          // Handle positioning of the toggle
-      window.addEventListener(
-        "resize",
-        throttle(() => {
-          elRect = undefined;
-          if (selectedAnnoteEl) {
-            selectCodeLines(selectedAnnoteEl);
-          }
-        }, 10)
-      );
-      function throttle(fn, ms) {
-      let throttle = false;
-      let timer;
-        return (...args) => {
-          if(!throttle) { // first call gets through
-              fn.apply(this, args);
-              throttle = true;
-          } else { // all the others get throttled
-              if(timer) clearTimeout(timer); // cancel #2
-              timer = setTimeout(() => {
-                fn.apply(this, args);
-                timer = throttle = false;
-              }, ms);
-          }
-        };
-      }
-        // Attach click handler to the DT
-        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-        for (const annoteDlNode of annoteDls) {
-          annoteDlNode.addEventListener('click', (event) => {
-            const clickedEl = event.target;
-            if (clickedEl !== selectedAnnoteEl) {
-              unselectCodeLines();
-              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-              if (activeEl) {
-                activeEl.classList.remove('code-annotation-active');
-              }
-              selectCodeLines(clickedEl);
-              clickedEl.classList.add('code-annotation-active');
-            } else {
-              // Unselect the line
-              unselectCodeLines();
-              clickedEl.classList.remove('code-annotation-active');
-            }
-          });
-        }
-    const findCites = (el) => {
-      const parentEl = el.parentElement;
-      if (parentEl) {
-        const cites = parentEl.dataset.cites;
-        if (cites) {
-          return {
-            el,
-            cites: cites.split(' ')
-          };
-        } else {
-          return findCites(el.parentElement)
-        }
       } else {
-        return undefined;
-      }
-    };
-    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-    for (var i=0; i<bibliorefs.length; i++) {
-      const ref = bibliorefs[i];
-      const citeInfo = findCites(ref);
-      if (citeInfo) {
-        tippyHover(citeInfo.el, function() {
-          var popup = window.document.createElement('div');
-          citeInfo.cites.forEach(function(cite) {
-            var citeDiv = window.document.createElement('div');
-            citeDiv.classList.add('hanging-indent');
-            citeDiv.classList.add('csl-entry');
-            var biblioDiv = window.document.getElementById('ref-' + cite);
-            if (biblioDiv) {
-              citeDiv.innerHTML = biblioDiv.innerHTML;
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
             }
-            popup.appendChild(citeDiv);
-          });
-          return popup.innerHTML;
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
         });
       }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
     }
-  });
-  </script>
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">

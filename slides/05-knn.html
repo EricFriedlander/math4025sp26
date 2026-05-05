@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-html/tabby.min.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.27">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.6.39">
 
   <meta name="author" content="Dr.&nbsp;Eric Friedlander">
   <title>Math 4025 - Spring 2026 – Math 4025: Data Splitting + KNN</title>
@@ -29,9 +29,8 @@
       vertical-align: middle;
     }
     /* CSS for syntax highlighting */
-    html { -webkit-text-size-adjust: 100%; }
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -42,7 +41,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -95,7 +94,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-0f85c99103221d1ebb6c43a3583f9823.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-72811bd306436bae30bfb620bac545c3.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -189,7 +188,7 @@
       margin-right: 0; 
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
   
   <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 </head>
@@ -211,8 +210,8 @@ Dr.&nbsp;Eric Friedlander
 </section>
 <section id="computational-setup" class="slide level2">
 <h2>Computational Setup</h2>
-<div id="10963ce7" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div id="128c1a88" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb1-4"><a></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsRegressor</span>
@@ -221,7 +220,7 @@ Dr.&nbsp;Eric Friedlander
 <span id="cb1-7"><a></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_openml</span>
 <span id="cb1-8"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-9"><a></a><span class="im">from</span> plotnine <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb1-10"><a></a><span class="im">from</span> itables <span class="im">import</span> show</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-10"><a></a><span class="im">from</span> itables <span class="im">import</span> show</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="comparing-models-data-splitting" class="slide level2 smaller">
@@ -243,8 +242,8 @@ Dr.&nbsp;Eric Friedlander
 </section>
 <section id="comparing-models-data-splitting-with-scikit-learn" class="slide level2 smaller">
 <h2>Comparing Models: Data Splitting with <code>scikit-learn</code></h2>
-<div id="50a4f2cf" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="co"># Load ames dataset from sklearn</span></span>
+<div id="4edf674e" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="co"># Load ames dataset from sklearn</span></span>
 <span id="cb2-2"><a></a>ames_data <span class="op">=</span> fetch_openml(name<span class="op">=</span><span class="st">"house_prices"</span>, as_frame<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb2-3"><a></a>ames <span class="op">=</span> ames_data.frame</span>
 <span id="cb2-4"><a></a></span>
@@ -258,7 +257,7 @@ Dr.&nbsp;Eric Friedlander
 <span id="cb2-12"><a></a>)</span>
 <span id="cb2-13"><a></a></span>
 <span id="cb2-14"><a></a><span class="bu">print</span>(<span class="ss">f"Training set size: </span><span class="sc">{</span><span class="bu">len</span>(ames_train)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb2-15"><a></a><span class="bu">print</span>(<span class="ss">f"Test set size: </span><span class="sc">{</span><span class="bu">len</span>(ames_test)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-15"><a></a><span class="bu">print</span>(<span class="ss">f"Test set size: </span><span class="sc">{</span><span class="bu">len</span>(ames_test)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Training set size: 1022
 Test set size: 438</code></pre>
@@ -280,8 +279,8 @@ Test set size: 438</code></pre>
 <li><strong>fit4</strong>: super flexible model which fits a 10th degree polynomial to <code>GrLivArea</code> and a 2nd degree polynomial to <code>BedroomAbvGr</code></li>
 </ul></li>
 </ul>
-<div id="933ad3e4" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="co"># Prepare target variable</span></span>
+<div id="063856b7" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="co"># Prepare target variable</span></span>
 <span id="cb4-2"><a></a>y_train <span class="op">=</span> ames_train[<span class="st">"SalePrice"</span>]</span>
 <span id="cb4-3"><a></a>y_test <span class="op">=</span> ames_test[<span class="st">"SalePrice"</span>]</span>
 <span id="cb4-4"><a></a></span>
@@ -302,13 +301,13 @@ Test set size: 438</code></pre>
 <span id="cb4-19"><a></a>    poly_liv.fit_transform(ames_train[[<span class="st">"GrLivArea"</span>]]),</span>
 <span id="cb4-20"><a></a>    poly_bed.fit_transform(ames_train[[<span class="st">"BedroomAbvGr"</span>]])</span>
 <span id="cb4-21"><a></a>])</span>
-<span id="cb4-22"><a></a>fit4 <span class="op">=</span> LinearRegression().fit(X_train_poly, y_train)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-22"><a></a>fit4 <span class="op">=</span> LinearRegression().fit(X_train_poly, y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="computing-mse" class="slide level2 smaller">
 <h2>Computing MSE</h2>
-<div id="f07ae2b1" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="co"># Function to compute MSE</span></span>
+<div id="dbd88984" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="co"># Function to compute MSE</span></span>
 <span id="cb5-2"><a></a><span class="kw">def</span> compute_mse(y_true, y_pred):</span>
 <span id="cb5-3"><a></a>    <span class="cf">return</span> np.mean((y_true <span class="op">-</span> y_pred) <span class="op">**</span> <span class="dv">2</span>)</span>
 <span id="cb5-4"><a></a></span>
@@ -330,7 +329,7 @@ Test set size: 438</code></pre>
 <span id="cb5-20"><a></a>    poly_bed.transform(ames_test[[<span class="st">"BedroomAbvGr"</span>]])</span>
 <span id="cb5-21"><a></a>])</span>
 <span id="cb5-22"><a></a>fit4_train_mse <span class="op">=</span> compute_mse(y_train, fit4.predict(X_train_poly))</span>
-<span id="cb5-23"><a></a>fit4_test_mse <span class="op">=</span> compute_mse(y_test, fit4.predict(X_test_poly))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-23"><a></a>fit4_test_mse <span class="op">=</span> compute_mse(y_test, fit4.predict(X_test_poly))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="question" class="slide level2">
@@ -345,8 +344,8 @@ Test set size: 438</code></pre>
 <h2>Choosing a Model</h2>
 <div class="columns">
 <div class="column">
-<div id="e51dce14" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="co"># Training Errors</span></span>
+<div id="ca03fb33" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="co"># Training Errors</span></span>
 <span id="cb6-2"><a></a>train_mses <span class="op">=</span> [fit1_train_mse, fit2_train_mse, fit3_train_mse, fit4_train_mse]</span>
 <span id="cb6-3"><a></a><span class="bu">print</span>(<span class="st">"Training MSEs:"</span>, [<span class="ss">f"</span><span class="sc">{</span>mse<span class="sc">:.0f}</span><span class="ss">"</span> <span class="cf">for</span> mse <span class="kw">in</span> train_mses])</span>
 <span id="cb6-4"><a></a><span class="bu">print</span>(<span class="ss">f"Best training: fit</span><span class="sc">{</span>np<span class="sc">.</span>argmin(train_mses) <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span>
@@ -354,7 +353,7 @@ Test set size: 438</code></pre>
 <span id="cb6-6"><a></a><span class="co"># Test Errors</span></span>
 <span id="cb6-7"><a></a>test_mses <span class="op">=</span> [fit1_test_mse, fit2_test_mse, fit3_test_mse, fit4_test_mse]</span>
 <span id="cb6-8"><a></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Test MSEs:"</span>, [<span class="ss">f"</span><span class="sc">{</span>mse<span class="sc">:.0f}</span><span class="ss">"</span> <span class="cf">for</span> mse <span class="kw">in</span> test_mses])</span>
-<span id="cb6-9"><a></a><span class="bu">print</span>(<span class="ss">f"Best test: fit</span><span class="sc">{</span>np<span class="sc">.</span>argmin(test_mses) <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-9"><a></a><span class="bu">print</span>(<span class="ss">f"Best test: fit</span><span class="sc">{</span>np<span class="sc">.</span>argmin(test_mses) <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Training MSEs: ['6175267159', '3097659031', '2737919477', '4028341437']
 Best training: fit3
@@ -382,7 +381,7 @@ Best test: fit3</code></pre>
 <section id="regression-conditional-averaging" class="slide level2 smaller">
 <h2>Regression: Conditional Averaging</h2>
 <p><strong>Restaurant Outlets Profit dataset</strong></p>
-<div id="e613cf17" class="cell" data-execution_count="6">
+<div id="58550b2c" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div>
 <figure>
@@ -409,19 +408,19 @@ Best test: fit3</code></pre>
 <div class="columns">
 <div class="column">
 <p><strong><span class="math inline">\(K=1\)</span></strong></p>
-<div id="5b2fa64a" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="co"># 1-NN regression</span></span>
+<div id="1802001f" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="co"># 1-NN regression</span></span>
 <span id="cb8-2"><a></a>knnfit1 <span class="op">=</span> KNeighborsRegressor(n_neighbors<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb8-3"><a></a>knnfit1.fit(outlets[[<span class="st">"population"</span>]], outlets[<span class="st">"profit"</span>])</span>
 <span id="cb8-4"><a></a></span>
 <span id="cb8-5"><a></a><span class="co"># 1-NN prediction at population = 6</span></span>
 <span id="cb8-6"><a></a>pred_1nn <span class="op">=</span> knnfit1.predict([[<span class="dv">6</span>]])</span>
-<span id="cb8-7"><a></a><span class="bu">print</span>(<span class="ss">f"1-NN prediction at x=6: </span><span class="sc">{</span>pred_1nn[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-7"><a></a><span class="bu">print</span>(<span class="ss">f"1-NN prediction at x=6: </span><span class="sc">{</span>pred_1nn[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>1-NN prediction at x=6: 0.9270</code></pre>
 </div>
 </div>
-<div id="157368b5" class="cell" data-execution_count="8">
+<div id="ab1847ef" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 <figure>
@@ -432,19 +431,19 @@ Best test: fit3</code></pre>
 </div>
 </div><div class="column">
 <p><strong><span class="math inline">\(K=5\)</span></strong></p>
-<div id="233cac98" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a><span class="co"># 5-NN regression</span></span>
+<div id="b40f1c92" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a><span class="co"># 5-NN regression</span></span>
 <span id="cb10-2"><a></a>knnfit5 <span class="op">=</span> KNeighborsRegressor(n_neighbors<span class="op">=</span><span class="dv">5</span>)</span>
 <span id="cb10-3"><a></a>knnfit5.fit(outlets[[<span class="st">"population"</span>]], outlets[<span class="st">"profit"</span>])</span>
 <span id="cb10-4"><a></a></span>
 <span id="cb10-5"><a></a><span class="co"># 5-NN prediction at population = 6</span></span>
 <span id="cb10-6"><a></a>pred_5nn <span class="op">=</span> knnfit5.predict([[<span class="dv">6</span>]])</span>
-<span id="cb10-7"><a></a><span class="bu">print</span>(<span class="ss">f"5-NN prediction at x=6: </span><span class="sc">{</span>pred_5nn[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-7"><a></a><span class="bu">print</span>(<span class="ss">f"5-NN prediction at x=6: </span><span class="sc">{</span>pred_5nn[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>5-NN prediction at x=6: 5.7699</code></pre>
 </div>
 </div>
-<div id="8083aca0" class="cell" data-execution_count="10">
+<div id="35666ddc" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 <figure>
@@ -457,7 +456,7 @@ Best test: fit3</code></pre>
 </section>
 <section id="regression-methods-comparison" class="slide level2">
 <h2>Regression Methods: Comparison</h2>
-<div id="82404ad6" class="cell" data-execution_count="11">
+<div id="6aa494f1" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 <figure>
@@ -481,11 +480,11 @@ Best test: fit3</code></pre>
 <ul>
 <li>Let’s look at the <code>ames</code> data</li>
 </ul>
-<div id="28d13fea" class="cell" data-execution_count="12">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a>show(ames[[<span class="st">"SalePrice"</span>, <span class="st">"GrLivArea"</span>, <span class="st">"BedroomAbvGr"</span>]].head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="0c303c78" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a>show(ames[[<span class="st">"SalePrice"</span>, <span class="st">"GrLivArea"</span>, <span class="st">"BedroomAbvGr"</span>]].head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_c5dd9379_43ca_47f4_a352_806e00341a48"><tbody><tr>
+<table id="itables_f4791b36_8c83_4bad_8440_56bbb0a619e0"><tbody><tr>
     <td style="vertical-align:middle; text-align:left">
     <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
     <g style="fill:#d9d7fc">
@@ -551,17 +550,18 @@ Best test: fit3</code></pre>
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_c5dd9379_43ca_47f4_a352_806e00341a48:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_f4791b36_8c83_4bad_8440_56bbb0a619e0:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "text_in_header_can_be_selected": true, "classes": ["display", "nowrap"], "order": [], "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>SalePrice</th>\n      <th>GrLivArea</th>\n      <th>BedroomAbvGr</th>\n    </tr>\n  </thead></table>", "data_json": "[[208500, 1710, 3], [181500, 1262, 3], [223500, 1786, 3], [140000, 1717, 3], [250000, 2198, 4]]"};
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "classes": ["display", "nowrap"], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "text_in_header_can_be_selected": true, "order": [], "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>SalePrice</th>\n      <th>GrLivArea</th>\n      <th>BedroomAbvGr</th>\n    </tr>\n  </thead></table>", "data_json": "[[208500, 1710, 3], [181500, 1262, 3], [223500, 1786, 3], [140000, 1717, 3], [250000, 2198, 4]]"};
         new ITable(table, dt_args);
     });
 </script>
 </div>
 </div>
 <div class="fragment">
+<div>
 <ul>
 <li class="fragment">Should 1 square foot count the same as 1 bedroom?</li>
 <li class="fragment">Need to <strong>center and scale</strong> (freq. just say scale)
@@ -572,11 +572,12 @@ Best test: fit3</code></pre>
 </ul></li>
 </ul>
 </div>
+</div>
 </section>
 <section id="scaling-in-python" class="slide level2">
 <h2>Scaling in Python</h2>
-<div id="cdc94184" class="cell" data-execution_count="13">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a><span class="co"># Scale predictors using StandardScaler</span></span>
+<div id="040db951" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a><span class="co"># Scale predictors using StandardScaler</span></span>
 <span id="cb13-2"><a></a>scaler <span class="op">=</span> StandardScaler()</span>
 <span id="cb13-3"><a></a></span>
 <span id="cb13-4"><a></a><span class="co"># Fit and transform</span></span>
@@ -586,10 +587,10 @@ Best test: fit3</code></pre>
 <span id="cb13-8"><a></a>    <span class="st">"price"</span>: ames[<span class="st">"SalePrice"</span>].values</span>
 <span id="cb13-9"><a></a>})</span>
 <span id="cb13-10"><a></a></span>
-<span id="cb13-11"><a></a>show(ames_scaled.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-11"><a></a>show(ames_scaled.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_e8620737_762f_459c_a5b3_92b682faef1d"><tbody><tr>
+<table id="itables_b89465f2_d9dd_4533_b6cd_b2b81f32c51c"><tbody><tr>
     <td style="vertical-align:middle; text-align:left">
     <a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
     <g style="fill:#d9d7fc">
@@ -655,11 +656,11 @@ Best test: fit3</code></pre>
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.4.0/dt_bundle.js';
 
-    document.querySelectorAll("#itables_e8620737_762f_459c_a5b3_92b682faef1d:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_b89465f2_d9dd_4533_b6cd_b2b81f32c51c:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
-        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "text_in_header_can_be_selected": true, "classes": ["display", "nowrap"], "order": [], "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>size_scaled</th>\n      <th>num_bedrooms_scaled</th>\n      <th>price</th>\n    </tr>\n  </thead></table>", "data_json": "[[0.370333, 0.163779, 208500], [-0.482512, 0.163779, 181500], [0.515013, 0.163779, 223500], [0.383659, 0.163779, 140000], [1.299326, 1.390023, 250000]]"};
+        let dt_args = {"layout": {"topStart": null, "topEnd": null, "bottomStart": null, "bottomEnd": null}, "classes": ["display", "nowrap"], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "text_in_header_can_be_selected": true, "order": [], "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>size_scaled</th>\n      <th>num_bedrooms_scaled</th>\n      <th>price</th>\n    </tr>\n  </thead></table>", "data_json": "[[0.370333, 0.163779, 208500], [-0.482512, 0.163779, 181500], [0.515013, 0.163779, 223500], [0.383659, 0.163779, 140000], [1.299326, 1.390023, 250000]]"};
         new ITable(table, dt_args);
     });
 </script>
@@ -668,17 +669,19 @@ Best test: fit3</code></pre>
 </section>
 <section id="question-2" class="slide level2">
 <h2>Question…</h2>
+<div>
 <ul>
 <li class="fragment">What about the training and test sets?</li>
 <li class="fragment">Need to scale BOTH sets based on the mean and standard deviation of the training set…</li>
 <li class="fragment">Discussion: Why?</li>
 <li class="fragment">Discussion: Why don’t I need to center and scale <code>Sale_Price</code>?</li>
 </ul>
+</div>
 </section>
 <section id="scaling-revisited" class="slide level2">
 <h2>Scaling Revisited</h2>
-<div id="c69aab78" class="cell" data-execution_count="14">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a><span class="co"># Create scalers fitted ONLY on training data</span></span>
+<div id="05d1bc86" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a><span class="co"># Create scalers fitted ONLY on training data</span></span>
 <span id="cb14-2"><a></a>scaler_size <span class="op">=</span> StandardScaler()</span>
 <span id="cb14-3"><a></a>scaler_bedrooms <span class="op">=</span> StandardScaler()</span>
 <span id="cb14-4"><a></a></span>
@@ -694,7 +697,7 @@ Best test: fit3</code></pre>
 <span id="cb14-14"><a></a>    <span class="st">"size_scaled"</span>: scaler_size.transform(ames_test[[<span class="st">"GrLivArea"</span>]])[:, <span class="dv">0</span>],</span>
 <span id="cb14-15"><a></a>    <span class="st">"num_bedrooms_scaled"</span>: scaler_bedrooms.transform(ames_test[[<span class="st">"BedroomAbvGr"</span>]])[:, <span class="dv">0</span>],</span>
 <span id="cb14-16"><a></a>    <span class="st">"price"</span>: ames_test[<span class="st">"SalePrice"</span>].values</span>
-<span id="cb14-17"><a></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb14-17"><a></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Next time: using <code>Pipeline</code> in <code>scikit-learn</code> to simplify this process</li>
@@ -702,13 +705,13 @@ Best test: fit3</code></pre>
 </section>
 <section id="k-nearest-neighbors-regression-multiple-predictors-1" class="slide level2 smaller">
 <h2><span class="r-fit-text">K-Nearest Neighbors Regression (multiple predictors)</span></h2>
-<div id="c2fb26e5" class="cell" data-execution_count="15">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a><span class="co"># 10-NN regression</span></span>
+<div id="8e97b8dc" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a><span class="co"># 10-NN regression</span></span>
 <span id="cb15-2"><a></a>knnfit10 <span class="op">=</span> KNeighborsRegressor(n_neighbors<span class="op">=</span><span class="dv">10</span>)</span>
 <span id="cb15-3"><a></a>knnfit10.fit(</span>
 <span id="cb15-4"><a></a>    ames_train_scaled[[<span class="st">"size_scaled"</span>, <span class="st">"num_bedrooms_scaled"</span>]], </span>
 <span id="cb15-5"><a></a>    ames_train_scaled[<span class="st">"price"</span>]</span>
-<span id="cb15-6"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb15-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <style>#sk-container-id-1 {
   /* Definition of color scheme common for light and dark mode */
@@ -1265,7 +1268,7 @@ a.param-doc-link::before {
             <details>
                 <summary>Parameters</summary>
                 
-<table class="parameters-table caption-top">
+<table class="parameters-table caption-top" data-quarto-postprocess="true">
 <colgroup>
 <col style="width: 33%">
 <col style="width: 33%">
@@ -1505,8 +1508,8 @@ forceTheme('sk-container-id-1');</script>
 <ul>
 <li>Test Point: <code>GrLivArea</code> = 2000 square feet, and <code>BedroomAbvGr</code> = 3, then</li>
 </ul>
-<div id="59c40898" class="cell" data-execution_count="16">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a><span class="co"># Scale the test point using training parameters</span></span>
+<div id="5817541f" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a><span class="co"># Scale the test point using training parameters</span></span>
 <span id="cb16-2"><a></a>test_point <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb16-3"><a></a>    <span class="st">"GrLivArea"</span>: [<span class="dv">2000</span>],</span>
 <span id="cb16-4"><a></a>    <span class="st">"BedroomAbvGr"</span>: [<span class="dv">3</span>]</span>
@@ -1519,7 +1522,7 @@ forceTheme('sk-container-id-1');</script>
 <span id="cb16-11"><a></a></span>
 <span id="cb16-12"><a></a><span class="co"># Obtain 10-NN prediction</span></span>
 <span id="cb16-13"><a></a>prediction <span class="op">=</span> knnfit10.predict(test_point_scaled)</span>
-<span id="cb16-14"><a></a><span class="bu">print</span>(<span class="ss">f"Predicted Sale Price: $</span><span class="sc">{</span>prediction[<span class="dv">0</span>]<span class="sc">:,.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb16-14"><a></a><span class="bu">print</span>(<span class="ss">f"Predicted Sale Price: $</span><span class="sc">{</span>prediction[<span class="dv">0</span>]<span class="sc">:,.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Predicted Sale Price: $257,619.00</code></pre>
 </div>
@@ -1531,7 +1534,7 @@ forceTheme('sk-container-id-1');</script>
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="../images/logo.png" class="slide-logo"></p>
 <div class="footer footer-default">
-<p><a href="https://EricFriedlander.github.io/math4025sp26/course-info/schedule.html">🔗 Math 4025 - Spring 2026 - Schedule</a></p>
+<p><a href="https://EricFriedlander.github.io/math4025sp26/index.html">🔗 Math 4025 - Spring 2026 - Schedule</a></p>
 </div>
 </div></div>
 
@@ -1719,7 +1722,7 @@ forceTheme('sk-container-id-1');</script>
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1746,173 +1749,190 @@ forceTheme('sk-container-id-1');</script>
       });
     </script>
     <script id="quarto-html-after-body" type="application/javascript">
-      window.document.addEventListener("DOMContentLoaded", function (event) {
-        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-        tabsets.forEach(function(tabset) {
-          const tabby = new Tabby('#' + tabset.id);
-        });
-        const isCodeAnnotation = (el) => {
-          for (const clz of el.classList) {
-            if (clz.startsWith('code-annotation-')) {                     
-              return true;
-            }
-          }
-          return false;
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
         }
-        const onCopySuccess = function(e) {
-          // button target
-          const button = e.trigger;
-          // don't keep focus
-          button.blur();
-          // flash "checked"
-          button.classList.add('code-copy-button-checked');
-          var currentTitle = button.getAttribute("title");
-          button.setAttribute("title", "Copied!");
-          let tooltip;
-          if (window.bootstrap) {
-            button.setAttribute("data-bs-toggle", "tooltip");
-            button.setAttribute("data-bs-placement", "left");
-            button.setAttribute("data-bs-title", "Copied!");
-            tooltip = new bootstrap.Tooltip(button, 
-              { trigger: "manual", 
-                customClass: "code-copy-button-tooltip",
-                offset: [0, -8]});
-            tooltip.show();    
-          }
-          setTimeout(function() {
-            if (tooltip) {
-              tooltip.hide();
-              button.removeAttribute("data-bs-title");
-              button.removeAttribute("data-bs-toggle");
-              button.removeAttribute("data-bs-placement");
-            }
-            button.setAttribute("title", currentTitle);
-            button.classList.remove('code-copy-button-checked');
-          }, 1000);
-          // clear code selection
-          e.clearSelection();
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
         }
-        const getTextToCopy = function(trigger) {
-          const outerScaffold = trigger.parentElement.cloneNode(true);
-          const codeEl = outerScaffold.querySelector('code');
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
           for (const childEl of codeEl.children) {
             if (isCodeAnnotation(childEl)) {
               childEl.remove();
             }
           }
           return codeEl.innerText;
-        }
-        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-          text: getTextToCopy
-        });
-        clipboard.on('success', onCopySuccess);
-        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-            text: getTextToCopy,
-            container: window.document.getElementById('quarto-embedded-source-code-modal')
-          });
-          clipboardModal.on('success', onCopySuccess);
-        }
-          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-          var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp("https:\/\/EricFriedlander\.github\.io\/math4025sp26\/");
-          var isInternal = (href) => {
-              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-          }
-          // Inspect non-navigation links and adorn them if external
-         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-          for (var i=0; i<links.length; i++) {
-            const link = links[i];
-            if (!isInternal(link.href)) {
-              // undo the damage that might have been done by quarto-nav.js in the case of
-              // links that we want to consider external
-              if (link.dataset.originalHref !== undefined) {
-                link.href = link.dataset.originalHref;
-              }
-            }
-          }
-        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-          const config = {
-            allowHTML: true,
-            maxWidth: 500,
-            delay: 100,
-            arrow: false,
-            appendTo: function(el) {
-                return el.closest('section.slide') || el.parentElement;
-            },
-            interactive: true,
-            interactiveBorder: 10,
-            theme: 'light-border',
-            placement: 'bottom-start',
-          };
-          if (contentFn) {
-            config.content = contentFn;
-          }
-          if (onTriggerFn) {
-            config.onTrigger = onTriggerFn;
-          }
-          if (onUntriggerFn) {
-            config.onUntrigger = onUntriggerFn;
-          }
-            config['offset'] = [0,0];
-            config['maxWidth'] = 700;
-          window.tippy(el, config); 
-        }
-        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-        for (var i=0; i<noterefs.length; i++) {
-          const ref = noterefs[i];
-          tippyHover(ref, function() {
-            // use id or data attribute instead here
-            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-            try { href = new URL(href).hash; } catch {}
-            const id = href.replace(/^#\/?/, "");
-            const note = window.document.getElementById(id);
-            if (note) {
-              return note.innerHTML;
-            } else {
-              return "";
-            }
-          });
-        }
-        const findCites = (el) => {
-          const parentEl = el.parentElement;
-          if (parentEl) {
-            const cites = parentEl.dataset.cites;
-            if (cites) {
-              return {
-                el,
-                cites: cites.split(' ')
-              };
-            } else {
-              return findCites(el.parentElement)
-            }
-          } else {
-            return undefined;
-          }
-        };
-        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-        for (var i=0; i<bibliorefs.length; i++) {
-          const ref = bibliorefs[i];
-          const citeInfo = findCites(ref);
-          if (citeInfo) {
-            tippyHover(citeInfo.el, function() {
-              var popup = window.document.createElement('div');
-              citeInfo.cites.forEach(function(cite) {
-                var citeDiv = window.document.createElement('div');
-                citeDiv.classList.add('hanging-indent');
-                citeDiv.classList.add('csl-entry');
-                var biblioDiv = window.document.getElementById('ref-' + cite);
-                if (biblioDiv) {
-                  citeDiv.innerHTML = biblioDiv.innerHTML;
-                }
-                popup.appendChild(citeDiv);
-              });
-              return popup.innerHTML;
-            });
-          }
-        }
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
-      </script>
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp("https:\/\/EricFriedlander\.github\.io\/math4025sp26\/");
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
     
 
 </body></html>
